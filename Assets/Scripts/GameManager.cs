@@ -25,37 +25,36 @@ public class GameManager : MonoBehaviour
         {
             lastEnemyTime = Time.time;
 
-            GameObject enemy = Instantiate(enemyPrefab as GameObject);
-
-            // random integer between 0 and 3
-            int side = Random.Range(0, 4);
-            switch (side)
-            {
-                case 0:
-                    // top
-                    enemy.transform.position = Camera.main.ViewportToWorldPoint(
-                        new Vector3(Random.Range(0.0f, 1.0f), 1.0f, 0.0f)
-                    );
-                    break;
-                case 1:
-                    // right
-                    enemy.transform.position = Camera.main.ViewportToWorldPoint(
-                        new Vector3(1.0f, Random.Range(0.0f, 1.0f), 0.0f)
-                    );
-                    break;
-                case 2:
-                    // bottom
-                    enemy.transform.position = Camera.main.ViewportToWorldPoint(
-                        new Vector3(Random.Range(0.0f, 1.0f), 0.0f, 0.0f)
-                    );
-                    break;
-                case 3:
-                    // left
-                    enemy.transform.position = Camera.main.ViewportToWorldPoint(
-                        new Vector3(0.0f, Random.Range(0.0f, 1.0f), 0.0f)
-                    );
-                    break;
-            }
+            SpawnEnemy();
         }
+    }
+
+    private void SpawnEnemy()
+    {
+        GameObject enemy = Instantiate(enemyPrefab as GameObject);
+
+        // viewport coords:
+        //   (0, 0) is bottom left
+        //   (1, 1) is top right
+        var spawnViewportCoord = new Vector3(0.0f, 0.0f, 0.0f);
+
+        // randomly choose a side to spawn on, then randomly choose a point on that side
+        int side = Random.Range(0, 4);
+        switch (side)
+        {
+            case 0: // top
+                spawnViewportCoord = new Vector3(Random.Range(0.0f, 1.0f), 1.1f, 0.0f);
+                break;
+            case 1: // right
+                spawnViewportCoord = new Vector3(1.1f, Random.Range(0.0f, 1.0f), 0.0f);
+                break;
+            case 2: // bottom
+                spawnViewportCoord = new Vector3(Random.Range(0.0f, 1.0f), -0.1f, 0.0f);
+                break;
+            case 3: // left
+                spawnViewportCoord = new Vector3(-0.1f, Random.Range(0.0f, 1.0f), 0.0f);
+                break;
+        }
+        enemy.transform.position = Camera.main.ViewportToWorldPoint(spawnViewportCoord);
     }
 }
