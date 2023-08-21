@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
 
     [SerializeField]
     [Tooltip("How much damage this projectile does to an enemy")]
-    private int _damage = 10;
+    public static int Damage = 10;
 
     private Vector3 _direction;
 
@@ -48,10 +48,10 @@ public class Projectile : MonoBehaviour
     // Deal damage to the enemy because they were hit by a projectile
     private void DamageEnemy(Enemy enemy)
     {
-        enemy.TakeDamage(_damage);
+        enemy.TakeDamage(Damage);
     }
 
     private void OnBecameInvisible() {
         Destroy(gameObject);
-    }
+    } 
 }
