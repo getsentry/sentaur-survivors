@@ -12,14 +12,25 @@ public class GameManager : MonoBehaviour
     [Tooltip("How frequently enemies spawn (in seconds)")]
     private float _enemySpawnRate = 2.0f;
 
+    [SerializeField]
+    [Tooltip("The level up UI prefab to spawn")]
+    private GameObject _levelUpUIPrefab;
+
     // the player's accumulated score so far
     private int _score = 0;
+
+    // the score a player must get to for the next weapon upgrade
+    private int _nextLevelScoreMilestone;
+    private int[] _levelMilestones = {100, 250, 500, 750, 1000, 1500, 2000, 3000, 5000};
+    private int _currentLevel = 0;
 
     private float _lastEnemySpawnTime = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
+        _nextLevelScoreMilestone = _levelMilestones[0];
+
         _lastEnemySpawnTime = Time.time;
 
         EventManager.AddListener("EnemyDestroyed", (eventData) => {
@@ -58,6 +69,19 @@ public class GameManager : MonoBehaviour
             _lastEnemySpawnTime = Time.time;
 
             SpawnEnemy();
+        }
+
+        if (_score >= _nextLevelScoreMilestone && _currentLevel < _levelMilestones.Length) 
+        {
+            _currentLevel++;
+
+            // we don't want to set the next milestone if we just reached the final level (there 
+            // are no more milestones)
+            if (_currentLevel < _levelMilestones.Length) 
+            {
+                _nextLevelScoreMilestone = _levelMilestones[_currentLevel];
+            }
+            GameObject levelUpUI = Instantiate(_levelUpUIPrefab);
         }
     }
 
