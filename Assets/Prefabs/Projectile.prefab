@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2127f6dfae2f04ffc84e833ab2e54280, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 10
+  _damage: 10
 --- !u!61 &-2341297887287861273
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -152,7 +154,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6795985259155833977}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
