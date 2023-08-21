@@ -2,6 +2,19 @@
 
 Requires Unity 2022.3.7f1.
 
+## Coding Style
+
+We mostly follow standard [Google's C# style guide](https://google.github.io/styleguide/csharp-style.html), because it's the most concise guide.
+
+The key things to know:
+
+* `PascalCase` for classes, methods, public fields, etc.
+* `camelCase` for local variables and parameters
+* `_camelCase` for private and protected class properties
+* 4 space indentation (vs 2 in Google's guide)
+
+Don't worry about being pedantic around whitespace rules, where braces go, method ordering, etc.
+
 ## Folders
 
 ### Assets
@@ -21,6 +34,14 @@ This is where the main scene files are located. Right now we just have a single 
 ### Assets/Scripts
 
 All the component C# scripts (read: the code for the game).
+
+### Assets/Sprites
+
+Sprites, art assets, etc.
+
+### Assets/Sounds
+
+Sound files.
 
 ## Tips
 
