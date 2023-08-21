@@ -29,6 +29,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        Debug.Log("Projectile.OnCollisionEnter2D: " + other.gameObject.name);
         // if the projectile collides with an enemy, destroy the enemy
         if (other.gameObject.tag == "Enemy")
         {
