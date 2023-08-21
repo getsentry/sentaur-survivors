@@ -45,6 +45,11 @@ public class Player : MonoBehaviour
 
             // set the projectile's position to the player's position
             projectile.transform.position = transform.position;
+
+            // projectile moves in the direction of the current mouse cursor
+            var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var direction = mousePosition - transform.position;
+            projectile.SetDirection(direction);
         }
     }
 
