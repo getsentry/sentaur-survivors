@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    private int _damageToPlayer = 10; // unused, but just an example of how this could be set/accessed
+
     void Start() { }
 
     // Update is called once per frame
@@ -39,5 +42,7 @@ public class Enemy : MonoBehaviour
     // Deal damage to the player because they touched
     private void DamagePlayer(Player player) {
         Debug.Log("Enemy.DamagePlayer: Player was damaged by " + gameObject.name);
+
+        player.TakeDamage(_damageToPlayer);
     }
 }

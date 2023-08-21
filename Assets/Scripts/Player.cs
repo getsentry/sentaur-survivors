@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,6 +6,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private int _hitPoints = 100;
+
     // Start is called before the first frame update
     void Start() { }
 
@@ -21,5 +24,13 @@ public class Player : MonoBehaviour
     // a collision handler that is called when the enemy collides with another object
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
+    }
+
+    public void TakeDamage(int damage = 0)
+    {
+        _hitPoints -= damage;
+        _hitPoints = Math.Max(_hitPoints, 0); // don't let the player have negative hit points
+
+        Debug.Log("Player.TakeDamage: Player took " + damage + " damage and now has " + _hitPoints + " hit points");
     }
 }
