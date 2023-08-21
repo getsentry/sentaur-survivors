@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
     {
         // get a reference to the Healthbar component
         _healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
-        
+
         takeDamageSound = GetComponent<AudioSource>();
     }
 
@@ -87,14 +87,14 @@ public class Player : MonoBehaviour
         _hitPoints = Math.Max(_hitPoints, 0); // don't let the player have negative hit points
 
         _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
-        
-        // play damage sound effect
-        takeDamageSound.Play();
 
         if (_hitPoints == 0)
         {
             // emit player death event
             EventManager.TriggerEvent("PlayerDeath");
+        } else {
+            // play damage sound effect
+            takeDamageSound.Play();
         }
     }
 
