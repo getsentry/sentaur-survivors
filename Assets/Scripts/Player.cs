@@ -75,6 +75,12 @@ public class Player : MonoBehaviour
         _hitPoints = Math.Max(_hitPoints, 0); // don't let the player have negative hit points
 
         _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
+
+        if (_hitPoints == 0)
+        {
+            // emit player death event
+            EventManager.TriggerEvent("PlayerDeath");
+        }
     }
 
     public void HealDamage(int healAmount = 0) {
