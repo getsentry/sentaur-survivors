@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
 
             // instantiate a new projectile
             var projectile = Instantiate(_projectilePrefab);
+            projectile.transform.parent = transform.parent;
 
             // projectile moves in the direction of the current mouse cursor
             var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
