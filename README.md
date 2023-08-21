@@ -47,3 +47,5 @@ Sound files.
 
 * Make sure you save your Scene in the Unity Editor (CMD + S) before committing code. If you don't, all the scene data (e.g. the game objects, their components, and those components' properties) won't get persisted.
 * When you add a new Script component inside Unity, it gets placed in the top-level `Assets` folder. You have to manually move the newly-created file to `Assets/Scripts`.
+* When renaming or moving files, move/rename the files inside Unity Editor, _not_ VS Code. Unity Editor will ensure any scripts that were attached to game objects also get renamed/mapped to the new location.
+  * _If you perform the move/rename in VS Code, you'll have to manually add all the script references back inside Unity._
