@@ -26,12 +26,14 @@ public class GameManager : MonoBehaviour
     private GameState _gameState;
 
     private HUD _hud;
+    private GameObject _levelContainer;
 
     // Start is called before the first frame update
     void Start()
     {
         _gameState = GameState.Playing;
         _hud = GameObject.Find("HUD").GetComponent<HUD>();
+        _levelContainer = GameObject.Find("Level");
 
         _lastEnemySpawnTime = Time.time;
 
@@ -91,6 +93,7 @@ public class GameManager : MonoBehaviour
     private void SpawnEnemy()
     {
         GameObject enemy = Instantiate(_enemyPrefab as GameObject);
+        enemy.transform.parent = _levelContainer.transform;
 
         // viewport coords:
         //   (0, 0) is bottom left
