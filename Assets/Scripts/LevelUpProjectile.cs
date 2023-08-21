@@ -15,6 +15,14 @@ public class LevelUpProjectile : MonoBehaviour
         {"count", 0}, {"speed", 0}, {"damage", 0}
     };
 
+    [SerializeField]
+    [Tooltip("The option 1 button")]
+    private Button option1Button;
+
+    [SerializeField]
+    [Tooltip("The option 2 button")]
+    private Button option2Button;
+
     private string[] _countUpgrades = {
         "+ 1 dart",
         "+ 1 dart",
@@ -33,15 +41,9 @@ public class LevelUpProjectile : MonoBehaviour
         "ultimate: base damage is insanely high for 15 seconds"
     };
 
-    [SerializeField]
-    [Tooltip("The option 1 button")]
-    private Button option1Button;
-
-    [SerializeField]
-    [Tooltip("The option 2 button")]
-    private Button option2Button;
-
     private int MAX_LEVEL = 2; // change to 3 when implementing ults
+
+    // these are equivalent to the index of the option in AvailableProjectileUpgrades
     private int option1;
     private int option2;
 
@@ -51,45 +53,55 @@ public class LevelUpProjectile : MonoBehaviour
         // pause the game
         Time.timeScale = 0;
 
-        // randomize the two options; TODO: abstract into method
+        RandomizeOptions();
+
+        option1Button.onClick.AddListener(() => SelectUpgrade(1));
+        option2Button.onClick.AddListener(() => SelectUpgrade(2));
+    }
+
+    void RandomizeOptions() 
+    {
         option1 = Random.Range(0, AvailableProjectileUpgrades.Count);
-        do {
+
+        // select a second option that is different from the first option if the number of available
+        // projectiles is greater than 1
+        do 
+        {
             option2 = Random.Range(0, AvailableProjectileUpgrades.Count);
         } while (AvailableProjectileUpgrades.Count > 1 && option2 == option1);
-
-        // TODO: need to deal with case where user has maxed out all the upgrades but one (would only have one option)
 
         option1Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = AvailableProjectileUpgrades[option1];
         if (option1 == option2) 
         {
             option2Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "ALL OTHER UPGRADES MAXED OUT";
             option2Button.enabled = false;
-        } else {
+        } 
+        else 
+        {
             option2Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = AvailableProjectileUpgrades[option2];
         }
 
-        option1Button.onClick.AddListener(() => SelectUpgrade(1));
-        option2Button.onClick.AddListener(() => SelectUpgrade(2));
-
-        // TODO: sprites, description (use _xxxUpgrades)
+        // TODO: change sprites, description (use _xxxUpgrades)
     }
 
-    void SelectUpgrade(int selectedOption) 
+    void SelectUpgrade(int selectedOptionNumber) 
     {
-        string selection = "";
-        if (selectedOption == 1) 
+        string selectedUpgrade = "";
+        if (selectedOptionNumber == 1) 
         {
-            selection = AvailableProjectileUpgrades[option1];
+            selectedUpgrade = AvailableProjectileUpgrades[option1];
         } else {
-            selection = AvailableProjectileUpgrades[option2];
+            selectedUpgrade = AvailableProjectileUpgrades[option2];
         }
-        UpgradesToLevelsMap[selection]++;
-        if (UpgradesToLevelsMap[selection] == MAX_LEVEL) 
+        
+        UpgradesToLevelsMap[selectedUpgrade]++; // level up the selected upgrade
+
+        if (UpgradesToLevelsMap[selectedUpgrade] == MAX_LEVEL) 
         {
-            // take the upgrade out of the pool
+            // take the upgrade out of the pool if it's maxed out
             for (int i = 0; i < AvailableProjectileUpgrades.Count; i++)
             {
-                if (AvailableProjectileUpgrades[i] == selection) 
+                if (AvailableProjectileUpgrades[i] == selectedUpgrade) 
                 {
                     AvailableProjectileUpgrades.RemoveAt(i);
                     break;
@@ -100,7 +112,7 @@ public class LevelUpProjectile : MonoBehaviour
         Player player = GameObject.Find("Player").GetComponent<Player>();
         if (player != null) 
         {
-            switch(selection) 
+            switch(selectedUpgrade) 
             {
                 case "count": 
                     player.UpgradeCount(UpgradesToLevelsMap["count"]);
@@ -115,7 +127,8 @@ public class LevelUpProjectile : MonoBehaviour
             }
         }
 
-        Time.timeScale = 1;
+        // resume the game and exit the level up popup
+        Time.timeScale = 1; 
         Destroy(gameObject);
         
     }
