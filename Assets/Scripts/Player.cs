@@ -8,8 +8,13 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private int _hitPoints = 100;
 
+    private HealthBar _healthBar;
+
     // Start is called before the first frame update
-    void Start() { }
+    void Start() { 
+        // get a reference to the Healthbar component
+        _healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -31,6 +36,7 @@ public class Player : MonoBehaviour
         _hitPoints -= damage;
         _hitPoints = Math.Max(_hitPoints, 0); // don't let the player have negative hit points
 
+        _healthBar.SetHealth(_hitPoints / 100f);
         Debug.Log("Player.TakeDamage: Player took " + damage + " damage and now has " + _hitPoints + " hit points");
     }
 }

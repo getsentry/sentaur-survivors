@@ -8,8 +8,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int _damageToPlayer = 10; // unused, but just an example of how this could be set/accessed
 
-    void Start() { }
-
     // Update is called once per frame
     void Update()
     {
