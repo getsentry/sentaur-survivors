@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     // the score a player must get to for the next weapon upgrade
     private int _nextLevelScoreMilestone;
-    private int[] _levelMilestones = {100, 250, 500, 750, 1000, 1500, 2000, 3000, 5000};
+    private int[] _levelMilestones = {10, 50, 100, 200, 300, 400, 500, 600, 700};
     private int _currentLevel = 0;
 
     private float _lastEnemySpawnTime = 0.0f;
