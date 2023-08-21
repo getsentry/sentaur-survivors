@@ -57,5 +57,6 @@
         "temp/":true,
         "Temp/":true
     },
-    "omnisharp.enableRoslynAnalyzers": true
+    "omnisharp.enableRoslynAnalyzers": true,
+    "dotnet.defaultSolution": "survivors-game.sln"
 }
