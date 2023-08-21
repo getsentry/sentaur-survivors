@@ -34,6 +34,9 @@ public class Player : MonoBehaviour
     private float _timeElapsedSinceLastProjectile = 0.0f;
 
     private HealthBar _healthBar;
+    public Animator animator;
+    Vector2 movement;
+    bool facingRight = false;
 
     public AudioSource takeDamageSound;
 
@@ -53,11 +56,22 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(
+        transform.position = new Vector2(
             transform.position.x + Input.GetAxis("Horizontal") * Time.deltaTime * _playerMoveRate,
-            transform.position.y + Input.GetAxis("Vertical") * Time.deltaTime * _playerMoveRate,
-            transform.position.z
+            transform.position.y + Input.GetAxis("Vertical") * Time.deltaTime * _playerMoveRate
         );
+
+        movement.x = Input.GetAxisRaw("Horizontal");
+        if (movement.x > 0) {
+            facingRight = true;
+        } else if (movement.x < 0) {
+            facingRight = false;
+        } // if 0, don't modify
+        movement.y = Input.GetAxisRaw("Vertical");
+
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Speed", movement.sqrMagnitude);
+        animator.SetBool("FacingRight", facingRight);
 
         // fire a projectile once enough time has elapsed
         _timeElapsedSinceLastProjectile += Time.deltaTime;
