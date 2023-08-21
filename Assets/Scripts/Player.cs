@@ -53,11 +53,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    // a collision handler that is called when the enemy collides with another object
-    private void OnCollisionEnter(UnityEngine.Collision collision)
-    {
-    }
-
     public void TakeDamage(int damage = 0)
     {
         _hitPoints -= damage;
