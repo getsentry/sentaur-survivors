@@ -6,12 +6,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
     [SerializeField]
+    [Tooltip("The projectile prefab that the player fires")]
     private Projectile _projectilePrefab;
 
-    [SerializeField] private int _hitPoints = 100;
+    [SerializeField] 
+    [Tooltip("How many hit points the player has")]
+    private int _hitPoints = 100;
 
     [SerializeField]
+    [Tooltip("How frequently the player fires projectiles (in seconds)")]
     private float _projectileFireRate = 0.5f;
 
     private float timeElapsedSinceLastProjectile = 0.0f;

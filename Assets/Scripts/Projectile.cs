@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
 {
     [Tooltip("How fast the projectile moves")]
     [SerializeField]
-    private float _speed = 10.0f;
+    private float _speed = 20.0f;
 
     [SerializeField]
     [Tooltip("How much damage this projectile does to an enemy")]
