@@ -24,13 +24,20 @@ public class Player : MonoBehaviour
     private float _projectileFireRate = 0.2f;
 
     [SerializeField]
+    [Tooltip("The number of projectiles fired by the player at once")]
+    private int _projectileCount = 1;
+
+    [SerializeField]
     [Tooltip("How fast the player moves (how exaclty I don't know)")]
     private float _playerMoveRate = 5;
-
 
     private float _timeElapsedSinceLastProjectile = 0.0f;
 
     private HealthBar _healthBar;
+
+    // private Dictionary<string, int> _upgradesToLevelsMap = new Dictionary<string, int>{
+    //     {"number of projectiles", 0}, {"fire rate", 0}, {"damage", 0}
+    // };
 
     // Start is called before the first frame update
     void Start()
@@ -82,5 +89,20 @@ public class Player : MonoBehaviour
         _hitPoints = Math.Min(_hitPoints, 100); // don't let the player have more than 100 hit points
 
         _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
+    }
+
+    public void UpgradeCount(int level) 
+    {
+        _projectileCount++;
+    }
+
+    public void UpgradeSpeed(int level) 
+    {
+        _projectileFireRate *= 0.5f;
+    }
+
+    public void UpgradeDamage(int level) 
+    {
+        Projectile.Damage *= 2;
     }
 }
