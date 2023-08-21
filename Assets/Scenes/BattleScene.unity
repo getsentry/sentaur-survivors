@@ -769,6 +769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 1001074756204391216, guid: ce6ca319e4496403782aea5ae869c333, type: 3}
   _enemySpawnRate: 2
+  _levelUpUIPrefab: {fileID: 3351380216167417446, guid: 0161067a6f1f146e880d28f01d9d1897, type: 3}
 --- !u!4 &1361049654
 Transform:
   m_ObjectHideFlags: 0
