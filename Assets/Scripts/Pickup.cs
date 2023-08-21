@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
     [SerializeField]
     private int _healAmount = 30;
+
+    [SerializeField]
+    private int _scoreValue = 50;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +36,9 @@ public class Pickup : MonoBehaviour
 
             // Destroy the pickup
             Destroy(this.gameObject);
+
+            // trigger an event that lets people know this was picked up
+            EventManager.TriggerEvent("PickupGrabbed", new EventData(_scoreValue));
         }
     }
 }
