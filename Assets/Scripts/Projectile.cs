@@ -25,6 +25,7 @@ public class Projectile : MonoBehaviour
     public void SetDirection(Vector3 direction)
     {
         _direction = direction.normalized;
+        _direction.z = 0; // don't move in the z direction
 
         // rotate the projectile to face the direction it's moving
         var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
