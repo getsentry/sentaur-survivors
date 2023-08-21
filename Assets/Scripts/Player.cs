@@ -6,12 +6,21 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField]
+    private Projectile _projectilePrefab;
+
     [SerializeField] private int _hitPoints = 100;
+
+    [SerializeField]
+    private float _projectileFireRate = 0.5f;
+
+    private float timeElapsedSinceLastProjectile = 0.0f;
 
     private HealthBar _healthBar;
 
     // Start is called before the first frame update
-    void Start() { 
+    void Start()
+    {
         // get a reference to the Healthbar component
         _healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
     }
@@ -24,11 +33,26 @@ public class Player : MonoBehaviour
             transform.position.y + Input.GetAxis("Vertical") * Time.deltaTime * 5,
             transform.position.z
         );
-    }
 
-    // a collision handler that is called when the enemy collides with another object
-    private void OnCollisionEnter(UnityEngine.Collision collision)
-    {
+        // fire a projectile once enough time has elapsed
+        timeElapsedSinceLastProjectile += Time.deltaTime;
+        if (timeElapsedSinceLastProjectile > _projectileFireRate)
+        {
+            timeElapsedSinceLastProjectile = 0.0f;
+
+            // instantiate a new projectile
+            var projectile = Instantiate(_projectilePrefab);
+
+            // projectile moves in the direction of the current mouse cursor
+            var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var direction = mousePosition - transform.position;
+            projectile.SetDirection(direction);
+
+            // set the projectile's position to the player's position + a little bit
+            // outside the player in the direction of the mouse cursor
+            var distanceOutsidePlayer = 2.0f;
+            projectile.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
+        }
     }
 
     public void TakeDamage(int damage = 0)
