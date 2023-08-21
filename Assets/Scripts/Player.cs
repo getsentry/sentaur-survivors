@@ -16,6 +16,10 @@ public class Player : MonoBehaviour
     private int _hitPoints = 100;
 
     [SerializeField]
+    [Tooltip("The maximum number of hit points the player can have")]
+    private int _maxHitPoints = 100;
+
+    [SerializeField]
     [Tooltip("How frequently the player fires projectiles (in seconds)")]
     private float _projectileFireRate = 0.5f;
 
@@ -65,7 +69,13 @@ public class Player : MonoBehaviour
         _hitPoints -= damage;
         _hitPoints = Math.Max(_hitPoints, 0); // don't let the player have negative hit points
 
-        _healthBar.SetHealth(_hitPoints / 100f);
-        Debug.Log("Player.TakeDamage: Player took " + damage + " damage and now has " + _hitPoints + " hit points");
+        _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
+    }
+
+    public void HealDamage(int healAmount = 0) {
+        _hitPoints += healAmount;
+        _hitPoints = Math.Min(_hitPoints, 100); // don't let the player have more than 100 hit points
+
+        _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
     }
 }
