@@ -31,15 +31,21 @@ public class GameManager : MonoBehaviour
     }
 
     private void OnPickupGrabbed(int scoreValue) {
-        _score += scoreValue;
+        SetScore(_score + scoreValue);
         Debug.Log("GameManager.OnPickupGrabbed: Score is now " + _score);
     }
 
     private void OnEnemyDestroyed(int scoreValue)
     {
-        _score += scoreValue;
+        SetScore(_score + scoreValue);
         Debug.Log("GameManager.OnEnemyDestroyed: Score is now " + _score);
 
+    }
+
+    private void SetScore(int score) {
+        _score = score;
+
+        EventManager.TriggerEvent("ScoreChange", new EventData(_score));
     }
 
     // Update is called once per frame
