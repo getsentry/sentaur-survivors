@@ -43,13 +43,15 @@ public class Player : MonoBehaviour
             // instantiate a new projectile
             var projectile = Instantiate(_projectilePrefab);
 
-            // set the projectile's position to the player's position
-            projectile.transform.position = transform.position;
-
             // projectile moves in the direction of the current mouse cursor
             var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             var direction = mousePosition - transform.position;
             projectile.SetDirection(direction);
+
+            // set the projectile's position to the player's position + a little bit
+            // outside the player in the direction of the mouse cursor
+            var distanceOutsidePlayer = 2.0f;
+            projectile.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
         }
     }
 
