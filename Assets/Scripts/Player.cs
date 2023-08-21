@@ -21,7 +21,12 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     [Tooltip("How frequently the player fires projectiles (in seconds)")]
-    private float _projectileFireRate = 0.5f;
+    private float _projectileFireRate = 0.2f;
+
+    [SerializeField]
+    [Tooltip("How fast the player moves (how exaclty I don't know)")]
+    private float _playerMoveRate = 5;
+
 
     private float _timeElapsedSinceLastProjectile = 0.0f;
 
@@ -38,8 +43,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         transform.position = new Vector3(
-            transform.position.x + Input.GetAxis("Horizontal") * Time.deltaTime * 5,
-            transform.position.y + Input.GetAxis("Vertical") * Time.deltaTime * 5,
+            transform.position.x + Input.GetAxis("Horizontal") * Time.deltaTime * _playerMoveRate,
+            transform.position.y + Input.GetAxis("Vertical") * Time.deltaTime * _playerMoveRate,
             transform.position.z
         );
 
