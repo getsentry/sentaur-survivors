@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("The enemy prefab to spawn")]
-    private GameObject enemyPrefab;
+    private GameObject _enemyPrefab;
 
     [SerializeField]
     [Tooltip("How frequently enemies spawn (in seconds)")]
@@ -25,6 +25,14 @@ public class GameManager : MonoBehaviour
         EventManager.AddListener("EnemyDestroyed", (eventData) => {
             OnEnemyDestroyed((int)eventData.Data);
         });
+        EventManager.AddListener("PickupGrabbed", (eventData) => {
+            OnPickupGrabbed((int)eventData.Data);
+        });
+    }
+
+    private void OnPickupGrabbed(int scoreValue) {
+        _score += scoreValue;
+        Debug.Log("GameManager.OnPickupGrabbed: Score is now " + _score);
     }
 
     private void OnEnemyDestroyed(int scoreValue)
@@ -49,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        GameObject enemy = Instantiate(enemyPrefab as GameObject);
+        GameObject enemy = Instantiate(_enemyPrefab as GameObject);
 
         // viewport coords:
         //   (0, 0) is bottom left
