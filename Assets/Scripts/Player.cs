@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
 
     private HealthBar _healthBar;
 
+    public AudioSource takeDamageSound;
+
     // private Dictionary<string, int> _upgradesToLevelsMap = new Dictionary<string, int>{
     //     {"number of projectiles", 0}, {"fire rate", 0}, {"damage", 0}
     // };
@@ -44,6 +46,8 @@ public class Player : MonoBehaviour
     {
         // get a reference to the Healthbar component
         _healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
+
+        takeDamageSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -88,6 +92,9 @@ public class Player : MonoBehaviour
         {
             // emit player death event
             EventManager.TriggerEvent("PlayerDeath");
+        } else {
+            // play damage sound effect
+            takeDamageSound.Play();
         }
     }
 
