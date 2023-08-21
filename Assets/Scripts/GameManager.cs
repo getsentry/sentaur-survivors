@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
         _lastEnemySpawnTime = Time.time;
 
         EventManager.AddListener("EnemyDestroyed", (eventData) => {
-            OnEnemyDestroyed((int)eventData.data);
+            OnEnemyDestroyed((int)eventData.Data);
         });
     }
 

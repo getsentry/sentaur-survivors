@@ -8,11 +8,11 @@ using System.Collections.Generic;
 
 public class EventData
 {
-    public object data;
+    public object Data;
 
     public EventData(object data = null)
     {
-        this.data = data;
+        this.Data = data;
     }
 }
 
@@ -20,13 +20,13 @@ public class EventManager : MonoBehaviour
 {
     private Dictionary<string, UnityEvent<EventData>> _events;
 
-    private static EventManager instance;
+    private static EventManager _instance;
 
     void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this;
+            _instance = this;
         }
         else
         {
@@ -49,7 +49,7 @@ public class EventManager : MonoBehaviour
     public static void AddListener(string eventName, UnityAction<EventData> listener)
     {
         UnityEvent<EventData> evt = null;
-        if (instance._events.TryGetValue(eventName, out evt))
+        if (_instance._events.TryGetValue(eventName, out evt))
         {
             evt.AddListener(listener);
         }
@@ -57,23 +57,23 @@ public class EventManager : MonoBehaviour
         {
             evt = new UnityEvent<EventData>();
             evt.AddListener(listener);
-            instance._events.Add(eventName, evt);
+            _instance._events.Add(eventName, evt);
         }
     }
 
     public static void RemoveListener(string eventName, UnityAction<EventData> listener)
     {
-        if (instance == null)
+        if (_instance == null)
             return;
         UnityEvent<EventData> evt = null;
-        if (instance._events.TryGetValue(eventName, out evt))
+        if (_instance._events.TryGetValue(eventName, out evt))
             evt.RemoveListener(listener);
     }
 
     public static void TriggerEvent(string eventName, EventData eventData)
     {
         UnityEvent<EventData> evt = null;
-        if (instance._events.TryGetValue(eventName, out evt))
+        if (_instance._events.TryGetValue(eventName, out evt))
         {
             evt.Invoke(eventData);
         }
