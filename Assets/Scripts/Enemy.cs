@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     [Tooltip("How many hitpoints the enemy has")]
     private int _hitpoints = 20;
+
+    [SerializeField]
+    [Tooltip("How many points the player gets for killing this enemy")]
+    private int _scoreValue = 10;
 
     // Update is called once per frame
     void Update()
@@ -56,8 +61,11 @@ public class Enemy : MonoBehaviour
         Debug.Log("Enemy.TakeDamage: Enemy took " + damage + " damage and now has " + _hitpoints + " hit points");
 
         if (_hitpoints == 0) {
+
             // destroy the enemy
             Destroy(this.gameObject);
+
+            EventManager.TriggerEvent("EnemyDestroyed", new EventData(_scoreValue));
         }
     }
 }

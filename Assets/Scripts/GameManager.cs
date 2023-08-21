@@ -5,15 +5,33 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
+    [Tooltip("The enemy prefab to spawn")]
     private GameObject enemyPrefab;
 
-    float timeUntilNextEnemy = 2.0f;
-    float lastEnemyTime = 0.0f;
+    [SerializeField]
+    [Tooltip("How frequently enemies spawn (in seconds)")]
+    private float _enemySpawnRate = 2.0f;
+
+    // the player's accumulated score so far
+    private int _score = 0;
+
+    private float _lastEnemySpawnTime = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        lastEnemyTime = Time.time;
+        _lastEnemySpawnTime = Time.time;
+
+        EventManager.AddListener("EnemyDestroyed", (eventData) => {
+            OnEnemyDestroyed((int)eventData.data);
+        });
+    }
+
+    private void OnEnemyDestroyed(int scoreValue)
+    {
+        _score += scoreValue;
+        Debug.Log("GameManager.OnEnemyDestroyed: Score is now " + _score);
+
     }
 
     // Update is called once per frame
@@ -21,9 +39,9 @@ public class GameManager : MonoBehaviour
     {
         // every 2 seconds, instantiate a new enemy prefab and position at the edge
         // of the viewport;
-        if (Time.time - lastEnemyTime > timeUntilNextEnemy)
+        if (Time.time - _lastEnemySpawnTime > _enemySpawnRate)
         {
-            lastEnemyTime = Time.time;
+            _lastEnemySpawnTime = Time.time;
 
             SpawnEnemy();
         }
