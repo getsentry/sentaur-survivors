@@ -388,7 +388,7 @@ GameObject:
   - component: {fileID: 702887976}
   - component: {fileID: 702887977}
   - component: {fileID: 702887978}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -475,7 +475,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7445bbf6e7dae43f5b79872980c8e394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _projectilePrefab: {fileID: -1238747304094502698, guid: f4b2f15faddfa43ee9ea450e341989a3, type: 3}
   _hitPoints: 100
+  _projectileFireRate: 0.5
 --- !u!61 &702887977
 BoxCollider2D:
   m_ObjectHideFlags: 0
