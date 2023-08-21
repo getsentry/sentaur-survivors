@@ -17,9 +17,22 @@ public class GameManager : MonoBehaviour
 
     private float _lastEnemySpawnTime = 0.0f;
 
+    private enum GameState
+    {
+        Playing,
+        GameOver
+    }
+
+    private GameState _gameState;
+
+    private HUD _hud;
+
     // Start is called before the first frame update
     void Start()
     {
+        _gameState = GameState.Playing;
+        _hud = GameObject.Find("HUD").GetComponent<HUD>();
+
         _lastEnemySpawnTime = Time.time;
 
         EventManager.AddListener("EnemyDestroyed", (eventData) => {
@@ -27,6 +40,9 @@ public class GameManager : MonoBehaviour
         });
         EventManager.AddListener("PickupGrabbed", (eventData) => {
             OnPickupGrabbed((int)eventData.Data);
+        });
+        EventManager.AddListener("PlayerDeath", (eventData) => {
+            OnPlayerDeath();
         });
     }
 
@@ -40,12 +56,23 @@ public class GameManager : MonoBehaviour
         SetScore(_score + scoreValue);
         Debug.Log("GameManager.OnEnemyDestroyed: Score is now " + _score);
 
+    
+    }
+     
+    private void OnPlayerDeath() {
+        _gameState = GameState.GameOver;
+
+        // STOP THE GAME
+        // -- by setting the timescale to 0, we stop all time-based operations
+        Time.timeScale = 0;
+
+        _hud.ShowGameOver();
     }
 
     private void SetScore(int score) {
         _score = score;
 
-        EventManager.TriggerEvent("ScoreChange", new EventData(_score));
+        _hud.SetScore(_score);
     }
 
     // Update is called once per frame
