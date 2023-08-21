@@ -25,6 +25,10 @@ public class Projectile : MonoBehaviour
     public void SetDirection(Vector3 direction)
     {
         _direction = direction.normalized;
+
+        // rotate the projectile to face the direction it's moving
+        var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
