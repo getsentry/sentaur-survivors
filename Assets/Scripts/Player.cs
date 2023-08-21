@@ -18,16 +18,8 @@ public class Player : MonoBehaviour
         );
     }
 
-    private void OnTriggerEnter(UnityEngine.Collider other)
-    {
-                Debug.Log("OnTriggerenter");
-    }
-
     // a collision handler that is called when the enemy collides with another object
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
-        Debug.Log("OnCollisionEnter");
-
-     
     }
 }

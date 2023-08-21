@@ -21,19 +21,23 @@ public class Enemy : MonoBehaviour
             );
         }
     }
-
-    private void OnTriggerEnter2D(UnityEngine.Collider2D other)
-    {
-        Debug.Log("OnTriggerenter");
-    }
-
     
     // a collision handler that is called when the enemy collides with another object
     private void OnCollisionEnter2D(UnityEngine.Collision2D collision)
     {
-        Debug.Log("OnCollisionEnter");
+        // if the enemy collides with the player, destroy the player
+        if (collision.gameObject.name == "Player")
+        {
+            var player = collision.gameObject.GetComponent<Player>();
+            DamagePlayer(player);
 
-     
+            // Destroy the enemy (for now they explode if they touch the player)
+            Destroy(this.gameObject);
+        }
     }
     
+    // Deal damage to the player because they touched
+    private void DamagePlayer(Player player) {
+        Debug.Log("Enemy.DamagePlayer: Player was damaged by " + gameObject.name);
+    }
 }
