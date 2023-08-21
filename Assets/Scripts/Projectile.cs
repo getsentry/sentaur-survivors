@@ -6,8 +6,13 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    [Tooltip("How fast the projectile moves")]
     [SerializeField]
     private float _speed = 10.0f;
+
+    [SerializeField]
+    [Tooltip("How much damage this projectile does to an enemy")]
+    private int _damage = 10;
 
     private Vector3 _direction;
 
@@ -24,7 +29,6 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("Projectile.OnCollisionEnter2D: Projectile collided with " + other.gameObject.tag);
         // if the projectile collides with an enemy, destroy the enemy
         if (other.gameObject.tag == "Enemy")
         {
@@ -39,6 +43,6 @@ public class Projectile : MonoBehaviour
     // Deal damage to the enemy because they were hit by a projectile
     private void DamageEnemy(Enemy enemy)
     {
-        // enemy.TakeDamage();
+        enemy.TakeDamage(_damage);
     }
 }
