@@ -50,4 +50,8 @@ public class Projectile : MonoBehaviour
     {
         enemy.TakeDamage(_damage);
     }
+
+    private void OnBecameInvisible() {
+        Destroy(gameObject);
+    }
 }
