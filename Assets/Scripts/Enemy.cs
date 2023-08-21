@@ -6,9 +6,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private int _damageToPlayer = 10; // unused, but just an example of how this could be set/accessed
+    [Tooltip("How much damage the enemy does to the player when they collide")]
+    private int _collisionDamage = 10;
 
     [SerializeField]
+    [Tooltip("How many hitpoints the enemy has")]
     private int _hitpoints = 20;
 
     // Update is called once per frame
@@ -44,7 +46,7 @@ public class Enemy : MonoBehaviour
     private void DamagePlayer(Player player) {
         Debug.Log("Enemy.DamagePlayer: Player was damaged by " + gameObject.name);
 
-        player.TakeDamage(_damageToPlayer);
+        player.TakeDamage(_collisionDamage);
     }
 
     public void TakeDamage(int damage) {
