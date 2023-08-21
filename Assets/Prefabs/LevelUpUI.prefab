@@ -263,19 +263,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5764386160134392063}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4114308774541903315}
-        m_TargetAssemblyTypeName: LevelUpProjectile, Assembly-CSharp
-        m_MethodName: SelectUpgrade
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &3351380216167417446
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,8 +309,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f991429628164e1d861474e8e3595dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  option1Button: {fileID: 0}
-  option2Button: {fileID: 0}
+  option1Button: {fileID: 1866379522583792614}
+  option2Button: {fileID: 7183013291275292374}
 --- !u!1 &3855266468033775329
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,19 +837,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7301638282571436730}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4114308774541903315}
-        m_TargetAssemblyTypeName: LevelUpProjectile, Assembly-CSharp
-        m_MethodName: SelectUpgrade
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &8679707311326836427
 GameObject:
   m_ObjectHideFlags: 0

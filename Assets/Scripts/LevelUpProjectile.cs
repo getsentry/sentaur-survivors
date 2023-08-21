@@ -7,10 +7,6 @@ using UnityEngine.UI;
 public class LevelUpProjectile : MonoBehaviour
 {
 
-    // private string[] ProjectileUpgradeTypes = {
-    //     "count", "speed", "damage"
-    // };
-
     public static List<string> AvailableProjectileUpgrades = new List<string>{
         "count", "speed", "damage"
     };
@@ -52,19 +48,33 @@ public class LevelUpProjectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // randomize the two options
-        option1 = Random.Range(0, AvailableProjectileUpgrades.Count - 1);
+        // pause the game
+        Time.timeScale = 0;
+
+        // randomize the two options; TODO: abstract into method
+        option1 = Random.Range(0, AvailableProjectileUpgrades.Count);
         do {
-            option2 = Random.Range(0, AvailableProjectileUpgrades.Count - 1);
-    } while (option2 != option1);
+            option2 = Random.Range(0, AvailableProjectileUpgrades.Count);
+        } while (AvailableProjectileUpgrades.Count > 1 && option2 == option1);
+
+        // TODO: need to deal with case where user has maxed out all the upgrades but one (would only have one option)
 
         option1Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = AvailableProjectileUpgrades[option1];
-        option2Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = AvailableProjectileUpgrades[option2];
+        if (option1 == option2) 
+        {
+            option2Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "ALL OTHER UPGRADES MAXED OUT";
+            option2Button.enabled = false;
+        } else {
+            option2Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = AvailableProjectileUpgrades[option2];
+        }
+
+        option1Button.onClick.AddListener(() => SelectUpgrade(1));
+        option2Button.onClick.AddListener(() => SelectUpgrade(2));
 
         // TODO: sprites, description (use _xxxUpgrades)
     }
 
-    public void SelectUpgrade(int selectedOption) 
+    void SelectUpgrade(int selectedOption) 
     {
         string selection = "";
         if (selectedOption == 1) 
@@ -104,6 +114,9 @@ public class LevelUpProjectile : MonoBehaviour
                 default: break;
             }
         }
+
+        Time.timeScale = 1;
+        Destroy(gameObject);
         
     }
 }
