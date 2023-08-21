@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     [Tooltip("How frequently the player fires projectiles (in seconds)")]
     private float _projectileFireRate = 0.5f;
 
-    private float timeElapsedSinceLastProjectile = 0.0f;
+    private float _timeElapsedSinceLastProjectile = 0.0f;
 
     private HealthBar _healthBar;
 
@@ -44,10 +44,10 @@ public class Player : MonoBehaviour
         );
 
         // fire a projectile once enough time has elapsed
-        timeElapsedSinceLastProjectile += Time.deltaTime;
-        if (timeElapsedSinceLastProjectile > _projectileFireRate)
+        _timeElapsedSinceLastProjectile += Time.deltaTime;
+        if (_timeElapsedSinceLastProjectile > _projectileFireRate)
         {
-            timeElapsedSinceLastProjectile = 0.0f;
+            _timeElapsedSinceLastProjectile = 0.0f;
 
             // instantiate a new projectile
             var projectile = Instantiate(_projectilePrefab);
