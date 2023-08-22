@@ -30,6 +30,21 @@ public class Player : MonoBehaviour
     [SerializeField]
     [Tooltip("How fast the player moves (how exaclty I don't know)")]
     private float _playerMoveRate = 5;
+    private float _baseMoveRate;
+
+    private bool _hasPickedUpSkateboard = false;
+    private float _timeElapsedSinceLastSkateboard = 0.0f;
+
+    private bool _hasPickedUpUmbrella = false;
+    private float _timeElapsedSinceLastUmbrella = 0.0f;
+
+    [SerializeField]
+    [Tooltip("How long a time-based pickup should last")]
+    private float _timeBasedPickupDuration = 10f;
+
+    [SerializeField]
+    [Tooltip("How much damage is reduced for the player")]
+    private float _damageReductionAmount = 0.0f;
 
     private float _timeElapsedSinceLastProjectile = 0.0f;
 
@@ -46,6 +61,9 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        _baseMoveRate = _playerMoveRate;
+
         // get a reference to the Healthbar component
         _healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
 
@@ -118,6 +136,31 @@ public class Player : MonoBehaviour
                 projectile.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
             }
         }
+
+        // remove pickup effects if any are time-based and expiring
+        if (_hasPickedUpSkateboard)
+        {
+            _timeElapsedSinceLastSkateboard += Time.deltaTime;
+            if (_timeElapsedSinceLastSkateboard > _timeBasedPickupDuration)
+            {
+                // reset player move speed back to normal if time is up for skateboard pickup
+                _hasPickedUpSkateboard = false;
+                _playerMoveRate = _baseMoveRate;
+                _timeElapsedSinceLastSkateboard = 0.0f;
+            }
+        }
+
+        if (_hasPickedUpUmbrella)
+        {
+            _timeElapsedSinceLastUmbrella += Time.deltaTime;
+            if (_timeElapsedSinceLastUmbrella > _timeBasedPickupDuration)
+            {
+                // reset player damage reduction to 0
+                _hasPickedUpUmbrella = false;
+                _damageReductionAmount = 0.0f;
+                _timeElapsedSinceLastUmbrella = 0.0f;
+            }
+        }
     }
 
     private Vector3 CalculateProjectileDirection() 
@@ -140,7 +183,7 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage = 0)
     {
-        _hitPoints -= damage;
+        _hitPoints -= (int) (damage * (1 - _damageReductionAmount));
         _hitPoints = Math.Max(_hitPoints, 0); // don't let the player have negative hit points
 
         _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
@@ -177,5 +220,28 @@ public class Player : MonoBehaviour
     public void UpgradeDamage(int level) 
     {
         Projectile.Damage *= 2;
+    }
+
+    public void SpeedUp(int newSpeed, bool hasSkateboard = false)
+    {
+        _playerMoveRate = newSpeed;
+        _hasPickedUpSkateboard = hasSkateboard;
+
+        if (_hasPickedUpSkateboard)
+        {
+            // need to reset in case player already had an active skateboard
+            _timeElapsedSinceLastSkateboard = 0.0f;
+        }
+    }
+
+    public void ReduceDamage(float reductionPercentage, bool hasUmbrella = false)
+    {
+        _damageReductionAmount = reductionPercentage;
+        _hasPickedUpUmbrella = hasUmbrella;
+
+        if (_hasPickedUpUmbrella)
+        {
+            _timeElapsedSinceLastUmbrella = 0.0f;
+        }
     }
 }
