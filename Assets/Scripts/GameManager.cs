@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
     [Tooltip("The level up UI prefab to spawn")]
     private GameObject _levelUpUIPrefab;
 
+    [SerializeField]
+    [Tooltip("The maximum number of hit points the player can have")]
+    private int _maxHitPoints = 100;
+
     // the player's accumulated score so far
     private int _score = 0;
 
@@ -37,6 +41,8 @@ public class GameManager : MonoBehaviour
     private HUD _hud;
     private GameObject _levelContainer;
 
+    private XpBar _xpBar;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +51,7 @@ public class GameManager : MonoBehaviour
         _gameState = GameState.Playing;
         _hud = GameObject.Find("HUD").GetComponent<HUD>();
         _levelContainer = GameObject.Find("Level");
+        _xpBar = GameObject.Find("XpBar").GetComponent<XpBar>();
 
         _lastEnemySpawnTime = Time.time;
 
@@ -63,6 +70,7 @@ public class GameManager : MonoBehaviour
 
     private void OnPickupGrabbed(int scoreValue) {
         SetScore(_score + scoreValue);
+        _xpBar.SetXp(1.0f * _score / _maxHitPoints);
         Debug.Log("GameManager.OnPickupGrabbed: Score is now " + _score);
     }
 
