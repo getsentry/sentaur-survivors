@@ -51,10 +51,11 @@ public class GameManager : MonoBehaviour
 
         _gameState = GameState.Playing;
         _hud = GameObject.Find("HUD").GetComponent<HUD>();
+        _xpBar = GameObject.Find("HUD").GetComponentInChildren<XpBar>();
         _levelContainer = GameObject.Find("Level");
-        _xpBar = GameObject.Find("XpBar").GetComponent<XpBar>();
 
         _lastEnemySpawnTime = Time.time;
+        _xpBar.SetXp(1.0f * _score);
 
         SetCurrentLevel(_currentLevel);
 
@@ -71,7 +72,7 @@ public class GameManager : MonoBehaviour
 
     private void OnPickupGrabbed(int scoreValue) {
         SetScore(_score + scoreValue);
-        _xpBar.SetXp(1.0f * _score / _maxHitPoints);
+        _xpBar.SetXp(1.0f * _score);
         Debug.Log("GameManager.OnPickupGrabbed: Score is now " + _score);
     }
 
@@ -96,6 +97,10 @@ public class GameManager : MonoBehaviour
         _score = score;
 
         _hud.SetScore(_score);
+
+        Debug.Log("GameManager.Update: Next Milestone at score " + _nextLevelScoreMilestone);
+        Debug.Log("GameManager.SetScore: Score is now " + _score);        
+
     }
 
     private void SetCurrentLevel(int level) {
