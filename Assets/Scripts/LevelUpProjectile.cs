@@ -24,8 +24,8 @@ public class LevelUpProjectile : MonoBehaviour
     private Button option2Button;
 
     private string[] _countUpgrades = {
-        "+ 1 dart",
-        "+ 1 dart",
+        "+ 2 darts",
+        "+ 2 darts",
         "ultimate: fires darts in all directions for 15 seconds"
     };
 
