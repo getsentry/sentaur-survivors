@@ -15,15 +15,13 @@ public class HUD : MonoBehaviour
     private TextMeshProUGUI _gameOverText;
     private TextMeshProUGUI _currentLevelText;
 
-    private int CURRENT_LEVEL = 1; // TODO: change based on score
-
     void Start()
     {
         // get score text component from child
         _scoreText = transform.Find("Score").GetComponent<TextMeshProUGUI>();
         _timeElapsedText = transform.Find("TimeElapsed").GetComponent<TextMeshProUGUI>();
         _gameOverText = transform.Find("GameOver").GetComponent<TextMeshProUGUI>();
-        _currentLevelText = transform.Find("CurrentLevel").GetComponent<TextMeshProUGUI>();
+        _currentLevelText = transform.Find("XpBar").GetComponentInChildren<TextMeshProUGUI>();
         
     }
 
@@ -46,6 +44,6 @@ public class HUD : MonoBehaviour
     }
 
     public void SetCurrentLevel(int level) {
-        _currentLevelText.text = "Level " + CURRENT_LEVEL;
+        _currentLevelText.text = "Level " + level;
     }
 }

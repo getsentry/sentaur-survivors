@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
 
         _lastEnemySpawnTime = Time.time;
 
+        SetCurrentLevel(_currentLevel);
+
         EventManager.AddListener("EnemyDestroyed", (eventData) => {
             OnEnemyDestroyed((int)eventData.Data);
         });
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
     {
         SetScore(_score + scoreValue);
         Debug.Log("GameManager.OnEnemyDestroyed: Score is now " + _score);
+        Debug.Log("GameManager.OnEnemyDestroyed: Level is now " + _currentLevel);
 
     
     }
@@ -88,6 +91,12 @@ public class GameManager : MonoBehaviour
         _hud.SetScore(_score);
     }
 
+    private void SetCurrentLevel(int level) {
+        _currentLevel = level;
+
+        _hud.SetCurrentLevel(_currentLevel);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -103,6 +112,9 @@ public class GameManager : MonoBehaviour
         if (_score >= _nextLevelScoreMilestone && _currentLevel < _levelMilestones.Length) 
         {
             _currentLevel++;
+            Debug.Log("GameManager.Update: Level is now " + _currentLevel);
+
+            SetCurrentLevel(_currentLevel);
 
             // we don't want to set the next milestone if we just reached the final level (there 
             // are no more milestones)
