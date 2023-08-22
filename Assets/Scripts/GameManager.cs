@@ -16,10 +16,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("The level up UI prefab to spawn")]
     private GameObject _levelUpUIPrefab;
 
-    // is this needed?
     [SerializeField]
-    [Tooltip("The maximum number of experience points the player can have")]
-    private int _maxXp = 100;
+    [Tooltip("Starting XP")]
+    private float _xp = 0;
 
     // the player's accumulated score so far
     private int _score = 0;
@@ -79,6 +78,7 @@ public class GameManager : MonoBehaviour
     {
         SetScore(_score + scoreValue);
         Debug.Log("GameManager.OnEnemyDestroyed: Score is now " + _score);
+        Debug.Log("GameManager.OnEnemyDestroyed: Next Milestone at score " + _nextLevelScoreMilestone);
     
     }
      
@@ -94,14 +94,13 @@ public class GameManager : MonoBehaviour
 
     private void SetScore(int score) {
         _score = score;
+        _xp = 1.0f * _score / _nextLevelScoreMilestone;
 
         _hud.SetScore(_score);
-        _hud.SetXp(1.0f * _score);
-
-        Debug.Log("GameManager.Update: Next Milestone at score " + _nextLevelScoreMilestone);
+        _hud.SetXp(_xp);
 
         Debug.Log("GameManager.SetScore: Score is now " + _score);   
-        // Debug.Log("GameManager.SetScore: Xp is now " + _xpBar);        
+        Debug.Log("GameManager.SetScore: Xp is now " + _xp);        
 
     }
 
@@ -127,6 +126,9 @@ public class GameManager : MonoBehaviour
         {
             _currentLevel++;
             SetCurrentLevel(_currentLevel);
+            
+            // reset xp bar to 0 after leveling up 
+            _hud.SetXp(0);
 
             // we don't want to set the next milestone if we just reached the final level (there 
             // are no more milestones)

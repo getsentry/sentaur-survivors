@@ -54,6 +54,6 @@ public class HUD : MonoBehaviour
     }
 
     public void SetCurrentLevel(int level) {
-        _currentLevelText.text = "Level " + level;
+        _currentLevelText.text = "Level " + (level + 1);
     }
 }

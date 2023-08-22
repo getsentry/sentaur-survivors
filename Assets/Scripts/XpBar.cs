@@ -13,16 +13,9 @@ public class XpBar : MonoBehaviour
         _slider = GetComponent<Slider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // 0.0f = 0% xp, 1.0f = 100% xp
     public void SetXp(float xp)
     {
-        Debug.Log("XpBar.SetXp: Setting xp to " + xp);
         _slider.value = xp;
     }
 }
