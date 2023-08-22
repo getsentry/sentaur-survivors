@@ -8,11 +8,11 @@ public class LevelUpProjectile : MonoBehaviour
 {
 
     public static List<string> AvailableProjectileUpgrades = new List<string>{
-        "count", "speed", "damage"
+        "count", "speed", "damage", "raven"
     };
 
     public static Dictionary<string, int> UpgradesToLevelsMap = new Dictionary<string, int>{
-        {"count", 0}, {"speed", 0}, {"damage", 0}
+        {"count", 0}, {"speed", 0}, {"damage", 0}, {"raven", 0}
     };
 
     private string[] _countUpgrades = {
@@ -31,6 +31,12 @@ public class LevelUpProjectile : MonoBehaviour
         "increase base damage",
         "increase base damage MORE",
         "increase base damage EVEN MORE"
+    };
+
+    private string[] _ravenUpgrades = {
+        "gain a Raven, who targets the nearest enemy every 10 seconds",
+        "Raven targets more frequently and deals more damage",
+        "gain ANOTHER Raven, with both doing even more damage"
     };
 
     private int MAX_LEVEL = 3;
@@ -123,6 +129,9 @@ public class LevelUpProjectile : MonoBehaviour
                     break;
                 case "damage":
                     player.UpgradeDamage(UpgradesToLevelsMap["damage"]);
+                    break;
+                case "raven":
+                    player.UpgradeRaven(UpgradesToLevelsMap["raven"]);
                     break;
                 default: break;
             }
