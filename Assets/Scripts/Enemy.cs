@@ -62,26 +62,7 @@ public class Enemy : MonoBehaviour
         _hitpoints -= damage;
         _hitpoints = Mathf.Max(_hitpoints, 0); // don't let the enemy have negative hit points
 
-        Debug.Log("Enemy.TakeDamage: Enemy took " + damage + " damage and now has " + _hitpoints + " hit points");
-
-        Debug.Log("enemy position is " + transform.position);
-        // instantiate a DamageText prefab to show how much damage was done
-        var damageText = Instantiate(
-            _damageTextPrefab,   // prefab to instantiate
-            transform.root,  // spawn at the enemy position 
-            true // instantiate in world space
-        );
-        damageText.transform.position = new Vector2(transform.position.x, transform.position.y);
-
-        // these should be the same position
-        Debug.Log("enemy position is " + transform.position);
-        Debug.Log("dmg text position is " + damageText.transform.position);
-
-        // when these debug statements emit, they have the same value now -- but in the editor
-        // (after they've been rendered) they don't have the same value
- 
-
-        damageText.SetDamage(damage);
+        _damageTextPrefab.Spawn(transform.root, transform.position, damage);
 
         if (_hitpoints == 0) {
 
