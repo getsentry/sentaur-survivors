@@ -15,14 +15,6 @@ public class LevelUpProjectile : MonoBehaviour
         {"count", 0}, {"speed", 0}, {"damage", 0}
     };
 
-    [SerializeField]
-    [Tooltip("The option 1 button")]
-    private Button option1Button;
-
-    [SerializeField]
-    [Tooltip("The option 2 button")]
-    private Button option2Button;
-
     private string[] _countUpgrades = {
         "+ 2 darts",
         "+ 2 darts",
@@ -47,6 +39,15 @@ public class LevelUpProjectile : MonoBehaviour
     private int option1;
     private int option2;
 
+    [SerializeField]
+    private LevelOption _levelOption1;
+
+    [SerializeField]
+    private LevelOption _levelOption2;
+
+    void Awake() {
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +55,9 @@ public class LevelUpProjectile : MonoBehaviour
         Time.timeScale = 0;
 
         RandomizeOptions();
+
+        var option1Button = _levelOption1.GetComponent<Button>();
+        var option2Button = _levelOption2.GetComponent<Button>();
 
         option1Button.onClick.AddListener(() => SelectUpgrade(1));
         option2Button.onClick.AddListener(() => SelectUpgrade(2));
@@ -70,16 +74,16 @@ public class LevelUpProjectile : MonoBehaviour
             option2 = Random.Range(0, AvailableProjectileUpgrades.Count);
         } while (AvailableProjectileUpgrades.Count > 1 && option2 == option1);
 
-        option1Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = AvailableProjectileUpgrades[option1];
-        if (option1 == option2) 
-        {
-            option2Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "ALL OTHER UPGRADES MAXED OUT";
-            option2Button.enabled = false;
-        } 
-        else 
-        {
-            option2Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = AvailableProjectileUpgrades[option2];
-        }
+        // option1Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = AvailableProjectileUpgrades[option1];
+        // if (option1 == option2) 
+        // {
+        //     option2Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "ALL OTHER UPGRADES MAXED OUT";
+        //     option2Button.enabled = false;
+        // } 
+        // else 
+        // {
+        //     option2Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = AvailableProjectileUpgrades[option2];
+        // }
 
         // TODO: change sprites, description (use _xxxUpgrades)
     }
