@@ -155,7 +155,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -85309671, guid: cb730de20abbb43d3bb078dd2492565a, type: 3}
+  m_Sprite: {fileID: 1101639518, guid: 239d3f29323044693a5d9a2e5fc07f73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -184,6 +184,8 @@ MonoBehaviour:
   _projectileFireRate: 2
   _projectileCount: 1
   _playerMoveRate: 5
+  _timeBasedPickupDuration: 10
+  _damageReductionAmount: 0
   animator: {fileID: 1002860201738508437}
   takeDamageSound: {fileID: 0}
 --- !u!61 &5032271188091294264
