@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -34,7 +35,6 @@ public class GameManager : MonoBehaviour
     private float _xp = 0;
 
     [SerializeField]
-    [Tooltip("The level's tilemap")]
     private Tilemap _floor;
 
     // the player's accumulated score so far
@@ -85,18 +85,22 @@ public class GameManager : MonoBehaviour
 
         SetCurrentLevel(_currentLevel);
 
-        EventManager.AddListener("EnemyDestroyed", (eventData) => {
+        EventManager.AddListener("EnemyDestroyed", (eventData) =>
+        {
             OnEnemyDestroyed((int)eventData.Data);
         });
-        EventManager.AddListener("PickupGrabbed", (eventData) => {
+        EventManager.AddListener("PickupGrabbed", (eventData) =>
+        {
             OnPickupGrabbed((int)eventData.Data);
         });
-        EventManager.AddListener("PlayerDeath", (eventData) => {
+        EventManager.AddListener("PlayerDeath", (eventData) =>
+        {
             OnPlayerDeath();
         });
     }
 
-    private void OnPickupGrabbed(int scoreValue) {
+    private void OnPickupGrabbed(int scoreValue)
+    {
         SetScore(_score + scoreValue);
         _pickupsOnScreen -= 1;
 
@@ -108,10 +112,10 @@ public class GameManager : MonoBehaviour
         SetScore(_score + scoreValue);
         Debug.Log("GameManager.OnEnemyDestroyed: Score is now " + _score);
         Debug.Log("GameManager.OnEnemyDestroyed: Next Milestone at score " + _nextLevelScoreMilestone);
-    
-    }
-     
-    private void OnPlayerDeath() {
+        }
+
+    private void OnPlayerDeath()
+    {
         _gameState = GameState.GameOver;
 
         // STOP THE GAME
@@ -121,7 +125,8 @@ public class GameManager : MonoBehaviour
         _hud.ShowGameOver();
     }
 
-    private void SetScore(int score) {
+    private void SetScore(int score)
+    {
         _score = score;
         _xp = 1.0f * _score / _nextLevelScoreMilestone;
 
@@ -133,7 +138,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void SetCurrentLevel(int level) {
+    private void SetCurrentLevel(int level)
+    {
         _currentLevel = level;
 
         _hud.SetCurrentLevel(_currentLevel);
@@ -178,7 +184,7 @@ public class GameManager : MonoBehaviour
 
             // we don't want to set the next milestone if we just reached the final level (there 
             // are no more milestones)
-            if (_currentLevel < _levelMilestones.Length) 
+            if (_currentLevel < _levelMilestones.Length)
             {
                 _nextLevelScoreMilestone = _levelMilestones[_currentLevel];
             }
@@ -188,35 +194,62 @@ public class GameManager : MonoBehaviour
         
     }
 
+    /**
+      * Returns the bounding box of the camera viewport in world space coordinates 
+      */
+    private Bounds GetViewportBounds() {
+        // get the bounding box of the camera viewport in world space coordinates
+        // camera viewport has the following coordinate system:
+        //   (0, 0) is bottom left
+        //   (1, 1) is top right
+        var viewportCenterCoords = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+        viewportCenterCoords.z = 0; // reset z to 0 so on same plane as enemies
+
+        var viewportBottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0f, 0f, 0.0f));
+        var viewportTopRight = Camera.main.ViewportToWorldPoint(new Vector3(1.0f, 1.0f, 0.0f));
+        var viewportExtents = new Vector3(
+            viewportTopRight.x - viewportBottomLeft.x,
+            viewportTopRight.y - viewportBottomLeft.y,
+            0f
+        );
+
+        // convert to bounds
+        return new Bounds(viewportCenterCoords, viewportExtents);
+    }
+
+    /**
+     * Returns a random spawnable position outside of the viewport
+     */
+    private Vector3 GetRandomSpawnPointOutsideViewport() {
+        var tileMap = _floor;
+
+        // get the bounding world coordinates of the tilemap
+        var tilemapBounds = tileMap.localBounds;
+        var tilemapWorldBounds = new Bounds(tilemapBounds.center + tileMap.transform.position, tilemapBounds.size);
+
+        // convert to bounds
+        var viewportBounds = GetViewportBounds();
+
+       // randomly choose a coordinate until one is found that is outside the viewport
+        Vector3 floorSpawnCoord;
+        do {
+            floorSpawnCoord = new Vector3(
+            Random.Range(tilemapWorldBounds.min.x, tilemapWorldBounds.max.x), 
+            Random.Range(tilemapWorldBounds.min.y, tilemapWorldBounds.max.y), 0.0f);
+
+            // loop until a coordinate is chosen outside viewport
+        } while (viewportBounds.Contains(floorSpawnCoord));
+
+        return floorSpawnCoord;
+    }
+
     private void SpawnEnemy()
     {
         GameObject enemy = Instantiate(_enemyPrefab as GameObject);
         enemy.GetComponent<Enemy>().hitpoints = _maxHitPoints;
         enemy.transform.parent = _levelContainer.transform;
 
-        // viewport coords:
-        //   (0, 0) is bottom left
-        //   (1, 1) is top right
-        var spawnViewportCoord = new Vector3(0.0f, 0.0f, 0.0f);
-
-        // randomly choose a side to spawn on, then randomly choose a point on that side
-        int side = Random.Range(0, 4);
-        switch (side)
-        {
-            case 0: // top
-                spawnViewportCoord = new Vector3(Random.Range(0.0f, 1.0f), 1.1f, 0.0f);
-                break;
-            case 1: // right
-                spawnViewportCoord = new Vector3(1.1f, Random.Range(0.0f, 1.0f), 0.0f);
-                break;
-            case 2: // bottom
-                spawnViewportCoord = new Vector3(Random.Range(0.0f, 1.0f), -0.1f, 0.0f);
-                break;
-            case 3: // left
-                spawnViewportCoord = new Vector3(-0.1f, Random.Range(0.0f, 1.0f), 0.0f);
-                break;
-        }
-        enemy.transform.position = Camera.main.ViewportToWorldPoint(spawnViewportCoord);
+        enemy.transform.position = GetRandomSpawnPointOutsideViewport();
     }
 
     private void SpawnPickup() 
