@@ -62,7 +62,12 @@ public class Enemy : MonoBehaviour
         _hitpoints -= damage;
         _hitpoints = Mathf.Max(_hitpoints, 0); // don't let the enemy have negative hit points
 
-        _damageTextPrefab.Spawn(transform.root, transform.position, damage);
+        // spawn the damage text above the enemy by 1 unit (32px)
+        var damageTextPosition = new Vector2(
+            transform.position.x,
+            transform.position.y + 1.0f
+        );
+        _damageTextPrefab.Spawn(transform.root, damageTextPosition, damage);
 
         if (_hitpoints == 0) {
 
