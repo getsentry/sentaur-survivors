@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class Raven : MonoBehaviour
 {
-    [Tooltip("How fast the raven moves")]
-    [SerializeField]
-    private float _speed = 20.0f;
 
-    [SerializeField]
-    [Tooltip("How much damage this raven does to an enemy")]
+    // properties true for all ravens
+    public static float Speed = 12.0f;
     public static int Damage = 10;
+    public static float FireRate = 10f;
+    private static float _distanceOutsidePlayer = 2.0f;
 
     private Vector3 _direction;
     private GameObject _player;
-    private float _distanceOutsidePlayer = 2.0f;
 
     void Awake()
     {
@@ -24,7 +22,7 @@ public class Raven : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += _direction * _speed * Time.deltaTime;
+        transform.position += _direction * Speed * Time.deltaTime;
     }
 
     public void TargetClosestEnemy() 

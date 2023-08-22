@@ -6,20 +6,17 @@ using UnityEngine;
 
 public class Dart : MonoBehaviour
 {
-    [Tooltip("How fast the dart moves")]
-    [SerializeField]
-    private float _speed = 20.0f;
-
-    [SerializeField]
-    [Tooltip("How much damage this dart does to an enemy")]
+    // properties true for all darts
+    public static float Speed = 10.0f;
     public static int Damage = 10;
+    public static float FireRate = 2f;
 
     private Vector3 _direction;
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += _direction * _speed * Time.deltaTime;
+        transform.position += _direction * Speed * Time.deltaTime;
     }
 
     public void SetDirection(Vector3 direction)
