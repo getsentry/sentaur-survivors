@@ -8,8 +8,12 @@ public class Player : MonoBehaviour
 {
 
     [SerializeField]
-    [Tooltip("The projectile prefab that the player fires")]
-    private Projectile _projectilePrefab;
+    [Tooltip("The prefab for the player's dart (starting projectile)")]
+    private Dart _dartPrefab;
+
+    [SerializeField]
+    [Tooltip("The prefab for the player's Raven")]
+    private Raven _ravenPrefab;
 
     [SerializeField] 
     [Tooltip("How many hit points the player has")]
@@ -20,17 +24,19 @@ public class Player : MonoBehaviour
     private int _maxHitPoints = 100;
 
     [SerializeField]
-    [Tooltip("How frequently the player fires projectiles (in seconds)")]
-    private float _projectileFireRate = 0.2f;
-
-    [SerializeField]
-    [Tooltip("The number of projectiles fired by the player at once")]
-    private int _projectileCount = 1;
+    [Tooltip("The number of darts fired by the player at once")]
+    private int _dartCount = 1;
 
     [SerializeField]
     [Tooltip("How fast the player moves (how exaclty I don't know)")]
     private float _playerMoveRate = 5;
     private float _baseMoveRate;
+
+    [SerializeField]
+    [Tooltip("How many Ravens the player has")]
+    private int _ravenCount = 0;
+
+    private float _timeElapsedSinceLastRaven = 0.0f;
 
     private bool _hasPickedUpSkateboard = false;
     private float _timeElapsedSinceLastSkateboard = 0.0f;
@@ -46,9 +52,9 @@ public class Player : MonoBehaviour
     [Tooltip("How much damage is reduced for the player")]
     private float _damageReductionAmount = 0.0f;
 
-    private float _timeElapsedSinceLastProjectile = 0.0f;
+    private float _timeElapsedSinceLastDart = 0.0f;
 
-    // the further a projectile's path is rotated from the center projectile
+    // the furthest a dart's path is rotated from the center dart
     private int _spreadInDegrees = 0; 
 
     private HealthBar _healthBar;
@@ -90,53 +96,67 @@ public class Player : MonoBehaviour
         animator.SetFloat("Speed", movement.sqrMagnitude);
         animator.SetBool("FacingRight", facingRight);
 
-        // fire a projectile once enough time has elapsed
-        _timeElapsedSinceLastProjectile += Time.deltaTime;
-
-        if (_timeElapsedSinceLastProjectile > _projectileFireRate)
+        // fire a dart once enough time has elapsed
+        _timeElapsedSinceLastDart += Time.deltaTime;
+        if (_ravenCount > 0)
         {
-            _timeElapsedSinceLastProjectile = 0.0f;
+            _timeElapsedSinceLastRaven += Time.deltaTime;
+        }
+
+        if (_timeElapsedSinceLastDart > Dart.FireRate)
+        {
+            _timeElapsedSinceLastDart = 0.0f;
 
             float degreesToRotate = _spreadInDegrees;
-            int numberOfProjectilePairs = _projectileCount / 2;
+            int numberOfDartPairs = _dartCount / 2;
 
-            // instantiate new projectile(s), starting from the two furthest projectiles then going inward
-            for (int i = 0; i < numberOfProjectilePairs ; i++) 
+            // instantiate new dart(s), starting from the two furthest darts then going inward
+            for (int i = 0; i < numberOfDartPairs ; i++) 
             {
                 for (int j = 0; j < 2; j++) 
                 {
-                    var projectile = Instantiate(_projectilePrefab);
-                    projectile.transform.parent = transform.parent;
-                    Vector3 direction = CalculateProjectileDirection();
+                    var dart = Instantiate(_dartPrefab);
+                    dart.transform.parent = transform.parent;
+                    Vector3 direction = CalculateDartDirection();
                     direction = RotateDirection(direction, degreesToRotate);
-                    degreesToRotate *= -1; // to get the proper rotation for the next projectile, which is on the other side of the center projectile
-                    projectile.SetDirection(direction);
+                    degreesToRotate *= -1; // to get the proper rotation for the next dart, which is on the other side of the center dart
+                    dart.SetDirection(direction);
 
-                    // set the projectile's position to the player's position + a little bit
+                    // set the dart's position to the player's position + a little bit
                     // outside the player in the direction of the mouse cursor
                     var distanceOutsidePlayer = 2.0f;
-                    projectile.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
+                    dart.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
                 }
 
-                degreesToRotate -= (degreesToRotate / numberOfProjectilePairs);
+                degreesToRotate -= (degreesToRotate / numberOfDartPairs);
             }
 
-            if (_projectileCount % 2 != 0) 
+            if (_dartCount % 2 != 0) 
             {
-                // odd number of projectiles, so we need to create a center projectile
-                var projectile = Instantiate(_projectilePrefab);
-                projectile.transform.parent = transform.parent;
-                Vector3 direction = CalculateProjectileDirection();
+                // odd number of darts, so we need to create a center dart
+                var dart = Instantiate(_dartPrefab);
+                dart.transform.parent = transform.parent;
+                Vector3 direction = CalculateDartDirection();
                 direction = RotateDirection(direction, 0);
-                projectile.SetDirection(direction);
+                dart.SetDirection(direction);
 
-                // set the projectile's position to the player's position + a little bit
+                // set the dart's position to the player's position + a little bit
                 // outside the player in the direction of the mouse cursor
                 var distanceOutsidePlayer = 2.0f;
-                projectile.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
+                dart.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
             }
         }
 
+        if (_ravenCount > 0 && _timeElapsedSinceLastRaven > Raven.FireRate)
+        {
+            _timeElapsedSinceLastRaven = 0.0f;
+            for (int i = 0; i < _ravenCount; i++) 
+            {
+                var raven = Instantiate(_ravenPrefab); 
+                raven.transform.parent = transform.parent;
+                raven.TargetClosestEnemy();
+            }
+        }
         // remove pickup effects if any are time-based and expiring
         if (_hasPickedUpSkateboard)
         {
@@ -163,9 +183,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    private Vector3 CalculateProjectileDirection() 
+    private Vector3 CalculateDartDirection() 
     {
-        // projectile moves in the direction of the current mouse cursor
+        // dart moves in the direction of the current mouse cursor
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 direction = mousePosition - transform.position;
 
@@ -207,19 +227,37 @@ public class Player : MonoBehaviour
 
     public void UpgradeCount(int level) 
     {
-        _projectileCount+= 2;
+        _dartCount+= 2;
         _spreadInDegrees += 10;
-        Debug.Log("upgrade count to " + _projectileCount);
     }
 
     public void UpgradeSpeed(int level) 
     {
-        _projectileFireRate *= 0.5f;
+        Dart.FireRate *= 0.5f;
     }
 
     public void UpgradeDamage(int level) 
     {
-        Projectile.Damage *= 2;
+        Dart.Damage *= 2;
+    }
+
+    public void UpgradeRaven(int level)
+    {
+        if (level == 1) 
+        {
+            _ravenCount++;
+            _timeElapsedSinceLastRaven = Raven.FireRate; // fire first raven right away
+        }
+        else if (level == 2)
+        {
+            Raven.FireRate *= 0.5f;
+            Raven.Damage += 5;
+        }
+        else if (level == 3)
+        {
+            _ravenCount++;
+            Raven.Damage += 10;
+        }
     }
 
     public void SpeedUp(int newSpeed, bool hasSkateboard = false)
