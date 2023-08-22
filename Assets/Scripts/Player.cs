@@ -15,6 +15,10 @@ public class Player : MonoBehaviour
     [Tooltip("The prefab for the player's Raven")]
     private Raven _ravenPrefab;
 
+    [SerializeField]
+    [Tooltip("The prefab for the player's Starfish")]
+    private Starfish _starfishPrefab;
+
     [SerializeField] 
     [Tooltip("How many hit points the player has")]
     private int _hitPoints = 100;
@@ -36,7 +40,13 @@ public class Player : MonoBehaviour
     [Tooltip("How many Ravens the player has")]
     private int _ravenCount = 0;
 
+    [SerializeField]
+    [Tooltip("How many Starfish the player has")]
+    private int _starfishCount = 0;
+
+    private float _timeElapsedSinceLastDart = 0.0f;
     private float _timeElapsedSinceLastRaven = 0.0f;
+    private float _timeElapsedSinceLastStarfish = 0.0f;
 
     private bool _hasPickedUpSkateboard = false;
     private float _timeElapsedSinceLastSkateboard = 0.0f;
@@ -51,8 +61,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     [Tooltip("How much damage is reduced for the player")]
     private float _damageReductionAmount = 0.0f;
-
-    private float _timeElapsedSinceLastDart = 0.0f;
 
     // the furthest a dart's path is rotated from the center dart
     private int _spreadInDegrees = 0; 
@@ -101,6 +109,11 @@ public class Player : MonoBehaviour
         if (_ravenCount > 0)
         {
             _timeElapsedSinceLastRaven += Time.deltaTime;
+        }
+
+        if (_starfishCount > 0) 
+        {
+            _timeElapsedSinceLastStarfish += Time.deltaTime;
         }
 
         if (_timeElapsedSinceLastDart > Dart.FireRate)
@@ -157,6 +170,17 @@ public class Player : MonoBehaviour
                 raven.TargetClosestEnemy();
             }
         }
+
+        if (_starfishCount > 0 && _timeElapsedSinceLastStarfish > Starfish.FireRate)
+        {
+            _timeElapsedSinceLastStarfish = 0.0f;
+            for (int i = 0; i < _starfishCount; i++)
+            {
+                var starfish = Instantiate(_starfishPrefab);
+                starfish.transform.parent = transform.parent;
+            }
+        }
+
         // remove pickup effects if any are time-based and expiring
         if (_hasPickedUpSkateboard)
         {
@@ -257,6 +281,25 @@ public class Player : MonoBehaviour
         {
             _ravenCount++;
             Raven.Damage += 10;
+        }
+    }
+
+    public void UpgradeStarfish(int level)
+    {
+        if (level == 1)
+        {
+            _starfishCount++;
+            _timeElapsedSinceLastStarfish = Starfish.FireRate;
+        }
+        else if (level == 2)
+        {
+            Starfish.Duration += 3f;
+            Starfish.Damage += 5;
+        }
+        else if (level == 3)
+        {
+            Starfish.DegreesPerFrame *= 2;
+            Starfish.Damage += 20;
         }
     }
 
