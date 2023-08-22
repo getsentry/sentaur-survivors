@@ -29,6 +29,12 @@ public class GameManager : MonoBehaviour
     private int _currentLevel = 0;
 
     private float _lastEnemySpawnTime = 0.0f;
+    private float _lastSpawnRampUp = 0.0f;
+    private int _spawnRampUpInterval = 10;
+
+    private int _hpRampUpInterval = 20;
+    private float _lastHpRampUp = 0.0f;
+    private int _maxHitPoints = 30;
 
     private enum GameState
     {
@@ -122,6 +128,17 @@ public class GameManager : MonoBehaviour
             SpawnEnemy();
         }
 
+        if (Time.time - _lastSpawnRampUp > _spawnRampUpInterval) {
+            _enemySpawnRate -= 0.05f;
+            _lastSpawnRampUp = Time.time;
+        }
+
+        if (Time.time - _lastHpRampUp > _hpRampUpInterval) {
+            Debug.Log("HP ramped up to " + _maxHitPoints);
+            _maxHitPoints += 10;
+            _lastHpRampUp = Time.time;
+        }
+
         if (_score >= _nextLevelScoreMilestone && _currentLevel < _levelMilestones.Length) 
         {
             _currentLevel++;
@@ -143,6 +160,7 @@ public class GameManager : MonoBehaviour
     private void SpawnEnemy()
     {
         GameObject enemy = Instantiate(_enemyPrefab as GameObject);
+        enemy.GetComponent<Enemy>().hitpoints = _maxHitPoints;
         enemy.transform.parent = _levelContainer.transform;
 
         // viewport coords:
