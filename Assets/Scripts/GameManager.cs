@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,12 +14,28 @@ public class GameManager : MonoBehaviour
     private float _enemySpawnRate = 2.0f;
 
     [SerializeField]
+    [Tooltip("The pickup prefab to spawn")]
+    private GameObject _pickupPrefab;
+
+    [SerializeField]
+    [Tooltip("How frequently pickups spawn (in seconds)")]
+    private float _pickupSpawnRate = 8.0f;
+
+    [SerializeField]
+    [Tooltip("The maximum number of pickups allowed on screen at any given moment")]
+    private int _maxPickupsOnScreen = 5;
+
+    [SerializeField]
     [Tooltip("The level up UI prefab to spawn")]
     private GameObject _levelUpUIPrefab;
 
     [SerializeField]
     [Tooltip("Starting XP")]
     private float _xp = 0;
+
+    [SerializeField]
+    [Tooltip("The level's tilemap")]
+    private Tilemap _floor;
 
     // the player's accumulated score so far
     private int _score = 0;
@@ -35,6 +52,9 @@ public class GameManager : MonoBehaviour
     private int _hpRampUpInterval = 20;
     private float _lastHpRampUp = 0.0f;
     private int _maxHitPoints = 30;
+    private float _lastPickupSpawnTime = 0.0f;
+
+    private int _pickupsOnScreen = 0; 
 
     private enum GameState
     {
@@ -60,6 +80,8 @@ public class GameManager : MonoBehaviour
         _levelContainer = GameObject.Find("Level");
 
         _lastEnemySpawnTime = Time.time;
+        _lastPickupSpawnTime = Time.time;
+        _pickupsOnScreen = 1;
 
         SetCurrentLevel(_currentLevel);
 
@@ -76,6 +98,7 @@ public class GameManager : MonoBehaviour
 
     private void OnPickupGrabbed(int scoreValue) {
         SetScore(_score + scoreValue);
+        _pickupsOnScreen -= 1;
 
         Debug.Log("GameManager.OnPickupGrabbed: Score is now " + _score);
     }
@@ -138,6 +161,12 @@ public class GameManager : MonoBehaviour
             _maxHitPoints += 10;
             _lastHpRampUp = Time.time;
         }
+        if (Time.time - _lastPickupSpawnTime > _pickupSpawnRate)
+        {
+            _lastPickupSpawnTime = Time.time;
+            
+            SpawnPickup();
+        }
 
         if (_score >= _nextLevelScoreMilestone && _currentLevel < _levelMilestones.Length) 
         {
@@ -155,6 +184,8 @@ public class GameManager : MonoBehaviour
             }
             GameObject levelUpUI = Instantiate(_levelUpUIPrefab);
         }
+
+        
     }
 
     private void SpawnEnemy()
@@ -187,4 +218,26 @@ public class GameManager : MonoBehaviour
         }
         enemy.transform.position = Camera.main.ViewportToWorldPoint(spawnViewportCoord);
     }
+
+    private void SpawnPickup() 
+    {
+        if (_pickupsOnScreen >= _maxPickupsOnScreen)
+        {
+            return;
+        }
+
+        GameObject pickup = Instantiate(_pickupPrefab as GameObject);
+        pickup.transform.parent = _levelContainer.transform;
+
+        float xMin = _floor.cellBounds.xMin;
+        float xMax = _floor.cellBounds.xMax;
+        float yMin = _floor.cellBounds.yMin;
+        float yMax = _floor.cellBounds.yMax;
+
+        Vector3 spawnViewportCoord = new Vector3(Random.Range(xMin, xMax), Random.Range(yMin, yMax), 0.0f);
+        
+        pickup.transform.position = spawnViewportCoord; //Camera.main.ViewportToWorldPoint(spawnViewportCoord);
+        _pickupsOnScreen++;
+    }
+
 }
