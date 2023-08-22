@@ -45,6 +45,17 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // wall tiles have OnTrigger enabled, so if the bullet intersects with one
+        // this method will fire
+
+        if (other.gameObject.tag == "Walls") {
+            // Destroy the projectile
+            Destroy(this.gameObject);
+        }
+    }
+
     // Deal damage to the enemy because they were hit by a projectile
     private void DamageEnemy(Enemy enemy)
     {
