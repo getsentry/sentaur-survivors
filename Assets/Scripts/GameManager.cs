@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
     private HUD _hud;
     private GameObject _levelContainer;
 
-    private XpBar _xpBar;
 
     // Start is called before the first frame update
     void Start()
@@ -51,11 +50,11 @@ public class GameManager : MonoBehaviour
 
         _gameState = GameState.Playing;
         _hud = GameObject.Find("HUD").GetComponent<HUD>();
-        _xpBar = GameObject.Find("HUD").GetComponentInChildren<XpBar>();
+        _hud.SetXp(1.0f * _score);
+
         _levelContainer = GameObject.Find("Level");
 
         _lastEnemySpawnTime = Time.time;
-        _xpBar.SetXp(1.0f * _score);
 
         SetCurrentLevel(_currentLevel);
 
@@ -72,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     private void OnPickupGrabbed(int scoreValue) {
         SetScore(_score + scoreValue);
-        _xpBar.SetXp(1.0f * _score);
+
         Debug.Log("GameManager.OnPickupGrabbed: Score is now " + _score);
     }
 
@@ -97,9 +96,12 @@ public class GameManager : MonoBehaviour
         _score = score;
 
         _hud.SetScore(_score);
+        _hud.SetXp(1.0f * _score);
 
         Debug.Log("GameManager.Update: Next Milestone at score " + _nextLevelScoreMilestone);
-        Debug.Log("GameManager.SetScore: Score is now " + _score);        
+
+        Debug.Log("GameManager.SetScore: Score is now " + _score);   
+        // Debug.Log("GameManager.SetScore: Xp is now " + _xpBar);        
 
     }
 

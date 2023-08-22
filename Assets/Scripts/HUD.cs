@@ -15,14 +15,20 @@ public class HUD : MonoBehaviour
     private TextMeshProUGUI _gameOverText;
     private TextMeshProUGUI _currentLevelText;
 
-    void Start()
-    {
+    private XpBar _xpBar;
+    
+    void Awake() {
         // get score text component from child
         _scoreText = transform.Find("Score").GetComponent<TextMeshProUGUI>();
         _timeElapsedText = transform.Find("TimeElapsed").GetComponent<TextMeshProUGUI>();
         _gameOverText = transform.Find("GameOver").GetComponent<TextMeshProUGUI>();
         _currentLevelText = transform.Find("XpBar").GetComponentInChildren<TextMeshProUGUI>();
-        
+
+        _xpBar = transform.Find("XpBar").GetComponent<XpBar>();
+    }
+    void Start()
+    {
+
     }
 
     // Update is called once per frame
@@ -37,6 +43,10 @@ public class HUD : MonoBehaviour
 
     public void SetScore(int score) {
         _scoreText.text = "Score: " + score;
+    }
+
+    public void SetXp(float xp) {
+        _xpBar.SetXp(xp);
     }
 
     public void ShowGameOver() {
