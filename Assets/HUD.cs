@@ -13,6 +13,9 @@ public class HUD : MonoBehaviour
     private TextMeshProUGUI _scoreText;
     private TextMeshProUGUI _timeElapsedText;
     private TextMeshProUGUI _gameOverText;
+    private TextMeshProUGUI _currentLevelText;
+
+    private int CURRENT_LEVEL = 1; // TODO: change based on score
 
     void Start()
     {
@@ -20,6 +23,8 @@ public class HUD : MonoBehaviour
         _scoreText = transform.Find("Score").GetComponent<TextMeshProUGUI>();
         _timeElapsedText = transform.Find("TimeElapsed").GetComponent<TextMeshProUGUI>();
         _gameOverText = transform.Find("GameOver").GetComponent<TextMeshProUGUI>();
+        _currentLevelText = transform.Find("CurrentLevel").GetComponent<TextMeshProUGUI>();
+        
     }
 
     // Update is called once per frame
@@ -38,5 +43,9 @@ public class HUD : MonoBehaviour
 
     public void ShowGameOver() {
         _gameOverText.enabled = true;
+    }
+
+    public void SetCurrentLevel(int level) {
+        _currentLevelText.text = "Level " + CURRENT_LEVEL;
     }
 }
