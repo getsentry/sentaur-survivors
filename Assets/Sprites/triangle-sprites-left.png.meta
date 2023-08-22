@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cb730de20abbb43d3bb078dd2492565a
+guid: 239d3f29323044693a5d9a2e5fc07f73
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: triangle-sprites_0
+      name: triangle-sprites-left_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2215f21eb2624483dae1c8669a9d5aa2
-      internalID: -85309671
+      spriteID: a4b73cfd6cbfc4db3903106c5a5b4243
+      internalID: 1101639518
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: triangle-sprites_1
+      name: triangle-sprites-left_1
       rect:
         serializedVersion: 2
         x: 32
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 260082c7360374866a7033fd5642dc93
-      internalID: 99100514
+      spriteID: 89325c7685c49417498f02604891a024
+      internalID: 218941152
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: triangle-sprites_2
+      name: triangle-sprites-left_2
       rect:
         serializedVersion: 2
         x: 64
@@ -179,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1db79ebcb67b943be8cb2f33620e9d44
-      internalID: -1035846762
+      spriteID: 12e80285b11404e7b9f321bba210f238
+      internalID: -667136949
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: triangle-sprites_3
+      name: triangle-sprites-left_3
       rect:
         serializedVersion: 2
         x: 96
@@ -200,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: edbf4781e095c41c6a98d217ba918b3c
-      internalID: 908036125
+      spriteID: 456ee9f6d80b3438ea9be77e70941dbd
+      internalID: -968649000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: triangle-sprites_4
+      name: triangle-sprites-left_4
       rect:
         serializedVersion: 2
         x: 128
@@ -221,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8356198afa78947f2aada68287e1cd4b
-      internalID: -316385299
+      spriteID: 95b07b0c739f94dab8f2bfa30bd9b549
+      internalID: -144210371
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: triangle-sprites_5
+      name: triangle-sprites-left_5
       rect:
         serializedVersion: 2
         x: 160
@@ -242,14 +242,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61f78e30973ae49869c7753674d37ae9
-      internalID: -865022066
+      spriteID: 5a75887a4caec4f6ebe3eb16cb1c6d3d
+      internalID: -806881937
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: triangle-sprites_6
+      name: triangle-sprites-left_6
       rect:
         serializedVersion: 2
         x: 192
@@ -263,14 +263,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2513144d4027543349e0a2d7fedbc912
-      internalID: -948584907
+      spriteID: d2f58ae4b7d7342ddb4007bb63fcbb3f
+      internalID: 531814397
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: triangle-sprites_7
+      name: triangle-sprites-left_7
       rect:
         serializedVersion: 2
         x: 224
@@ -284,8 +284,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b990feeb65a8342e5b1a718e9d0667b7
-      internalID: -776462183
+      spriteID: e325f2e87027746dc847abd72558fc0e
+      internalID: -125326849
       vertices: []
       indices: 
       edges: []
@@ -301,14 +301,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      triangle-sprites_0: -85309671
-      triangle-sprites_1: 99100514
-      triangle-sprites_2: -1035846762
-      triangle-sprites_3: 908036125
-      triangle-sprites_4: -316385299
-      triangle-sprites_5: -865022066
-      triangle-sprites_6: -948584907
-      triangle-sprites_7: -776462183
+      triangle-sprites-left_0: 1101639518
+      triangle-sprites-left_1: 218941152
+      triangle-sprites-left_2: -667136949
+      triangle-sprites-left_3: -968649000
+      triangle-sprites-left_4: -144210371
+      triangle-sprites-left_5: -806881937
+      triangle-sprites-left_6: 531814397
+      triangle-sprites-left_7: -125326849
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
