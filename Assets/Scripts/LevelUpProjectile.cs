@@ -26,22 +26,22 @@ public class LevelUpProjectile : MonoBehaviour
     private string[] _countUpgrades = {
         "+ 2 darts",
         "+ 2 darts",
-        "ultimate: fires darts in all directions for 15 seconds"
+        "+ 2 darts"
     };
 
     private string[] _speedUpgrades = {
         "darts auto-fire faster",
         "darts auto-fire EVEN FASTER",
-        "ultimate: rapid fire darts for 15 seconds"
+        "darts auto-fire the fastest they've ever fired B)"
     };
 
     private string[] _damageUpgrades = {
         "increase base damage",
         "increase base damage MORE",
-        "ultimate: base damage is insanely high for 15 seconds"
+        "increase base damage EVEN MORE"
     };
 
-    private int MAX_LEVEL = 2; // change to 3 when implementing ults
+    private int MAX_LEVEL = 3;
 
     // these are equivalent to the index of the option in AvailableProjectileUpgrades
     private int option1;
