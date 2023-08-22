@@ -74,17 +74,14 @@ public class LevelUpProjectile : MonoBehaviour
             option2 = Random.Range(0, AvailableProjectileUpgrades.Count);
         } while (AvailableProjectileUpgrades.Count > 1 && option2 == option1);
 
-        // option1Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = AvailableProjectileUpgrades[option1];
-        // if (option1 == option2) 
-        // {
-        //     option2Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "ALL OTHER UPGRADES MAXED OUT";
-        //     option2Button.enabled = false;
-        // } 
-        // else 
-        // {
-        //     option2Button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = AvailableProjectileUpgrades[option2];
-        // }
-
+        var optionText = AvailableProjectileUpgrades[option1];
+        _levelOption1.Set(title: optionText, description: "", stats: "");
+        if (option1 == option2) {
+            _levelOption2.Set("ALL OTHER UPGRADES MAXED OUT", "", "");
+        } else {
+            optionText = AvailableProjectileUpgrades[option2];
+            _levelOption2.Set(title: optionText, description: "", stats: "");
+        }
         // TODO: change sprites, description (use _xxxUpgrades)
     }
 
