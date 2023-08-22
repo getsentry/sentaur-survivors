@@ -18,6 +18,10 @@ public class Enemy : MonoBehaviour
     [Tooltip("How many points the player gets for killing this enemy")]
     private int _scoreValue = 10;
 
+    [SerializeField]
+    [Tooltip("The prefab to use for the damage text")]
+    private DamageText _damageTextPrefab;
+
     // Update is called once per frame
     void Update()
     {
@@ -58,7 +62,12 @@ public class Enemy : MonoBehaviour
         _hitpoints -= damage;
         _hitpoints = Mathf.Max(_hitpoints, 0); // don't let the enemy have negative hit points
 
-        Debug.Log("Enemy.TakeDamage: Enemy took " + damage + " damage and now has " + _hitpoints + " hit points");
+        // spawn the damage text above the enemy by 1 unit (32px)
+        var damageTextPosition = new Vector2(
+            transform.position.x,
+            transform.position.y + 1.0f
+        );
+        _damageTextPrefab.Spawn(transform.root, damageTextPosition, damage);
 
         if (_hitpoints == 0) {
 
