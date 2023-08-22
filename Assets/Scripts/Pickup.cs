@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,16 +13,35 @@ public class Pickup : MonoBehaviour
     [SerializeField]
     private int _scoreValue = 50;
 
+    private enum PickupType 
+    {
+        Hotdog,
+        Skateboard,
+        Umbrella
+    }
+
+    private PickupType[] pickupTypesArray = Enum.GetValues(typeof(PickupType)) as PickupType[];
+    private PickupType pickupType;
+    private static System.Random random = new System.Random();
+
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
+        // randomize pickup type
+        pickupType = (PickupType) pickupTypesArray.GetValue(random.Next(pickupTypesArray.Length));
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        switch (pickupType)
+        {
+            case PickupType.Hotdog:
+                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                break;
+            case PickupType.Skateboard:
+                gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+                break;
+            case PickupType.Umbrella:
+                gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                break;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -31,8 +51,20 @@ public class Pickup : MonoBehaviour
         {
             var player = other.gameObject.GetComponent<Player>();
 
-            // TODO: more than just heal
-            player.HealDamage(_healAmount);
+            switch (pickupType)
+            {
+                case PickupType.Hotdog: 
+                    player.HealDamage(_healAmount);
+                    break;
+                case PickupType.Skateboard:
+                    player.SpeedUp(10, true);
+                    break;
+                case PickupType.Umbrella:
+                    player.ReduceDamage(0.5f, true);
+                    break;
+                default: 
+                break;
+            }
 
             // Destroy the pickup
             Destroy(this.gameObject);
