@@ -64,11 +64,22 @@ public class Enemy : MonoBehaviour
 
         Debug.Log("Enemy.TakeDamage: Enemy took " + damage + " damage and now has " + _hitpoints + " hit points");
 
+        Debug.Log("enemy position is " + transform.position);
         // instantiate a DamageText prefab to show how much damage was done
-        var damageText = Instantiate(_damageTextPrefab, transform.position, Quaternion.identity, transform.parent);
-        // damageText.transform.position = transform.position;
-        Debug.Log("dmg text parent position is " + transform.position);
+        var damageText = Instantiate(
+            _damageTextPrefab,   // prefab to instantiate
+            transform.root,  // spawn at the enemy position 
+            true // instantiate in world space
+        );
+        damageText.transform.position = new Vector2(transform.position.x, transform.position.y);
+
+        // these should be the same position
+        Debug.Log("enemy position is " + transform.position);
         Debug.Log("dmg text position is " + damageText.transform.position);
+
+        // when these debug statements emit, they have the same value now -- but in the editor
+        // (after they've been rendered) they don't have the same value
+ 
 
         damageText.SetDamage(damage);
 
