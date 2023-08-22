@@ -178,12 +178,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7445bbf6e7dae43f5b79872980c8e394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectilePrefab: {fileID: -1238747304094502698, guid: f4b2f15faddfa43ee9ea450e341989a3, type: 3}
+  _dartPrefab: {fileID: -1238747304094502698, guid: f4b2f15faddfa43ee9ea450e341989a3, type: 3}
+  _ravenPrefab: {fileID: 1783361906523289645, guid: 73dffc90c37874381bd50b09415a2c82, type: 3}
   _hitPoints: 100
   _maxHitPoints: 100
   _projectileFireRate: 2
   _projectileCount: 1
   _playerMoveRate: 5
+  _ravenCount: 0
+  _ravenFireRate: 5
+  _timeBasedPickupDuration: 10
+  _damageReductionAmount: 0
   animator: {fileID: 1002860201738508437}
   takeDamageSound: {fileID: 0}
 --- !u!61 &5032271188091294264

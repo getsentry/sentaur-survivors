@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using Unity.Profiling;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Dart : MonoBehaviour
 {
-    [Tooltip("How fast the projectile moves")]
+    [Tooltip("How fast the dart moves")]
     [SerializeField]
     private float _speed = 20.0f;
 
     [SerializeField]
-    [Tooltip("How much damage this projectile does to an enemy")]
+    [Tooltip("How much damage this dart does to an enemy")]
     public static int Damage = 10;
 
     private Vector3 _direction;
@@ -27,28 +27,28 @@ public class Projectile : MonoBehaviour
         _direction = direction.normalized;
         _direction.z = 0; // don't move in the z direction
 
-        // rotate the projectile to face the direction it's moving
+        // rotate the dart to face the direction it's moving
         var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        // if the projectile collides with an enemy, destroy the enemy
+        // if the dart collides with an enemy, destroy the enemy
         if (other.gameObject.tag == "Enemy")
         {
             var enemy = other.gameObject.GetComponent<Enemy>();
             DamageEnemy(enemy);
 
-            // Destroy the projectile
+            // Destroy the dart
             Destroy(this.gameObject);
         } else if (other.gameObject.tag == "Barrier") {
-            // Destroy the projectile
+            // Destroy the dart
             Destroy(this.gameObject);
         }
     }
 
-    // Deal damage to the enemy because they were hit by a projectile
+    // Deal damage to the enemy because they were hit by a dart
     private void DamageEnemy(Enemy enemy)
     {
         enemy.TakeDamage(Damage);

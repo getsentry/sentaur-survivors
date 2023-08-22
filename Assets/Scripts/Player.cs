@@ -8,8 +8,12 @@ public class Player : MonoBehaviour
 {
 
     [SerializeField]
-    [Tooltip("The projectile prefab that the player fires")]
-    private Projectile _projectilePrefab;
+    [Tooltip("The prefab for the player's dart (starting projectile)")]
+    private Dart _dartPrefab;
+
+    [SerializeField]
+    [Tooltip("The prefab for the player's Raven")]
+    private Raven _ravenPrefab;
 
     [SerializeField] 
     [Tooltip("How many hit points the player has")]
@@ -31,6 +35,16 @@ public class Player : MonoBehaviour
     [Tooltip("How fast the player moves (how exaclty I don't know)")]
     private float _playerMoveRate = 5;
     private float _baseMoveRate;
+
+    [SerializeField]
+    [Tooltip("How many Ravens the player has")]
+    private int _ravenCount = 0;
+
+    [SerializeField]
+    [Tooltip("How frequently the Raven(s) fire")]
+    private float _ravenFireRate = 10f;
+
+    private float _timeElapsedSinceLastRaven = 0.0f;
 
     private bool _hasPickedUpSkateboard = false;
     private float _timeElapsedSinceLastSkateboard = 0.0f;
@@ -92,6 +106,10 @@ public class Player : MonoBehaviour
 
         // fire a projectile once enough time has elapsed
         _timeElapsedSinceLastProjectile += Time.deltaTime;
+        if (_ravenCount > 0)
+        {
+            _timeElapsedSinceLastRaven += Time.deltaTime;
+        }
 
         if (_timeElapsedSinceLastProjectile > _projectileFireRate)
         {
@@ -105,7 +123,7 @@ public class Player : MonoBehaviour
             {
                 for (int j = 0; j < 2; j++) 
                 {
-                    var projectile = Instantiate(_projectilePrefab);
+                    var projectile = Instantiate(_dartPrefab);
                     projectile.transform.parent = transform.parent;
                     Vector3 direction = CalculateProjectileDirection();
                     direction = RotateDirection(direction, degreesToRotate);
@@ -124,7 +142,7 @@ public class Player : MonoBehaviour
             if (_projectileCount % 2 != 0) 
             {
                 // odd number of projectiles, so we need to create a center projectile
-                var projectile = Instantiate(_projectilePrefab);
+                var projectile = Instantiate(_dartPrefab);
                 projectile.transform.parent = transform.parent;
                 Vector3 direction = CalculateProjectileDirection();
                 direction = RotateDirection(direction, 0);
@@ -137,6 +155,17 @@ public class Player : MonoBehaviour
             }
         }
 
+        if (_ravenCount > 0 && _timeElapsedSinceLastRaven > _ravenFireRate)
+        {
+            _timeElapsedSinceLastRaven = 0.0f;
+            for (int i = 0; i < _ravenCount; i++) 
+            {
+                Debug.Log("firing raven");
+                var raven = Instantiate(_ravenPrefab); 
+                raven.transform.parent = transform.parent;
+                raven.TargetClosestEnemy();
+            }
+        }
         // remove pickup effects if any are time-based and expiring
         if (_hasPickedUpSkateboard)
         {
@@ -209,7 +238,6 @@ public class Player : MonoBehaviour
     {
         _projectileCount+= 2;
         _spreadInDegrees += 10;
-        Debug.Log("upgrade count to " + _projectileCount);
     }
 
     public void UpgradeSpeed(int level) 
@@ -219,7 +247,26 @@ public class Player : MonoBehaviour
 
     public void UpgradeDamage(int level) 
     {
-        Projectile.Damage *= 2;
+        Dart.Damage *= 2;
+    }
+
+    public void UpgradeRaven(int level)
+    {
+        if (level == 1) 
+        {
+            _ravenCount++;
+            _timeElapsedSinceLastRaven = _ravenFireRate;
+        }
+        else if (level == 2)
+        {
+            _ravenFireRate *= 0.75f;
+            Raven.Damage += 5;
+        }
+        else if (level == 3)
+        {
+            _ravenCount++;
+            Raven.Damage += 5;
+        }
     }
 
     public void SpeedUp(int newSpeed, bool hasSkateboard = false)
