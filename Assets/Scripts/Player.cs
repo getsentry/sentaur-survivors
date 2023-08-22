@@ -33,16 +33,15 @@ public class Player : MonoBehaviour
 
     private float _timeElapsedSinceLastProjectile = 0.0f;
 
+    // the further a projectile's path is rotated from the center projectile
+    private int _spreadInDegrees = 0; 
+
     private HealthBar _healthBar;
     public Animator animator;
     Vector2 movement;
     bool facingRight = false;
 
     public AudioSource takeDamageSound;
-
-    // private Dictionary<string, int> _upgradesToLevelsMap = new Dictionary<string, int>{
-    //     {"number of projectiles", 0}, {"fire rate", 0}, {"damage", 0}
-    // };
 
     // Start is called before the first frame update
     void Start()
@@ -75,24 +74,68 @@ public class Player : MonoBehaviour
 
         // fire a projectile once enough time has elapsed
         _timeElapsedSinceLastProjectile += Time.deltaTime;
+
         if (_timeElapsedSinceLastProjectile > _projectileFireRate)
         {
             _timeElapsedSinceLastProjectile = 0.0f;
 
-            // instantiate a new projectile
-            var projectile = Instantiate(_projectilePrefab);
-            projectile.transform.parent = transform.parent;
+            float degreesToRotate = _spreadInDegrees;
+            int numberOfProjectilePairs = _projectileCount / 2;
 
-            // projectile moves in the direction of the current mouse cursor
-            var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var direction = mousePosition - transform.position;
-            projectile.SetDirection(direction);
+            // instantiate new projectile(s), starting from the two furthest projectiles then going inward
+            for (int i = 0; i < numberOfProjectilePairs ; i++) 
+            {
+                for (int j = 0; j < 2; j++) 
+                {
+                    var projectile = Instantiate(_projectilePrefab);
+                    projectile.transform.parent = transform.parent;
+                    Vector3 direction = CalculateProjectileDirection();
+                    direction = RotateDirection(direction, degreesToRotate);
+                    degreesToRotate *= -1; // to get the proper rotation for the next projectile, which is on the other side of the center projectile
+                    projectile.SetDirection(direction);
 
-            // set the projectile's position to the player's position + a little bit
-            // outside the player in the direction of the mouse cursor
-            var distanceOutsidePlayer = 2.0f;
-            projectile.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
+                    // set the projectile's position to the player's position + a little bit
+                    // outside the player in the direction of the mouse cursor
+                    var distanceOutsidePlayer = 2.0f;
+                    projectile.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
+                }
+
+                degreesToRotate -= (degreesToRotate / numberOfProjectilePairs);
+            }
+
+            if (_projectileCount % 2 != 0) 
+            {
+                // odd number of projectiles, so we need to create a center projectile
+                var projectile = Instantiate(_projectilePrefab);
+                projectile.transform.parent = transform.parent;
+                Vector3 direction = CalculateProjectileDirection();
+                direction = RotateDirection(direction, 0);
+                projectile.SetDirection(direction);
+
+                // set the projectile's position to the player's position + a little bit
+                // outside the player in the direction of the mouse cursor
+                var distanceOutsidePlayer = 2.0f;
+                projectile.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
+            }
         }
+    }
+
+    private Vector3 CalculateProjectileDirection() 
+    {
+        // projectile moves in the direction of the current mouse cursor
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 direction = mousePosition - transform.position;
+
+        return direction;
+    }
+
+    private Vector3 RotateDirection(Vector3 direction, float degreesToRotate)
+    {
+        float degreesInRadians = degreesToRotate * Mathf.Deg2Rad;
+        return new Vector3(
+            direction.x * Mathf.Cos(degreesInRadians) - direction.y * Mathf.Sin(degreesInRadians),
+            direction.x * Mathf.Sin(degreesInRadians) + direction.y * Mathf.Cos(degreesInRadians) 
+        );
     }
 
     public void TakeDamage(int damage = 0)
@@ -121,7 +164,9 @@ public class Player : MonoBehaviour
 
     public void UpgradeCount(int level) 
     {
-        _projectileCount++;
+        _projectileCount+= 2;
+        _spreadInDegrees += 10;
+        Debug.Log("upgrade count to " + _projectileCount);
     }
 
     public void UpgradeSpeed(int level) 
