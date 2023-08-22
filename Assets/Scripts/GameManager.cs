@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
     [Tooltip("The level up UI prefab to spawn")]
     private GameObject _levelUpUIPrefab;
 
+    [SerializeField]
+    [Tooltip("Starting XP")]
+    private float _xp = 0;
+
     // the player's accumulated score so far
     private int _score = 0;
 
@@ -37,6 +41,7 @@ public class GameManager : MonoBehaviour
     private HUD _hud;
     private GameObject _levelContainer;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +49,8 @@ public class GameManager : MonoBehaviour
 
         _gameState = GameState.Playing;
         _hud = GameObject.Find("HUD").GetComponent<HUD>();
+        _hud.SetXp(1.0f * _score);
+
         _levelContainer = GameObject.Find("Level");
 
         _lastEnemySpawnTime = Time.time;
@@ -63,6 +70,7 @@ public class GameManager : MonoBehaviour
 
     private void OnPickupGrabbed(int scoreValue) {
         SetScore(_score + scoreValue);
+
         Debug.Log("GameManager.OnPickupGrabbed: Score is now " + _score);
     }
 
@@ -70,6 +78,7 @@ public class GameManager : MonoBehaviour
     {
         SetScore(_score + scoreValue);
         Debug.Log("GameManager.OnEnemyDestroyed: Score is now " + _score);
+        Debug.Log("GameManager.OnEnemyDestroyed: Next Milestone at score " + _nextLevelScoreMilestone);
     
     }
      
@@ -85,8 +94,14 @@ public class GameManager : MonoBehaviour
 
     private void SetScore(int score) {
         _score = score;
+        _xp = 1.0f * _score / _nextLevelScoreMilestone;
 
         _hud.SetScore(_score);
+        _hud.SetXp(_xp);
+
+        Debug.Log("GameManager.SetScore: Score is now " + _score);   
+        Debug.Log("GameManager.SetScore: Xp is now " + _xp);        
+
     }
 
     private void SetCurrentLevel(int level) {
@@ -111,6 +126,9 @@ public class GameManager : MonoBehaviour
         {
             _currentLevel++;
             SetCurrentLevel(_currentLevel);
+            
+            // reset xp bar to 0 after leveling up 
+            _hud.SetXp(0);
 
             // we don't want to set the next milestone if we just reached the final level (there 
             // are no more milestones)
