@@ -42,8 +42,11 @@ public class GameManager : MonoBehaviour
 
     // the score a player must get to for the next weapon upgrade
     private int _nextLevelScoreMilestone;
+    // trackinf the previous level score milestone for xp bar
+    private int _previousLevelScoreMilestone;
     private int[] _levelMilestones = {10, 50, 100, 200, 300, 400, 500, 600, 700}; // TODO: update
     private int _currentLevel = 0;
+    private int _previousLevel = 0;
 
     private float _lastEnemySpawnTime = 0.0f;
     private float _lastSpawnRampUp = 0.0f;
@@ -128,12 +131,19 @@ public class GameManager : MonoBehaviour
     private void SetScore(int score)
     {
         _score = score;
-        _xp = 1.0f * _score / _nextLevelScoreMilestone;
+
+        if (_currentLevel == 0) 
+        {
+            _xp = 1.0f * _score / _nextLevelScoreMilestone;
+        } else {
+            _xp = 1.0f * (_score - _previousLevelScoreMilestone) / (_nextLevelScoreMilestone - _previousLevelScoreMilestone);
+        }
 
         _hud.SetScore(_score);
         _hud.SetXp(_xp);
 
         Debug.Log("GameManager.SetScore: Score is now " + _score);   
+        Debug.Log("GameManager.SetScore: Milestone level is now " + _nextLevelScoreMilestone);
         Debug.Log("GameManager.SetScore: Xp is now " + _xp);        
 
     }
@@ -177,6 +187,10 @@ public class GameManager : MonoBehaviour
         if (_score >= _nextLevelScoreMilestone && _currentLevel < _levelMilestones.Length) 
         {
             _currentLevel++;
+            Debug.Log("GameManager.Update: level up!");
+
+            _previousLevel = _currentLevel - 1;
+
             SetCurrentLevel(_currentLevel);
             
             // reset xp bar to 0 after leveling up 
@@ -187,6 +201,7 @@ public class GameManager : MonoBehaviour
             if (_currentLevel < _levelMilestones.Length)
             {
                 _nextLevelScoreMilestone = _levelMilestones[_currentLevel];
+                _previousLevelScoreMilestone = _levelMilestones[_previousLevel];
             }
             GameObject levelUpUI = Instantiate(_levelUpUIPrefab);
         }
