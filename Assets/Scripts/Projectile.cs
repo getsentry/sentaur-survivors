@@ -42,7 +42,7 @@ public class Projectile : MonoBehaviour
 
             // Destroy the projectile
             Destroy(this.gameObject);
-        } else if (other.gameObject.tag == "Walls") {
+        } else if (other.gameObject.tag == "Barrier") {
             // Destroy the projectile
             Destroy(this.gameObject);
         }
