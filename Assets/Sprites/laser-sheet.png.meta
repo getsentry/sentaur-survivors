@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ff6241d4542ce48498eb33d98235f5e5
+guid: 5a5ba1533b6c24e50bbda5dd7fdf5e13
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 8
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: triangle-sprites-right_0
+      name: laser-sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6939b832085bb42b2be824c2f8438fc7
-      internalID: 11330091
+      spriteID: 02abcbdae91414a7f90acece9d2d686b
+      internalID: -1437892036
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: triangle-sprites-right_1
+      name: laser-sheet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d656e060ffd24992b4021a1d758671c
-      internalID: -288204189
+      spriteID: eac8cf01100e446fbbaf24673b6148c8
+      internalID: 632998947
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: triangle-sprites-right_2
+      name: laser-sheet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -179,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 80ae5da9795474fee884a0720eb55e16
-      internalID: -1253996103
+      spriteID: 0b90340d059dd4350b2dba2ab02bcb69
+      internalID: 1255731035
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: triangle-sprites-right_3
+      name: laser-sheet_3
       rect:
         serializedVersion: 2
         x: 96
@@ -200,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ddd3b1406f8264fd7a6db3266f936497
-      internalID: 594192162
+      spriteID: f4fedf201945a4022917140914ddbc6c
+      internalID: -1202570663
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: triangle-sprites-right_4
+      name: laser-sheet_4
       rect:
         serializedVersion: 2
         x: 128
@@ -221,71 +221,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c73daf61fc43c4c37ac4c833f77897a2
-      internalID: -835081217
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: triangle-sprites-right_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5e2cfa674d4a94cdab5b86468ab4d6e9
-      internalID: -880365849
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: triangle-sprites-right_6
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 116c1fc01ca1444578d6746098fde36d
-      internalID: -814932890
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: triangle-sprites-right_7
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cd515d28c8d324256a4da1e1a9ac9292
-      internalID: -1433961388
+      spriteID: 641c645eff6b44e2ba642dc7e601fd8b
+      internalID: 2022513904
       vertices: []
       indices: 
       edges: []
@@ -301,14 +238,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      triangle-sprites-right_0: 11330091
-      triangle-sprites-right_1: -288204189
-      triangle-sprites-right_2: -1253996103
-      triangle-sprites-right_3: 594192162
-      triangle-sprites-right_4: -835081217
-      triangle-sprites-right_5: -880365849
-      triangle-sprites-right_6: -814932890
-      triangle-sprites-right_7: -1433961388
+      laser-sheet_0: -1437892036
+      laser-sheet_1: 632998947
+      laser-sheet_2: 1255731035
+      laser-sheet_3: -1202570663
+      laser-sheet_4: 2022513904
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
