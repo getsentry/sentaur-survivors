@@ -42,7 +42,7 @@ public class HUD : MonoBehaviour
     }
 
     public void SetScore(int score) {
-        _scoreText.text = "Score: " + score;
+        _scoreText.text = score.ToString();
     }
 
     public void SetXp(float xp) {
