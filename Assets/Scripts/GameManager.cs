@@ -119,14 +119,17 @@ public class GameManager : MonoBehaviour
 
     private void OnXpEarned(int xp)
     {
+        _xp += xp;
         Debug.Log("GameManager.OnXpEarned: Xp is now " + _xp);
+
+        float xpProgress;        
         if (_currentLevel == 0) 
         {
-            _xp = 1.0f * _score / _nextLevelScoreMilestone;
+            xpProgress = 1.0f * _xp / _nextLevelScoreMilestone;
         } else {
-            _xp = 1.0f * (_score - _previousLevelScoreMilestone) / (_nextLevelScoreMilestone - _previousLevelScoreMilestone);
+            xpProgress = 1.0f * (_xp - _previousLevelScoreMilestone) / (_nextLevelScoreMilestone - _previousLevelScoreMilestone);
         }
-        _hud.SetXp(_xp);
+        _hud.SetXp(xpProgress);
     }
 
     private void OnEnemyDestroyed(int scoreValue)
@@ -155,7 +158,6 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("GameManager.SetScore: Score is now " + _score);   
         Debug.Log("GameManager.SetScore: Milestone level is now " + _nextLevelScoreMilestone);
-        Debug.Log("GameManager.SetScore: Xp is now " + _xp);        
 
     }
 
