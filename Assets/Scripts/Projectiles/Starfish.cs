@@ -47,7 +47,7 @@ public class Starfish : MonoBehaviour
         transform.RotateAround(_player.transform.position, Vector3.forward, DegreesPerFrame * Time.deltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         // if the starfish collides with an enemy, damage the enemy
         if (other.gameObject.tag == "Enemy")
@@ -57,7 +57,7 @@ public class Starfish : MonoBehaviour
         } 
         else if (other.gameObject.tag == "Barrier")
         {
-            Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), other.collider);
+            Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), other);
         }
     }
 

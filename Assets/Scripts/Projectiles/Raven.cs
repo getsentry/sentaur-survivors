@@ -62,7 +62,7 @@ public class Raven : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         // if the raven collides with an enemy, destroy the enemy
         if (other.gameObject.tag == "Enemy")
