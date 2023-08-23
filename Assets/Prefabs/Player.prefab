@@ -191,6 +191,7 @@ MonoBehaviour:
   _damageReductionAmount: 0
   animator: {fileID: 1002860201738508437}
   takeDamageSound: {fileID: 0}
+  lastPosition: {x: 0, y: 0, z: 0}
 --- !u!61 &5032271188091294264
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -552,7 +553,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10.140625
+  orthographic size: 8.21875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
