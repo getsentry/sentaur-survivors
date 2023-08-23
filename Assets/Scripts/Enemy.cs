@@ -17,10 +17,21 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     [Tooltip("How many points the player gets for killing this enemy")]
     private int _scoreValue = 10;
+    
+    [SerializeField]
+    protected float _speed = 1f;
 
     [SerializeField]
     [Tooltip("The prefab to use for the damage text")]
     private DamageText _damageTextPrefab;
+
+    
+    private Vector2 _lastPosition;
+    
+    private SpriteRenderer _spriteRenderer;
+    void Awake() {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     void Start(){
         Debug.Log("HITPOINTS:" + hitpoints);
@@ -33,16 +44,27 @@ public class Enemy : MonoBehaviour
         GameObject player = GameObject.Find("Player");
         if (player != null)
         {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                player.transform.position,
-                Time.deltaTime
-            );
+            _lastPosition = transform.position;
+            transform.position = (Vector3)DetermineDirection(player);
         }
+
+        // flip sprite in x direction if moving left
+        var delta = (Vector2)transform.position - _lastPosition;
+        _spriteRenderer.flipX = delta.x < 0;
+        
+    }
+
+    virtual protected Vector2 DetermineDirection(GameObject player) {
+        // move towards the player character
+        return Vector2.MoveTowards(
+            transform.position,
+            player.transform.position,
+            Time.deltaTime
+        ) * _speed;
     }
     
     // a collision handler that is called when the enemy collides with another object
-    private void OnCollisionEnter2D(UnityEngine.Collision2D collision)
+    virtual protected void OnCollisionEnter2D(UnityEngine.Collision2D collision)
     {
         // if the enemy collides with the player, destroy the player
         if (collision.gameObject.name == "Player")

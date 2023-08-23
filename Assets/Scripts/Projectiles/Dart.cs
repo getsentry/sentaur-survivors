@@ -35,6 +35,7 @@ public class Dart : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             var enemy = other.gameObject.GetComponent<Enemy>();
+            Debug.Log("Dart hit enemy");
             DamageEnemy(enemy);
 
             // Destroy the dart

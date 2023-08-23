@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     private GameObject _enemyPrefab;
 
     [SerializeField]
+    [Tooltip("The diagonal enemy prefab to spawn")]
+    private DiagonalEnemy _diagonalEnemyPrefab;
+
+    [SerializeField]
     [Tooltip("How frequently enemies spawn (in seconds)")]
     private float _enemySpawnRate = 2.0f;
 
@@ -164,7 +168,17 @@ public class GameManager : MonoBehaviour
         {
             _lastEnemySpawnTime = Time.time;
 
-            SpawnEnemy();
+            GameObject prefab;
+
+            // spawn a diagonal enemy 20% of the time
+            int random = Random.Range(0, 4);
+            if (random == 0) {
+                prefab = _diagonalEnemyPrefab.gameObject;
+            } else {
+                prefab = _enemyPrefab;
+            }
+
+            SpawnEnemy(prefab);
         }
 
         if (Time.time - _lastSpawnRampUp > _spawnRampUpInterval) {
@@ -258,9 +272,9 @@ public class GameManager : MonoBehaviour
         return floorSpawnCoord;
     }
 
-    private void SpawnEnemy()
+    private void SpawnEnemy(GameObject prefab)
     {
-        GameObject enemy = Instantiate(_enemyPrefab as GameObject);
+        GameObject enemy = Instantiate(prefab);
         enemy.GetComponent<Enemy>().hitpoints = _maxHitPoints;
         enemy.transform.parent = _levelContainer.transform;
 
