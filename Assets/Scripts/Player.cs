@@ -278,7 +278,7 @@ public class Player : MonoBehaviour
 
     public void UpgradeCount(int level) 
     {
-        _dartCount+= 2;
+        _dartCount+= 1;
         _spreadInDegrees += 10;
     }
 

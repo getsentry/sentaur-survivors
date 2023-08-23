@@ -8,6 +8,8 @@ public class ProjectileBase : MonoBehaviour {
 
     protected Rigidbody2D _rigidbody2D;
     public static int BaseDamage = 10;
+    public static float BaseCooldown = 3f;
+    public static int BaseCount = 1;
 
     protected void Awake() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -33,6 +35,57 @@ public class ProjectileBase : MonoBehaviour {
 
     public static void UpgradeDamage(int level)
     {
-        ProjectileBase.BaseDamage *= 2;
+        if (level == 1) 
+        {
+            BaseDamage = (int) (BaseDamage * 1.3);
+        }
+        else if (level == 2)
+        {
+            BaseDamage = (int) (BaseDamage * 1.6);
+        }
+        else if (level == 3)
+        {
+            BaseDamage = (int) (BaseDamage * 2);
+        }
+
+        Dart.Damage = (int) (BaseDamage * Dart.BaseDamagePercentage);
+        Raven.Damage = (int) (BaseDamage * Raven.BaseDamagePercentage);
+        Starfish.Damage = (int) (BaseDamage * Starfish.BaseDamagePercentage);
     }
+
+    public static void UpgradeCooldown(int level)
+    {
+        if (level == 1)
+        {
+            BaseCooldown = (int) (BaseCooldown * 0.67);
+        } 
+        else if (level == 2)
+        {
+            BaseCooldown = (int) (BaseCooldown * 0.5);
+        }
+        else if (level == 3)
+        {
+            BaseCooldown = (int) (BaseCooldown * 0.25);
+        }
+
+        Dart.Cooldown = BaseCooldown * Dart.BaseCooldownPercentage;
+        Raven.Cooldown = BaseCooldown * Raven.BaseCooldownPercentage;
+        Starfish.Cooldown = BaseCooldown * Starfish.BaseCooldownPercentage;
+    }
+
+    public static void UpgradeCount(int level)
+    {
+        if (level == 3) 
+        {
+            BaseCount += 2;
+        }
+        else
+        {
+            BaseCount++;
+        }
+    }
+
+    void OnBecameInvisible() {
+        Destroy(gameObject);
+    } 
 }

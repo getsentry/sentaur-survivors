@@ -7,9 +7,13 @@ using UnityEngine;
 public class Dart : ProjectileBase
 {
     // properties true for all darts
+    public static int Damage = BaseDamage;
+    public static float BaseDamagePercentage = 1f;
+    public static float Cooldown = BaseCooldown;
+    public static float BaseCooldownPercentage = 1f;
+
     public static float Speed = 10.0f;
-    public static int Damage = 10;
-    public static float FireRate = 2f;
+    public static int AdditionalDarts = 0;
 
     private Vector3 _direction;
 
@@ -32,7 +36,22 @@ public class Dart : ProjectileBase
         enemy.TakeDamage(Damage);
     }
 
-    private void OnBecameInvisible() {
-        Destroy(gameObject);
-    } 
+    public static void UpgradeDart(int level) 
+    {
+        if (level == 1)
+        {
+            AdditionalDarts++;
+        } 
+        else if (level == 2)
+        {
+            BaseDamagePercentage = 1.2f;
+            Damage = (int) (BaseDamage * BaseDamagePercentage);
+        }
+        else if (level == 3)
+        {
+            BaseDamagePercentage = 1.8f;
+            Damage = (int) (BaseDamage * BaseDamagePercentage);
+            AdditionalDarts += 2;
+        }
+    }
 }

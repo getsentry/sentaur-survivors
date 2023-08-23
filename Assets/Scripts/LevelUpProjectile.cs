@@ -11,29 +11,33 @@ public class LevelUpProjectile : MonoBehaviour
     // leveling up an upgrade, changes the stats to new level, increases the level #
 
     public static List<string> AvailableProjectileUpgrades = new List<string>{
-        "count++", "speed++", "damage++", "raven", "starfish"
+        "count++", "cooldown++", "damage++", "raven", "starfish"
     };
 
     public static Dictionary<string, Upgrade> UpgradeData = new Dictionary<string, Upgrade>{
         {
             "count++",
-            new Upgrade("count++", new List<string>{"+2 darts (3 total)", "+2 darts (5 total)", "+2 darts (7 total)"})
+            new Upgrade("count++", new List<string>{"+1 projectile", "+1 projectile", "+2 projectiles"})
         },
         {
-            "speed++",
-            new Upgrade("speed++", new List<string>{"+50% dart base fire rate", "+100% dart base fire rate", "+250% dart base fire rate"})
+            "cooldown++",
+            new Upgrade("cooldown++", new List<string>{"-33% base cooldown", "-50% base cooldown", "-75% base cooldown"})
         },
         {
             "damage++",
-            new Upgrade("damage++", new List<string>{"+100% dart base damage", "+200% dart base damage", "+300% dart base damage"})
+            new Upgrade("damage++", new List<string>{"+30% base damage", "+60% base damage", "+100% base damage"})
+        },
+        {
+            "dart",
+            new Upgrade("dart", new List<string>{"gain an additional dart that fires in the opposite direction", "+50% damage", "+100% damage and gain two additional darts firing in the opposite direction"})
         },
         {
             "raven",
-            new Upgrade("raven", new List<string>{"auto-targets the nearest enemy every now and then", "auto-targets more frequently and deals more damage", "auto-targets the two closest enemies and deals even more damage"})
+            new Upgrade("raven", new List<string>{"auto-targets the nearest enemy after a set cooldown", "gain an additional raven", "+50% damage and -33% cooldown"})
         },
         {
             "starfish",
-            new Upgrade("starfish", new List<string>{"auto-orbits you for a bit every now and then, damaging every enemy you hit", "orbits for longer and deals more damage", "orbits faster and deals even more damage"})
+            new Upgrade("starfish", new List<string>{"auto-orbits you for a set duration after a set cooldown, damaging every enemy you hit", "+50% orbit duration", "+100% orbit duration and -50% cooldown"})
         }
     };
 
@@ -120,28 +124,29 @@ public class LevelUpProjectile : MonoBehaviour
             }
         }
 
-        Player player = GameObject.Find("Player").GetComponent<Player>();
-        if (player != null) 
+        int newLevel = UpgradeData[selectedUpgrade].CurrentLevel;
+     
+        switch(selectedUpgrade) 
         {
-            switch(selectedUpgrade) 
-            {
-                case "count++": 
-                    player.UpgradeCount(UpgradeData["count++"].CurrentLevel);
-                    break;
-                case "speed++":
-                    player.UpgradeSpeed(UpgradeData["speed++"].CurrentLevel);
-                    break;
-                case "damage++":
-                    player.UpgradeDamage(UpgradeData["damage++"].CurrentLevel);
-                    break;
-                case "raven":
-                    player.UpgradeRaven(UpgradeData["raven"].CurrentLevel);
-                    break;
-                case "starfish":
-                    player.UpgradeStarfish(UpgradeData["starfish"].CurrentLevel);
-                    break;
-                default: break;
-            }
+            case "count++": 
+                ProjectileBase.UpgradeCount(newLevel);
+                break;
+            case "cooldown++":
+                ProjectileBase.UpgradeCooldown(newLevel);
+                break;
+            case "damage++":
+                ProjectileBase.UpgradeDamage(newLevel);
+                break;
+            case "dart":
+                Dart.UpgradeDart(newLevel);
+                break;
+            case "raven":
+                Raven.UpgradeRaven(newLevel);
+                break;
+            case "starfish":
+                Starfish.UpgradeStarfish(newLevel);
+                break;
+            default: break;
         }
 
         // resume the game and exit the level up popup

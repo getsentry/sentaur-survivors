@@ -5,11 +5,15 @@ using UnityEngine;
 public class Starfish : ProjectileBase
 {
     // properties true for all starfish
-    public static int Damage = 5;
-    public static float FireRate = 8f;
+    public static int Damage;
+    public static float BaseDamagePercentage = 1.2f;
+    public static float Cooldown;
+    public static float BaseCooldownPercentage = 4.5f;
+    
     public static float Duration = 5f;
     public static float DegreesPerFrame = 180f;
     public static bool IsActive = false;
+    public static int AdditionalStarfish = 0;
     private static float _distanceOutsidePlayer = 2f;
 
     private GameObject _player;
@@ -61,5 +65,19 @@ public class Starfish : ProjectileBase
     override protected void DamageEnemy(Enemy enemy)
     {
         enemy.TakeDamage(Damage);
+    }
+
+    public static void UpgradeStarfish(int level)
+    {
+        if (level == 2)
+        {
+            Duration *= 1.5f;
+        }
+        else if (level == 3)
+        {
+            Duration *= 2;
+            BaseCooldownPercentage = 3f;
+            Cooldown = BaseCooldown * BaseCooldownPercentage;
+        }
     }
 }

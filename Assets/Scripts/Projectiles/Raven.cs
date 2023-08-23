@@ -6,9 +6,13 @@ public class Raven : ProjectileBase
 {
 
     // properties true for all ravens
+    public static int Damage;
+    public static float BaseDamagePercentage = 0.5f;
+    public static float Cooldown;
+    public static float BaseCooldownPercentage = 3f;
+
     public static float Speed = 12.0f;
-    public static int Damage = 10;
-    public static float FireRate = 10f;
+    public static int AdditionalRavens = 0;
     public static GameObject FirstTarget = null;
     private static float _distanceOutsidePlayer = 2.0f;
 
@@ -16,7 +20,7 @@ public class Raven : ProjectileBase
     private Vector3 _direction;
     private GameObject _player;
 
-    void Awake()
+    new void Awake()
     {
         base.Awake();
 
@@ -81,7 +85,18 @@ public class Raven : ProjectileBase
         enemy.TakeDamage(Damage);
     }
 
-    private void OnBecameInvisible() {
-        Destroy(gameObject);
-    } 
+    public static void UpgradeRaven(int level)
+    {
+        if (level == 2)
+        {
+            AdditionalRavens++;
+        }
+        else if (level == 3)
+        {
+            BaseDamagePercentage = 0.75f;
+            Damage = (int) (BaseDamage * BaseDamagePercentage);
+            BaseCooldownPercentage = 2f;
+            Cooldown = BaseCooldown * BaseCooldownPercentage;
+        }
+    }
 }
