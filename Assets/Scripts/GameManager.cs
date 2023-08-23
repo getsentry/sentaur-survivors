@@ -45,10 +45,10 @@ public class GameManager : MonoBehaviour
     private int _score = 0;
 
     // the score a player must get to for the next weapon upgrade
-    private int _nextLevelScoreMilestone;
+    private int _nextLevelXpMilestone;
     private int[] _levelMilestones = {50, 150, 350, 650, 1050, 1550, 2150, 2850, 3650, 4550, 5550}; // TODO: update
     // trackinf the previous level score milestone for xp bar
-    private int _previousLevelScoreMilestone;
+    private int _prevLevelXpMilestone;
     private int _currentLevel = 0;
     private int _previousLevel = 0;
 
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _nextLevelScoreMilestone = _levelMilestones[0];
+        _nextLevelXpMilestone = _levelMilestones[0];
 
         _gameState = GameState.Playing;
         _hud = GameObject.Find("HUD").GetComponent<HUD>();
@@ -122,12 +122,16 @@ public class GameManager : MonoBehaviour
         _xp += xp;
         Debug.Log("GameManager.OnXpEarned: Xp is now " + _xp);
 
+        UpdateXpProgress();
+    }
+
+    private void UpdateXpProgress() {
         float xpProgress;        
         if (_currentLevel == 0) 
         {
-            xpProgress = 1.0f * _xp / _nextLevelScoreMilestone;
+            xpProgress = 1.0f * _xp / _nextLevelXpMilestone;
         } else {
-            xpProgress = 1.0f * (_xp - _previousLevelScoreMilestone) / (_nextLevelScoreMilestone - _previousLevelScoreMilestone);
+            xpProgress = 1.0f * (_xp - _prevLevelXpMilestone) / (_nextLevelXpMilestone - _prevLevelXpMilestone);
         }
         _hud.SetXp(xpProgress);
     }
@@ -136,7 +140,7 @@ public class GameManager : MonoBehaviour
     {
         SetScore(_score + scoreValue);
         Debug.Log("GameManager.OnEnemyDestroyed: Score is now " + _score);
-        Debug.Log("GameManager.OnEnemyDestroyed: Next Milestone at score " + _nextLevelScoreMilestone);
+        Debug.Log("GameManager.OnEnemyDestroyed: Next Milestone at score " + _nextLevelXpMilestone);
         }
 
     private void OnPlayerDeath()
@@ -157,7 +161,7 @@ public class GameManager : MonoBehaviour
 
 
         Debug.Log("GameManager.SetScore: Score is now " + _score);   
-        Debug.Log("GameManager.SetScore: Milestone level is now " + _nextLevelScoreMilestone);
+        Debug.Log("GameManager.SetScore: Milestone level is now " + _nextLevelXpMilestone);
 
     }
 
@@ -207,7 +211,7 @@ public class GameManager : MonoBehaviour
             SpawnPickup();
         }
 
-        if (_score >= _nextLevelScoreMilestone && _currentLevel < _levelMilestones.Length) 
+        if (_xp >= _nextLevelXpMilestone && _currentLevel < _levelMilestones.Length) 
         {
             _currentLevel++;
             Debug.Log("GameManager.Update: level up!");
@@ -223,8 +227,8 @@ public class GameManager : MonoBehaviour
             // are no more milestones)
             if (_currentLevel < _levelMilestones.Length)
             {
-                _nextLevelScoreMilestone = _levelMilestones[_currentLevel];
-                _previousLevelScoreMilestone = _levelMilestones[_previousLevel];
+                _nextLevelXpMilestone = _levelMilestones[_currentLevel];
+                _prevLevelXpMilestone = _levelMilestones[_previousLevel];
             }
             GameObject levelUpUI = Instantiate(_levelUpUIPrefab);
         }
