@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Raven : MonoBehaviour
+public class Raven : ProjectileBase
 {
 
     // properties true for all ravens
@@ -62,24 +62,8 @@ public class Raven : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // if the raven collides with an enemy, destroy the enemy
-        if (other.gameObject.tag == "Enemy")
-        {
-            var enemy = other.gameObject.GetComponent<Enemy>();
-            DamageEnemy(enemy);
-
-            // Destroy the raven
-            Destroy(this.gameObject);
-        } else if (other.gameObject.tag == "Barrier") {
-            // Destroy the raven
-            Destroy(this.gameObject);
-        }
-    }
-
     // Deal damage to the enemy because they were hit by a dart
-    private void DamageEnemy(Enemy enemy)
+    override protected void DamageEnemy(Enemy enemy)
     {
         enemy.TakeDamage(Damage);
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Starfish : MonoBehaviour
+public class Starfish : ProjectileBase
 {
     // properties true for all starfish
     public static int Damage = 5;
@@ -47,7 +47,7 @@ public class Starfish : MonoBehaviour
         transform.RotateAround(_player.transform.position, Vector3.forward, DegreesPerFrame * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    override protected void OnTriggerEnter2D(Collider2D other)
     {
         // if the starfish collides with an enemy, damage the enemy
         if (other.gameObject.tag == "Enemy")
@@ -62,7 +62,7 @@ public class Starfish : MonoBehaviour
     }
 
     // Deal damage to the enemy because they were hit by a dart
-    private void DamageEnemy(Enemy enemy)
+    override protected void DamageEnemy(Enemy enemy)
     {
         enemy.TakeDamage(Damage);
     }
