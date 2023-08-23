@@ -73,7 +73,13 @@ public class Player : MonoBehaviour
     public AudioSource takeDamageSound;
     public Vector3 lastPosition;
 
+    private Rigidbody2D _rigidBody;
+
     // Start is called before the first frame update
+    void Awake() {
+        _rigidBody = GetComponent<Rigidbody2D>();
+    }
+
     void Start()
     {
 
@@ -89,10 +95,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         lastPosition = transform.position;
-        transform.position = new Vector2(
-            transform.position.x + Input.GetAxis("Horizontal") * Time.deltaTime * _playerMoveRate,
-            transform.position.y + Input.GetAxis("Vertical") * Time.deltaTime * _playerMoveRate
+
+        var movementVector = new Vector2(
+            Input.GetAxis("Horizontal") *  _playerMoveRate,
+            Input.GetAxis("Vertical") * _playerMoveRate
         );
+        _rigidBody.velocity = movementVector;
 
         movement.x = Input.GetAxisRaw("Horizontal");
         if (movement.x > 0) {
