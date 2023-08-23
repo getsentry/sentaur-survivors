@@ -177,9 +177,11 @@ public class Player : MonoBehaviour
             for (int i = 0; i < _ravenCount; i++) 
             {
                 var raven = Instantiate(_ravenPrefab); 
+                raven.identifier = i;
                 raven.transform.parent = transform.parent;
                 raven.TargetClosestEnemy();
             }
+            Raven.FirstTarget = null; // reset raven targeting
         }
 
         if (_starfishCount > 0 && !Starfish.IsActive && _timeElapsedSinceLastStarfish > Starfish.FireRate)
