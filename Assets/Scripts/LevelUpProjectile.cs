@@ -17,23 +17,23 @@ public class LevelUpProjectile : MonoBehaviour
     public static Dictionary<string, Upgrade> UpgradeData = new Dictionary<string, Upgrade>{
         {
             "count++",
-            new Upgrade("count++", new List<string>{"+2 darts (3 total)", "+2 darts (5 total)", "+2 darts (7 total)"})
+            new Upgrade("count++", new List<string>{"+2 darts (3 total)", "+2 darts (5 total)", "+2 darts (7 total)", "count"})
         },
         {
             "speed++",
-            new Upgrade("speed++", new List<string>{"+50% dart base fire rate", "+100% dart base fire rate", "+250% dart base fire rate"})
+            new Upgrade("speed++", new List<string>{"+50% dart base fire rate", "+100% dart base fire rate", "+250% dart base fire rate", "speed"})
         },
         {
             "damage++",
-            new Upgrade("damage++", new List<string>{"+100% dart base damage", "+200% dart base damage", "+300% dart base damage"})
+            new Upgrade("damage++", new List<string>{"+100% dart base damage", "+200% dart base damage", "+300% dart base damage", "damage"})
         },
         {
             "raven",
-            new Upgrade("raven", new List<string>{"auto-targets the nearest enemy every now and then", "auto-targets more frequently and deals more damage", "auto-targets the two closest enemies and deals even more damage"})
+            new Upgrade("raven", new List<string>{"auto-targets the nearest enemy every now and then", "auto-targets more frequently and deals more damage", "auto-targets the two closest enemies and deals even more damage", "raven"})
         },
         {
             "starfish",
-            new Upgrade("starfish", new List<string>{"auto-orbits you for a bit every now and then, damaging every enemy you hit", "orbits for longer and deals more damage", "orbits faster and deals even more damage"})
+            new Upgrade("starfish", new List<string>{"auto-orbits you for a bit every now and then, damaging every enemy you hit", "orbits for longer and deals more damage", "orbits faster and deals even more damage", "starfish"})
         }
     };
 
@@ -48,6 +48,7 @@ public class LevelUpProjectile : MonoBehaviour
 
     [SerializeField]
     private LevelOption _levelOption2;
+
 
     void Awake() {
     }
@@ -81,17 +82,17 @@ public class LevelUpProjectile : MonoBehaviour
         string optionTitle = AvailableProjectileUpgrades[option1];
         int optionLevel = UpgradeData[optionTitle].CurrentLevel + 1;
         string optionStats = UpgradeData[optionTitle].GetLevelStats(optionLevel);
-        // Debug.Log("LevelUpProjectile.RandomizeOptions: option1 is " + option1Description);   
-        _levelOption1.Set(title: optionTitle, description: "Level " + optionLevel, stats: optionStats);
+        Sprite optionSprite = UpgradeData[optionTitle].UpgradeSprite;
+        _levelOption1.Set(title: optionTitle, description: "Level " + optionLevel, stats: optionStats, sprite: optionSprite);
 
         if (option1 == option2) {
-            _levelOption2.Set("ALL OTHER UPGRADES MAXED OUT", "", "");
+            _levelOption2.Set("ALL OTHER UPGRADES MAXED OUT", "", "", null);
         } else {
             optionTitle = AvailableProjectileUpgrades[option2];
             optionLevel = UpgradeData[optionTitle].CurrentLevel + 1;
             optionStats = UpgradeData[optionTitle].GetLevelStats(optionLevel);
-            // Debug.Log("LevelUpProjectile.RandomizeOptions: option2statsText is " + statsText);   
-            _levelOption2.Set(title: optionTitle, description: "Level " + optionLevel, stats: optionStats);
+            optionSprite = UpgradeData[optionTitle].UpgradeSprite;
+            _levelOption2.Set(title: optionTitle, description: "Level " + optionLevel, stats: optionStats, sprite: optionSprite);
         }
     }
 
