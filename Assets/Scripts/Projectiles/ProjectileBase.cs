@@ -8,7 +8,7 @@ public class ProjectileBase : MonoBehaviour {
 
     protected Rigidbody2D _rigidbody2D;
     public static int BaseDamage = 10;
-    public static float BaseCooldown = 3f;
+    public static float BaseCooldown = 4f;
     public static int BaseCount = 1;
 
     protected void Awake() {
@@ -57,15 +57,15 @@ public class ProjectileBase : MonoBehaviour {
     {
         if (level == 1)
         {
-            BaseCooldown = (int) (BaseCooldown * 0.67);
+            BaseCooldown = (int) (BaseCooldown * 0.9);
         } 
         else if (level == 2)
         {
-            BaseCooldown = (int) (BaseCooldown * 0.5);
+            BaseCooldown = (int) (BaseCooldown * 0.67);
         }
         else if (level == 3)
         {
-            BaseCooldown = (int) (BaseCooldown * 0.25);
+            BaseCooldown = (int) (BaseCooldown * 0.5);
         }
 
         Dart.Cooldown = BaseCooldown * Dart.BaseCooldownPercentage;
@@ -77,10 +77,12 @@ public class ProjectileBase : MonoBehaviour {
     {
         if (level == 3) 
         {
+            Dart.SpreadInDegrees += 20;
             BaseCount += 2;
         }
         else
         {
+            Dart.SpreadInDegrees += 10;
             BaseCount++;
         }
     }

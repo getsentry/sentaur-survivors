@@ -11,7 +11,7 @@ public class LevelUpProjectile : MonoBehaviour
     // leveling up an upgrade, changes the stats to new level, increases the level #
 
     public static List<string> AvailableProjectileUpgrades = new List<string>{
-        "count++", "cooldown++", "damage++", "raven", "starfish"
+        "count++", "cooldown++", "damage++", "dart", "raven", "starfish"
     };
 
     public static Dictionary<string, Upgrade> UpgradeData = new Dictionary<string, Upgrade>{

@@ -8,14 +8,16 @@ public class Starfish : ProjectileBase
     public static int Damage;
     public static float BaseDamagePercentage = 1.2f;
     public static float Cooldown;
-    public static float BaseCooldownPercentage = 4.5f;
+    public static float BaseCooldownPercentage = 5f;
+    public static bool IsEnabled = false;
     
     public static float Duration = 5f;
     public static float DegreesPerFrame = 180f;
     public static bool IsActive = false;
     public static int AdditionalStarfish = 0;
-    private static float _distanceOutsidePlayer = 2f;
+    private static float _distanceOutsidePlayer = 1f;
 
+    public int identifier; // TODO: use this to space out starfish
     private GameObject _player;
     private float _timeElapsedSinceActivated = 0.0f;
 
@@ -24,7 +26,41 @@ public class Starfish : ProjectileBase
         _player = GameObject.Find("Player");
         IsActive = true;
 
-        // starting position
+        // TODO: make this better lol (this is used to make sure the starfish don't all start in the same spot if there are multiple)
+        Vector3 positionRelativeToPlayer = new Vector3(0,0,0);
+        switch (identifier)
+        {
+            case 0: 
+                positionRelativeToPlayer.x = 1f;
+                break;
+            case 1: 
+                positionRelativeToPlayer.x = 1f;
+                positionRelativeToPlayer.y = 1f;
+                break;
+            case 2: 
+                positionRelativeToPlayer.y = 1f;
+                break;
+            case 3: 
+                positionRelativeToPlayer.x = -1f;
+                positionRelativeToPlayer.y = 1f;
+                break;
+            case 4: 
+                positionRelativeToPlayer.x = -1f;
+                break;
+            case 5: 
+                positionRelativeToPlayer.x = -1f;
+                positionRelativeToPlayer.y = -1f;
+                break;
+            case 6: 
+                positionRelativeToPlayer.x = -1f;
+                break;
+            case 7: 
+                positionRelativeToPlayer.x = 1f;
+                positionRelativeToPlayer.y = -1f;
+                break;
+        }
+
+         // starting position
         transform.position = _player.transform.position + new Vector3(1f,0,0).normalized * _distanceOutsidePlayer;
     }
 
@@ -69,14 +105,20 @@ public class Starfish : ProjectileBase
 
     public static void UpgradeStarfish(int level)
     {
-        if (level == 2)
+        if (level == 1)
+        {
+            IsEnabled = true;
+            Damage = (int) (BaseDamage * BaseDamagePercentage);
+            Cooldown = BaseCooldown * BaseCooldownPercentage;
+        }
+        else if (level == 2)
         {
             Duration *= 1.5f;
         }
         else if (level == 3)
         {
             Duration *= 2;
-            BaseCooldownPercentage = 3f;
+            BaseCooldownPercentage = 3.5f;
             Cooldown = BaseCooldown * BaseCooldownPercentage;
         }
     }
