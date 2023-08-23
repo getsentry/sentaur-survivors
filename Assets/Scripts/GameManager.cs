@@ -56,9 +56,19 @@ public class GameManager : MonoBehaviour
     private float _lastSpawnRampUp = 0.0f;
     private int _spawnRampUpInterval = 10;
 
-    private int _hpRampUpInterval = 20;
+    [SerializeField]
+    [Tooltip("How frequently the max hitpoints of enemies ramp up (in seconds)")]
+    private int _hpRampUpInterval = 60;
+
+    [SerializeField]
+    [Tooltip("How much to increase the max hitpoints of enemies by each interval")]
+    private int _hpRampUpValue = 10;
+
+
     private float _lastHpRampUp = 0.0f;
+
     private int _maxHitPoints = 30;
+
     private float _lastPickupSpawnTime = 0.0f;
 
     private int _pickupsOnScreen = 0; 
@@ -200,9 +210,10 @@ public class GameManager : MonoBehaviour
         }
 
         if (Time.time - _lastHpRampUp > _hpRampUpInterval) {
-            Debug.Log("HP ramped up to " + _maxHitPoints);
-            _maxHitPoints += 10;
+            _maxHitPoints += _hpRampUpValue;
             _lastHpRampUp = Time.time;
+
+            Debug.Log("HP ramped up to " + _maxHitPoints);
         }
         if (Time.time - _lastPickupSpawnTime > _pickupSpawnRate)
         {
