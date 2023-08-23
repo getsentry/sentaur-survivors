@@ -54,6 +54,10 @@ public class HUD : MonoBehaviour
     }
 
     public void SetCurrentLevel(int level) {
-        _currentLevelText.text = "Level " + (level + 1);
+        if (level == 12) {
+            _currentLevelText.text = "Level 13: Ultimate Sentaur";
+        } else {
+            _currentLevelText.text = "Level " + (level + 1);
+        }
     }
 }
