@@ -18,6 +18,8 @@ public class Raven : ProjectileBase
 
     void Awake()
     {
+        base.Awake();
+        
         _player = GameObject.Find("Player");
     }
 

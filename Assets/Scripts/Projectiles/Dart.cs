@@ -14,11 +14,6 @@ public class Dart : ProjectileBase
     private Vector3 _direction;
 
     // Update is called once per frame
-    void Update()
-    {
-        transform.position += _direction * Speed * Time.deltaTime;
-    }
-
     public void SetDirection(Vector3 direction)
     {
         _direction = direction.normalized;
@@ -27,6 +22,8 @@ public class Dart : ProjectileBase
         // rotate the dart to face the direction it's moving
         var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        _rigidbody2D.velocity = _direction * Speed;
     }
 
     // Deal damage to the enemy because they were hit by a dart

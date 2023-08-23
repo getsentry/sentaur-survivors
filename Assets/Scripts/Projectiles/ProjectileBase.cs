@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class ProjectileBase : MonoBehaviour {
 
+    protected Rigidbody2D _rigidbody2D;
+
+    protected void Awake() {
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+    }
+    
     virtual protected void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.name == "Hitbox") {
