@@ -7,6 +7,7 @@ using UnityEngine;
 public class ProjectileBase : MonoBehaviour {
 
     protected Rigidbody2D _rigidbody2D;
+    public static int BaseDamage = 10;
 
     protected void Awake() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -29,4 +30,9 @@ public class ProjectileBase : MonoBehaviour {
 
     // Deal damage to the enemy because they were hit by a dart
     virtual protected void DamageEnemy(Enemy enemy) {}
+
+    public static void UpgradeDamage(int level)
+    {
+        ProjectileBase.BaseDamage *= 2;
+    }
 }

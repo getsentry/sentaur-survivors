@@ -14,16 +14,12 @@ public class Starfish : ProjectileBase
 
     private GameObject _player;
     private float _timeElapsedSinceActivated = 0.0f;
-    private Vector3 _positionOffset;
-
-    void Awake()
-    {
-        _player = GameObject.Find("Player");
-        IsActive = true;
-    }
 
     void Start()
     {
+        _player = GameObject.Find("Player");
+        IsActive = true;
+
         // starting position
         transform.position = _player.transform.position + new Vector3(1f,0,0).normalized * _distanceOutsidePlayer;
     }
