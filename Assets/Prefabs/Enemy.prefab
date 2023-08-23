@@ -106,6 +106,7 @@ MonoBehaviour:
   _scoreValue: 10
   _speed: 1
   _damageTextPrefab: {fileID: 3046976478099630124, guid: f3d91c6924ee1487984efd1cdf4dab92, type: 3}
+  _xpDropPrefab: {fileID: 4537481635261412375, guid: 41573deea9de44cd3a8532bf5d4f24fc, type: 3}
 --- !u!61 &1832744029709189115
 BoxCollider2D:
   m_ObjectHideFlags: 0

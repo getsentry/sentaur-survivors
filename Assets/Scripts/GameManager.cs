@@ -104,6 +104,9 @@ public class GameManager : MonoBehaviour
         {
             OnPlayerDeath();
         });
+        EventManager.AddListener("XpEarned", (eventData) => {
+            OnXpEarned((int)eventData.Data);
+        });
     }
 
     private void OnPickupGrabbed(int scoreValue)
@@ -112,6 +115,18 @@ public class GameManager : MonoBehaviour
         _pickupsOnScreen -= 1;
 
         Debug.Log("GameManager.OnPickupGrabbed: Score is now " + _score);
+    }
+
+    private void OnXpEarned(int xp)
+    {
+        Debug.Log("GameManager.OnXpEarned: Xp is now " + _xp);
+        if (_currentLevel == 0) 
+        {
+            _xp = 1.0f * _score / _nextLevelScoreMilestone;
+        } else {
+            _xp = 1.0f * (_score - _previousLevelScoreMilestone) / (_nextLevelScoreMilestone - _previousLevelScoreMilestone);
+        }
+        _hud.SetXp(_xp);
     }
 
     private void OnEnemyDestroyed(int scoreValue)
@@ -135,16 +150,8 @@ public class GameManager : MonoBehaviour
     private void SetScore(int score)
     {
         _score = score;
-
-        if (_currentLevel == 0) 
-        {
-            _xp = 1.0f * _score / _nextLevelScoreMilestone;
-        } else {
-            _xp = 1.0f * (_score - _previousLevelScoreMilestone) / (_nextLevelScoreMilestone - _previousLevelScoreMilestone);
-        }
-
         _hud.SetScore(_score);
-        _hud.SetXp(_xp);
+
 
         Debug.Log("GameManager.SetScore: Score is now " + _score);   
         Debug.Log("GameManager.SetScore: Milestone level is now " + _nextLevelScoreMilestone);
