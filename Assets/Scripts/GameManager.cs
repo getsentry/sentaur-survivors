@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
         }
 
     private void OnPlayerDeath()
-    {
+    {   
         _gameState = GameState.GameOver;
 
         // STOP THE GAME
