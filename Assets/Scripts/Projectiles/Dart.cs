@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Profiling;
 using UnityEngine;
 
-public class Dart : MonoBehaviour
+public class Dart : ProjectileBase
 {
     // properties true for all darts
     public static float Speed = 10.0f;
@@ -29,24 +29,8 @@ public class Dart : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.name == "Hitbox") {
-            var hitbox = other.gameObject.GetComponent<Hitbox>();
-            var enemy = hitbox.Enemy;
-
-            DamageEnemy(enemy);
-            Destroy(this.gameObject);
-        }
-        else if (other.gameObject.tag == "Barrier") {
-            // Destroy the dart
-            Destroy(this.gameObject);
-        }
-
-    }
-
     // Deal damage to the enemy because they were hit by a dart
-    private void DamageEnemy(Enemy enemy)
+    override protected void DamageEnemy(Enemy enemy)
     {
         enemy.TakeDamage(Damage);
     }
