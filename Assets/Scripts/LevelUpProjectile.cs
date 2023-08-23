@@ -9,12 +9,7 @@ public class LevelUpProjectile : MonoBehaviour
 
     // fyi: title -> upgrade name, description -> level, stats -> description 
 
-    // ????
-    // todo - make this a dictionary of string to string, where the key is the upgrade name and the value is the description
-    // todo - make this a dictionary of string to string, where the key is the upgrade name and the value is the stats
-    // todo - make this a dictionary of string to string, where the key is the upgrade name and the value is the sprite
-    // todo - make this a dictionary of string to string, where the key is the upgrade name and the value is the level
-
+    // todo: would be nice to better organize the upgrade data its easier to track and use
     // upgrade[(string) upgradeName] = [description, stats, sprite, level]
     // upgradeObject = upgrade[(string) upgradeName]
     // upgradeObject.description
@@ -23,7 +18,6 @@ public class LevelUpProjectile : MonoBehaviour
     // upgradeObject.level
 
     // leveling up an upgrade, changes the stats to new level, increases the level #
-
 
     public static List<string> AvailableProjectileUpgrades = new List<string>{
         "count++", "speed++", "damage++", "raven", "starfish"
