@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1945184621
+  m_SortingLayerID: 740904935
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -1132381815, guid: 2827c36882dbd4030974748cca6d4741, type: 3}
@@ -104,6 +104,7 @@ MonoBehaviour:
   _collisionDamage: 10
   hitpoints: 20
   _scoreValue: 10
+  _xpValue: 10
   _speed: 1
   _damageTextPrefab: {fileID: 3046976478099630124, guid: f3d91c6924ee1487984efd1cdf4dab92, type: 3}
   _xpDropPrefab: {fileID: 4537481635261412375, guid: 41573deea9de44cd3a8532bf5d4f24fc, type: 3}
