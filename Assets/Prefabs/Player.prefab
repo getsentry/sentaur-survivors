@@ -153,7 +153,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1945184621
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1101639518, guid: 239d3f29323044693a5d9a2e5fc07f73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -181,7 +181,7 @@ MonoBehaviour:
   _dartPrefab: {fileID: -1238747304094502698, guid: f4b2f15faddfa43ee9ea450e341989a3, type: 3}
   _ravenPrefab: {fileID: 1783361906523289645, guid: 73dffc90c37874381bd50b09415a2c82, type: 3}
   _starfishPrefab: {fileID: 4760811041620966471, guid: 33fd1a5d339ac4354ba91c77597adb88, type: 3}
-  _hitPoints: 10
+  _hitPoints: 100
   _maxHitPoints: 100
   _dartCount: 1
   _playerMoveRate: 5
