@@ -17,6 +17,9 @@ public class DiagonalEnemy : Enemy
         if (collision.gameObject.tag == "Barrier") {
             // rotate direction 90 degrees
             _direction = Quaternion.AngleAxis(-90, Vector3.forward) * _direction;
+        } else if (collision.gameObject.tag == "Enemy") {
+            // ignore physics collision with other enemies
+            Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
         }
     }
 }
