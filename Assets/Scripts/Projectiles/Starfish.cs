@@ -9,6 +9,7 @@ public class Starfish : MonoBehaviour
     public static float FireRate = 8f;
     public static float Duration = 5f;
     public static float DegreesPerFrame = 180f;
+    public static bool IsActive = false;
     private static float _distanceOutsidePlayer = 2f;
 
     private GameObject _player;
@@ -18,12 +19,13 @@ public class Starfish : MonoBehaviour
     void Awake()
     {
         _player = GameObject.Find("Player");
+        IsActive = true;
     }
 
     void Start()
     {
         // starting position
-        transform.position = _player.transform.position + new Vector3(1f,1f,0).normalized * _distanceOutsidePlayer;
+        transform.position = _player.transform.position + new Vector3(1f,0,0).normalized * _distanceOutsidePlayer;
     }
 
     // Update is called once per frame
@@ -32,16 +34,16 @@ public class Starfish : MonoBehaviour
         _timeElapsedSinceActivated += Time.deltaTime;
         if (_timeElapsedSinceActivated > Duration)
         {
+            IsActive = false;
             Destroy(gameObject);
         }
-        
     }
 
     void LateUpdate()
     {
-        // move where player is
-        _positionOffset = transform.position - _player.transform.position; 
-        transform.position = _player.transform.position + _positionOffset.normalized * _distanceOutsidePlayer;
+        // move the same amount the player moved in this frame
+        Vector3 playerMovement = _player.transform.position - _player.GetComponent<Player>().lastPosition;
+        transform.position += playerMovement;
         transform.RotateAround(_player.transform.position, Vector3.forward, DegreesPerFrame * Time.deltaTime);
     }
 
@@ -53,6 +55,10 @@ public class Starfish : MonoBehaviour
             var enemy = other.gameObject.GetComponent<Enemy>();
             DamageEnemy(enemy);
         } 
+        else if (other.gameObject.tag == "Barrier")
+        {
+            Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), other.collider);
+        }
     }
 
     // Deal damage to the enemy because they were hit by a dart

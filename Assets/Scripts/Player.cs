@@ -71,6 +71,7 @@ public class Player : MonoBehaviour
     bool facingRight = false;
 
     public AudioSource takeDamageSound;
+    public Vector3 lastPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +88,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        lastPosition = transform.position;
         transform.position = new Vector2(
             transform.position.x + Input.GetAxis("Horizontal") * Time.deltaTime * _playerMoveRate,
             transform.position.y + Input.GetAxis("Vertical") * Time.deltaTime * _playerMoveRate
@@ -111,8 +113,9 @@ public class Player : MonoBehaviour
             _timeElapsedSinceLastRaven += Time.deltaTime;
         }
 
-        if (_starfishCount > 0) 
+        if (_starfishCount > 0 && !Starfish.IsActive) 
         {
+            // don't count while starfish is still orbiting
             _timeElapsedSinceLastStarfish += Time.deltaTime;
         }
 
@@ -171,7 +174,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (_starfishCount > 0 && _timeElapsedSinceLastStarfish > Starfish.FireRate)
+        if (_starfishCount > 0 && !Starfish.IsActive && _timeElapsedSinceLastStarfish > Starfish.FireRate)
         {
             _timeElapsedSinceLastStarfish = 0.0f;
             for (int i = 0; i < _starfishCount; i++)
