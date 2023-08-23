@@ -31,19 +31,18 @@ public class Dart : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // if the dart collides with an enemy, destroy the enemy
-        if (other.gameObject.tag == "Enemy")
-        {
-            var enemy = other.gameObject.GetComponent<Enemy>();
-            Debug.Log("Dart hit enemy");
-            DamageEnemy(enemy);
+        if (other.gameObject.name == "Hitbox") {
+            var hitbox = other.gameObject.GetComponent<Hitbox>();
+            var enemy = hitbox.Enemy;
 
-            // Destroy the dart
+            DamageEnemy(enemy);
             Destroy(this.gameObject);
-        } else if (other.gameObject.tag == "Barrier") {
+        }
+        else if (other.gameObject.tag == "Barrier") {
             // Destroy the dart
             Destroy(this.gameObject);
         }
+
     }
 
     // Deal damage to the enemy because they were hit by a dart
