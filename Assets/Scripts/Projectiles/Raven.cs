@@ -19,14 +19,8 @@ public class Raven : ProjectileBase
     void Awake()
     {
         base.Awake();
-        
-        _player = GameObject.Find("Player");
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        transform.position += _direction * Speed * Time.deltaTime;
+        _player = GameObject.Find("Player");
     }
 
     public void TargetClosestEnemy() 
@@ -34,6 +28,8 @@ public class Raven : ProjectileBase
         GameObject target = GetTarget();
         Vector3 direction = target.transform.position - _player.transform.position;
         SetDirection(direction);
+
+        // initial position
         transform.position = _player.transform.position + direction.normalized * _distanceOutsidePlayer;
     }
 
@@ -71,6 +67,8 @@ public class Raven : ProjectileBase
     {
         _direction = direction.normalized;
         _direction.z = 0; // don't move in the z direction
+
+        _rigidbody2D.velocity = _direction * Speed;
 
         // rotate the raven to face the direction it's moving
         var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
