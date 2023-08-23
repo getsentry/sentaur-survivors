@@ -26,15 +26,14 @@ public class Enemy : MonoBehaviour
     private DamageText _damageTextPrefab;
 
     
-    private Vector2 _lastPosition;
     
     private SpriteRenderer _spriteRenderer;
+
+    private Rigidbody2D _rigidbody2D;
+
     void Awake() {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    void Start(){
-        Debug.Log("HITPOINTS:" + hitpoints);
+        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -44,23 +43,19 @@ public class Enemy : MonoBehaviour
         GameObject player = GameObject.Find("Player");
         if (player != null)
         {
-            _lastPosition = transform.position;
-            transform.position = (Vector3)DetermineDirection(player);
-        }
+            var direction = DetermineDirection(player);
+            _rigidbody2D.velocity = direction * _speed;
 
-        // flip sprite in x direction if moving left
-        var delta = (Vector2)transform.position - _lastPosition;
-        _spriteRenderer.flipX = delta.x < 0;
-        
+            // flip sprite in x direction if moving left
+            _spriteRenderer.flipX = direction.x < 0;
+        }
     }
 
+    /**
+     * Returns a normalized vector in the direction of the desired movement
+     */
     virtual protected Vector2 DetermineDirection(GameObject player) {
-        // move towards the player character
-        return Vector2.MoveTowards(
-            transform.position,
-            player.transform.position,
-            Time.deltaTime
-        ) * _speed;
+        return Vector3.Normalize(player.transform.position - transform.position);
     }
     
     // a collision handler that is called when the enemy collides with another object
