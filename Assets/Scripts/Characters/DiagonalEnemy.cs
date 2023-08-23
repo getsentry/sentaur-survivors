@@ -8,8 +8,7 @@ public class DiagonalEnemy : Enemy
     Vector2 _direction = new Vector3(0.5f, 0.5f, 0);
 
     override protected Vector2 DetermineDirection(GameObject player) {
-        var nextPosition = (Vector2)transform.position + _direction * Time.deltaTime * _speed;
-        return nextPosition;
+        return Vector3.Normalize(_direction);
     }
 
     override protected void OnCollisionEnter2D(Collision2D collision) {
