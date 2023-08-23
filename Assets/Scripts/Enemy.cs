@@ -17,6 +17,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     [Tooltip("How many points the player gets for killing this enemy")]
     private int _scoreValue = 10;
+
+    [SerializeField]
+    [Tooltip("How much XP the player earns")]
+    private int _xpValue = 10;
     
     [SerializeField]
     protected float _speed = 1f;
@@ -25,8 +29,9 @@ public class Enemy : MonoBehaviour
     [Tooltip("The prefab to use for the damage text")]
     private DamageText _damageTextPrefab;
 
-    
-    
+    [SerializeField]
+    private XpDrop _xpDropPrefab;
+
     private SpriteRenderer _spriteRenderer;
 
     private Rigidbody2D _rigidbody2D;
@@ -68,10 +73,22 @@ public class Enemy : MonoBehaviour
             DamagePlayer(player);
 
             // Destroy the enemy (for now they explode if they touch the player)
-            Destroy(this.gameObject);
+            Death();
+            
         }
     }
     
+    virtual public void Death(bool leaveXp = false) {
+
+        if (leaveXp) {
+            // instantiate an xp drop at this position
+            var xpDrop = Instantiate(_xpDropPrefab, transform.position, Quaternion.identity);
+            xpDrop.SetXp(_xpValue);
+        }
+
+        Destroy(this.gameObject);
+    }
+
     // Deal damage to the player because they touched
     private void DamagePlayer(Player player) {
         Debug.Log("Enemy.DamagePlayer: Player was damaged by " + gameObject.name);
@@ -92,8 +109,7 @@ public class Enemy : MonoBehaviour
 
         if (hitpoints == 0) {
 
-            // destroy the enemy
-            Destroy(this.gameObject);
+            Death(leaveXp: true);
 
             EventManager.TriggerEvent("EnemyDestroyed", new EventData(_scoreValue));
         }
