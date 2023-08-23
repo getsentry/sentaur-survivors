@@ -8,15 +8,6 @@ public class LevelUpProjectile : MonoBehaviour
 {
 
     // fyi: title -> upgrade name, description -> level, stats -> description 
-
-    // todo: would be nice to better organize the upgrade data its easier to track and use
-    // upgrade[(string) upgradeName] = [description, stats, sprite, level]
-    // upgradeObject = upgrade[(string) upgradeName]
-    // upgradeObject.description
-    // upgradeObject.stats
-    // upgradeObject.sprite
-    // upgradeObject.level
-
     // leveling up an upgrade, changes the stats to new level, increases the level #
 
     public static List<string> AvailableProjectileUpgrades = new List<string>{
@@ -51,10 +42,6 @@ public class LevelUpProjectile : MonoBehaviour
     // these are equivalent to the index of the option in AvailableProjectileUpgrades
     private int option1;
     private int option2;
-
-    // find the descriptions of the upgrades
-    private string option1Name;
-    private string option2Name;
 
     [SerializeField]
     private LevelOption _levelOption1;
