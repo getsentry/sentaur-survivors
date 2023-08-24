@@ -18,7 +18,7 @@ public class Dart : ProjectileBase
     public static float TimeElapsedSinceLastDart;
     public static bool IsShooting = false;
 
-    private static float _distanceOutsidePlayer = 2f;
+    private static float _distanceOutsidePlayer = 1.25f;
     private static float _shootingInterval = 0.4f; // time between consecutive darts
 
     private Vector3 _direction;
@@ -62,8 +62,11 @@ public class Dart : ProjectileBase
     {
         Dart dart = Instantiate(prefab);
         dart.transform.parent = player.transform.parent;
-        dart.SetDirection(direction);
+
+        // initial position
         dart.transform.position = player.transform.position + direction.normalized * _distanceOutsidePlayer;
+
+        dart.SetDirection(direction);
     }
 
     private static Vector3 CalculateDirection(GameObject player)
@@ -83,7 +86,7 @@ public class Dart : ProjectileBase
         var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        _rigidbody2D.velocity = _direction * Speed;
+        _rigidbody2D.velocity = Vector3.Normalize(_direction) * Speed;
     }
 
     // Deal damage to the enemy because they were hit by a dart
