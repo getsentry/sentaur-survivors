@@ -42,8 +42,8 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
+  - name: Floor
+    uniqueID: 2931695325
     locked: 0
   - name: Walls
     uniqueID: 4272993269
@@ -53,6 +53,12 @@ TagManager:
     locked: 0
   - name: Pickups
     uniqueID: 23827671
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Shadows
+    uniqueID: 1245650623
     locked: 0
   - name: Characters
     uniqueID: 740904935
