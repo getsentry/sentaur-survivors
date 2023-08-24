@@ -59,6 +59,18 @@ public class Player : MonoBehaviour
     private bool _isDead = false;
 
     // Start is called before the first frame update
+
+    static Player _instance;
+
+    public static Player Instance {
+        get {
+            if (_instance == null) {
+                _instance = GameObject.FindObjectOfType<Player>();
+            }
+            return _instance;
+        }
+    }
+
     void Awake() {
         _rigidBody = GetComponent<Rigidbody2D>();
     }

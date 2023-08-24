@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+using DG.Tweening;
 
 public class Enemy : MonoBehaviour
 {
@@ -17,6 +17,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     [Tooltip("How many points the player gets for killing this enemy")]
     private int _scoreValue = 10;
+
+    [SerializeField]
+    [Tooltip("How much XP the player earns")]
+    private int _xpValue = 10;
     
     [SerializeField]
     protected float _speed = 1f;
@@ -25,19 +29,37 @@ public class Enemy : MonoBehaviour
     [Tooltip("The prefab to use for the damage text")]
     private DamageText _damageTextPrefab;
 
-    
-    
+    [SerializeField]
+    private XpDrop _xpDropPrefab;
+
+    [SerializeField]
+    [Tooltip("The material to use when the enemy is flashing")]
+    private Material _flashMaterial;
+
+    [SerializeField]
+    [Tooltip("How long the enemy flashes for when they take damage")]
+    private float _flashDuration = 0.2f;
+
+    [SerializeField]
+    [Tooltip("How long the enemy's death animation lasts")]
+    private float _deathAnimDuration = 0.5f;
+
+    private Material _originalMaterial;
+    private Coroutine _flashCoroutine;
+
     private SpriteRenderer _spriteRenderer;
 
-    private Rigidbody2D _rigidbody2D;
+    protected Rigidbody2D _rigidbody2D;
 
-    void Awake() {
+    protected void Awake() {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
+
+        _originalMaterial = _spriteRenderer.material;
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {   
         // move towards the player character
         GameObject player = GameObject.Find("Player");
@@ -68,10 +90,38 @@ public class Enemy : MonoBehaviour
             DamagePlayer(player);
 
             // Destroy the enemy (for now they explode if they touch the player)
-            Destroy(this.gameObject);
+            Death();
+            
         }
     }
     
+    // material flash trick from: https://www.youtube.com/watch?v=9rZkiEyS66I
+    public void Flash() {
+
+        if (_flashCoroutine != null) {
+            StopCoroutine(_flashCoroutine);
+        }
+        _flashCoroutine = StartCoroutine(FlashCoroutine());
+    }
+
+    private IEnumerator FlashCoroutine() {
+        _spriteRenderer.material = _flashMaterial;
+        yield return new WaitForSeconds(_flashDuration);
+        _spriteRenderer.material = _originalMaterial;
+    }
+
+    virtual public void Death(bool leaveXp = false) {
+        // shrink (scale to 1) before being destroyed
+        transform.DOScale(0.01f, _deathAnimDuration).OnComplete(() => {
+            if (leaveXp) {
+                // instantiate an xp drop at this position
+                var xpDrop = Instantiate(_xpDropPrefab, transform.position, Quaternion.identity);
+                xpDrop.SetXp(_xpValue);
+            }
+            Destroy(gameObject);
+        });
+    }
+
     // Deal damage to the player because they touched
     private void DamagePlayer(Player player) {
         Debug.Log("Enemy.DamagePlayer: Player was damaged by " + gameObject.name);
@@ -80,6 +130,8 @@ public class Enemy : MonoBehaviour
     }
 
     public void TakeDamage(int damage) {
+        Flash();
+
         hitpoints -= damage;
         hitpoints = Mathf.Max(hitpoints, 0); // don't let the enemy have negative hit points
 
@@ -92,8 +144,7 @@ public class Enemy : MonoBehaviour
 
         if (hitpoints == 0) {
 
-            // destroy the enemy
-            Destroy(this.gameObject);
+            Death(leaveXp: true);
 
             EventManager.TriggerEvent("EnemyDestroyed", new EventData(_scoreValue));
         }

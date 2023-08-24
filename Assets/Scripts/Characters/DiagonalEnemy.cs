@@ -5,18 +5,35 @@ using UnityEngine;
 
 public class DiagonalEnemy : Enemy
 {
-    Vector2 _direction = new Vector3(0.5f, 0.5f, 0);
+    Vector2 _direction;
 
-    override protected Vector2 DetermineDirection(GameObject player) {
+    void Awake() {
+        base.Awake();
+
+        // initialize a random direction
+        _direction = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+
+    }
+    override protected Vector2 DetermineDirection(GameObject player)
+    {
         return Vector3.Normalize(_direction);
     }
 
-    override protected void OnCollisionEnter2D(Collision2D collision) {
+    override protected void OnCollisionEnter2D(Collision2D collision)
+    {
         base.OnCollisionEnter2D(collision);
 
-        if (collision.gameObject.tag == "Barrier") {
-            // rotate direction 90 degrees
-            _direction = Quaternion.AngleAxis(-90, Vector3.forward) * _direction;
+        if (collision.gameObject.tag == "Barrier")
+        {
+            // reflect the velocity of the enemy off the barrier
+            // https://stackoverflow.com/questions/49790711/reflect-a-projectile-on-collision-in-unity
+
+            _direction = Vector3.Reflect(_direction, collision.contacts[0].normal);
+        }
+        else if (collision.gameObject.tag == "Enemy")
+        {
+            // ignore physics collision with other enemies
+            Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
         }
     }
 }

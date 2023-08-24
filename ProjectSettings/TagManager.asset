@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Barrier
+  - Characters
+  - Projectiles
   layers:
   - Default
   - TransparentFX
@@ -40,12 +42,33 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
+  - name: Floor
+    uniqueID: 2931695325
     locked: 0
   - name: Walls
     uniqueID: 4272993269
     locked: 0
   - name: Obstacles
     uniqueID: 719373989
+    locked: 0
+  - name: Pickups
+    uniqueID: 23827671
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Shadows
+    uniqueID: 1245650623
+    locked: 0
+  - name: Characters
+    uniqueID: 740904935
+    locked: 0
+  - name: Flying Characters
+    uniqueID: 2873400759
+    locked: 0
+  - name: Projectiles
+    uniqueID: 1750925873
+    locked: 0
+  - name: WorldSpace UI
+    uniqueID: 3738593703
     locked: 0
