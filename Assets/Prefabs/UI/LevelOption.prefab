@@ -649,6 +649,7 @@ MonoBehaviour:
   _countSprite: {fileID: 21300000, guid: d5250e5db3ce642448c7a5c9ffa33af9, type: 3}
   _speedSprite: {fileID: 21300000, guid: 8094df7779b004b43b7cc37ee399539b, type: 3}
   _damageSprite: {fileID: 21300000, guid: 4af40a0e588594a3c9e45068423eb312, type: 3}
+  _dartSprite: {fileID: 21300000, guid: 7065380beeb504112b67e70f625d51e3, type: 3}
   _ravenSprite: {fileID: -41011132, guid: 2d1db680ea22a4dd78b6c2918a56aa0e, type: 3}
   _starfishSprite: {fileID: 900386594, guid: f973a0cae040d40648faf1d1eab27ad7, type: 3}
 --- !u!114 &3883653688101900433
