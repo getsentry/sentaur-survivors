@@ -34,15 +34,15 @@ public class Enemy : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
 
-    private Rigidbody2D _rigidbody2D;
+    protected Rigidbody2D _rigidbody2D;
 
-    void Awake() {
+    protected void Awake() {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {   
         // move towards the player character
         GameObject player = GameObject.Find("Player");
