@@ -39,6 +39,10 @@ public class Player : MonoBehaviour
     private float _timeElapsedSinceLastUmbrella = 0.0f;
 
     [SerializeField]
+    [Tooltip("The prefab to use for the player text")]
+    private PlayerText _playerTextPrefab;
+
+    [SerializeField]
     [Tooltip("How long a time-based pickup should last")]
     private float _timeBasedPickupDuration = 10f;
 
@@ -192,25 +196,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-    // private Vector3 CalculateDartDirection() 
-    // {
-    //     // dart moves in the direction of the current mouse cursor
-    //     Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //     Vector3 direction = mousePosition - transform.position;
-
-    //     return direction;
-    // }
-
-    private Vector3 RotateDirection(Vector3 direction, float degreesToRotate)
-    {
-        float degreesInRadians = degreesToRotate * Mathf.Deg2Rad;
-        return new Vector3(
-            direction.x * Mathf.Cos(degreesInRadians) - direction.y * Mathf.Sin(degreesInRadians),
-            direction.x * Mathf.Sin(degreesInRadians) + direction.y * Mathf.Cos(degreesInRadians) 
-        );
-    }
-    
     IEnumerator Wait(float _waitTime) {
         _isDead = true;
         yield return new WaitForSeconds(_waitTime);
@@ -241,12 +226,26 @@ public class Player : MonoBehaviour
         _hitPoints = Math.Min(_hitPoints, 100); // don't let the player have more than 100 hit points
 
         _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
+
+        Vector2 textPosition = new Vector2(
+            transform.position.x,
+            transform.position.y + 1.0f
+        );
+        _playerTextPrefab.Spawn(transform.root, textPosition, "+" + healAmount + " health!");
+
     }
 
     public void SpeedUp(int newSpeed, bool hasSkateboard = false)
     {
         _playerMoveRate = newSpeed;
         _hasPickedUpSkateboard = hasSkateboard;
+
+        Vector2 textPosition = new Vector2(
+            transform.position.x,
+            transform.position.y + 1.0f
+        );
+        string speedRate = (newSpeed / _baseMoveRate).ToString();
+        _playerTextPrefab.Spawn(transform.root, textPosition, speedRate + "x speed!");
 
         if (_hasPickedUpSkateboard)
         {
@@ -259,6 +258,13 @@ public class Player : MonoBehaviour
     {
         _damageReductionAmount = reductionPercentage;
         _hasPickedUpUmbrella = hasUmbrella;
+
+        Vector2 textPosition = new Vector2(
+            transform.position.x,
+            transform.position.y + 1.0f
+        );
+        string formatPercentage = (reductionPercentage*100).ToString();
+        _playerTextPrefab.Spawn(transform.root, textPosition, formatPercentage + "% dmg reduction!");
 
         if (_hasPickedUpUmbrella)
         {
