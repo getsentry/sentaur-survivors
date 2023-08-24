@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     [Tooltip("How fast the player moves (how exaclty I don't know)")]
-    private float _playerMoveRate = 5;
+    private float _playerMoveRate = 2.5f;
     private float _baseMoveRate;
 
     private bool _hasPickedUpSkateboard = false;
