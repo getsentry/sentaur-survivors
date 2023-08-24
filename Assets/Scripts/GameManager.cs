@@ -28,6 +28,10 @@ public class GameManager : MonoBehaviour
     private int _currentLevel = 0;
 
     [SerializeField]
+    [Tooltip("Maximum wave size scale factor")]
+    private float _maxWaveSizeScaleFactor = 0.67f;
+
+    [SerializeField]
     [Tooltip("The plane to spawn enemies on")]
     private GameObject _spawnPlane;
 
@@ -387,12 +391,14 @@ public class GameManager : MonoBehaviour
                 throw new System.Exception("GameManager.Spawn: Invalid spawn choice");
         }
 
-        // number of enemies spawned is random based on level
-        // level 1: 1 enemy
-        // level 2: 1-2 enemies
-        // level 3: 1-3 enemies
-        // level 4: 1-4 enemies ... etc
-        int waveSize = Random.Range(1, _currentLevel + 1);
+        // number of enemies spawned is random based on level * _maxWaveSizeScaleFactor
+        // with default maxWaveScaleFactor of 0.67:
+        //   level 1-2: 1 enemy
+        //   level 3-4: 1-2 enemies
+        //   level 5:   1-3 enemies
+        //   level 6-7: 1-4 enemies
+        //   level 8:   1-5 enemies ... etc
+        int waveSize = Random.Range(1, (int)(_currentLevel * _maxWaveSizeScaleFactor));
         SpawnEnemyWave(prefab, waveSize);
     }
 
