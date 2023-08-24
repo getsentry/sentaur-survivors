@@ -42,10 +42,6 @@ public class LevelUpProjectile : MonoBehaviour
     private int option1;
     private int option2;
 
-    // find the descriptions of the upgrades
-    private string option1stats;
-    private string option2stats;
-
     [SerializeField]
     private LevelOption _levelOption1;
 
@@ -73,16 +69,12 @@ public class LevelUpProjectile : MonoBehaviour
     void RandomizeOptions() 
     {
         option1 = Random.Range(0, AvailableProjectileUpgrades.Count);
-        option1stats = AvailableProjectileUpgrades[option1];
-        Debug.Log("LevelUpProjectile.RandomizeOptions: option1stats is " + option1stats);   
 
         // select a second option that is different from the first option if the number of available
         // projectiles is greater than 1
         do 
         {
             option2 = Random.Range(0, AvailableProjectileUpgrades.Count);
-            option2stats = AvailableProjectileUpgrades[option2];
-            Debug.Log("LevelUpProjectile.RandomizeOptions: option2stats is " + option2stats);
         } while (AvailableProjectileUpgrades.Count > 1 && option2 == option1);
 
         string optionTitle = AvailableProjectileUpgrades[option1];
