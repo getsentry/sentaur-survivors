@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6295179934123336098}
   - component: {fileID: 295774253270329903}
   m_Layer: 9
-  m_Name: MantisEnemy 1
+  m_Name: MantisEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
