@@ -5,21 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    [Tooltip("The enemy prefab to spawn")]
-    private GameObject _enemyPrefab;
 
-    [SerializeField]
-    [Tooltip("The diagonal enemy prefab to spawn")]
-    private DiagonalEnemy _diagonalEnemyPrefab;
-
+    [Header("Game Properties")]
     [SerializeField]
     [Tooltip("How frequently enemies spawn (in seconds)")]
     private float _enemySpawnRate = 2.0f;
-
-    [SerializeField]
-    [Tooltip("The pickup prefab to spawn")]
-    private GameObject _pickupPrefab;
 
     [SerializeField]
     [Tooltip("How frequently pickups spawn (in seconds)")]
@@ -30,19 +20,42 @@ public class GameManager : MonoBehaviour
     private int _maxPickupsOnScreen = 5;
 
     [SerializeField]
-    [Tooltip("The level up UI prefab to spawn")]
-    private GameObject _levelUpUIPrefab;
+    [Tooltip("The current level")]
+    private int _currentLevel = 0;
+
+    [SerializeField]
+    [Tooltip("The plane to spawn enemies on")]
+    private GameObject _spawnPlane;
 
     [SerializeField]
     [Tooltip("Starting XP")]
     private float _xp = 0;
 
+    [Header("Prefabs")]
     [SerializeField]
-    private Tilemap _floor;
+    [Tooltip("The sentaur enemy prefab to spawn")]
+    private GameObject _sentaurEnemyPrefab;
 
     [SerializeField]
-    [Tooltip("The plane to spawn enemies on")]
-    private GameObject _spawnPlane;
+    [Tooltip("The ant enemy prefab to spawn")]
+    private GameObject _antEnemyPrefab;
+
+    [SerializeField]
+    [Tooltip("The head enemy prefab to spawn")]
+    private GameObject _headEnemyPrefab;
+
+    [SerializeField]
+    [Tooltip("The mantis enemy prefab to spawn")]
+    private GameObject _mantisEnemyPrefab;
+
+    [SerializeField]
+    [Tooltip("The pickup prefab to spawn")]
+    private GameObject _pickupPrefab;
+
+    [SerializeField]
+    [Tooltip("The level up UI prefab to spawn")]
+    private GameObject _levelUpUIPrefab;
+
 
     // the player's accumulated score so far
     private int _score = 0;
@@ -53,12 +66,26 @@ public class GameManager : MonoBehaviour
     private int _nextLevelXpMilestone;
     // trackinf the previous level score milestone for xp bar
     private int _prevLevelXpMilestone;
-    private int _currentLevel = 0;
     private int _previousLevel = 0;
 
     private float _lastEnemySpawnTime = 0.0f;
     private float _lastSpawnRampUp = 0.0f;
     private int _spawnRampUpInterval = 10;
+
+    public enum EnemyType {
+        Sentaur = 0,
+        Ant = 1,
+        Head = 2,
+        Mantis= 3
+    };
+
+    // what level enemies start appearing
+    private Dictionary<EnemyType, int> _levelEnemyGate = new  Dictionary<EnemyType, int> {
+        {EnemyType.Sentaur, 0}, // start
+        {EnemyType.Ant, 2}, // level 3
+        {EnemyType.Head, 4}, // level 5
+        {EnemyType.Mantis, 6}, // level 7
+    };
 
     [SerializeField]
     [Tooltip("How frequently the max hitpoints of enemies ramp up (in seconds)")]
@@ -186,17 +213,8 @@ public class GameManager : MonoBehaviour
         {
             _lastEnemySpawnTime = Time.time;
 
-            GameObject prefab;
+            Spawn();
 
-            // spawn a diagonal enemy 20% of the time
-            int random = Random.Range(0, 4);
-            if (random == 0) {
-                prefab = _diagonalEnemyPrefab.gameObject;
-            } else {
-                prefab = _enemyPrefab;
-            }
-
-            SpawnEnemy(prefab);
         }
 
         // ramp up spawn rate
@@ -208,7 +226,7 @@ public class GameManager : MonoBehaviour
         // ramp up enemy hp
         if (Time.time - _lastHpRampUp > _hpRampUpInterval) {
             _enemyHitPointModifier += _hpRampUpValue;
-            
+
             Debug.Log("Enemy HP modifier is now " + _enemyHitPointModifier + " (" + (int)(Time.time - _lastHpRampUp) + "s elapsed )");
             _lastHpRampUp = Time.time;
         }
@@ -302,6 +320,45 @@ public class GameManager : MonoBehaviour
         } while (viewportBounds.Contains(floorSpawnCoord));
 
         return floorSpawnCoord;
+    }
+
+    private void Spawn() {
+        GameObject prefab;
+
+        int spawnRange = (int)EnemyType.Sentaur;
+
+        // determine what range of enemies to spawn based on level
+        if (_currentLevel >= _levelEnemyGate[EnemyType.Ant]) {
+            spawnRange = (int)EnemyType.Ant;
+        }
+        if (_currentLevel >= _levelEnemyGate[EnemyType.Head]) {
+            spawnRange = (int)EnemyType.Head;
+        }
+        if (_currentLevel >= _levelEnemyGate[EnemyType.Mantis]) {
+            spawnRange = (int)EnemyType.Mantis;
+        }
+        Debug.Log(spawnRange);
+        int spawnChoice = Random.Range((int)EnemyType.Sentaur, spawnRange + 1);
+
+        switch (spawnChoice) {
+            case (int)EnemyType.Sentaur:
+                prefab = _sentaurEnemyPrefab;
+                break;
+            case (int)EnemyType.Ant:
+                prefab = _antEnemyPrefab;
+                break;
+            case (int)EnemyType.Head:
+                prefab = _headEnemyPrefab;
+                break;
+            case (int)EnemyType.Mantis:
+                prefab = _mantisEnemyPrefab;
+                break;
+            default:
+                // throw exception; should never get here
+                throw new System.Exception("GameManager.Spawn: Invalid spawn choice");
+        }
+
+        SpawnEnemy(prefab);
     }
 
     private void SpawnEnemy(GameObject prefab)
