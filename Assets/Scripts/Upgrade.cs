@@ -8,13 +8,11 @@ public class Upgrade
     private string _name;
     private int _currentLevel;
     private List<string> _levelStats;
-    private Sprite _upgradeSprite;
 
-    public Upgrade(string name, List<string> levelStats, Sprite upgradeSprite = null, int currentLevel = 0)
+    public Upgrade(string name, List<string> levelStats, int currentLevel = 0)
     {
         _name = name;
         _levelStats = levelStats;
-        _upgradeSprite = upgradeSprite;
         _currentLevel = currentLevel;
     }
 
@@ -48,10 +46,5 @@ public class Upgrade
             return "";
         }
 
-    }
-
-    public Sprite UpgradeSprite
-    {
-        get { return _upgradeSprite; }
     }
 }
