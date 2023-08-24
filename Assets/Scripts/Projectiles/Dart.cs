@@ -16,10 +16,63 @@ public class Dart : ProjectileBase
     public static float Speed = 10.0f;
     public static int AdditionalDarts = 0;
     public static float TimeElapsedSinceLastDart;
+    public static bool IsShooting = false;
+
+    private static float _distanceOutsidePlayer = 2f;
+    private static float _shootingInterval = 0.4f; // time between consecutive darts
 
     private Vector3 _direction;
 
-    // Update is called once per frame
+    public static IEnumerator ShootDarts(Dart prefab, GameObject player)
+    {
+        IsShooting = true;
+        Vector3 direction = CalculateDirection(player);
+        for (int i = 0; i < BaseCount; i++)
+        {
+            ShootADart(prefab, player, direction);
+            if (AdditionalDarts > i)
+            {
+                direction *= -1;
+                ShootADart(prefab, player, direction);
+                direction *= -1;
+            }
+
+            yield return new WaitForSeconds(_shootingInterval);            
+        }
+
+        // accounting for case where # of backwards darts > # of forwards darts
+        int remainingDarts = AdditionalDarts - BaseCount;
+        if (remainingDarts > 0) 
+        {
+            direction *= -1;
+            for (int i = 0; i < remainingDarts; i++)
+            {
+                ShootADart(prefab, player, direction);
+                yield return new WaitForSeconds(_shootingInterval);
+            }
+        }
+
+        TimeElapsedSinceLastDart = 0.0f;
+        IsShooting = false;
+        yield return null;
+    }
+
+    private static void ShootADart(Dart prefab, GameObject player, Vector3 direction)
+    {
+        Dart dart = Instantiate(prefab);
+        dart.transform.parent = player.transform.parent;
+        dart.SetDirection(direction);
+        dart.transform.position = player.transform.position + direction.normalized * _distanceOutsidePlayer;
+    }
+
+    private static Vector3 CalculateDirection(GameObject player)
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 direction = mousePosition - player.transform.position;
+        
+        return direction;
+    }
+
     public void SetDirection(Vector3 direction)
     {
         _direction = direction.normalized;
