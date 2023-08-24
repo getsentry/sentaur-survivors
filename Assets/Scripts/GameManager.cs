@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     [Tooltip("How frequently pickups spawn (in seconds)")]
-    private float _pickupSpawnRate = 8.0f;
+    private float _pickupSpawnRate = 15.0f;
 
     [SerializeField]
     [Tooltip("The maximum number of pickups allowed on screen at any given moment")]
@@ -306,7 +306,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Enemy HP modifier is now " + _enemyHitPointModifier + " (" + (int)(Time.time - _lastHpRampUp) + "s elapsed )");
             _lastHpRampUp = Time.time;
         }
-        if (Time.time - _lastPickupSpawnTime > _pickupSpawnRate)
+        if (_pickupsOnScreen < _maxPickupsOnScreen && Time.time - _lastPickupSpawnTime > _pickupSpawnRate)
         {
             _lastPickupSpawnTime = Time.time;
             

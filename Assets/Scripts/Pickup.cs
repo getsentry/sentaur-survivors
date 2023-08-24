@@ -69,7 +69,7 @@ public class Pickup : MonoBehaviour
                     player.HealDamage(_healAmount);
                     break;
                 case PickupType.Skateboard:
-                    player.SpeedUp(10, true);
+                    player.SpeedUp(5, true);
                     break;
                 case PickupType.Umbrella:
                     player.ReduceDamage(0.5f, true);
