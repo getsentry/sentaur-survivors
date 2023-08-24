@@ -9,67 +9,34 @@ public class LevelUpProjectile : MonoBehaviour
 
     // fyi: title -> upgrade name, description -> level, stats -> description 
 
-    // todo: would be nice to better organize the upgrade data its easier to track and use
-    // upgrade[(string) upgradeName] = [description, stats, sprite, level]
-    // upgradeObject = upgrade[(string) upgradeName]
-    // upgradeObject.description
-    // upgradeObject.stats
-    // upgradeObject.sprite
-    // upgradeObject.level
-
-    // leveling up an upgrade, changes the stats to new level, increases the level #
-
     public static List<string> AvailableProjectileUpgrades = new List<string>{
         "count++", "speed++", "damage++", "raven", "starfish"
     };
 
-    public static Dictionary<string, int> UpgradesToLevelsMap = new Dictionary<string, int>{
-        {"count++", 0}, {"speed++", 0}, {"damage++", 0}, {"raven", 0}, {"starfish", 0}
+    public static Dictionary<string, Upgrade> UpgradeData = new Dictionary<string, Upgrade>{
+        {
+            "count++",
+            new Upgrade("count++", new List<string>{"+2 darts (3 total)", "+2 darts (5 total)", "+2 darts (7 total)"})
+        },
+        {
+            "speed++",
+            new Upgrade("speed++", new List<string>{"+50% dart base fire rate", "+100% dart base fire rate", "+250% dart base fire rate"})
+        },
+        {
+            "damage++",
+            new Upgrade("damage++", new List<string>{"+100% dart base damage", "+200% dart base damage", "+300% dart base damage"})
+        },
+        {
+            "raven",
+            new Upgrade("raven", new List<string>{"auto-targets the nearest enemy every now and then", "auto-targets more frequently and deals more damage", "auto-targets the two closest enemies and deals even more damage"})
+        },
+        {
+            "starfish",
+            new Upgrade("starfish", new List<string>{"auto-orbits you for a bit every now and then, damaging every enemy you hit", "orbits for longer and deals more damage", "orbits faster and deals even more damage"})
+        }
     };
 
-
-    //map each AvailableProjectileUpgrades to the stats of the each upgrade
-    public static Dictionary<string, string> AvailableProjectileUpgradesStats = new Dictionary<string, string>{
-        {"count++", "+1 dart"},
-        {"speed++", "+50% dart speed"},
-        {"damage++", "+100% base damage"},
-        {"raven", "targets the nearest enemy"},
-        {"starfish", "orbits and damages enemies"}
-    };
-
-    // todo match these stats / descriptions with the strings in AvailableProjectileUpgrades
-
-    private string[] _countUpgrades = {
-        "+ 2 darts",
-        "+ 2 darts",
-        "+ 2 darts"
-    };
-
-    private string[] _speedUpgrades = {
-        "darts auto-fire faster",
-        "darts auto-fire EVEN FASTER",
-        "darts auto-fire the fastest they've ever fired B)"
-    };
-
-    private string[] _damageUpgrades = {
-        "increase base damage",
-        "increase base damage MORE",
-        "increase base damage EVEN MORE"
-    };
-
-    private string[] _ravenUpgrades = {
-        "gain a Raven, who targets the nearest enemy every 10 seconds",
-        "Raven targets more frequently and deals more damage",
-        "gain ANOTHER Raven, with both doing even more damage"
-    };
-
-    private string[] _starfishUpgrades = {
-        "gain a Starfish, which orbits you for 5 seconds every 8 seconds and deals a bit of damage to every enemy it touches",
-        "the Starfish orbits for 3 seconds longer and deals more damage",
-        "the Starfish orbits faster and deals even more damage"
-    };
-
-    private int MAX_LEVEL = 3;
+   private int MAX_LEVEL = 3;
 
     // these are equivalent to the index of the option in AvailableProjectileUpgrades
     private int option1;
@@ -118,19 +85,21 @@ public class LevelUpProjectile : MonoBehaviour
             Debug.Log("LevelUpProjectile.RandomizeOptions: option2stats is " + option2stats);
         } while (AvailableProjectileUpgrades.Count > 1 && option2 == option1);
 
-        var optionText = AvailableProjectileUpgrades[option1];
-        var statsText = AvailableProjectileUpgradesStats[option1stats];
-        Debug.Log("LevelUpProjectile.RandomizeOptions: option1statsText is " + statsText);   
-        _levelOption1.Set(title: optionText, description: "", stats: statsText);
+        string optionTitle = AvailableProjectileUpgrades[option1];
+        int optionLevel = UpgradeData[optionTitle].CurrentLevel + 1;
+        string optionStats = UpgradeData[optionTitle].GetLevelStats(optionLevel);
+        // Debug.Log("LevelUpProjectile.RandomizeOptions: option1 is " + option1Description);   
+        _levelOption1.Set(title: optionTitle, description: "Level " + optionLevel, stats: optionStats);
+
         if (option1 == option2) {
             _levelOption2.Set("ALL OTHER UPGRADES MAXED OUT", "", "");
         } else {
-            optionText = AvailableProjectileUpgrades[option2];
-            statsText = AvailableProjectileUpgradesStats[option2stats];
-            Debug.Log("LevelUpProjectile.RandomizeOptions: option2statsText is " + statsText);   
-            _levelOption2.Set(title: optionText, description: "", stats: statsText);
+            optionTitle = AvailableProjectileUpgrades[option2];
+            optionLevel = UpgradeData[optionTitle].CurrentLevel + 1;
+            optionStats = UpgradeData[optionTitle].GetLevelStats(optionLevel);
+            // Debug.Log("LevelUpProjectile.RandomizeOptions: option2statsText is " + statsText);   
+            _levelOption2.Set(title: optionTitle, description: "Level " + optionLevel, stats: optionStats);
         }
-        // TODO: change sprites, description (use _xxxUpgrades)
     }
 
     void SelectUpgrade(int selectedOptionNumber) 
@@ -143,9 +112,9 @@ public class LevelUpProjectile : MonoBehaviour
             selectedUpgrade = AvailableProjectileUpgrades[option2];
         }
         
-        UpgradesToLevelsMap[selectedUpgrade]++; // level up the selected upgrade
+        UpgradeData[selectedUpgrade].LevelUp(); // level up the selected upgrade
 
-        if (UpgradesToLevelsMap[selectedUpgrade] == MAX_LEVEL) 
+        if (UpgradeData[selectedUpgrade].CurrentLevel == MAX_LEVEL) 
         {
             // take the upgrade out of the pool if it's maxed out
             for (int i = 0; i < AvailableProjectileUpgrades.Count; i++)
@@ -164,19 +133,19 @@ public class LevelUpProjectile : MonoBehaviour
             switch(selectedUpgrade) 
             {
                 case "count++": 
-                    player.UpgradeCount(UpgradesToLevelsMap["count++"]);
+                    player.UpgradeCount(UpgradeData["count++"].CurrentLevel);
                     break;
                 case "speed++":
-                    player.UpgradeSpeed(UpgradesToLevelsMap["speed++"]);
+                    player.UpgradeSpeed(UpgradeData["speed++"].CurrentLevel);
                     break;
                 case "damage++":
-                    player.UpgradeDamage(UpgradesToLevelsMap["damage++"]);
+                    player.UpgradeDamage(UpgradeData["damage++"].CurrentLevel);
                     break;
                 case "raven":
-                    player.UpgradeRaven(UpgradesToLevelsMap["raven"]);
+                    player.UpgradeRaven(UpgradeData["raven"].CurrentLevel);
                     break;
                 case "starfish":
-                    player.UpgradeStarfish(UpgradesToLevelsMap["starfish"]);
+                    player.UpgradeStarfish(UpgradeData["starfish"].CurrentLevel);
                     break;
                 default: break;
             }

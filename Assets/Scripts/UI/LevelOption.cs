@@ -19,18 +19,6 @@ public class LevelOption : MonoBehaviour
         // _icon = transform.Find("Border/Icon").GetComponent<Image>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        _description.enabled = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // fyi: title -> upgrade name, description -> level, stats -> description 
     public void Set(string title, string description, string stats) {
         _title.text = title;

@@ -73,7 +73,27 @@ public class Player : MonoBehaviour
     public AudioSource takeDamageSound;
     public Vector3 lastPosition;
 
+    private Rigidbody2D _rigidBody;
+    private IEnumerator coroutine;
+    private bool _isDead = false;
+
     // Start is called before the first frame update
+
+    static Player _instance;
+
+    public static Player Instance {
+        get {
+            if (_instance == null) {
+                _instance = GameObject.FindObjectOfType<Player>();
+            }
+            return _instance;
+        }
+    }
+
+    void Awake() {
+        _rigidBody = GetComponent<Rigidbody2D>();
+    }
+
     void Start()
     {
 
@@ -88,11 +108,17 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_isDead) {
+            return;
+        }
+
         lastPosition = transform.position;
-        transform.position = new Vector2(
-            transform.position.x + Input.GetAxis("Horizontal") * Time.deltaTime * _playerMoveRate,
-            transform.position.y + Input.GetAxis("Vertical") * Time.deltaTime * _playerMoveRate
+
+        var movementVector = new Vector2(
+            Input.GetAxis("Horizontal") *  _playerMoveRate,
+            Input.GetAxis("Vertical") * _playerMoveRate
         );
+        _rigidBody.velocity = movementVector;
 
         movement.x = Input.GetAxisRaw("Horizontal");
         if (movement.x > 0) {
@@ -169,9 +195,11 @@ public class Player : MonoBehaviour
             for (int i = 0; i < _ravenCount; i++) 
             {
                 var raven = Instantiate(_ravenPrefab); 
+                raven.identifier = i;
                 raven.transform.parent = transform.parent;
                 raven.TargetClosestEnemy();
             }
+            Raven.FirstTarget = null; // reset raven targeting
         }
 
         if (_starfishCount > 0 && !Starfish.IsActive && _timeElapsedSinceLastStarfish > Starfish.FireRate)
@@ -227,7 +255,13 @@ public class Player : MonoBehaviour
             direction.x * Mathf.Sin(degreesInRadians) + direction.y * Mathf.Cos(degreesInRadians) 
         );
     }
-
+    
+    IEnumerator Wait(float _waitTime) {
+        _isDead = true;
+        yield return new WaitForSeconds(_waitTime);
+        // emit player death event
+        EventManager.TriggerEvent("PlayerDeath");
+    }
     public void TakeDamage(int damage = 0)
     {
         _hitPoints -= (int) (damage * (1 - _damageReductionAmount));
@@ -237,8 +271,10 @@ public class Player : MonoBehaviour
 
         if (_hitPoints == 0)
         {
-            // emit player death event
-            EventManager.TriggerEvent("PlayerDeath");
+            animator.SetTrigger("Dead");
+            coroutine = Wait(1.2f);
+            StartCoroutine(coroutine);
+    
         } else {
             // play damage sound effect
             takeDamageSound.Play();

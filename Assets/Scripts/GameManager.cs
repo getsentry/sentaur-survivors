@@ -46,9 +46,10 @@ public class GameManager : MonoBehaviour
 
     // the score a player must get to for the next weapon upgrade
     private int _nextLevelScoreMilestone;
+    private int _nextLevelXpMilestone;
     private int[] _levelMilestones = {50, 150, 350, 650, 1050, 1550, 2150, 2850, 3650, 4550, 5550}; // TODO: update
     // trackinf the previous level score milestone for xp bar
-    private int _previousLevelScoreMilestone;
+    private int _prevLevelXpMilestone;
     private int _currentLevel = 0;
     private int _previousLevel = 0;
 
@@ -56,9 +57,21 @@ public class GameManager : MonoBehaviour
     private float _lastSpawnRampUp = 0.0f;
     private int _spawnRampUpInterval = 10;
 
-    private int _hpRampUpInterval = 20;
+    [SerializeField]
+    [Tooltip("How frequently the max hitpoints of enemies ramp up (in seconds)")]
+    private int _hpRampUpInterval = 60;
+
+    [SerializeField]
+    [Tooltip("How much to increase the max hitpoints of enemies by each interval")]
+    private int _hpRampUpValue = 10;
+
+
     private float _lastHpRampUp = 0.0f;
-    private int _maxHitPoints = 30;
+
+    
+    // By how much each enemy's hit points is modified when spawned
+    private int _enemyHitPointModifier = 0;
+
     private float _lastPickupSpawnTime = 0.0f;
 
     private int _pickupsOnScreen = 0; 
@@ -78,7 +91,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _nextLevelScoreMilestone = _levelMilestones[0];
+        _nextLevelXpMilestone = _levelMilestones[0];
 
         _gameState = GameState.Playing;
         _hud = GameObject.Find("HUD").GetComponent<HUD>();
@@ -104,6 +117,9 @@ public class GameManager : MonoBehaviour
         {
             OnPlayerDeath();
         });
+        EventManager.AddListener("XpEarned", (eventData) => {
+            OnXpEarned((int)eventData.Data);
+        });
     }
 
     private void OnPickupGrabbed(int scoreValue)
@@ -114,15 +130,32 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager.OnPickupGrabbed: Score is now " + _score);
     }
 
+    private void OnXpEarned(int xp)
+    {
+        _xp += xp;
+        Debug.Log("GameManager.OnXpEarned: Xp is now " + _xp);
+
+        UpdateXpProgress();
+    }
+
+    private void UpdateXpProgress() {
+        float xpProgress;        
+        if (_currentLevel == 0) 
+        {
+            xpProgress = 1.0f * _xp / _nextLevelXpMilestone;
+        } else {
+            xpProgress = 1.0f * (_xp - _prevLevelXpMilestone) / (_nextLevelXpMilestone - _prevLevelXpMilestone);
+        }
+        _hud.SetXp(xpProgress);
+    }
+
     private void OnEnemyDestroyed(int scoreValue)
     {
         SetScore(_score + scoreValue);
-        Debug.Log("GameManager.OnEnemyDestroyed: Score is now " + _score);
-        Debug.Log("GameManager.OnEnemyDestroyed: Next Milestone at score " + _nextLevelScoreMilestone);
-        }
+    }
 
     private void OnPlayerDeath()
-    {
+    {   
         _gameState = GameState.GameOver;
 
         // STOP THE GAME
@@ -135,21 +168,7 @@ public class GameManager : MonoBehaviour
     private void SetScore(int score)
     {
         _score = score;
-
-        if (_currentLevel == 0) 
-        {
-            _xp = 1.0f * _score / _nextLevelScoreMilestone;
-        } else {
-            _xp = 1.0f * (_score - _previousLevelScoreMilestone) / (_nextLevelScoreMilestone - _previousLevelScoreMilestone);
-        }
-
         _hud.SetScore(_score);
-        _hud.SetXp(_xp);
-
-        Debug.Log("GameManager.SetScore: Score is now " + _score);   
-        Debug.Log("GameManager.SetScore: Milestone level is now " + _nextLevelScoreMilestone);
-        Debug.Log("GameManager.SetScore: Xp is now " + _xp);        
-
     }
 
     private void SetCurrentLevel(int level)
@@ -181,14 +200,16 @@ public class GameManager : MonoBehaviour
             SpawnEnemy(prefab);
         }
 
+        // ramp up spawn rate
         if (Time.time - _lastSpawnRampUp > _spawnRampUpInterval) {
             _enemySpawnRate -= 0.05f;
             _lastSpawnRampUp = Time.time;
         }
 
+        // ramp up enemy hp
         if (Time.time - _lastHpRampUp > _hpRampUpInterval) {
-            Debug.Log("HP ramped up to " + _maxHitPoints);
-            _maxHitPoints += 10;
+            _enemyHitPointModifier += _hpRampUpValue;
+            Debug.Log("Enemy HP modifier is now " + _enemyHitPointModifier + " (" + (int)(Time.time - _lastHpRampUp) + "s elapsed )");
             _lastHpRampUp = Time.time;
         }
         if (Time.time - _lastPickupSpawnTime > _pickupSpawnRate)
@@ -198,10 +219,10 @@ public class GameManager : MonoBehaviour
             SpawnPickup();
         }
 
-        if (_score >= _nextLevelScoreMilestone && _currentLevel < _levelMilestones.Length) 
+        if (_xp >= _nextLevelXpMilestone && _currentLevel < _levelMilestones.Length) 
         {
             _currentLevel++;
-            Debug.Log("GameManager.Update: level up!");
+            Debug.Log("GameManager.Update: Level Up!");
 
             _previousLevel = _currentLevel - 1;
 
@@ -214,8 +235,8 @@ public class GameManager : MonoBehaviour
             // are no more milestones)
             if (_currentLevel < _levelMilestones.Length)
             {
-                _nextLevelScoreMilestone = _levelMilestones[_currentLevel];
-                _previousLevelScoreMilestone = _levelMilestones[_previousLevel];
+                _nextLevelXpMilestone = _levelMilestones[_currentLevel];
+                _prevLevelXpMilestone = _levelMilestones[_previousLevel];
             }
             GameObject levelUpUI = Instantiate(_levelUpUIPrefab);
         }
@@ -275,7 +296,7 @@ public class GameManager : MonoBehaviour
     private void SpawnEnemy(GameObject prefab)
     {
         GameObject enemy = Instantiate(prefab);
-        enemy.GetComponent<Enemy>().hitpoints = _maxHitPoints;
+        enemy.GetComponent<Enemy>().hitpoints += _enemyHitPointModifier;
         enemy.transform.parent = _levelContainer.transform;
 
         enemy.transform.position = GetRandomSpawnPointOutsideViewport();
