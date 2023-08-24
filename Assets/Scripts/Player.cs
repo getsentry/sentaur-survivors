@@ -28,25 +28,9 @@ public class Player : MonoBehaviour
     private int _maxHitPoints = 100;
 
     [SerializeField]
-    [Tooltip("The number of darts fired by the player at once")]
-    private int _dartCount = 1;
-
-    [SerializeField]
     [Tooltip("How fast the player moves (how exaclty I don't know)")]
     private float _playerMoveRate = 5;
     private float _baseMoveRate;
-
-    [SerializeField]
-    [Tooltip("How many Ravens the player has")]
-    private int _ravenCount = 0;
-
-    [SerializeField]
-    [Tooltip("How many Starfish the player has")]
-    private int _starfishCount = 0;
-
-    private float _timeElapsedSinceLastDart = 0.0f;
-    private float _timeElapsedSinceLastRaven = 0.0f;
-    private float _timeElapsedSinceLastStarfish = 0.0f;
 
     private bool _hasPickedUpSkateboard = false;
     private float _timeElapsedSinceLastSkateboard = 0.0f;
@@ -61,9 +45,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     [Tooltip("How much damage is reduced for the player")]
     private float _damageReductionAmount = 0.0f;
-
-    // the furthest a dart's path is rotated from the center dart
-    private int _spreadInDegrees = 0; 
 
     private HealthBar _healthBar;
     public Animator animator;
@@ -103,6 +84,8 @@ public class Player : MonoBehaviour
         _healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
 
         takeDamageSound = GetComponent<AudioSource>();
+
+        Dart.TimeElapsedSinceLastDart = Dart.Cooldown - 1f; // shoot right when the game starts
     }
 
     // Update is called once per frame
@@ -133,27 +116,28 @@ public class Player : MonoBehaviour
         animator.SetBool("FacingRight", facingRight);
 
         // fire a dart once enough time has elapsed
-        _timeElapsedSinceLastDart += Time.deltaTime;
-        if (_ravenCount > 0)
+        Dart.TimeElapsedSinceLastDart += Time.deltaTime;
+
+        if (Raven.IsEnabled)
         {
-            _timeElapsedSinceLastRaven += Time.deltaTime;
+            Raven.TimeElapsedSinceLastRaven += Time.deltaTime;
         }
 
-        if (_starfishCount > 0 && !Starfish.IsActive) 
+        if (Starfish.IsEnabled && !Starfish.IsActive) 
         {
             // don't count while starfish is still orbiting
-            _timeElapsedSinceLastStarfish += Time.deltaTime;
+            Starfish.TimeElapsedSinceLastStarfish += Time.deltaTime;
         }
 
-        if (_timeElapsedSinceLastDart > Dart.FireRate)
+        if (Dart.TimeElapsedSinceLastDart > Dart.Cooldown)
         {
-            _timeElapsedSinceLastDart = 0.0f;
+            Dart.TimeElapsedSinceLastDart = 0.0f;
 
-            float degreesToRotate = _spreadInDegrees;
-            int numberOfDartPairs = _dartCount / 2;
+            float degreesToRotate = Dart.SpreadInDegrees;
+            int numberOfDartPairs = Dart.BaseCount / 2;
 
-            // instantiate new dart(s), starting from the two furthest darts then going inward
-            for (int i = 0; i < numberOfDartPairs ; i++) 
+            // instantiate new dart(s)
+            for (int i = 0; i < numberOfDartPairs; i++) 
             {
                 for (int j = 0; j < 2; j++) 
                 {
@@ -170,10 +154,12 @@ public class Player : MonoBehaviour
                     dart.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
                 }
 
-                degreesToRotate -= (degreesToRotate / numberOfDartPairs);
+                degreesToRotate -= degreesToRotate / numberOfDartPairs;
+
+                // TODO: need to write coroutine to space out darts and remove spread
             }
 
-            if (_dartCount % 2 != 0) 
+            if (Dart.BaseCount % 2 != 0) 
             {
                 // odd number of darts, so we need to create a center dart
                 var dart = Instantiate(_dartPrefab);
@@ -187,28 +173,70 @@ public class Player : MonoBehaviour
                 var distanceOutsidePlayer = 2.0f;
                 dart.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
             }
+
+            int numberOfAdditionalDartPairs = Dart.AdditionalDarts / 2;
+
+            // instantiate backwards dart(s), if any
+            for (int i = 0; i < numberOfAdditionalDartPairs; i++)
+            {
+                for (int j = 0; j < 2; j++) 
+                {
+                    var dart = Instantiate(_dartPrefab);
+                    dart.transform.parent = transform.parent;
+                    Vector3 direction = CalculateDartDirection();
+                    direction = RotateDirection(direction, degreesToRotate);
+                    degreesToRotate *= -1; // to get the proper rotation for the next dart, which is on the other side of the center dart
+                    dart.SetDirection(-direction); // bc these ones go backwards
+
+                    // set the dart's position to the player's position + a little bit
+                    // outside the player in the direction of the mouse cursor
+                    var distanceOutsidePlayer = 2.0f;
+                    dart.transform.position = transform.position + (-direction).normalized * distanceOutsidePlayer;
+                }
+                // TODO: need to write coroutine to space out darts; might have to do this within dart
+            }
+
+            if (Dart.AdditionalDarts % 2 != 0) 
+            {
+                // odd number of darts, so we need to create a center dart
+                var dart = Instantiate(_dartPrefab);
+                dart.transform.parent = transform.parent;
+                Vector3 direction = CalculateDartDirection();
+                direction = RotateDirection(direction, 0);
+                dart.SetDirection(-direction);
+
+                // set the dart's position to the player's position + a little bit
+                // outside the player in the direction of the mouse cursor
+                var distanceOutsidePlayer = 2.0f;
+                dart.transform.position = transform.position + (-direction).normalized * distanceOutsidePlayer;
+            }
         }
 
-        if (_ravenCount > 0 && _timeElapsedSinceLastRaven > Raven.FireRate)
+        if (Raven.IsEnabled && Raven.TimeElapsedSinceLastRaven > Raven.Cooldown)
         {
-            _timeElapsedSinceLastRaven = 0.0f;
-            for (int i = 0; i < _ravenCount; i++) 
+            Raven.TimeElapsedSinceLastRaven = 0.0f;
+            int numberOfRavens = Raven.BaseCount + Raven.AdditionalRavens;
+            for (int i = 0; i < numberOfRavens; i++) 
             {
                 var raven = Instantiate(_ravenPrefab); 
                 raven.identifier = i;
                 raven.transform.parent = transform.parent;
                 raven.TargetClosestEnemy();
             }
-            Raven.FirstTarget = null; // reset raven targeting
+            Raven.CurrentTargets.Clear(); // reset raven targeting
         }
 
-        if (_starfishCount > 0 && !Starfish.IsActive && _timeElapsedSinceLastStarfish > Starfish.FireRate)
+        if (Starfish.IsEnabled && !Starfish.IsActive && Starfish.TimeElapsedSinceLastStarfish > Starfish.Cooldown)
         {
-            _timeElapsedSinceLastStarfish = 0.0f;
-            for (int i = 0; i < _starfishCount; i++)
+            Starfish.TimeElapsedSinceLastStarfish = 0.0f;
+            int numberOfStarfish = Starfish.BaseCount + Starfish.AdditionalStarfish;
+            float degreesBetweenStarfish = 360 / numberOfStarfish;
+            for (int i = 0; i < numberOfStarfish; i++)
             {
+                _starfishPrefab.DegreesToNextStarfish = degreesBetweenStarfish;
+                _starfishPrefab.identifier = i;
                 var starfish = Instantiate(_starfishPrefab);
-                starfish.transform.parent = transform.parent;
+                starfish.transform.parent = transform;
             }
         }
 
@@ -286,60 +314,6 @@ public class Player : MonoBehaviour
         _hitPoints = Math.Min(_hitPoints, 100); // don't let the player have more than 100 hit points
 
         _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
-    }
-
-    public void UpgradeCount(int level) 
-    {
-        _dartCount+= 2;
-        _spreadInDegrees += 10;
-    }
-
-    public void UpgradeSpeed(int level) 
-    {
-        Dart.FireRate *= 0.5f;
-    }
-
-    public void UpgradeDamage(int level) 
-    {
-        Dart.Damage *= 2;
-    }
-
-    public void UpgradeRaven(int level)
-    {
-        if (level == 1) 
-        {
-            _ravenCount++;
-            _timeElapsedSinceLastRaven = Raven.FireRate; // fire first raven right away
-        }
-        else if (level == 2)
-        {
-            Raven.FireRate *= 0.5f;
-            Raven.Damage += 5;
-        }
-        else if (level == 3)
-        {
-            _ravenCount++;
-            Raven.Damage += 10;
-        }
-    }
-
-    public void UpgradeStarfish(int level)
-    {
-        if (level == 1)
-        {
-            _starfishCount++;
-            _timeElapsedSinceLastStarfish = Starfish.FireRate;
-        }
-        else if (level == 2)
-        {
-            Starfish.Duration += 3f;
-            Starfish.Damage += 5;
-        }
-        else if (level == 3)
-        {
-            Starfish.DegreesPerFrame *= 2;
-            Starfish.Damage += 20;
-        }
     }
 
     public void SpeedUp(int newSpeed, bool hasSkateboard = false)

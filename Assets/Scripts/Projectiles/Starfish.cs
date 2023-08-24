@@ -5,27 +5,32 @@ using UnityEngine;
 public class Starfish : ProjectileBase
 {
     // properties true for all starfish
-    public static int Damage = 5;
-    public static float FireRate = 8f;
-    public static float Duration = 5f;
+    public static int Damage;
+    public static float BaseDamagePercentage = 1.2f;
+    public static float Cooldown;
+    public static float BaseCooldownPercentage = 4.5f; 
+    public static bool IsEnabled = false;
+    
+    public static float Duration = 6f;
     public static float DegreesPerFrame = 180f;
     public static bool IsActive = false;
+    public static int AdditionalStarfish = 0;
+    public static float TimeElapsedSinceLastStarfish;
     private static float _distanceOutsidePlayer = 2f;
 
+    public float DegreesToNextStarfish; 
+    public int identifier;
     private GameObject _player;
     private float _timeElapsedSinceActivated = 0.0f;
-    private Vector3 _positionOffset;
-
-    void Awake()
-    {
-        _player = GameObject.Find("Player");
-        IsActive = true;
-    }
 
     void Start()
     {
-        // starting position
+        _player = GameObject.Find("Player");
+        IsActive = true;
+
+         // starting position
         transform.position = _player.transform.position + new Vector3(1f,0,0).normalized * _distanceOutsidePlayer;
+        transform.RotateAround(_player.transform.position, Vector3.forward, DegreesToNextStarfish * identifier);
     }
 
     // Update is called once per frame
@@ -41,9 +46,6 @@ public class Starfish : ProjectileBase
 
     void LateUpdate()
     {
-        // move the same amount the player moved in this frame
-        Vector3 playerMovement = _player.transform.position - _player.GetComponent<Player>().lastPosition;
-        transform.position += playerMovement;
         transform.RotateAround(_player.transform.position, Vector3.forward, DegreesPerFrame * Time.deltaTime);
     }
 
@@ -65,5 +67,26 @@ public class Starfish : ProjectileBase
     override protected void DamageEnemy(Enemy enemy)
     {
         enemy.TakeDamage(Damage);
+    }
+
+    public static void UpgradeStarfish(int level)
+    {
+        if (level == 1)
+        {
+            IsEnabled = true;
+            Damage = (int) (BaseDamage * BaseDamagePercentage);
+            Cooldown = BaseCooldown * BaseCooldownPercentage;
+            TimeElapsedSinceLastStarfish = Cooldown - 1f; // launch a starfish as soon as its enabled
+        }
+        else if (level == 2)
+        {
+            Duration *= 1.5f;
+        }
+        else if (level == 3)
+        {
+            Duration *= 2;
+            BaseCooldownPercentage = 3f;
+            Cooldown = BaseCooldown * BaseCooldownPercentage;
+        }
     }
 }
