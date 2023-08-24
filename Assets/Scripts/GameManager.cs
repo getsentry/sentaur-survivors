@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
     private float _enemySpawnRate = 2.0f;
 
     [SerializeField]
+    [Tooltip("The fastest possible spawn rate for enemies (in seconds)")]
+    private float _enemySpawnRateFloor = 0.5f;
+
+    [SerializeField]
     [Tooltip("How frequently pickups spawn (in seconds)")]
     private float _pickupSpawnRate = 8.0f;
 
@@ -220,6 +224,8 @@ public class GameManager : MonoBehaviour
         // ramp up spawn rate
         if (Time.time - _lastSpawnRampUp > _spawnRampUpInterval) {
             _enemySpawnRate -= 0.05f;
+            _enemySpawnRate = Mathf.Max(_enemySpawnRate, _enemySpawnRateFloor);
+
             _lastSpawnRampUp = Time.time;
         }
 
@@ -322,6 +328,9 @@ public class GameManager : MonoBehaviour
         return floorSpawnCoord;
     }
 
+    /**
+     * Spawns random enemies depending on the level
+     */
     private void Spawn() {
         GameObject prefab;
 
@@ -358,16 +367,45 @@ public class GameManager : MonoBehaviour
                 throw new System.Exception("GameManager.Spawn: Invalid spawn choice");
         }
 
-        SpawnEnemy(prefab);
+        // number of enemies spawned is random based on level
+        // level 1: 1 enemy
+        // level 2: 1-2 enemies
+        // level 3: 1-3 enemies
+        // level 4: 1-4 enemies ... etc
+        int waveSize = Random.Range(1, _currentLevel + 1);
+        SpawnEnemyWave(prefab, waveSize);
     }
 
-    private void SpawnEnemy(GameObject prefab)
+    private void SpawnEnemyWave(GameObject prefab, int count)
     {
-        GameObject enemy = Instantiate(prefab);
-        enemy.GetComponent<Enemy>().hitpoints += _enemyHitPointModifier;
-        enemy.transform.parent = _levelContainer.transform;
+        Vector3 initialPosition = GetRandomSpawnPointOutsideViewport();
 
-        enemy.transform.position = GetRandomSpawnPointOutsideViewport();
+        Vector3 spawnPosition;
+
+        // distance between enemies in X direction
+        float distanceOffsetX = 0.75f;
+        // range of possible y coordinates to spawn enemies at
+        float maxRangeY = 2.0f;
+        int flipX = 1;
+
+        Debug.Log("Initial position: " + initialPosition);
+        int spawnCount = 0;
+        while (spawnCount < count) {
+            GameObject enemy = Instantiate(prefab);
+            enemy.GetComponent<Enemy>().hitpoints += _enemyHitPointModifier;
+            enemy.transform.parent = _levelContainer.transform;
+
+            // from initial position, fan out enemies to the left and right
+            spawnPosition = initialPosition + new Vector3(
+                distanceOffsetX * ((1 + spawnCount) / 2) * flipX, 
+                // randomize y within (2, 2)
+                Random.Range(0, maxRangeY),
+                0);
+            enemy.transform.position = spawnPosition;
+
+            spawnCount++;
+            flipX = -flipX;
+        }
     }
 
     private void SpawnPickup() 
