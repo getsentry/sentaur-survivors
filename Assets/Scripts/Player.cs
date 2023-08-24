@@ -191,7 +191,7 @@ public class Player : MonoBehaviour
                     // set the dart's position to the player's position + a little bit
                     // outside the player in the direction of the mouse cursor
                     var distanceOutsidePlayer = 2.0f;
-                    dart.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
+                    dart.transform.position = transform.position + (-direction).normalized * distanceOutsidePlayer;
                 }
                 // TODO: need to write coroutine to space out darts; might have to do this within dart
             }
@@ -208,7 +208,7 @@ public class Player : MonoBehaviour
                 // set the dart's position to the player's position + a little bit
                 // outside the player in the direction of the mouse cursor
                 var distanceOutsidePlayer = 2.0f;
-                dart.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
+                dart.transform.position = transform.position + (-direction).normalized * distanceOutsidePlayer;
             }
         }
 
