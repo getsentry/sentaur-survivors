@@ -199,7 +199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Stats
+  m_text: 7 darts!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e5a94dc2c07b44d6bbd6ca6449bac31, type: 2}
   m_sharedMaterial: {fileID: 6781213276952807005, guid: 2e5a94dc2c07b44d6bbd6ca6449bac31, type: 2}
@@ -226,8 +226,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -646,6 +646,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b3dd2a3ab2a477faae51ce48d9c4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _countSprite: {fileID: 21300000, guid: d5250e5db3ce642448c7a5c9ffa33af9, type: 3}
+  _speedSprite: {fileID: 21300000, guid: 8094df7779b004b43b7cc37ee399539b, type: 3}
+  _damageSprite: {fileID: 21300000, guid: 4af40a0e588594a3c9e45068423eb312, type: 3}
+  _ravenSprite: {fileID: -41011132, guid: 2d1db680ea22a4dd78b6c2918a56aa0e, type: 3}
+  _starfishSprite: {fileID: 900386594, guid: f973a0cae040d40648faf1d1eab27ad7, type: 3}
 --- !u!114 &3883653688101900433
 MonoBehaviour:
   m_ObjectHideFlags: 0

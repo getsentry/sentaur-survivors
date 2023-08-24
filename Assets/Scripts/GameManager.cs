@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Tilemap _floor;
 
+    [SerializeField]
+    [Tooltip("The plane to spawn enemies on")]
+    private GameObject _spawnPlane;
+
     // the player's accumulated score so far
     private int _score = 0;
 
@@ -126,15 +130,11 @@ public class GameManager : MonoBehaviour
     {
         SetScore(_score + scoreValue);
         _pickupsOnScreen -= 1;
-
-        Debug.Log("GameManager.OnPickupGrabbed: Score is now " + _score);
     }
 
     private void OnXpEarned(int xp)
     {
         _xp += xp;
-        Debug.Log("GameManager.OnXpEarned: Xp is now " + _xp);
-
         UpdateXpProgress();
     }
 
@@ -209,6 +209,7 @@ public class GameManager : MonoBehaviour
         // ramp up enemy hp
         if (Time.time - _lastHpRampUp > _hpRampUpInterval) {
             _enemyHitPointModifier += _hpRampUpValue;
+            
             Debug.Log("Enemy HP modifier is now " + _enemyHitPointModifier + " (" + (int)(Time.time - _lastHpRampUp) + "s elapsed )");
             _lastHpRampUp = Time.time;
         }
@@ -268,24 +269,35 @@ public class GameManager : MonoBehaviour
     }
 
     /**
+     * Returns a random position within the spane area
+     */
+    private Vector3 GetRandomSpawnPoint() {
+        var rectTransform = _spawnPlane.GetComponent<RectTransform>();
+        // get bounds of rect transform
+        var rectTransformWorldBounds = new Bounds(
+            rectTransform.position,
+            rectTransform.rect.size
+        );
+
+        var floorSpawnCoord = new Vector3(
+            Random.Range(rectTransformWorldBounds.min.x, rectTransformWorldBounds.max.x),
+            Random.Range(rectTransformWorldBounds.min.y, rectTransformWorldBounds.max.y), 0.0f);
+
+        return floorSpawnCoord;
+    }
+
+    /**
      * Returns a random spawnable position outside of the viewport
      */
     private Vector3 GetRandomSpawnPointOutsideViewport() {
-        var tileMap = _floor;
-
-        // get the bounding world coordinates of the tilemap
-        var tilemapBounds = tileMap.localBounds;
-        var tilemapWorldBounds = new Bounds(tilemapBounds.center + tileMap.transform.position, tilemapBounds.size);
-
         // convert to bounds
         var viewportBounds = GetViewportBounds();
 
        // randomly choose a coordinate until one is found that is outside the viewport
         Vector3 floorSpawnCoord;
         do {
-            floorSpawnCoord = new Vector3(
-            Random.Range(tilemapWorldBounds.min.x, tilemapWorldBounds.max.x), 
-            Random.Range(tilemapWorldBounds.min.y, tilemapWorldBounds.max.y), 0.0f);
+            // choose a random coordinate within rectTransformWorldBounds
+            floorSpawnCoord = GetRandomSpawnPoint();
 
             // loop until a coordinate is chosen outside viewport
         } while (viewportBounds.Contains(floorSpawnCoord));
@@ -312,14 +324,7 @@ public class GameManager : MonoBehaviour
         GameObject pickup = Instantiate(_pickupPrefab as GameObject);
         pickup.transform.parent = _levelContainer.transform;
 
-        float xMin = _floor.cellBounds.xMin;
-        float xMax = _floor.cellBounds.xMax;
-        float yMin = _floor.cellBounds.yMin;
-        float yMax = _floor.cellBounds.yMax;
-
-        Vector3 spawnViewportCoord = new Vector3(Random.Range(xMin, xMax), Random.Range(yMin, yMax), 0.0f);
-        
-        pickup.transform.position = spawnViewportCoord; //Camera.main.ViewportToWorldPoint(spawnViewportCoord);
+        pickup.transform.position = GetRandomSpawnPoint();
         _pickupsOnScreen++;
     }
 
