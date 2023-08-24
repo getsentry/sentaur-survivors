@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Tilemap _floor;
 
+    [SerializeField]
+    [Tooltip("The plane to spawn enemies on")]
+    private GameObject _spawnPlane;
+
     // the player's accumulated score so far
     private int _score = 0;
 
@@ -272,9 +276,12 @@ public class GameManager : MonoBehaviour
     private Vector3 GetRandomSpawnPointOutsideViewport() {
         var tileMap = _floor;
 
-        // get the bounding world coordinates of the tilemap
-        var tilemapBounds = tileMap.localBounds;
-        var tilemapWorldBounds = new Bounds(tilemapBounds.center + tileMap.transform.position, tilemapBounds.size);
+        var rectTransform = _spawnPlane.GetComponent<RectTransform>();
+        // get bounds of rect transform
+        var rectTransformWorldBounds = new Bounds(
+            rectTransform.position,
+            rectTransform.rect.size
+        );
 
         // convert to bounds
         var viewportBounds = GetViewportBounds();
@@ -282,9 +289,10 @@ public class GameManager : MonoBehaviour
        // randomly choose a coordinate until one is found that is outside the viewport
         Vector3 floorSpawnCoord;
         do {
+            // choose a random coordinate within rectTransformWorldBounds
             floorSpawnCoord = new Vector3(
-            Random.Range(tilemapWorldBounds.min.x, tilemapWorldBounds.max.x), 
-            Random.Range(tilemapWorldBounds.min.y, tilemapWorldBounds.max.y), 0.0f);
+                Random.Range(rectTransformWorldBounds.min.x, rectTransformWorldBounds.max.x), 
+                Random.Range(rectTransformWorldBounds.min.y, rectTransformWorldBounds.max.y), 0.0f);
 
             // loop until a coordinate is chosen outside viewport
         } while (viewportBounds.Contains(floorSpawnCoord));
