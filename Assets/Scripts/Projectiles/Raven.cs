@@ -15,6 +15,7 @@ public class Raven : ProjectileBase
     public static float Speed = 12.0f;
     public static int AdditionalRavens = 0;
     public static List<GameObject> CurrentTargets = new List<GameObject>{}; 
+    public static float TimeElapsedSinceLastRaven;
     private static float _distanceOutsidePlayer = 2.0f;
 
     public int identifier;
@@ -34,6 +35,7 @@ public class Raven : ProjectileBase
         if (target == null)
         {
             // nothing to target
+            Destroy(gameObject);
             return;
         }
         Vector3 direction = target.transform.position - _player.transform.position;
@@ -104,6 +106,7 @@ public class Raven : ProjectileBase
             IsEnabled = true;
             Damage = (int) (BaseDamage * BaseDamagePercentage);
             Cooldown = BaseCooldown * BaseCooldownPercentage;
+            TimeElapsedSinceLastRaven = Cooldown - 1f; // launch a raven as soon as it's enabled
         }
         else if (level == 2)
         {

@@ -8,16 +8,18 @@ public class Starfish : ProjectileBase
     public static int Damage;
     public static float BaseDamagePercentage = 1.2f;
     public static float Cooldown;
-    public static float BaseCooldownPercentage = 5f;
+    public static float BaseCooldownPercentage = 1f; // change back to 5
     public static bool IsEnabled = false;
     
     public static float Duration = 5f;
     public static float DegreesPerFrame = 180f;
     public static bool IsActive = false;
     public static int AdditionalStarfish = 0;
-    private static float _distanceOutsidePlayer = 1f;
+    public static float TimeElapsedSinceLastStarfish;
+    private static float _distanceOutsidePlayer = 1.5f;
 
-    public int identifier; // TODO: use this to space out starfish
+    public float DegreesToNextStarfish; 
+    public int identifier;
     private GameObject _player;
     private float _timeElapsedSinceActivated = 0.0f;
 
@@ -26,42 +28,9 @@ public class Starfish : ProjectileBase
         _player = GameObject.Find("Player");
         IsActive = true;
 
-        // TODO: make this better lol (this is used to make sure the starfish don't all start in the same spot if there are multiple)
-        Vector3 positionRelativeToPlayer = new Vector3(0,0,0);
-        switch (identifier)
-        {
-            case 0: 
-                positionRelativeToPlayer.x = 1f;
-                break;
-            case 1: 
-                positionRelativeToPlayer.x = 1f;
-                positionRelativeToPlayer.y = 1f;
-                break;
-            case 2: 
-                positionRelativeToPlayer.y = 1f;
-                break;
-            case 3: 
-                positionRelativeToPlayer.x = -1f;
-                positionRelativeToPlayer.y = 1f;
-                break;
-            case 4: 
-                positionRelativeToPlayer.x = -1f;
-                break;
-            case 5: 
-                positionRelativeToPlayer.x = -1f;
-                positionRelativeToPlayer.y = -1f;
-                break;
-            case 6: 
-                positionRelativeToPlayer.x = -1f;
-                break;
-            case 7: 
-                positionRelativeToPlayer.x = 1f;
-                positionRelativeToPlayer.y = -1f;
-                break;
-        }
-
          // starting position
         transform.position = _player.transform.position + new Vector3(1f,0,0).normalized * _distanceOutsidePlayer;
+        transform.RotateAround(_player.transform.position, Vector3.forward, DegreesToNextStarfish * identifier);
     }
 
     // Update is called once per frame
@@ -77,9 +46,9 @@ public class Starfish : ProjectileBase
 
     void LateUpdate()
     {
-        // move the same amount the player moved in this frame
-        Vector3 playerMovement = _player.transform.position - _player.GetComponent<Player>().lastPosition;
-        transform.position += playerMovement;
+        // reposition the starfish so it still looks the same distance to the player regardless of how they moved; TODO: still wonky
+        Vector3 targetPosition = _player.transform.position + (_player.transform.position - transform.position).normalized * _distanceOutsidePlayer;
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, -(_distanceOutsidePlayer - Vector3.Distance(transform.position, _player.transform.position)));
         transform.RotateAround(_player.transform.position, Vector3.forward, DegreesPerFrame * Time.deltaTime);
     }
 
@@ -110,6 +79,7 @@ public class Starfish : ProjectileBase
             IsEnabled = true;
             Damage = (int) (BaseDamage * BaseDamagePercentage);
             Cooldown = BaseCooldown * BaseCooldownPercentage;
+            TimeElapsedSinceLastStarfish = Cooldown - 1f; // launch a starfish as soon as its enabled
         }
         else if (level == 2)
         {

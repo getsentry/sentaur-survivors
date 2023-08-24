@@ -15,6 +15,7 @@ public class Dart : ProjectileBase
 
     public static float Speed = 10.0f;
     public static int AdditionalDarts = 0;
+    public static float TimeElapsedSinceLastDart;
 
     private Vector3 _direction;
 

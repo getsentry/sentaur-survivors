@@ -32,10 +32,6 @@ public class Player : MonoBehaviour
     private float _playerMoveRate = 5;
     private float _baseMoveRate;
 
-    private float _timeElapsedSinceLastDart = 0.0f;
-    private float _timeElapsedSinceLastRaven = 0.0f;
-    private float _timeElapsedSinceLastStarfish = 0.0f;
-
     private bool _hasPickedUpSkateboard = false;
     private float _timeElapsedSinceLastSkateboard = 0.0f;
 
@@ -76,6 +72,8 @@ public class Player : MonoBehaviour
         _healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
 
         takeDamageSound = GetComponent<AudioSource>();
+
+        Dart.TimeElapsedSinceLastDart = Dart.Cooldown - 1f; // shoot right when the game starts
     }
 
     // Update is called once per frame
@@ -106,22 +104,22 @@ public class Player : MonoBehaviour
         animator.SetBool("FacingRight", facingRight);
 
         // fire a dart once enough time has elapsed
-        _timeElapsedSinceLastDart += Time.deltaTime;
+        Dart.TimeElapsedSinceLastDart += Time.deltaTime;
 
         if (Raven.IsEnabled)
         {
-            _timeElapsedSinceLastRaven += Time.deltaTime;
+            Raven.TimeElapsedSinceLastRaven += Time.deltaTime;
         }
 
         if (Starfish.IsEnabled && !Starfish.IsActive) 
         {
             // don't count while starfish is still orbiting
-            _timeElapsedSinceLastStarfish += Time.deltaTime;
+            Starfish.TimeElapsedSinceLastStarfish += Time.deltaTime;
         }
 
-        if (_timeElapsedSinceLastDart > Dart.Cooldown)
+        if (Dart.TimeElapsedSinceLastDart > Dart.Cooldown)
         {
-            _timeElapsedSinceLastDart = 0.0f;
+            Dart.TimeElapsedSinceLastDart = 0.0f;
 
             float degreesToRotate = Dart.SpreadInDegrees;
             int numberOfDartPairs = Dart.BaseCount / 2;
@@ -202,9 +200,9 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Raven.IsEnabled && _timeElapsedSinceLastRaven > Raven.Cooldown)
+        if (Raven.IsEnabled && Raven.TimeElapsedSinceLastRaven > Raven.Cooldown)
         {
-            _timeElapsedSinceLastRaven = 0.0f;
+            Raven.TimeElapsedSinceLastRaven = 0.0f;
             int numberOfRavens = Raven.BaseCount + Raven.AdditionalRavens;
             for (int i = 0; i < numberOfRavens; i++) 
             {
@@ -216,12 +214,14 @@ public class Player : MonoBehaviour
             Raven.CurrentTargets.Clear(); // reset raven targeting
         }
 
-        if (Starfish.IsEnabled && !Starfish.IsActive && _timeElapsedSinceLastStarfish > Starfish.Cooldown)
+        if (Starfish.IsEnabled && !Starfish.IsActive && Starfish.TimeElapsedSinceLastStarfish > Starfish.Cooldown)
         {
-            _timeElapsedSinceLastStarfish = 0.0f;
+            Starfish.TimeElapsedSinceLastStarfish = 0.0f;
             int numberOfStarfish = Starfish.BaseCount + Starfish.AdditionalStarfish;
+            float degreesBetweenStarfish = 360 / numberOfStarfish;
             for (int i = 0; i < numberOfStarfish; i++)
             {
+                _starfishPrefab.DegreesToNextStarfish = degreesBetweenStarfish;
                 _starfishPrefab.identifier = i;
                 var starfish = Instantiate(_starfishPrefab);
                 starfish.transform.parent = transform.parent;
