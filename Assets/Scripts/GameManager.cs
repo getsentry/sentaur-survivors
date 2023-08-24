@@ -67,7 +67,9 @@ public class GameManager : MonoBehaviour
 
     private float _lastHpRampUp = 0.0f;
 
-    private int _maxHitPoints = 30;
+    
+    // By how much each enemy's hit points is modified when spawned
+    private int _enemyHitPointModifier = 0;
 
     private float _lastPickupSpawnTime = 0.0f;
 
@@ -210,10 +212,10 @@ public class GameManager : MonoBehaviour
         }
 
         if (Time.time - _lastHpRampUp > _hpRampUpInterval) {
-            _maxHitPoints += _hpRampUpValue;
+            _enemyHitPointModifier += _hpRampUpValue;
             _lastHpRampUp = Time.time;
 
-            Debug.Log("HP ramped up to " + _maxHitPoints);
+            Debug.Log("HP ramped up to " + _enemyHitPointModifier);
         }
         if (Time.time - _lastPickupSpawnTime > _pickupSpawnRate)
         {
@@ -299,7 +301,7 @@ public class GameManager : MonoBehaviour
     private void SpawnEnemy(GameObject prefab)
     {
         GameObject enemy = Instantiate(prefab);
-        enemy.GetComponent<Enemy>().hitpoints = _maxHitPoints;
+        enemy.GetComponent<Enemy>().hitpoints += _enemyHitPointModifier;
         enemy.transform.parent = _levelContainer.transform;
 
         enemy.transform.position = GetRandomSpawnPointOutsideViewport();
