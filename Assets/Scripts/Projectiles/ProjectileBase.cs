@@ -8,7 +8,7 @@ public class ProjectileBase : MonoBehaviour {
 
     protected Rigidbody2D _rigidbody2D;
     public static int BaseDamage = 10;
-    public static float BaseCooldown = 4f;
+    public static float BaseCooldownPercentage = 1f;
     public static int BaseCount = 1;
 
     protected void Awake() {
@@ -57,20 +57,20 @@ public class ProjectileBase : MonoBehaviour {
     {
         if (level == 1)
         {
-            BaseCooldown = (int) (BaseCooldown * 0.9);
+            BaseCooldownPercentage = 0.9f;
         } 
         else if (level == 2)
         {
-            BaseCooldown = (int) (BaseCooldown * 0.67);
+            BaseCooldownPercentage = 0.6f;
         }
         else if (level == 3)
         {
-            BaseCooldown = (int) (BaseCooldown * 0.5);
+            BaseCooldownPercentage = 0.3f;
         }
 
-        Dart.Cooldown = BaseCooldown * Dart.BaseCooldownPercentage;
-        Raven.Cooldown = BaseCooldown * Raven.BaseCooldownPercentage;
-        Starfish.Cooldown = BaseCooldown * Starfish.BaseCooldownPercentage;
+        Dart.Cooldown = BaseCooldownPercentage * Dart.StartingCooldown;
+        Raven.Cooldown = BaseCooldownPercentage * Raven.StartingCooldown;
+        Starfish.Cooldown = BaseCooldownPercentage * Starfish.StartingCooldown;
     }
 
     public static void UpgradeCount(int level)
