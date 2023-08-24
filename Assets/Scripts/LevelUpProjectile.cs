@@ -17,23 +17,23 @@ public class LevelUpProjectile : MonoBehaviour
     public static Dictionary<string, Upgrade> UpgradeData = new Dictionary<string, Upgrade>{
         {
             "count++",
-            new Upgrade("count++", new List<string>{"+2 darts (3 total)", "+2 darts (5 total)", "+2 darts (7 total)"})
+            new Upgrade("count++", new List<string>{"3 darts", "5 darts", "7 darts!)"})
         },
         {
             "speed++",
-            new Upgrade("speed++", new List<string>{"+50% dart base fire rate", "+100% dart base fire rate", "+250% dart base fire rate"})
+            new Upgrade("speed++", new List<string>{"+50% dart fire rate", "+100% dart fire rate", "+250% dart fire rate!"})
         },
         {
             "damage++",
-            new Upgrade("damage++", new List<string>{"+100% dart base damage", "+200% dart base damage", "+300% dart base damage"})
+            new Upgrade("damage++", new List<string>{"+100% dart damage", "+200% dart damage", "+300% dart damage!"})
         },
         {
             "raven",
-            new Upgrade("raven", new List<string>{"auto-targets the nearest enemy every now and then", "auto-targets more frequently and deals more damage", "auto-targets the two closest enemies and deals even more damage"})
+            new Upgrade("raven", new List<string>{"targets nearest enemy", "targets more frequently with more damage", "targets two enemies and deals even more damage!"})
         },
         {
             "starfish",
-            new Upgrade("starfish", new List<string>{"auto-orbits you for a bit every now and then, damaging every enemy you hit", "orbits for longer and deals more damage", "orbits faster and deals even more damage"})
+            new Upgrade("starfish", new List<string>{"orbits around you, damaging enemies", "orbits for longer and deals more damage", "orbits faster and deals more damage!"})
         }
     };
 
