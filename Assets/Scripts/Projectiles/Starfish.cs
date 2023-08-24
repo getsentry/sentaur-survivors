@@ -6,12 +6,12 @@ public class Starfish : ProjectileBase
 {
     // properties true for all starfish
     public static int Damage;
-    public static float BaseDamagePercentage = 1.2f;
-    public static float Cooldown;
-    public static float BaseCooldownPercentage = 4.5f; 
+    public static float BaseDamagePercentage = 0.9f;
+    public static float StartingCooldown = 5f;
+    public static float Cooldown = 5f;
     public static bool IsEnabled = false;
     
-    public static float Duration = 6f;
+    public static float Duration = 5f;
     public static float DegreesPerFrame = 180f;
     public static bool IsActive = false;
     public static int AdditionalStarfish = 0;
@@ -75,18 +75,20 @@ public class Starfish : ProjectileBase
         {
             IsEnabled = true;
             Damage = (int) (BaseDamage * BaseDamagePercentage);
-            Cooldown = BaseCooldown * BaseCooldownPercentage;
+            Cooldown = StartingCooldown * BaseCooldownPercentage;
             TimeElapsedSinceLastStarfish = Cooldown - 1f; // launch a starfish as soon as its enabled
         }
         else if (level == 2)
         {
-            Duration *= 1.5f;
+            Duration *= 1.2f;
+            BaseDamagePercentage = 1.2f;
+            Damage = (int) (BaseDamage * BaseDamagePercentage);
         }
         else if (level == 3)
         {
-            Duration *= 2;
-            BaseCooldownPercentage = 3f;
-            Cooldown = BaseCooldown * BaseCooldownPercentage;
+            Duration *= 1.5f;
+            StartingCooldown *= 0.7f;
+            Cooldown = StartingCooldown * BaseCooldownPercentage;
         }
     }
 }
