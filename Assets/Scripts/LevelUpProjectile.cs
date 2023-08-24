@@ -17,27 +17,27 @@ public class LevelUpProjectile : MonoBehaviour
     public static Dictionary<string, Upgrade> UpgradeData = new Dictionary<string, Upgrade>{
         {
             "count++",
-            new Upgrade("count++", new List<string>{"3 darts", "5 darts", "7 darts!"})
+            new Upgrade("count++", new List<string>{"2 of each projectile", "3 of each projectile", "5 of each projectile!"})
         },
         {
             "cooldown++",
-            new Upgrade("cooldown++", new List<string>{"-33% base cooldown", "-50% base cooldown", "-75% base cooldown!"})
+            new Upgrade("cooldown++", new List<string>{"-10% cooldown time", "-33% cooldown time", "-50% cooldown time!"})
         },
         {
             "damage++",
-            new Upgrade("damage++", new List<string>{"+30% base damage", "+60% base damage", "+100% base damage!"})
+            new Upgrade("damage++", new List<string>{"+30% damage", "+60% damage", "+100% damage!"})
         },
         {
             "dart",
-            new Upgrade("dart", new List<string>{"extra dart that fires behind you", "+50% dart damage", "3 darts firing behind and +100% damage!"})
+            new Upgrade("dart", new List<string>{"extra dart that fires behind you", "+25% damage", "3 darts firing behind and +44% damage!"})
         },
         {
             "raven",
-            new Upgrade("raven", new List<string>{"targets the nearest enemy", "gain an additional raven", "+50% damage and -33% cooldown!"})
+            new Upgrade("raven", new List<string>{"auto-targets the nearest enemy", "gain an additional raven", "+33% damage and -20% cooldown!"})
         },
         {
             "starfish",
-            new Upgrade("starfish", new List<string>{"orbits around you, damaging enemies", "+50% orbit duration", "+100% orbit duration and -50% cooldown!"})
+            new Upgrade("starfish", new List<string>{"orbits around you, wreaking havoc", "+20% orbit duration", "+50% orbit duration and -30% cooldown!"})
         }
     };
 
