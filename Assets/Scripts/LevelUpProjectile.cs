@@ -29,11 +29,11 @@ public class LevelUpProjectile : MonoBehaviour
         },
         {
             "dart",
-            new Upgrade("dart", new List<string>{"gain an additional dart that fires in the opposite direction", "+50% damage", "+100% damage and gain two additional darts firing in the opposite direction"})
+            new Upgrade("dart", new List<string>{"extra dart that fires behind you", "+50% dart damage", "3 darts firing behind and +100% damage!"})
         },
         {
             "raven",
-            new Upgrade("raven", new List<string>{"targets the nearest enemy", "gain an additional raven", "+50% damage and -33% cooldown"})
+            new Upgrade("raven", new List<string>{"targets the nearest enemy", "gain an additional raven", "+50% damage and -33% cooldown!"})
         },
         {
             "starfish",
