@@ -151,9 +151,7 @@ public class GameManager : MonoBehaviour
     private void OnEnemyDestroyed(int scoreValue)
     {
         SetScore(_score + scoreValue);
-        Debug.Log("GameManager.OnEnemyDestroyed: Score is now " + _score);
-        Debug.Log("GameManager.OnEnemyDestroyed: Next Milestone at score " + _nextLevelXpMilestone);
-        }
+    }
 
     private void OnPlayerDeath()
     {   
@@ -170,11 +168,6 @@ public class GameManager : MonoBehaviour
     {
         _score = score;
         _hud.SetScore(_score);
-
-
-        Debug.Log("GameManager.SetScore: Score is now " + _score);   
-        Debug.Log("GameManager.SetScore: Milestone level is now " + _nextLevelXpMilestone);
-
     }
 
     private void SetCurrentLevel(int level)
@@ -206,16 +199,17 @@ public class GameManager : MonoBehaviour
             SpawnEnemy(prefab);
         }
 
+        // ramp up spawn rate
         if (Time.time - _lastSpawnRampUp > _spawnRampUpInterval) {
             _enemySpawnRate -= 0.05f;
             _lastSpawnRampUp = Time.time;
         }
 
+        // ramp up enemy hp
         if (Time.time - _lastHpRampUp > _hpRampUpInterval) {
             _enemyHitPointModifier += _hpRampUpValue;
+            Debug.Log("Enemy HP modifier is now " + _enemyHitPointModifier + " (" + (int)(Time.time - _lastHpRampUp) + "s elapsed )");
             _lastHpRampUp = Time.time;
-
-            Debug.Log("HP ramped up to " + _enemyHitPointModifier);
         }
         if (Time.time - _lastPickupSpawnTime > _pickupSpawnRate)
         {
@@ -227,7 +221,7 @@ public class GameManager : MonoBehaviour
         if (_xp >= _nextLevelXpMilestone && _currentLevel < _levelMilestones.Length) 
         {
             _currentLevel++;
-            Debug.Log("GameManager.Update: level up!");
+            Debug.Log("GameManager.Update: Level Up!");
 
             _previousLevel = _currentLevel - 1;
 

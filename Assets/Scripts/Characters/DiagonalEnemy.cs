@@ -9,7 +9,7 @@ public class DiagonalEnemy : Enemy
 
     void Awake() {
         base.Awake();
-        
+
         // initialize a random direction
         _direction = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
 
@@ -29,7 +29,6 @@ public class DiagonalEnemy : Enemy
             // https://stackoverflow.com/questions/49790711/reflect-a-projectile-on-collision-in-unity
 
             _direction = Vector3.Reflect(_direction, collision.contacts[0].normal);
-            Debug.Log("Enemy " + this.name + " has collision.contacts[0].normal: " + collision.contacts[0].normal);
         }
         else if (collision.gameObject.tag == "Enemy")
         {
