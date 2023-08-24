@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+using DG.Tweening;
 
 public class Enemy : MonoBehaviour
 {
@@ -39,6 +39,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     [Tooltip("How long the enemy flashes for when they take damage")]
     private float _flashDuration = 0.2f;
+
+    [SerializeField]
+    [Tooltip("How long the enemy's death animation lasts")]
+    private float _deathAnimDuration = 0.5f;
 
     private Material _originalMaterial;
     private Coroutine _flashCoroutine;
@@ -104,18 +108,18 @@ public class Enemy : MonoBehaviour
         _spriteRenderer.material = _flashMaterial;
         yield return new WaitForSeconds(_flashDuration);
         _spriteRenderer.material = _originalMaterial;
-        _originalMaterial = null;
     }
 
     virtual public void Death(bool leaveXp = false) {
-
-        if (leaveXp) {
-            // instantiate an xp drop at this position
-            var xpDrop = Instantiate(_xpDropPrefab, transform.position, Quaternion.identity);
-            xpDrop.SetXp(_xpValue);
-        }
-
-        Destroy(this.gameObject);
+        // shrink (scale to 1) before being destroyed
+        transform.DOScale(0.01f, _deathAnimDuration).OnComplete(() => {
+            if (leaveXp) {
+                // instantiate an xp drop at this position
+                var xpDrop = Instantiate(_xpDropPrefab, transform.position, Quaternion.identity);
+                xpDrop.SetXp(_xpValue);
+            }
+            Destroy(gameObject);
+        });
     }
 
     // Deal damage to the player because they touched
