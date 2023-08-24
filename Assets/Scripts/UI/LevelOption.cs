@@ -20,6 +20,14 @@ public class LevelOption : MonoBehaviour
     [Tooltip("Sprite for the damage++ upgrade")]
     private Sprite _damageSprite;
 
+    [SerializeField]
+    [Tooltip("Sprite for the raven upgrade")]
+    private Sprite _ravenSprite;
+
+    [SerializeField]
+    [Tooltip("Sprite for the starfish upgrade")]
+    private Sprite _starfishSprite;
+
     private TextMeshProUGUI _title;
     private TextMeshProUGUI _description;
     private TextMeshProUGUI _stats;
@@ -48,6 +56,12 @@ public class LevelOption : MonoBehaviour
                 break;
             case "damage++":
                 _icon.sprite = _damageSprite;
+                break;
+            case "raven":
+                _icon.sprite = _ravenSprite;
+                break;
+            case "starfish":
+                _icon.sprite = _starfishSprite;
                 break;
             default: break;
         }
