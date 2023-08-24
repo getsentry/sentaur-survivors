@@ -29,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -73,10 +73,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 23827671
-  m_SortingLayer: 3
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.3146997, g: 1, b: 0.21226418, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -100,6 +100,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healAmount: 30
   _scoreValue: 50
+  _hotdogSprite: {fileID: 21300000, guid: f2bf24979fc854a0fa0a4ac4ff31544c, type: 3}
+  _skateboardSprite: {fileID: 21300000, guid: bc2358cfcb81b427380e5587bf683dab, type: 3}
+  _umbrellaSprite: {fileID: 21300000, guid: 5e2a42506cbea4b5293b0461bc112382, type: 3}
 --- !u!61 &8459684996225841193
 BoxCollider2D:
   m_ObjectHideFlags: 0

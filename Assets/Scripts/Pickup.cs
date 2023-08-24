@@ -13,6 +13,18 @@ public class Pickup : MonoBehaviour
     [SerializeField]
     private int _scoreValue = 50;
 
+    [SerializeField]
+    [Tooltip("Sprite for the hotdog pickup")]
+    private Sprite _hotdogSprite;
+
+    [SerializeField]
+    [Tooltip("Sprite for the skateboard pickup")]
+    private Sprite _skateboardSprite;
+
+    [SerializeField]
+    [Tooltip("Sprite for the umbrella pickup")]
+    private Sprite _umbrellaSprite;
+
     private enum PickupType 
     {
         Hotdog,
@@ -33,13 +45,13 @@ public class Pickup : MonoBehaviour
         switch (pickupType)
         {
             case PickupType.Hotdog:
-                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                gameObject.GetComponent<SpriteRenderer>().sprite = _hotdogSprite;
                 break;
             case PickupType.Skateboard:
-                gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+                gameObject.GetComponent<SpriteRenderer>().sprite = _skateboardSprite;
                 break;
             case PickupType.Umbrella:
-                gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                gameObject.GetComponent<SpriteRenderer>().sprite = _umbrellaSprite;
                 break;
         }
     }
