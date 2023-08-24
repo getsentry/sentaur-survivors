@@ -60,6 +60,10 @@ public class GameManager : MonoBehaviour
     [Tooltip("The level up UI prefab to spawn")]
     private GameObject _levelUpUIPrefab;
 
+    [SerializeField]
+    [Tooltip("The parent UI element containing the active pickups")]
+    private GameObject _activePickupContainer;
+
 
     // the player's accumulated score so far
     private int _score = 0;
@@ -145,7 +149,10 @@ public class GameManager : MonoBehaviour
         });
         EventManager.AddListener("PickupGrabbed", (eventData) =>
         {
-            OnPickupGrabbed((int)eventData.Data);
+            OnPickupGrabbed((List<object>)eventData.Data);
+        });
+        EventManager.AddListener("PickupExpired", (eventData) => {
+            OnPickupExpired((string)eventData.Data);
         });
         EventManager.AddListener("PlayerDeath", (eventData) =>
         {
@@ -156,10 +163,23 @@ public class GameManager : MonoBehaviour
         });
     }
 
-    private void OnPickupGrabbed(int scoreValue)
+    private void OnPickupGrabbed(List<object> eventData)
     {
+        int scoreValue = (int) eventData[0];
         SetScore(_score + scoreValue);
         _pickupsOnScreen -= 1;
+
+        string pickupName = (string) eventData[1];
+
+        if (pickupName != "Hotdog")
+        {
+            _activePickupContainer.transform.Find(pickupName).gameObject.SetActive(true);
+        }
+    }
+
+    private void OnPickupExpired(string pickupName)
+    {
+        _activePickupContainer.transform.Find(pickupName).gameObject.SetActive(false);
     }
 
     private void OnXpEarned(int xp)
