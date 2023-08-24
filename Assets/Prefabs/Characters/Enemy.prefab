@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collisionDamage: 10
-  hitpoints: 20
+  hitpoints: 10
   _scoreValue: 10
   _xpValue: 10
   _speed: 1.5

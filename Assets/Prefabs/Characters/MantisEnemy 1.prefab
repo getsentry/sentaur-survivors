@@ -102,11 +102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d44215412c149edb355122fa7bd915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collisionDamage: 15
-  hitpoints: 30
-  _scoreValue: 20
-  _xpValue: 20
-  _speed: 1
+  _collisionDamage: 25
+  hitpoints: 75
+  _scoreValue: 100
+  _xpValue: 100
+  _speed: 2
   _damageTextPrefab: {fileID: 3046976478099630124, guid: f3d91c6924ee1487984efd1cdf4dab92, type: 3}
   _xpDropPrefab: {fileID: 4537481635261412375, guid: 41573deea9de44cd3a8532bf5d4f24fc, type: 3}
   _flashMaterial: {fileID: 2100000, guid: fd4fa7d682b474410a971d96b6c0d276, type: 2}
