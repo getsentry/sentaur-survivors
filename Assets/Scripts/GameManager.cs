@@ -76,6 +76,10 @@ public class GameManager : MonoBehaviour
     [Tooltip("The parent UI element containing the active pickups")]
     private GameObject _activePickupContainer;
 
+    [SerializeField]
+    [Tooltip("Background Music")]
+    private AudioSource _backgroundMusic;
+
 
     // the player's accumulated score so far
     private int _score = 0;
@@ -171,6 +175,7 @@ public class GameManager : MonoBehaviour
         _hud.SetXp(1.0f * _score);
 
         _levelContainer = GameObject.Find("Level");
+        _backgroundMusic = GameObject.Find("Level").GetComponent<AudioSource>();
 
         _lastEnemySpawnTime = Time.time;
         _lastPickupSpawnTime = Time.time;
@@ -244,6 +249,8 @@ public class GameManager : MonoBehaviour
     private void OnPlayerDeath()
     {   
         _gameState = GameState.GameOver;
+        // stop playing the background music when the game stops
+        _backgroundMusic.Stop();
 
         // STOP THE GAME
         // -- by setting the timescale to 0, we stop all time-based operations
