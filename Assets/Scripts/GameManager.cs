@@ -82,7 +82,27 @@ public class GameManager : MonoBehaviour
 
     // the score a player must get to for the next weapon upgrade
     private int _nextLevelScoreMilestone;
-    private int[] _levelMilestones = {50, 150, 350, 650, 1050, 1550, 2150, 2850, 3650, 4550, 5550}; // for testing: {50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900};
+
+    [SerializeField]
+    private int[] _levelMilestones = {
+        50, // level 2
+        150, 
+        350, 
+        650, 
+        1050, 
+        1550, 
+        2150, 
+        2850, 
+        3650, // level 10
+        4550, 
+        5550,
+        6700,
+        8000,
+        9400,
+        11000,
+        12800,
+        14800, // level 18 (max)
+    }; // for testing: {50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900};
     private int _nextLevelXpMilestone;
     // trackinf the previous level score milestone for xp bar
     private int _prevLevelXpMilestone;
