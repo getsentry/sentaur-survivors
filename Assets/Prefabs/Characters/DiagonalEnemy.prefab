@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6178801690770967218}
   - component: {fileID: 1832744029709189115}
   - component: {fileID: 6295179934123336098}
+  - component: {fileID: -4973739486306597661}
   m_Layer: 9
   m_Name: DiagonalEnemy
   m_TagString: Enemy
@@ -183,6 +184,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!95 &-4973739486306597661
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001074756204391216}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &103302148038260753
 PrefabInstance:
   m_ObjectHideFlags: 0
