@@ -236,7 +236,7 @@ public class Player : MonoBehaviour
                 _starfishPrefab.DegreesToNextStarfish = degreesBetweenStarfish;
                 _starfishPrefab.identifier = i;
                 var starfish = Instantiate(_starfishPrefab);
-                starfish.transform.parent = transform.parent;
+                starfish.transform.parent = transform;
             }
         }
 

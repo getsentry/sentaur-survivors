@@ -46,9 +46,6 @@ public class Starfish : ProjectileBase
 
     void LateUpdate()
     {
-        // reposition the starfish so it still looks the same distance to the player regardless of how they moved; TODO: still wonky
-        Vector3 targetPosition = _player.transform.position + (_player.transform.position - transform.position).normalized * _distanceOutsidePlayer;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, -(_distanceOutsidePlayer - Vector3.Distance(transform.position, _player.transform.position)));
         transform.RotateAround(_player.transform.position, Vector3.forward, DegreesPerFrame * Time.deltaTime);
     }
 
