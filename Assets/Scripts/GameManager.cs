@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
     private float _maxWaveSizeScaleFactor = 0.67f;
 
     [SerializeField]
+    [Tooltip("Time when death appears (in seconds)")]
+    private float _deathAppearanceTime = 600; // 10 minutes
+
+    [SerializeField]
     [Tooltip("The plane to spawn enemies on")]
     private GameObject _spawnPlane;
 
@@ -55,6 +59,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     [Tooltip("The mantis enemy prefab to spawn")]
     private GameObject _mantisEnemyPrefab;
+
+    [SerializeField]
+    [Tooltip("The death enemy prefab to spawn")]
+    private GameObject _deathEnemyPrefab;
 
     [SerializeField]
     [Tooltip("The pickup prefab to spawn")]
@@ -129,6 +137,9 @@ public class GameManager : MonoBehaviour
     private HUD _hud;
     private GameObject _levelContainer;
 
+    private float _gameStartTime;
+    private bool _isDeathEnemyPresent = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -144,6 +155,8 @@ public class GameManager : MonoBehaviour
         _lastEnemySpawnTime = Time.time;
         _lastPickupSpawnTime = Time.time;
         _pickupsOnScreen = 1;
+
+        _gameStartTime = Time.time;
 
         SetCurrentLevel(_currentLevel);
 
@@ -235,6 +248,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!_isDeathEnemyPresent && (Time.time - _gameStartTime > _deathAppearanceTime))
+        {
+            _isDeathEnemyPresent = true;
+            SpawnDeath();
+        }
+
         // every 2 seconds, instantiate a new enemy prefab and position at the edge
         // of the viewport;
         if (Time.time - _lastEnemySpawnTime > _enemySpawnRate)
@@ -432,6 +451,13 @@ public class GameManager : MonoBehaviour
             spawnCount++;
             flipX = -flipX;
         }
+    }
+
+    private void SpawnDeath() {
+        GameObject death = Instantiate(_deathEnemyPrefab);
+        death.transform.parent = _levelContainer.transform;
+        death.transform.position = GetRandomSpawnPointOutsideViewport();
+        _gameStartTime = Time.time;
     }
 
     private void SpawnPickup() 
