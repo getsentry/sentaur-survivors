@@ -22,22 +22,16 @@ public class Dart : ProjectileBase
     private static float _shootingInterval = 0.4f; // time between consecutive darts
 
     [SerializeField]
-    [Tooltip("shooting sound effect")]
+    [Tooltip("enemy hit sound effect")]
     public AudioSource dartShootingSound;
 
-
     private Vector3 _direction;
-
-    void Start()
-    {
-        dartShootingSound = GetComponent<AudioSource>();
-    }
 
     public static IEnumerator ShootDarts(Dart prefab, GameObject player)
     {
         IsShooting = true;
         Vector3 direction = CalculateDirection(player);
-        AudioSource dartShootingSound = prefab.GetComponent<AudioSource>();
+
         for (int i = 0; i < BaseCount; i++)
         {
             ShootADart(prefab, player, direction);
@@ -45,10 +39,6 @@ public class Dart : ProjectileBase
             {
                 direction *= -1;
                 ShootADart(prefab, player, direction);
-
-                // play damage sound effect
-                dartShootingSound.Play();
-                
                 direction *= -1;
             }
 
