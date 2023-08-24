@@ -32,6 +32,17 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private XpDrop _xpDropPrefab;
 
+    [SerializeField]
+    [Tooltip("The material to use when the enemy is flashing")]
+    private Material _flashMaterial;
+
+    [SerializeField]
+    [Tooltip("How long the enemy flashes for when they take damage")]
+    private float _flashDuration = 0.2f;
+
+    private Material _originalMaterial;
+    private Coroutine _flashCoroutine;
+
     private SpriteRenderer _spriteRenderer;
 
     protected Rigidbody2D _rigidbody2D;
@@ -39,6 +50,8 @@ public class Enemy : MonoBehaviour
     protected void Awake() {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
+
+        _originalMaterial = _spriteRenderer.material;
     }
 
     // Update is called once per frame
@@ -78,6 +91,22 @@ public class Enemy : MonoBehaviour
         }
     }
     
+    // material flash trick from: https://www.youtube.com/watch?v=9rZkiEyS66I
+    public void Flash() {
+
+        if (_flashCoroutine != null) {
+            StopCoroutine(_flashCoroutine);
+        }
+        _flashCoroutine = StartCoroutine(FlashCoroutine());
+    }
+
+    private IEnumerator FlashCoroutine() {
+        _spriteRenderer.material = _flashMaterial;
+        yield return new WaitForSeconds(_flashDuration);
+        _spriteRenderer.material = _originalMaterial;
+        _originalMaterial = null;
+    }
+
     virtual public void Death(bool leaveXp = false) {
 
         if (leaveXp) {
@@ -97,6 +126,8 @@ public class Enemy : MonoBehaviour
     }
 
     public void TakeDamage(int damage) {
+        Flash();
+
         hitpoints -= damage;
         hitpoints = Mathf.Max(hitpoints, 0); // don't let the enemy have negative hit points
 
