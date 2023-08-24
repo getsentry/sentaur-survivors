@@ -646,6 +646,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b3dd2a3ab2a477faae51ce48d9c4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _countSprite: {fileID: 21300000, guid: d5250e5db3ce642448c7a5c9ffa33af9, type: 3}
+  _speedSprite: {fileID: 21300000, guid: 8094df7779b004b43b7cc37ee399539b, type: 3}
+  _damageSprite: {fileID: 21300000, guid: 4af40a0e588594a3c9e45068423eb312, type: 3}
 --- !u!114 &3883653688101900433
 MonoBehaviour:
   m_ObjectHideFlags: 0
