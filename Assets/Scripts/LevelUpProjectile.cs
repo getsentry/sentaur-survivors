@@ -8,6 +8,7 @@ public class LevelUpProjectile : MonoBehaviour
 {
 
     // fyi: title -> upgrade name, description -> level, stats -> description 
+    // leveling up an upgrade, changes the stats to new level, increases the level #
 
     public static List<string> AvailableProjectileUpgrades = new List<string>{
         "count++", "speed++", "damage++", "raven", "starfish"
