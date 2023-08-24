@@ -5628,8 +5628,8 @@ MonoBehaviour:
   _levelUpUIPrefab: {fileID: 3351380216167417446, guid: 0161067a6f1f146e880d28f01d9d1897, type: 3}
   _xp: 0
   _floor: {fileID: 1455703352}
-  _hpRampUpInterval: 20
-  _hpRampUpValue: 10
+  _hpRampUpInterval: 60
+  _hpRampUpValue: 5
 --- !u!4 &1361049654
 Transform:
   m_ObjectHideFlags: 0
