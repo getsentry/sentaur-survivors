@@ -6495,6 +6495,7 @@ MonoBehaviour:
   _levelUpUIPrefab: {fileID: 3351380216167417446, guid: 0161067a6f1f146e880d28f01d9d1897, type: 3}
   _activePickupContainer: {fileID: 1213143403}
   _backgroundMusic: {fileID: 0}
+  _levelMilestones: 32000000960000005e0100008a0200001a0400000e06000066080000220b0000420e0000c6110000ae1500002c1a0000401f0000b8240000f82a000000320000d0390000
   _hpRampUpInterval: 60
   _hpRampUpValue: 5
 --- !u!4 &1361049654
@@ -27196,7 +27197,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5f13ac7eeb6b8443fb2543becbe169f7, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
