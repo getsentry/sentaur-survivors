@@ -129,15 +129,11 @@ public class GameManager : MonoBehaviour
     {
         SetScore(_score + scoreValue);
         _pickupsOnScreen -= 1;
-
-        Debug.Log("GameManager.OnPickupGrabbed: Score is now " + _score);
     }
 
     private void OnXpEarned(int xp)
     {
         _xp += xp;
-        Debug.Log("GameManager.OnXpEarned: Xp is now " + _xp);
-
         UpdateXpProgress();
     }
 
@@ -212,6 +208,7 @@ public class GameManager : MonoBehaviour
         // ramp up enemy hp
         if (Time.time - _lastHpRampUp > _hpRampUpInterval) {
             _enemyHitPointModifier += _hpRampUpValue;
+            
             Debug.Log("Enemy HP modifier is now " + _enemyHitPointModifier + " (" + (int)(Time.time - _lastHpRampUp) + "s elapsed )");
             _lastHpRampUp = Time.time;
         }
