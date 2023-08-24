@@ -6,17 +6,23 @@ public class Raven : ProjectileBase
 {
 
     // properties true for all ravens
+    public static int Damage;
+    public static float BaseDamagePercentage = 0.5f;
+    public static float Cooldown;
+    public static float BaseCooldownPercentage = 4f;
+    public static bool IsEnabled = false;
+
     public static float Speed = 12.0f;
-    public static int Damage = 10;
-    public static float FireRate = 10f;
-    public static GameObject FirstTarget = null;
+    public static int AdditionalRavens = 0;
+    public static List<GameObject> CurrentTargets = new List<GameObject>{}; 
+    public static float TimeElapsedSinceLastRaven;
     private static float _distanceOutsidePlayer = 2.0f;
 
     public int identifier;
     private Vector3 _direction;
     private GameObject _player;
 
-    void Awake()
+    new void Awake()
     {
         base.Awake();
 
@@ -26,6 +32,12 @@ public class Raven : ProjectileBase
     public void TargetClosestEnemy() 
     {
         GameObject target = GetTarget();
+        if (target == null)
+        {
+            // nothing to target
+            Destroy(gameObject);
+            return;
+        }
         Vector3 direction = target.transform.position - _player.transform.position;
         SetDirection(direction);
 
@@ -39,11 +51,21 @@ public class Raven : ProjectileBase
         GameObject target = null;
         float distance = Mathf.Infinity;
         Vector3 position = _player.transform.position;
+        bool isAlreadyTargeted = false;
         foreach (GameObject enemy in enemies)
         {
-            if (ReferenceEquals(enemy, FirstTarget))
+            foreach (GameObject targetedEnemy in CurrentTargets)
             {
-                // if this enemy is already targeted, skip over it to find our second closest so the second raven aims at a different enemy than the first raven
+                if (ReferenceEquals(enemy, targetedEnemy))
+                {
+                    // if this enemy is already targeted, skip over it to find our second closest so the second raven aims at a different enemy than the first raven
+                    isAlreadyTargeted = true;
+                    break;
+                }
+            }
+
+            if (isAlreadyTargeted)
+            {
                 continue;
             }
 
@@ -51,15 +73,11 @@ public class Raven : ProjectileBase
             float curDistance = diff.sqrMagnitude;
             if (curDistance < distance)
             {
-                if (identifier == 0)
-                {
-                    // only set this if this Raven is the first one 
-                    FirstTarget = enemy;
-                }
                 target = enemy;
                 distance = curDistance;
             }
         }
+        CurrentTargets.Add(target);
         return target;
     }
 
@@ -81,7 +99,25 @@ public class Raven : ProjectileBase
         enemy.TakeDamage(Damage);
     }
 
-    private void OnBecameInvisible() {
-        Destroy(gameObject);
-    } 
+    public static void UpgradeRaven(int level)
+    {
+        if (level == 1)
+        {
+            IsEnabled = true;
+            Damage = (int) (BaseDamage * BaseDamagePercentage);
+            Cooldown = BaseCooldown * BaseCooldownPercentage;
+            TimeElapsedSinceLastRaven = Cooldown - 1f; // launch a raven as soon as it's enabled
+        }
+        else if (level == 2)
+        {
+            AdditionalRavens++;
+        }
+        else if (level == 3)
+        {
+            BaseDamagePercentage = 0.75f;
+            Damage = (int) (BaseDamage * BaseDamagePercentage);
+            BaseCooldownPercentage = 3f;
+            Cooldown = BaseCooldown * BaseCooldownPercentage;
+        }
+    }
 }
