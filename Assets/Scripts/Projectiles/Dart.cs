@@ -9,8 +9,8 @@ public class Dart : ProjectileBase
     // properties true for all darts
     public static int Damage = BaseDamage;
     public static float BaseDamagePercentage = 1f;
-    public static float Cooldown = BaseCooldown;
-    public static float BaseCooldownPercentage = 1f;
+    public static float StartingCooldown = 1.8f;
+    public static float Cooldown = 1.8f;
     public static float SpreadInDegrees = 10f;
 
     public static float Speed = 10.0f;
