@@ -8,15 +8,15 @@ public class Starfish : ProjectileBase
     public static int Damage;
     public static float BaseDamagePercentage = 1.2f;
     public static float Cooldown;
-    public static float BaseCooldownPercentage = 1f; // change back to 5
+    public static float BaseCooldownPercentage = 4.5f; 
     public static bool IsEnabled = false;
     
-    public static float Duration = 5f;
+    public static float Duration = 6f;
     public static float DegreesPerFrame = 180f;
     public static bool IsActive = false;
     public static int AdditionalStarfish = 0;
     public static float TimeElapsedSinceLastStarfish;
-    private static float _distanceOutsidePlayer = 1.5f;
+    private static float _distanceOutsidePlayer = 2f;
 
     public float DegreesToNextStarfish; 
     public int identifier;
@@ -88,7 +88,7 @@ public class Starfish : ProjectileBase
         else if (level == 3)
         {
             Duration *= 2;
-            BaseCooldownPercentage = 3.5f;
+            BaseCooldownPercentage = 3f;
             Cooldown = BaseCooldown * BaseCooldownPercentage;
         }
     }
