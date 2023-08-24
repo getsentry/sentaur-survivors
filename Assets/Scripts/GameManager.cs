@@ -271,11 +271,9 @@ public class GameManager : MonoBehaviour
     }
 
     /**
-     * Returns a random spawnable position outside of the viewport
+     * Returns a random position within the spane area
      */
-    private Vector3 GetRandomSpawnPointOutsideViewport() {
-        var tileMap = _floor;
-
+    private Vector3 GetRandomSpawnPoint() {
         var rectTransform = _spawnPlane.GetComponent<RectTransform>();
         // get bounds of rect transform
         var rectTransformWorldBounds = new Bounds(
@@ -283,6 +281,17 @@ public class GameManager : MonoBehaviour
             rectTransform.rect.size
         );
 
+        var floorSpawnCoord = new Vector3(
+            Random.Range(rectTransformWorldBounds.min.x, rectTransformWorldBounds.max.x),
+            Random.Range(rectTransformWorldBounds.min.y, rectTransformWorldBounds.max.y), 0.0f);
+
+        return floorSpawnCoord;
+    }
+
+    /**
+     * Returns a random spawnable position outside of the viewport
+     */
+    private Vector3 GetRandomSpawnPointOutsideViewport() {
         // convert to bounds
         var viewportBounds = GetViewportBounds();
 
@@ -290,9 +299,7 @@ public class GameManager : MonoBehaviour
         Vector3 floorSpawnCoord;
         do {
             // choose a random coordinate within rectTransformWorldBounds
-            floorSpawnCoord = new Vector3(
-                Random.Range(rectTransformWorldBounds.min.x, rectTransformWorldBounds.max.x), 
-                Random.Range(rectTransformWorldBounds.min.y, rectTransformWorldBounds.max.y), 0.0f);
+            floorSpawnCoord = GetRandomSpawnPoint();
 
             // loop until a coordinate is chosen outside viewport
         } while (viewportBounds.Contains(floorSpawnCoord));
@@ -319,14 +326,7 @@ public class GameManager : MonoBehaviour
         GameObject pickup = Instantiate(_pickupPrefab as GameObject);
         pickup.transform.parent = _levelContainer.transform;
 
-        float xMin = _floor.cellBounds.xMin;
-        float xMax = _floor.cellBounds.xMax;
-        float yMin = _floor.cellBounds.yMin;
-        float yMax = _floor.cellBounds.yMax;
-
-        Vector3 spawnViewportCoord = new Vector3(Random.Range(xMin, xMax), Random.Range(yMin, yMax), 0.0f);
-        
-        pickup.transform.position = spawnViewportCoord; //Camera.main.ViewportToWorldPoint(spawnViewportCoord);
+        pickup.transform.position = GetRandomSpawnPoint();
         _pickupsOnScreen++;
     }
 
