@@ -116,7 +116,10 @@ public class Player : MonoBehaviour
         animator.SetBool("FacingRight", facingRight);
 
         // fire a dart once enough time has elapsed
-        Dart.TimeElapsedSinceLastDart += Time.deltaTime;
+        if (!Dart.IsShooting)
+        {
+            Dart.TimeElapsedSinceLastDart += Time.deltaTime;
+        }
 
         if (Raven.IsEnabled)
         {
@@ -129,87 +132,9 @@ public class Player : MonoBehaviour
             Starfish.TimeElapsedSinceLastStarfish += Time.deltaTime;
         }
 
-        if (Dart.TimeElapsedSinceLastDart > Dart.Cooldown)
+        if (Dart.TimeElapsedSinceLastDart > Dart.Cooldown && !Dart.IsShooting)
         {
-            Dart.TimeElapsedSinceLastDart = 0.0f;
-
-            float degreesToRotate = Dart.SpreadInDegrees;
-            int numberOfDartPairs = Dart.BaseCount / 2;
-
-            // instantiate new dart(s)
-            for (int i = 0; i < numberOfDartPairs; i++) 
-            {
-                for (int j = 0; j < 2; j++) 
-                {
-                    var dart = Instantiate(_dartPrefab);
-                    dart.transform.parent = transform.parent;
-                    Vector3 direction = CalculateDartDirection();
-                    direction = RotateDirection(direction, degreesToRotate);
-                    degreesToRotate *= -1; // to get the proper rotation for the next dart, which is on the other side of the center dart
-                    dart.SetDirection(direction);
-
-                    // set the dart's position to the player's position + a little bit
-                    // outside the player in the direction of the mouse cursor
-                    var distanceOutsidePlayer = 2.0f;
-                    dart.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
-                }
-
-                degreesToRotate -= degreesToRotate / numberOfDartPairs;
-
-                // TODO: need to write coroutine to space out darts and remove spread
-            }
-
-            if (Dart.BaseCount % 2 != 0) 
-            {
-                // odd number of darts, so we need to create a center dart
-                var dart = Instantiate(_dartPrefab);
-                dart.transform.parent = transform.parent;
-                Vector3 direction = CalculateDartDirection();
-                direction = RotateDirection(direction, 0);
-                dart.SetDirection(direction);
-
-                // set the dart's position to the player's position + a little bit
-                // outside the player in the direction of the mouse cursor
-                var distanceOutsidePlayer = 2.0f;
-                dart.transform.position = transform.position + direction.normalized * distanceOutsidePlayer;
-            }
-
-            int numberOfAdditionalDartPairs = Dart.AdditionalDarts / 2;
-
-            // instantiate backwards dart(s), if any
-            for (int i = 0; i < numberOfAdditionalDartPairs; i++)
-            {
-                for (int j = 0; j < 2; j++) 
-                {
-                    var dart = Instantiate(_dartPrefab);
-                    dart.transform.parent = transform.parent;
-                    Vector3 direction = CalculateDartDirection();
-                    direction = RotateDirection(direction, degreesToRotate);
-                    degreesToRotate *= -1; // to get the proper rotation for the next dart, which is on the other side of the center dart
-                    dart.SetDirection(-direction); // bc these ones go backwards
-
-                    // set the dart's position to the player's position + a little bit
-                    // outside the player in the direction of the mouse cursor
-                    var distanceOutsidePlayer = 2.0f;
-                    dart.transform.position = transform.position + (-direction).normalized * distanceOutsidePlayer;
-                }
-                // TODO: need to write coroutine to space out darts; might have to do this within dart
-            }
-
-            if (Dart.AdditionalDarts % 2 != 0) 
-            {
-                // odd number of darts, so we need to create a center dart
-                var dart = Instantiate(_dartPrefab);
-                dart.transform.parent = transform.parent;
-                Vector3 direction = CalculateDartDirection();
-                direction = RotateDirection(direction, 0);
-                dart.SetDirection(-direction);
-
-                // set the dart's position to the player's position + a little bit
-                // outside the player in the direction of the mouse cursor
-                var distanceOutsidePlayer = 2.0f;
-                dart.transform.position = transform.position + (-direction).normalized * distanceOutsidePlayer;
-            }
+            StartCoroutine(Dart.ShootDarts(_dartPrefab, gameObject));
         }
 
         if (Raven.IsEnabled && Raven.TimeElapsedSinceLastRaven > Raven.Cooldown)
@@ -268,14 +193,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    private Vector3 CalculateDartDirection() 
-    {
-        // dart moves in the direction of the current mouse cursor
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 direction = mousePosition - transform.position;
+    // private Vector3 CalculateDartDirection() 
+    // {
+    //     // dart moves in the direction of the current mouse cursor
+    //     Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //     Vector3 direction = mousePosition - transform.position;
 
-        return direction;
-    }
+    //     return direction;
+    // }
 
     private Vector3 RotateDirection(Vector3 direction, float degreesToRotate)
     {
