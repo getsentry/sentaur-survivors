@@ -253,7 +253,7 @@ MonoBehaviour:
   _hitPoints: 100
   _maxHitPoints: 100
   _dartCount: 1
-  _playerMoveRate: 5
+  _playerMoveRate: 3
   _ravenCount: 0
   _starfishCount: 0
   _timeBasedPickupDuration: 10
