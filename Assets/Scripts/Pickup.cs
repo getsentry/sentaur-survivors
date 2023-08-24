@@ -82,7 +82,8 @@ public class Pickup : MonoBehaviour
             Destroy(this.gameObject);
 
             // trigger an event that lets people know this was picked up
-            EventManager.TriggerEvent("PickupGrabbed", new EventData(_scoreValue));
+            List<object> eventData = new List<object>{_scoreValue, pickupType.ToString()};
+            EventManager.TriggerEvent("PickupGrabbed", new EventData(eventData));
         }
     }
 }

@@ -250,6 +250,7 @@ public class Player : MonoBehaviour
                 _hasPickedUpSkateboard = false;
                 _playerMoveRate = _baseMoveRate;
                 _timeElapsedSinceLastSkateboard = 0.0f;
+                EventManager.TriggerEvent("PickupExpired", new EventData("Skateboard"));
             }
         }
 
@@ -262,6 +263,7 @@ public class Player : MonoBehaviour
                 _hasPickedUpUmbrella = false;
                 _damageReductionAmount = 0.0f;
                 _timeElapsedSinceLastUmbrella = 0.0f;
+                EventManager.TriggerEvent("PickupExpired", new EventData("Umbrella"));
             }
         }
     }
