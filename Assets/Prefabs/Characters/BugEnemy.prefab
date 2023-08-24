@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d44215412c149edb355122fa7bd915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collisionDamage: 15
+  _collisionDamage: 12
   hitpoints: 25
   _scoreValue: 25
   _xpValue: 25
