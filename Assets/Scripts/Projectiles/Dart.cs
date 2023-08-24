@@ -21,10 +21,6 @@ public class Dart : ProjectileBase
     private static float _distanceOutsidePlayer = 2f;
     private static float _shootingInterval = 0.4f; // time between consecutive darts
 
-    [SerializeField]
-    [Tooltip("enemy hit sound effect")]
-    public AudioSource dartShootingSound;
-
     private Vector3 _direction;
 
     public static IEnumerator ShootDarts(Dart prefab, GameObject player)
@@ -68,8 +64,6 @@ public class Dart : ProjectileBase
         dart.transform.parent = player.transform.parent;
         dart.SetDirection(direction);
         dart.transform.position = player.transform.position + direction.normalized * _distanceOutsidePlayer;
-
-  
     }
 
     private static Vector3 CalculateDirection(GameObject player)
