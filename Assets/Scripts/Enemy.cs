@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
 
     protected Rigidbody2D _rigidbody2D;
 
-    protected void Awake() {
+    virtual protected void Awake() {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
 

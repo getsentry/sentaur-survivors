@@ -7,7 +7,7 @@ public class DiagonalEnemy : Enemy
 {
     Vector2 _direction;
 
-    void Awake() {
+    override protected void Awake() {
         base.Awake();
 
         // initialize a random direction
