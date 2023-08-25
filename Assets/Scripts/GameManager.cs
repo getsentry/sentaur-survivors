@@ -93,23 +93,23 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private int[] _levelMilestones = {
-        50, // level 2
-        150, 
-        350, 
-        650, 
-        1050, 
-        1550, 
-        2150, 
-        2850, 
-        3650, // level 10
-        4550, 
-        5550,
-        6700,
-        8000,
-        9400,
-        11000,
-        12800,
-        14800, // level 18 (max)
+      50, // level 2
+      150, 
+      350, 
+      650, 
+      1050, 
+      1550, 
+      2200, 
+      3000, 
+      4000, // level 10
+      5250, 
+      6800, 
+      8750, 
+      11200, 
+      14250, 
+      18000, 
+      22500, 
+      28000, // level 18 (max)
     }; // for testing: {50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900};
     private int _nextLevelXpMilestone;
     // trackinf the previous level score milestone for xp bar
