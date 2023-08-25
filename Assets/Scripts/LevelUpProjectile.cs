@@ -53,6 +53,11 @@ public class LevelUpProjectile : MonoBehaviour
     [SerializeField]
     private LevelOption _levelOption2;
 
+    // this is in GameManager.cs, but idk how to access it from here
+    // [SerializeField]
+    // [Tooltip("The parent UI element containing the active upgrades")]
+    // private GameObject _activeUpgradesContainer;
+
     void Awake() {
     }
 
@@ -85,7 +90,6 @@ public class LevelUpProjectile : MonoBehaviour
         string optionTitle = AvailableProjectileUpgrades[option1];
         int optionLevel = UpgradeData[optionTitle].CurrentLevel + 1;
         string optionStats = UpgradeData[optionTitle].GetLevelStats(optionLevel);
-        // Debug.Log("LevelUpProjectile.RandomizeOptions: option1 is " + option1Description);   
         _levelOption1.Set(title: optionTitle, description: "Level " + optionLevel, stats: optionStats);
 
         if (option1 == option2) {
@@ -94,7 +98,6 @@ public class LevelUpProjectile : MonoBehaviour
             optionTitle = AvailableProjectileUpgrades[option2];
             optionLevel = UpgradeData[optionTitle].CurrentLevel + 1;
             optionStats = UpgradeData[optionTitle].GetLevelStats(optionLevel);
-            // Debug.Log("LevelUpProjectile.RandomizeOptions: option2statsText is " + statsText);   
             _levelOption2.Set(title: optionTitle, description: "Level " + optionLevel, stats: optionStats);
         }
     }
@@ -130,6 +133,9 @@ public class LevelUpProjectile : MonoBehaviour
         {
             case "count++": 
                 ProjectileBase.UpgradeCount(newLevel);
+                // add upgrade to the active upgrades container in the hud
+                // i think we need an EventListener like we do in Pickup.cs:84, maybe?
+                // _activePickupContainer.transform.Find("Count").gameObject.SetActive(true);
                 break;
             case "cooldown++":
                 ProjectileBase.UpgradeCooldown(newLevel);

@@ -77,6 +77,10 @@ public class GameManager : MonoBehaviour
     private GameObject _activePickupContainer;
 
     [SerializeField]
+    [Tooltip("The parent UI element containing the active upgrades")]
+    public GameObject _activeUpgradesContainer;
+
+    [SerializeField]
     [Tooltip("Background Music")]
     private AudioSource _backgroundMusic;
 
