@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour
     [Tooltip("Background Music")]
     private AudioSource _backgroundMusic;
 
-
     // the player's accumulated score so far
     private int _score = 0;
 
@@ -157,8 +156,11 @@ public class GameManager : MonoBehaviour
     private enum GameState
     {
         Playing,
-        GameOver
+        GameOver,
+        Paused
     }
+
+    public bool IsPlaying => _gameState == GameState.Playing;
 
     private GameState _gameState;
 
@@ -273,6 +275,32 @@ public class GameManager : MonoBehaviour
         SetScore(_score + scoreValue);
     }
 
+    public void PauseGame() {
+        _gameState = GameState.Paused;
+
+       // stop playing the background music when the game stops
+        _backgroundMusic.Stop();
+
+        // STOP THE GAME
+        // -- by setting the timescale to 0, we stop all time-based operations
+        Time.timeScale = 0;
+
+        _hud.ShowPause();
+    }
+
+    public void UnpauseGame() {
+        _gameState = GameState.Playing;
+
+        // resume playing the background music when the game resumes
+        _backgroundMusic.Play();
+
+        // RESUME THE GAME
+        // -- by setting the timescale to 1, we resume all time-based operations
+        Time.timeScale = 1;
+
+        _hud.HidePause();
+    }
+
     private void OnPlayerDeath()
     {   
         _gameState = GameState.GameOver;
@@ -307,6 +335,20 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_gameState == GameState.Playing)
+                PauseGame();
+            else if (_gameState == GameState.Paused)
+                UnpauseGame();
+        }
+
+        if (_gameState != GameState.Playing)
+        {
+            return;
+        }
+
         if (!_isDeathEnemyPresent && (Time.time - _gameStartTime > _deathAppearanceTime))
         {
             _isDeathEnemyPresent = true;

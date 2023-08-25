@@ -66,7 +66,20 @@ public class HUD : MonoBehaviour
         _xpBar.SetXp(xp);
     }
 
+    public void ShowPause() {
+        _gameOverText.text = "PAUSED";
+        _gameOverText.enabled = true;
+
+        _quit.SetActive(true);
+    }
+
+    public void HidePause() {
+        _gameOverText.enabled = false;
+        _quit.SetActive(false);
+    }
+    
     public void ShowGameOver() {
+        _gameOverText.text = "GAME OVER";
         _gameOverText.enabled = true;
 
         _quit.SetActive(true);
