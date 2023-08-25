@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Dart : ProjectileBase
 {
+    [SerializeField]
+    private float _areaOfEffectRange = 0.3f;
 
     // properties true for all darts
     public static int Damage = BaseDamage;
@@ -92,12 +94,25 @@ public class Dart : ProjectileBase
     }
 
     // Deal damage to the enemy because they were hit by a dart
-    override protected void DamageEnemy(Enemy enemy)
+    override protected void DamageEnemy(Enemy initialEnemy)
     {
 
-        enemy.TakeDamage(Damage);
+        initialEnemy.TakeDamage(Damage);
         // why 5000? -- the result of experimenting with different values (!)
-        enemy.Knockback(_direction, 5000);
+        initialEnemy.Knockback(_direction, 5000);
+
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(initialEnemy.transform.position, _areaOfEffectRange, Vector2.zero);
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy"))
+            {
+                Enemy enemyHit = hit.collider.gameObject.GetComponent<Enemy>();
+                // dont hit initial enemy twice
+                if (enemyHit != initialEnemy) {
+                    enemyHit.TakeDamage(Damage);
+                }
+            }
+        }
     }
 
     public static void UpgradeDart(int level) 
