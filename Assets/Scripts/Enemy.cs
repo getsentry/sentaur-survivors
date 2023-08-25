@@ -44,10 +44,6 @@ public class Enemy : MonoBehaviour
     [Tooltip("How long the enemy's death animation lasts")]
     private float _deathAnimDuration = 0.5f;
 
-    // [SerializeField]
-    // [Tooltip("enemy hit sound effect")]
-    // public AudioSource _enemyHitSound;
-
     private Material _originalMaterial;
     private Coroutine _flashCoroutine;
 
@@ -58,7 +54,6 @@ public class Enemy : MonoBehaviour
     protected void Awake() {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        // _enemyHitSound = GetComponent<AudioSource>();
 
         _originalMaterial = _spriteRenderer.material;
     }
@@ -120,12 +115,6 @@ public class Enemy : MonoBehaviour
     }
     
     virtual public void Death(bool leaveXp = false) {
-
-        // // play the enemy hit sound
-        // if (_enemyHitSound != null) {
-        //     _enemyHitSound.Play();
-        // }
-
         // disable all colliders and hitboxes
         // -- that way enemy can't get hit again while they're dying/shrinking
         DisableHitboxes();
