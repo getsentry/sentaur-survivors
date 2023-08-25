@@ -58,5 +58,5 @@
         "Temp/":true
     },
     "omnisharp.enableRoslynAnalyzers": true,
-    "dotnet.defaultSolution": "sentaur-survivors.sln"
+    "dotnet.defaultSolution": "survivors-game.sln"
 }
