@@ -112,6 +112,7 @@ MonoBehaviour:
   _flashMaterial: {fileID: 2100000, guid: fd4fa7d682b474410a971d96b6c0d276, type: 2}
   _flashDuration: 0.2
   _deathAnimDuration: 0.5
+  _enemyHitSound: {fileID: 0}
 --- !u!61 &1832744029709189115
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -194,7 +195,7 @@ Animator:
   m_GameObject: {fileID: 1001074756204391216}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ae845de54f6864c3cac444f197ed6b05, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
