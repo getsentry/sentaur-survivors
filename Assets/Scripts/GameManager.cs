@@ -474,7 +474,6 @@ public class GameManager : MonoBehaviour
         float maxRangeY = 2.0f;
         int flipX = 1;
 
-        Debug.Log("Initial position: " + initialPosition);
         int spawnCount = 0;
         while (spawnCount < count) {
             GameObject enemy = Instantiate(prefab);

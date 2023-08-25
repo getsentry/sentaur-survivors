@@ -11,14 +11,9 @@ public class ProjectileBase : MonoBehaviour {
     public static int BaseDamage = 10;
     public static float BaseCooldownPercentage = 1f;
     public static int BaseCount = 1;
-    [SerializeField]
-    [Tooltip("enemy hit sound effect")]
-    public AudioSource _enemyHitSound;
 
     protected void Awake() {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-        _enemyHitSound = GetComponent<AudioSource>();
-    }
+        _rigidbody2D = GetComponent<Rigidbody2D>();    }
     
     virtual protected void OnTriggerEnter2D(Collider2D other)
     {
@@ -28,19 +23,9 @@ public class ProjectileBase : MonoBehaviour {
 
             DamageEnemy(enemy);
 
-            // play the enemy hit sound
-            if (_enemyHitSound != null) {
-                _enemyHitSound.Play();
-            }
+            SoundManager.Instance.PlayHitSound();
 
-            // if _enemyHitSound.isPlaying dont destroy gameObject
-            // else destroy gameObject
-            if (_enemyHitSound.isPlaying) {
-                Debug.Log("enemy hit sound is playing");
-            } else {
-                Debug.Log("enemy hit sound is not playing");
-                Destroy(this.gameObject);
-            }
+            Destroy(this.gameObject);
         }
         else if (other.gameObject.tag == "Barrier") {
             // Destroy the dart
