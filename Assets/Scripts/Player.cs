@@ -62,6 +62,8 @@ public class Player : MonoBehaviour
     private IEnumerator coroutine;
     private bool _isDead = false;
 
+    private GameManager _gameManager;
+
     // Start is called before the first frame update
 
     static Player _instance;
@@ -77,6 +79,8 @@ public class Player : MonoBehaviour
 
     void Awake() {
         _rigidBody = GetComponent<Rigidbody2D>();
+
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     void Start()
@@ -96,6 +100,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (_isDead) {
+            return;
+        }
+
+        // get game manager
+        if (!_gameManager.IsPlaying)
+        {
             return;
         }
 
