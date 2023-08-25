@@ -105,7 +105,7 @@ MonoBehaviour:
   _collisionDamage: 20
   hitpoints: 35
   _scoreValue: 50
-  _xpValue: 50
+  _xpValue: 25
   _speed: 3
   _damageTextPrefab: {fileID: 3046976478099630124, guid: f3d91c6924ee1487984efd1cdf4dab92, type: 3}
   _xpDropPrefab: {fileID: 4537481635261412375, guid: 41573deea9de44cd3a8532bf5d4f24fc, type: 3}
