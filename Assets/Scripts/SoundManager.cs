@@ -24,8 +24,6 @@ public class SoundManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-
-        DontDestroyOnLoad(this.gameObject);
         Init();
     }
 
@@ -39,7 +37,7 @@ public class SoundManager : MonoBehaviour
         if (Time.time - _timeOfLastHitSound < _hitSoundCooldown) {
             return;
         }
-        
+
         _enemyHitSound.Play();
         _timeOfLastHitSound = Time.time;
     }

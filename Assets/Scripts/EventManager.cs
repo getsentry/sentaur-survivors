@@ -34,7 +34,6 @@ public class EventManager : MonoBehaviour
             return;
         }
 
-        DontDestroyOnLoad(this.gameObject);
         Init();
     }
 

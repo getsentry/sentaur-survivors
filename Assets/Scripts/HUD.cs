@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using TMPro;
+using UnityEngine.UI;
 
 /**
  * Heads-up display (HUD) for the game.
@@ -15,6 +16,11 @@ public class HUD : MonoBehaviour
     private TextMeshProUGUI _gameOverText;
     private TextMeshProUGUI _currentLevelText;
 
+    [SerializeField]
+    private GameObject _tryAgain;
+    [SerializeField]
+    private GameObject _quit;
+
     private XpBar _xpBar;
     
     void Awake() {
@@ -25,6 +31,17 @@ public class HUD : MonoBehaviour
         _currentLevelText = transform.Find("XpBar").GetComponentInChildren<TextMeshProUGUI>();
 
         _xpBar = transform.Find("XpBar").GetComponent<XpBar>();
+
+
+        var _tryAgainButton = _tryAgain.GetComponent<Button>();
+        _tryAgainButton.onClick.AddListener(() => {
+            EventManager.TriggerEvent("TryAgain");
+        });
+
+        var _quitButton = _quit.GetComponent<Button>();
+        _quitButton.onClick.AddListener(() => {
+            EventManager.TriggerEvent("Quit");
+        });
     }
     void Start()
     {
@@ -51,6 +68,11 @@ public class HUD : MonoBehaviour
 
     public void ShowGameOver() {
         _gameOverText.enabled = true;
+
+        _quit.SetActive(true);
+
+        // disabled for now until we can get resetting the game to work
+        // _tryAgain.SetActive(true);
     }
 
     public void SetCurrentLevel(int level) {
