@@ -55,6 +55,9 @@ public class Starfish : ProjectileBase
         if (other.gameObject.tag == "Enemy")
         {
             var enemy = other.gameObject.GetComponent<Enemy>();
+
+            SoundManager.Instance.PlayHitSound();
+            
             DamageEnemy(enemy);
         } 
         else if (other.gameObject.tag == "Barrier")
