@@ -115,6 +115,10 @@ public class Enemy : MonoBehaviour
         _spriteRenderer.material = _originalMaterial;
     }
 
+    public void Knockback(Vector2 direction, float force) {
+        _rigidbody2D.AddForce(direction * force);
+    }
+    
     virtual public void Death(bool leaveXp = false) {
 
         // play the enemy hit sound
