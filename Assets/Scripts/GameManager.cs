@@ -207,6 +207,15 @@ public class GameManager : MonoBehaviour
         EventManager.AddListener("XpEarned", (eventData) => {
             OnXpEarned((int)eventData.Data);
         });
+
+        EventManager.AddListener("TryAgain", (eventData) => {
+            OnTryAgain();
+        });
+
+        EventManager.AddListener("Quit", (eventData) => {
+            OnQuit();
+        });
+
     }
 
     private void OnPickupGrabbed(List<object> eventData)
@@ -237,6 +246,15 @@ public class GameManager : MonoBehaviour
         // this is important late game -- even if xp doesn't help you level up,
         // at least it adds to score
         AddScore(xp);
+    }
+
+    private void OnQuit() {
+        Application.Quit();
+    }
+
+    private void OnTryAgain() {
+        // reload this scene
+        UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
     private void UpdateXpProgress() {
