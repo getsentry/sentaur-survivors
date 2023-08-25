@@ -19,7 +19,7 @@ public class Raven : ProjectileBase
     public static int AdditionalRavens = 0;
     public static List<GameObject> CurrentTargets = new List<GameObject>{}; 
     public static float TimeElapsedSinceLastRaven;
-    private static float _distanceOutsidePlayer = 2.0f;
+    private static float _distanceOutsidePlayer = 1.25f;
 
     public int identifier;
     private Vector3 _direction;
