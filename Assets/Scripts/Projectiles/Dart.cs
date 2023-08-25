@@ -28,17 +28,18 @@ public class Dart : ProjectileBase
         IsShooting = true;
         Vector3 direction = CalculateDirection(player);
 
+        // shoot the base number of darts
         for (int i = 0; i < BaseCount; i++)
         {
             ShootADart(prefab, player, direction);
             if (AdditionalDarts > i)
             {
-                direction *= -1;
-                ShootADart(prefab, player, direction);
-                direction *= -1;
+                ShootADart(prefab, player, direction * -1);
             }
 
             yield return new WaitForSeconds(_shootingInterval);            
+            // get new updates mouse coords inbetween shots
+            direction = CalculateDirection(player);
         }
 
         // accounting for case where # of backwards darts > # of forwards darts
