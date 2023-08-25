@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Dart : ProjectileBase
 {
+
     // properties true for all darts
     public static int Damage = BaseDamage;
     public static float BaseDamagePercentage = 1f;
@@ -93,7 +94,10 @@ public class Dart : ProjectileBase
     // Deal damage to the enemy because they were hit by a dart
     override protected void DamageEnemy(Enemy enemy)
     {
+
         enemy.TakeDamage(Damage);
+        // why 5000? -- the result of experimenting with different values (!)
+        enemy.Knockback(_direction, 5000);
     }
 
     public static void UpgradeDart(int level) 
