@@ -7,7 +7,7 @@ using UnityEngine;
 public class Dart : ProjectileBase
 {
     [SerializeField]
-    private float _areaOfEffectRange = 0.3f;
+    private float _areaOfEffectRange = 0.25f;
 
     // properties true for all darts
     public static int Damage = BaseDamage;
