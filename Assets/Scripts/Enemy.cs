@@ -118,7 +118,13 @@ public class Enemy : MonoBehaviour
     virtual public void Death(bool leaveXp = false) {
 
         // play the enemy hit sound
-        _enemyHitSound.Play();
+        if (_enemyHitSound != null) {
+            _enemyHitSound.Play();
+        }
+
+        // disable all colliders and hitboxes
+        // -- that way enemy can't get hit again while they're dying/shrinking
+        DisableHitboxes();
 
         // shrink (scale to 1) before being destroyed
         transform.DOScale(0.01f, _deathAnimDuration).OnComplete(() => {
@@ -129,6 +135,16 @@ public class Enemy : MonoBehaviour
             }
             Destroy(gameObject);
         });
+    }
+
+    protected void DisableHitboxes() {
+        var collider = GetComponent<Collider2D>();
+        collider.enabled = false;
+
+        // get hitbox and disable
+        var hitbox = GetComponentInChildren<Hitbox>();
+        hitbox.Disable();
+
     }
 
     // Deal damage to the player because they touched
