@@ -97,16 +97,21 @@ public class Raven : ProjectileBase
     }
 
     // Deal damage to the enemy because they were hit by the raven
-    override protected void DamageEnemy(Enemy enemy)
+    override protected void DamageEnemy(Enemy initialEnemy)
     {
         // find all enemies within _areaOfEffectRange unit of enemy hit using raycast
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(enemy.transform.position, _areaOfEffectRange, Vector2.zero);
+        initialEnemy.TakeDamage(Damage);
+
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(initialEnemy.transform.position, _areaOfEffectRange, Vector2.zero);
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy"))
             {
                 Enemy enemyHit = hit.collider.gameObject.GetComponent<Enemy>();
-                enemyHit.TakeDamage(Damage);
+                // dont hit initial enemy twice
+                if (enemyHit != initialEnemy) {
+                    enemyHit.TakeDamage(Damage);
+                }
             }
         }
     }
