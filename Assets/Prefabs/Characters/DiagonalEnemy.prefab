@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collisionDamage: 20
-  hitpoints: 40
+  hitpoints: 35
   _scoreValue: 50
   _xpValue: 50
   _speed: 3
@@ -112,6 +112,7 @@ MonoBehaviour:
   _flashMaterial: {fileID: 2100000, guid: fd4fa7d682b474410a971d96b6c0d276, type: 2}
   _flashDuration: 0.2
   _deathAnimDuration: 0.5
+  _enemyHitSound: {fileID: 0}
 --- !u!61 &1832744029709189115
 BoxCollider2D:
   m_ObjectHideFlags: 0
