@@ -232,6 +232,11 @@ public class GameManager : MonoBehaviour
     {
         _xp += xp;
         UpdateXpProgress();
+
+        // xp picked up also adds to score
+        // this is important late game -- even if xp doesn't help you level up,
+        // at least it adds to score
+        AddScore(xp);
     }
 
     private void UpdateXpProgress() {
@@ -267,6 +272,11 @@ public class GameManager : MonoBehaviour
     {
         _score = score;
         _hud.SetScore(_score);
+    }
+
+    private void AddScore(int score)
+    {
+        SetScore(_score + score);
     }
 
     private void SetCurrentLevel(int level)
