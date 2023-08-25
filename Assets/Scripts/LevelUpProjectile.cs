@@ -21,7 +21,7 @@ public class LevelUpProjectile : MonoBehaviour
         },
         {
             "cooldown++",
-            new Upgrade("cooldown++", new List<string>{"-10% cooldown time", "-33% cooldown time", "-50% cooldown time!"})
+            new Upgrade("cooldown++", new List<string>{"-20% cooldown time", "-25% cooldown time", "-50% cooldown time!"})
         },
         {
             "damage++",
@@ -29,11 +29,11 @@ public class LevelUpProjectile : MonoBehaviour
         },
         {
             "dart",
-            new Upgrade("dart", new List<string>{"extra dart that fires behind you", "+25% damage", "3 darts firing behind and +44% damage!"})
+            new Upgrade("dart", new List<string>{"extra dart that fires behind you", "+50% damage", "3 darts firing behind and +33% damage!"})
         },
         {
             "raven",
-            new Upgrade("raven", new List<string>{"auto-targets the nearest enemy", "gain an additional raven", "+33% damage and -20% cooldown!"})
+            new Upgrade("raven", new List<string>{"heat-seeking bomb targets closest enemy", "gain an additional raven", "+33% damage and -20% cooldown!"})
         },
         {
             "starfish",

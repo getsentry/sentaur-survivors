@@ -103,12 +103,12 @@ public class Dart : ProjectileBase
         } 
         else if (level == 2)
         {
-            BaseDamagePercentage = 1.2f;
+            BaseDamagePercentage = 1.5f;
             Damage = (int) (BaseDamage * BaseDamagePercentage);
         }
         else if (level == 3)
         {
-            BaseDamagePercentage = 1.8f;
+            BaseDamagePercentage = 2f;
             Damage = (int) (BaseDamage * BaseDamagePercentage);
             AdditionalDarts += 2;
         }   
