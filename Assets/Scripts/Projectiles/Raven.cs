@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Raven : ProjectileBase
 {
+    [SerializeField]
+    [Tooltip("How much AOE range this effect has on hit")]
+    private float _areaOfEffectRange = 1.0f;
 
     // properties true for all ravens
     public static int Damage;
@@ -93,10 +96,19 @@ public class Raven : ProjectileBase
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    // Deal damage to the enemy because they were hit by a dart
+    // Deal damage to the enemy because they were hit by the raven
     override protected void DamageEnemy(Enemy enemy)
     {
-        enemy.TakeDamage(Damage);
+        // find all enemies within _areaOfEffectRange unit of enemy hit using raycast
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(enemy.transform.position, _areaOfEffectRange, Vector2.zero);
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy"))
+            {
+                Enemy enemyHit = hit.collider.gameObject.GetComponent<Enemy>();
+                enemyHit.TakeDamage(Damage);
+            }
+        }
     }
 
     public static void UpgradeRaven(int level)
