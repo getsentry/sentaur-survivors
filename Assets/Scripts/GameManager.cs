@@ -430,7 +430,7 @@ public class GameManager : MonoBehaviour
         if (_currentLevel >= _levelEnemyGate[EnemyType.Mantis]) {
             spawnRange = (int)EnemyType.Mantis;
         }
-        Debug.Log(spawnRange);
+
         int spawnChoice = Random.Range((int)EnemyType.Sentaur, spawnRange + 1);
 
         switch (spawnChoice) {
