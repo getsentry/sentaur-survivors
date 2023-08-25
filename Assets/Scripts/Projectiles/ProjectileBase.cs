@@ -57,7 +57,7 @@ public class ProjectileBase : MonoBehaviour {
     {
         if (level == 1)
         {
-            BaseCooldownPercentage = 0.9f;
+            BaseCooldownPercentage = 0.8f;
         } 
         else if (level == 2)
         {
