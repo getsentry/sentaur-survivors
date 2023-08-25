@@ -5,7 +5,10 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     private AudioSource _enemyHitSound;
+    private float _timeOfLastHitSound = 0f;
 
+    [SerializeField]
+    private float _hitSoundCooldown = 0.1f;
 
     private static SoundManager _instance;
 
@@ -32,6 +35,12 @@ public class SoundManager : MonoBehaviour
     }
 
     public void PlayHitSound() {
+        // don't play the sound if it's too soon
+        if (Time.time - _timeOfLastHitSound < _hitSoundCooldown) {
+            return;
+        }
+        
         _enemyHitSound.Play();
+        _timeOfLastHitSound = Time.time;
     }
 }
