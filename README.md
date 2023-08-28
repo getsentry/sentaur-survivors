@@ -1,5 +1,12 @@
 # Sentaur Survivors
 
+An Sentry-themed Vampire Survivors clone written for Unity in C# featuring:
+* 3 weapons with their own unique behavior and upgrade paths
+* 5 different enemies
+* 3 tactical item pickups
+
+![](https://github.com/getsentry/sentaur-survivors/blob/main/Media/gameplay.gif?raw=true)
+
 ## Dependencies
 
 Requires Unity 2022.3.7f1.
@@ -28,10 +35,6 @@ Don't worry about being pedantic around whitespace rules, where braces go, metho
 
 ### Folders
 
-#### Assets
-
-All your work lives here.
-
 #### Assets/Prefabs
 
 These are prefab game objects from which in-game game objects are generated (anything that's duplicated). Enemies, Projectiles, etc. 
@@ -49,15 +52,13 @@ This is where the main scene files are located. There are just two scenes:
 
 All the component C# scripts (read: the code for the game).
 
-#### Assets/Sprites
+#### Assets/Graphics
 
-Sprites, art assets, etc.
+Sprites, art assets, tiles, materials, etc.
 
 #### Assets/Sounds
-#### Assets/Fonts
-#### Assets/Materials
 
-Sounds, fonts, materials, etc. Hopefully you have the idea by now.
+Music and sound effects.
 
 ### Tips for Contributing
 
