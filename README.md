@@ -1,8 +1,19 @@
 # Sentaur Survivors
 
+## Dependencies
+
 Requires Unity 2022.3.7f1.
 
-## Coding Style
+## License
+
+Source code, art assets, and sound effects are licensed under Apache 2.0 (see LICENSE).
+
+The in-game music track, ["37 ohmperios" by Rolemusic](https://freemusicarchive.org/music/Rolemusic/single/37-ohmperios/), is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+
+## Contributing
+
+### Coding Style
 
 We mostly follow standard [Google's C# style guide](https://google.github.io/styleguide/csharp-style.html), because it's the most concise guide.
 
@@ -15,35 +26,40 @@ The key things to know:
 
 Don't worry about being pedantic around whitespace rules, where braces go, method ordering, etc.
 
-## Folders
+### Folders
 
-### Assets
+#### Assets
 
 All your work lives here.
 
-### Assets/Prefabs
+#### Assets/Prefabs
 
 These are prefab game objects from which in-game game objects are generated (anything that's duplicated). Enemies, Projectiles, etc. 
 
 From inside the Unity Editor, you can drag these prefab objects into the scene (make sure you're in Scene view) and they'll become game objects in the game.
 
-### Assets/Scenes
+#### Assets/Scenes
 
-This is where the main scene files are located. Right now we just have a single scene, the `BattleScene` (where the player fights enemies).
+This is where the main scene files are located. There are just two scenes:
 
-### Assets/Scripts
+* `TitleScene` - displays the title when the game launches
+* `BattleScene` - the primary in-game scene (where the player fights enemies)
+
+#### Assets/Scripts
 
 All the component C# scripts (read: the code for the game).
 
-### Assets/Sprites
+#### Assets/Sprites
 
 Sprites, art assets, etc.
 
-### Assets/Sounds
+#### Assets/Sounds
+#### Assets/Fonts
+#### Assets/Materials
 
-Sound files.
+Sounds, fonts, materials, etc. Hopefully you have the idea by now.
 
-## Tips
+### Tips for Contributing
 
 * Make sure you save your Scene in the Unity Editor (CMD + S) before committing code. If you don't, all the scene data (e.g. the game objects, their components, and those components' properties) won't get persisted.
 * When you add a new Script component inside Unity, it gets placed in the top-level `Assets` folder. You have to manually move the newly-created file to `Assets/Scripts`.
