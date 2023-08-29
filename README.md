@@ -11,14 +11,6 @@ An Sentry-themed Vampire Survivors clone written for Unity in C# featuring:
 
 Requires Unity 2022.3.7f1.
 
-## License
-
-Game source code, art assets, and sound effects are licensed under Apache 2.0 (see LICENSE).
-
-The in-game music track, ["37 ohmperios" by Rolemusic](https://freemusicarchive.org/music/Rolemusic/single/37-ohmperios/), is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-
-DOTween is distributed under [DOTween's Artistic License](https://dotween.demigiant.com/license.php).
-
 
 ## Contributing
 
@@ -68,3 +60,21 @@ Music and sound effects.
 * When you add a new Script component inside Unity, it gets placed in the top-level `Assets` folder. You have to manually move the newly-created file to `Assets/Scripts`.
 * When renaming or moving files, move/rename the files inside Unity Editor, _not_ VS Code. Unity Editor will ensure any scripts that were attached to game objects also get renamed/mapped to the new location.
   * _If you perform the move/rename in VS Code, you'll have to manually add all the script references back inside Unity._
+
+## Credits
+
+Sentaur Survivors was originally developed in a single week as part of @getsentry's 2023 Hack Week event. The development team was:
+
+* Michelle Fu ([@mifu67](https://github.com/mifu67)) - art + animation for title screen, player character, pickups, icons + programming
+* Olivier Williams ([@olivier-w](https://github.com/olivier-w)) - UI design and sound effects + programming
+* Isabella Enriquez ([@isabellaenriquez)](https://github.com/isabellaenriquez) - weapon and projectile systems
+* Daniel Cardozo - art for level tileset, Sentaur art + animation
+* Ben Vinegar ([@benvinegar](https://github.com/benvinegar)) - general game programming
+
+## License
+
+Game source code, art assets, and sound effects are licensed under Apache 2.0 (see LICENSE).
+
+The in-game music track, ["37 ohmperios" by Rolemusic](https://freemusicarchive.org/music/Rolemusic/single/37-ohmperios/), is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+DOTween is distributed under [DOTween's Artistic License](https://dotween.demigiant.com/license.php).
