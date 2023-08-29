@@ -13,9 +13,11 @@ Requires Unity 2022.3.7f1.
 
 ## License
 
-Source code, art assets, and sound effects are licensed under Apache 2.0 (see LICENSE).
+Game source code, art assets, and sound effects are licensed under Apache 2.0 (see LICENSE).
 
 The in-game music track, ["37 ohmperios" by Rolemusic](https://freemusicarchive.org/music/Rolemusic/single/37-ohmperios/), is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+DOTween is distributed under [DOTween's Artistic License](https://dotween.demigiant.com/license.php).
 
 
 ## Contributing
