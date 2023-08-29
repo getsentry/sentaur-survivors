@@ -1,11 +1,11 @@
-# Sentaur Survivors
+# ![](Media/sentaur.gif) Sentaur Survivors
 
 An Sentry-themed Vampire Survivors clone written for Unity in C# featuring:
 * 3 weapons with their own unique behavior and upgrade paths
 * 5 different enemies
 * 3 tactical item pickups
 
-![](https://github.com/getsentry/sentaur-survivors/blob/main/Media/gameplay.gif?raw=true)
+![](/Media/gameplay.gif?raw=true)
 
 ## Dependencies
 
