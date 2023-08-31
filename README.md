@@ -12,10 +12,27 @@ A Sentry-themed Vampire Survivors clone written for Unity in C# featuring:
 
 Requires Unity 2022.3.7f1.
 
-
 ## Contributing
 
 See [CONTRIBUTING](CONTRIBUTING.md).
+
+## Leaderboard / Top 10
+
+To get on the leaderboard, open up a pull request with a change to this README and a screenshot.
+
+| Player                                   | Platform   | Score  | Time  | Date    |
+| ---------------------------------------- | ---------- | ------ | ----- | ------- |
+| [Dan Fuller](github.com/wedamija)        | macOS      | 263228 | 10:22 | 8/25/23 |
+| [William Mak](github.com/wmak)           | macOS      | 241599 | 10:49 | 8/28/23 |
+| [Billy Vong](github.com/billyvong)       | Windows    | 236838 | 10:06 | 8/28/23 |
+| [David Wang](github.com/davidenwang)     | macOS      | 224095 | 10:08 | 8/29/23 |
+| [Ben Vinegar](github.com/benvinegar)     | macOS      | 222712 | 10:16 | 8/25/23 |
+| [Olivier Williams](github.com/olivier-w) | Windows    | 215862 | 10:15 | 8/29/23 |
+| [Chad Whitacre](github.com/chadwhitacre) | macOS      | 203858 | 10:08 | 8/29/23 |
+| Spencer Murray                           | macOS      | 198705 | 10:03 | 8/25/23 |
+| [Seiji Chew](github.com/schew2381)       | macOS      | 196124 | 10:05 | 8/25/23 |
+| Lucas Hatae                              | macOS      | 192689 | 10:05 | 8/25/23 |
+
 
 ## Credits
 
