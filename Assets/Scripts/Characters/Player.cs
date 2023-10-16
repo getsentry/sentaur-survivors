@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     [Tooltip("The prefab for the player's Starfish")]
     private Starfish _starfishPrefab;
 
-    [SerializeField] 
+    [SerializeField]
     [Tooltip("How many hit points the player has")]
     private int _hitPoints = 100;
 
@@ -129,43 +129,61 @@ public class Player : MonoBehaviour
         animator.SetFloat("Speed", movement.sqrMagnitude);
         animator.SetBool("FacingRight", facingRight);
 
-        // fire a dart once enough time has elapsed
-        if (!Dart.IsShooting)
+        UpdateDarts();
+        UpdateRavens();
+        UpdateStarfish();
+        UpdatePickups();
+    }
+
+    void UpdateDarts() {
+        if (Dart.IsShooting)
         {
-            Dart.TimeElapsedSinceLastDart += Time.deltaTime;
+            // if the dart is already firing, exit early (we only start counting
+            // after the dart has CEASED firing)
+            return;
         }
 
-        if (Raven.IsEnabled)
-        {
-            Raven.TimeElapsedSinceLastRaven += Time.deltaTime;
-        }
-
-        if (Starfish.IsEnabled && !Starfish.IsActive) 
-        {
-            // don't count while starfish is still orbiting
-            Starfish.TimeElapsedSinceLastStarfish += Time.deltaTime;
-        }
-
+        // once enough time has elapsed, fire the darts
+        Dart.TimeElapsedSinceLastDart += Time.deltaTime;
         if (Dart.TimeElapsedSinceLastDart > Dart.Cooldown && !Dart.IsShooting)
         {
             StartCoroutine(Dart.ShootDarts(_dartPrefab, gameObject));
         }
+    }
 
-        if (Raven.IsEnabled && Raven.TimeElapsedSinceLastRaven > Raven.Cooldown)
+    void UpdateRavens() {
+        if (!Raven.IsEnabled) {
+            return;
+        }
+
+        Raven.TimeElapsedSinceLastRaven += Time.deltaTime;
+        if (Raven.TimeElapsedSinceLastRaven > Raven.Cooldown)
         {
             Raven.TimeElapsedSinceLastRaven = 0.0f;
             int numberOfRavens = Raven.BaseCount + Raven.AdditionalRavens;
-            for (int i = 0; i < numberOfRavens; i++) 
+            for (int i = 0; i < numberOfRavens; i++)
             {
-                var raven = Instantiate(_ravenPrefab); 
+                var raven = Instantiate(_ravenPrefab);
                 raven.identifier = i;
                 raven.transform.parent = transform.parent;
                 raven.TargetClosestEnemy();
             }
             Raven.CurrentTargets.Clear(); // reset raven targeting
         }
+    }
 
-        if (Starfish.IsEnabled && !Starfish.IsActive && Starfish.TimeElapsedSinceLastStarfish > Starfish.Cooldown)
+    void UpdateStarfish() {
+        if (!Starfish.IsEnabled) {
+            return;
+        }
+
+        if (Starfish.IsActive) {
+            // if starfish is already orbiting nothing to do
+            return;
+        }
+
+        Starfish.TimeElapsedSinceLastStarfish += Time.deltaTime;
+        if (Starfish.TimeElapsedSinceLastStarfish > Starfish.Cooldown)
         {
             Starfish.TimeElapsedSinceLastStarfish = 0.0f;
             int numberOfStarfish = Starfish.BaseCount + Starfish.AdditionalStarfish;
@@ -178,7 +196,9 @@ public class Player : MonoBehaviour
                 starfish.transform.parent = transform;
             }
         }
+    }
 
+    void UpdatePickups() {
         // remove pickup effects if any are time-based and expiring
         if (_hasPickedUpSkateboard)
         {
@@ -206,6 +226,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+
     IEnumerator Wait(float _waitTime) {
         _isDead = true;
         yield return new WaitForSeconds(_waitTime);
@@ -224,7 +245,7 @@ public class Player : MonoBehaviour
             animator.SetTrigger("Dead");
             coroutine = Wait(1.2f);
             StartCoroutine(coroutine);
-    
+
         } else {
             // play damage sound effect
             takeDamageSound.Play();
