@@ -46,10 +46,6 @@ public class LevelUpUI : MonoBehaviour
 
    private int MAX_LEVEL = 3;
 
-    // these are equivalent to the index of the option in AvailableProjectileUpgrades
-    private int option1;
-    private int option2;
-
     [SerializeField]
     private LevelOption _levelOption1;
 
@@ -70,18 +66,23 @@ public class LevelUpUI : MonoBehaviour
         // pause the game
         Time.timeScale = 0;
 
-        RandomizeOptions();
+        (int upgradeChoice1, int upgradeChoice2) = GetRandomValidChoice();
+
+        SetLevelOptionUI(upgradeChoice1, upgradeChoice2);
 
         var option1Button = _levelOption1.GetComponent<Button>();
         var option2Button = _levelOption2.GetComponent<Button>();
 
-        option1Button.onClick.AddListener(() => SelectUpgrade(1));
-        option2Button.onClick.AddListener(() => SelectUpgrade(2));
+        option1Button.onClick.AddListener(() => SelectUpgrade(upgradeChoice1));
+        option2Button.onClick.AddListener(() => SelectUpgrade(upgradeChoice2));
     }
 
-    void RandomizeOptions() 
-    {
-        option1 = Random.Range(0, AvailableProjectileUpgrades.Count);
+    /**
+     * Returns a tuple of random level upgrade indices that are valid
+     */
+    (int, int) GetRandomValidChoice() {
+        int option1 = Random.Range(0, AvailableProjectileUpgrades.Count);
+        int option2;
 
         // select a second option that is different from the first option if the number of available
         // projectiles is greater than 1
@@ -89,7 +90,14 @@ public class LevelUpUI : MonoBehaviour
         {
             option2 = Random.Range(0, AvailableProjectileUpgrades.Count);
         } while (AvailableProjectileUpgrades.Count > 1 && option2 == option1);
+        return (option1, option2);
+    }
 
+    /**
+     * Given a set of option choices, update the UI accordingly
+     */
+    void SetLevelOptionUI(int option1, int option2) 
+    {
         string optionTitle = AvailableProjectileUpgrades[option1];
         int optionLevel = UpgradeData[optionTitle].CurrentLevel + 1;
         string optionStats = UpgradeData[optionTitle].GetLevelStats(optionLevel);
@@ -105,15 +113,9 @@ public class LevelUpUI : MonoBehaviour
         }
     }
 
-    void SelectUpgrade(int selectedOptionNumber) 
+    void SelectUpgrade(int selectedUpgradeIndex)
     {
-        string selectedUpgrade = "";
-        if (selectedOptionNumber == 1) 
-        {
-            selectedUpgrade = AvailableProjectileUpgrades[option1];
-        } else {
-            selectedUpgrade = AvailableProjectileUpgrades[option2];
-        }
+        string selectedUpgrade = AvailableProjectileUpgrades[selectedUpgradeIndex];
         
         UpgradeData[selectedUpgrade].LevelUp(); // level up the selected upgrade
 
