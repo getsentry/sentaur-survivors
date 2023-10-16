@@ -177,6 +177,8 @@ public class GameManager : MonoBehaviour
         _nextLevelXpMilestone = _levelMilestones[0];
 
         _gameState = GameState.Playing;
+        Time.timeScale = 1; // in case time scale was set to 0 (e.g. on death)
+
         _hud = GameObject.Find("HUD").GetComponent<HUD>();
         _hud.SetXp(1.0f * _score);
 

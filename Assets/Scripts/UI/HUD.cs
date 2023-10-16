@@ -83,9 +83,7 @@ public class HUD : MonoBehaviour
         _gameOverText.enabled = true;
 
         _quit.SetActive(true);
-
-        // disabled for now until we can get resetting the game to work
-        // _tryAgain.SetActive(true);
+        _tryAgain.SetActive(true);
     }
 
     public void SetCurrentLevel(int level) {
