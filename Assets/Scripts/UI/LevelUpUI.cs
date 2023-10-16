@@ -1,6 +1,5 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,27 +24,27 @@ public class LevelUpUI : MonoBehaviour
     public static Dictionary<UpgradeType, UpgradePath> _upgradeData = new Dictionary<UpgradeType, UpgradePath>{
         {
             UpgradeType.CountUp,
-            new UpgradePath("count++", new List<string>{"2 of each projectile", "3 of each projectile", "5 of each projectile!"})
+            new UpgradePath(new List<string>{"2 of each projectile", "3 of each projectile", "5 of each projectile!"})
         },
         {
             UpgradeType.CooldownDown,
-            new UpgradePath("cooldown++", new List<string>{"-20% cooldown time", "-25% cooldown time", "-50% cooldown time!"})
+            new UpgradePath(new List<string>{"-20% cooldown time", "-25% cooldown time", "-50% cooldown time!"})
         },
         {
             UpgradeType.DamageUp,
-            new UpgradePath("damage++", new List<string>{"+30% damage", "+60% damage", "+100% damage!"})
+            new UpgradePath(new List<string>{"+30% damage", "+60% damage", "+100% damage!"})
         },
         {
             UpgradeType.Dart,
-            new UpgradePath("dart", new List<string>{"extra dart that fires behind you", "+50% damage", "3 darts firing behind and +33% damage!"})
+            new UpgradePath(new List<string>{"extra dart that fires behind you", "+50% damage", "3 darts firing behind and +33% damage!"})
         },
         {
             UpgradeType.Raven,
-            new UpgradePath("raven", new List<string>{"heat-seeking bomb targets closest enemy", "gain an additional raven", "+33% damage and -20% cooldown!"})
+            new UpgradePath(new List<string>{"heat-seeking bomb targets closest enemy", "gain an additional raven", "+33% damage and -20% cooldown!"})
         },
         {
             UpgradeType.Starfish,
-            new UpgradePath("starfish", new List<string>{"orbits around you, wreaking havoc", "+20% orbit duration", "+50% orbit duration and -30% cooldown!"})
+            new UpgradePath(new List<string>{"orbits around you, wreaking havoc", "+20% orbit duration", "+50% orbit duration and -30% cooldown!"})
         }
     };
 
@@ -71,7 +70,7 @@ public class LevelUpUI : MonoBehaviour
         // pause the game
         Time.timeScale = 0;
 
-        (int upgradeChoice1, int upgradeChoice2) = GetRandomValidChoice();
+        (UpgradeType upgradeChoice1, UpgradeType upgradeChoice2) = GetRandomUpgradeChoices();
 
         SetLevelOptionUI(upgradeChoice1, upgradeChoice2);
 
@@ -85,7 +84,7 @@ public class LevelUpUI : MonoBehaviour
     /**
      * Returns a tuple of random level upgrade indices that are valid
      */
-    (int, int) GetRandomValidChoice() {
+    (UpgradeType, UpgradeType) GetRandomUpgradeChoices() {
         int option1 = Random.Range(0, _availableUpgradeTypes.Count);
         int option2;
 
@@ -95,15 +94,18 @@ public class LevelUpUI : MonoBehaviour
         {
             option2 = Random.Range(0, _availableUpgradeTypes.Count);
         } while (_availableUpgradeTypes.Count > 1 && option2 == option1);
-        return (option1, option2);
+
+        UpgradeType upgradeType1 = _availableUpgradeTypes[option1];
+        UpgradeType upgradeType2 = _availableUpgradeTypes[option2];
+        return (upgradeType1, upgradeType2);
     }
 
     /**
      * Given a set of option choices, update the UI accordingly
      */
-    void SetLevelOptionUI(int option1, int option2)
+    void SetLevelOptionUI(UpgradeType option1, UpgradeType option2)
     {
-        UpgradeType optionTitle = _availableUpgradeTypes[option1];
+        UpgradeType optionTitle = option1;
         int optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
         string optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
         _levelOption1.Set(upgradeType: optionTitle, description: "Level " + optionLevel, stats: optionStats);
@@ -111,25 +113,23 @@ public class LevelUpUI : MonoBehaviour
         if (option1 == option2) {
             _levelOption2.SetMaxedOut();
         } else {
-            optionTitle = _availableUpgradeTypes[option2];
+            optionTitle = option2;
             optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
             optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
             _levelOption2.Set(upgradeType: optionTitle, description: "Level " + optionLevel, stats: optionStats);
         }
     }
 
-    void SelectUpgrade(int selectedUpgradeIndex)
+    void SelectUpgrade(UpgradeType selectedUpgradeType)
     {
-        UpgradeType _selectedUpgradeType = _availableUpgradeTypes[selectedUpgradeIndex];
+        _upgradeData[selectedUpgradeType].LevelUp(); // level up the selected upgrade
 
-        _upgradeData[_selectedUpgradeType].LevelUp(); // level up the selected upgrade
-
-        if (_upgradeData[_selectedUpgradeType].CurrentLevel == MAX_LEVEL)
+        if (_upgradeData[selectedUpgradeType].CurrentLevel == MAX_LEVEL)
         {
             // take the upgrade out of the pool if it's maxed out
             for (int i = 0; i < _availableUpgradeTypes.Count; i++)
             {
-                if (_availableUpgradeTypes[i] == _selectedUpgradeType)
+                if (_availableUpgradeTypes[i] == selectedUpgradeType)
                 {
                     _availableUpgradeTypes.RemoveAt(i);
                     break;
@@ -137,9 +137,9 @@ public class LevelUpUI : MonoBehaviour
             }
         }
 
-        int newLevel = _upgradeData[_selectedUpgradeType].CurrentLevel;
+        int newLevel = _upgradeData[selectedUpgradeType].CurrentLevel;
 
-        switch(_selectedUpgradeType)
+        switch(selectedUpgradeType)
         {
             case UpgradeType.CountUp:
                 ProjectileBase.UpgradeCount(newLevel);
@@ -168,6 +168,5 @@ public class LevelUpUI : MonoBehaviour
         // resume the game and exit the level up popup
         Time.timeScale = 1;
         Destroy(gameObject);
-
     }
 }

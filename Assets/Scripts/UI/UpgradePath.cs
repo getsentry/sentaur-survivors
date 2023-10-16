@@ -14,18 +14,10 @@ public class UpgradePath
     private int _currentLevel;
     private List<string> _levelDesc;
 
-    public UpgradePath(string name, List<string> levelStats, int currentLevel = 0)
+    public UpgradePath(List<string> levelStats, int currentLevel = 0)
     {
-        _name = name;
         _levelDesc = levelStats;
         _currentLevel = currentLevel;
-    }
-
-    public string Name
-    {
-        get { return _name; }
-
-        set { _name = value; }
     }
 
     public int CurrentLevel
@@ -41,10 +33,10 @@ public class UpgradePath
     public string GetLevelStats(int level)
     {
         level -= 1; // indexing starts at 0;
-        try 
+        try
         {
             return _levelDesc[level];
-        } 
+        }
         catch (IndexOutOfRangeException e)
         {
             Debug.Log(e.Message);
