@@ -220,8 +220,11 @@ public class BattleSceneManager : MonoBehaviour
             OnQuit();
         });
 
-    }
+        EventManager.AddListener("UpgradeChosen", (eventData) => {
+            OnUpgradeChosen((UpgradeEventData)eventData.Data);
+        });
 
+    }
     private void OnPickupGrabbed(List<object> eventData)
     {
         int scoreValue = (int) eventData[0];
@@ -576,4 +579,33 @@ public class BattleSceneManager : MonoBehaviour
         _pickupsOnScreen++;
     }
 
+    private void OnUpgradeChosen(UpgradeEventData upgradeEvent) {
+        var newLevel = upgradeEvent.Level;
+        switch(upgradeEvent.UpgradeType)
+        {
+            case UpgradeType.CountUp:
+                ProjectileBase.UpgradeCount(newLevel);
+                // add upgrade to the active upgrades container in the hud
+                // i think we need an EventListener like we do in Pickup.cs:84, maybe?
+                // _activePickupContainer.transform.Find("Count").gameObject.SetActive(true);
+                break;
+            case UpgradeType.CooldownDown:
+                ProjectileBase.UpgradeCooldown(newLevel);
+                break;
+            case UpgradeType.DamageUp:
+                ProjectileBase.UpgradeDamage(newLevel);
+                break;
+            case UpgradeType.Dart:
+                Dart.UpgradeDart(newLevel);
+                break;
+            case UpgradeType.Raven:
+                Raven.UpgradeRaven(newLevel);
+                break;
+            case UpgradeType.Starfish:
+                Starfish.UpgradeStarfish(newLevel);
+                break;
+            default: break;
+        }
+
+    }
 }

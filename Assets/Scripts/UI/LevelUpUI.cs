@@ -12,7 +12,7 @@ public class LevelUpUI : MonoBehaviour
     // fyi: title -> upgrade name, description -> level, stats -> description
     // leveling up an upgrade, changes the stats to new level, increases the level #
 
-    public static List<UpgradeType> _availableUpgradeTypes = new List<UpgradeType>{
+    public List<UpgradeType> _availableUpgradeTypes = new List<UpgradeType>{
         UpgradeType.CountUp,
         UpgradeType.CooldownDown,
         UpgradeType.DamageUp,
@@ -139,31 +139,9 @@ public class LevelUpUI : MonoBehaviour
 
         int newLevel = _upgradeData[selectedUpgradeType].CurrentLevel;
 
-        switch(selectedUpgradeType)
-        {
-            case UpgradeType.CountUp:
-                ProjectileBase.UpgradeCount(newLevel);
-                // add upgrade to the active upgrades container in the hud
-                // i think we need an EventListener like we do in Pickup.cs:84, maybe?
-                // _activePickupContainer.transform.Find("Count").gameObject.SetActive(true);
-                break;
-            case UpgradeType.CooldownDown:
-                ProjectileBase.UpgradeCooldown(newLevel);
-                break;
-            case UpgradeType.DamageUp:
-                ProjectileBase.UpgradeDamage(newLevel);
-                break;
-            case UpgradeType.Dart:
-                Dart.UpgradeDart(newLevel);
-                break;
-            case UpgradeType.Raven:
-                Raven.UpgradeRaven(newLevel);
-                break;
-            case UpgradeType.Starfish:
-                Starfish.UpgradeStarfish(newLevel);
-                break;
-            default: break;
-        }
+        var upgradeEvent = new UpgradeEventData(selectedUpgradeType, newLevel);
+        EventManager.TriggerEvent("UpgradeChosen", new EventData(upgradeEvent));
+
 
         // resume the game and exit the level up popup
         Time.timeScale = 1;
