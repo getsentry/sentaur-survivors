@@ -4,7 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelUpProjectile : MonoBehaviour
+/**
+ * Encapsulates behavior of LevelUpUI prefab
+ */
+public class LevelUpUI : MonoBehaviour
 {
 
     // fyi: title -> upgrade name, description -> level, stats -> description 
@@ -14,30 +17,30 @@ public class LevelUpProjectile : MonoBehaviour
         "count++", "cooldown++", "damage++", "dart", "raven", "starfish"
     };
 
-    public static Dictionary<string, Upgrade> UpgradeData = new Dictionary<string, Upgrade>{
+    public static Dictionary<string, UpgradePath> UpgradeData = new Dictionary<string, UpgradePath>{
         {
             "count++",
-            new Upgrade("count++", new List<string>{"2 of each projectile", "3 of each projectile", "5 of each projectile!"})
+            new UpgradePath("count++", new List<string>{"2 of each projectile", "3 of each projectile", "5 of each projectile!"})
         },
         {
             "cooldown++",
-            new Upgrade("cooldown++", new List<string>{"-20% cooldown time", "-25% cooldown time", "-50% cooldown time!"})
+            new UpgradePath("cooldown++", new List<string>{"-20% cooldown time", "-25% cooldown time", "-50% cooldown time!"})
         },
         {
             "damage++",
-            new Upgrade("damage++", new List<string>{"+30% damage", "+60% damage", "+100% damage!"})
+            new UpgradePath("damage++", new List<string>{"+30% damage", "+60% damage", "+100% damage!"})
         },
         {
             "dart",
-            new Upgrade("dart", new List<string>{"extra dart that fires behind you", "+50% damage", "3 darts firing behind and +33% damage!"})
+            new UpgradePath("dart", new List<string>{"extra dart that fires behind you", "+50% damage", "3 darts firing behind and +33% damage!"})
         },
         {
             "raven",
-            new Upgrade("raven", new List<string>{"heat-seeking bomb targets closest enemy", "gain an additional raven", "+33% damage and -20% cooldown!"})
+            new UpgradePath("raven", new List<string>{"heat-seeking bomb targets closest enemy", "gain an additional raven", "+33% damage and -20% cooldown!"})
         },
         {
             "starfish",
-            new Upgrade("starfish", new List<string>{"orbits around you, wreaking havoc", "+20% orbit duration", "+50% orbit duration and -30% cooldown!"})
+            new UpgradePath("starfish", new List<string>{"orbits around you, wreaking havoc", "+20% orbit duration", "+50% orbit duration and -30% cooldown!"})
         }
     };
 

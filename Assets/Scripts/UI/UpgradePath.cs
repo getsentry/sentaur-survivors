@@ -3,16 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Upgrade
+/**
+ * Describes a weapon upgrade path, with text description for each level
+ * (e.g. Dart levels 1-3)
+ */
+
+public class UpgradePath
 {
     private string _name;
     private int _currentLevel;
-    private List<string> _levelStats;
+    private List<string> _levelDesc;
 
-    public Upgrade(string name, List<string> levelStats, int currentLevel = 0)
+    public UpgradePath(string name, List<string> levelStats, int currentLevel = 0)
     {
         _name = name;
-        _levelStats = levelStats;
+        _levelDesc = levelStats;
         _currentLevel = currentLevel;
     }
 
@@ -38,7 +43,7 @@ public class Upgrade
         level -= 1; // indexing starts at 0;
         try 
         {
-            return _levelStats[level];
+            return _levelDesc[level];
         } 
         catch (IndexOutOfRangeException e)
         {
