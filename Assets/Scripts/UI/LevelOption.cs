@@ -31,7 +31,7 @@ public class LevelOption : MonoBehaviour
     [SerializeField]
     [Tooltip("Sprite for the starfish upgrade")]
     private Sprite _starfishSprite;
-    
+
 
     private TextMeshProUGUI _title;
     private TextMeshProUGUI _description;
@@ -45,30 +45,41 @@ public class LevelOption : MonoBehaviour
         _icon = transform.Find("Border/Icon").GetComponent<Image>();
     }
 
-    // fyi: title -> upgrade name, description -> level, stats -> description 
-    public void Set(string title, string description, string stats) {
-        _title.text = title;
+    public void SetMaxedOut() {
+        _title.text = "ALL OTHER UPGRADES MAXED OUT";
+        _description.text = "";
+        _stats.text = "";
+    }
+
+    // fyi: title -> upgrade name, description -> level, stats -> description
+    public void Set(UpgradeType upgradeType, string description, string stats) {
         _description.text = description;
         _stats.text = stats;
 
-        switch(title)
+        switch(upgradeType)
         {
-            case "count++": 
+            case UpgradeType.CountUp:
+                _title.text = "count++";
                 _icon.sprite = _countSprite;
                 break;
-            case "cooldown++":
+            case UpgradeType.CooldownDown:
+                _title.text = "cooldown++"; // should be minus minus?
                 _icon.sprite = _speedSprite;
                 break;
-            case "damage++":
+            case UpgradeType.DamageUp:
+                _title.text = "damage++";
                 _icon.sprite = _damageSprite;
                 break;
-            case "dart":
+            case UpgradeType.Dart:
+                _title.text = "dart";
                 _icon.sprite = _dartSprite;
                 break;
-            case "raven":
+            case UpgradeType.Raven:
+                _title.text = "raven";
                 _icon.sprite = _ravenSprite;
                 break;
-            case "starfish":
+            case UpgradeType.Starfish:
+                _title.text = "starfish";
                 _icon.sprite = _starfishSprite;
                 break;
             default: break;

@@ -10,36 +10,41 @@ using UnityEngine.UI;
 public class LevelUpUI : MonoBehaviour
 {
 
-    // fyi: title -> upgrade name, description -> level, stats -> description 
+    // fyi: title -> upgrade name, description -> level, stats -> description
     // leveling up an upgrade, changes the stats to new level, increases the level #
 
-    public static List<string> AvailableProjectileUpgrades = new List<string>{
-        "count++", "cooldown++", "damage++", "dart", "raven", "starfish"
+    public static List<UpgradeType> _availableUpgradeTypes = new List<UpgradeType>{
+        UpgradeType.CountUp,
+        UpgradeType.CooldownDown,
+        UpgradeType.DamageUp,
+        UpgradeType.Dart,
+        UpgradeType.Raven,
+        UpgradeType.Starfish
     };
 
-    public static Dictionary<string, UpgradePath> UpgradeData = new Dictionary<string, UpgradePath>{
+    public static Dictionary<UpgradeType, UpgradePath> _upgradeData = new Dictionary<UpgradeType, UpgradePath>{
         {
-            "count++",
+            UpgradeType.CountUp,
             new UpgradePath("count++", new List<string>{"2 of each projectile", "3 of each projectile", "5 of each projectile!"})
         },
         {
-            "cooldown++",
+            UpgradeType.CooldownDown,
             new UpgradePath("cooldown++", new List<string>{"-20% cooldown time", "-25% cooldown time", "-50% cooldown time!"})
         },
         {
-            "damage++",
+            UpgradeType.DamageUp,
             new UpgradePath("damage++", new List<string>{"+30% damage", "+60% damage", "+100% damage!"})
         },
         {
-            "dart",
+            UpgradeType.Dart,
             new UpgradePath("dart", new List<string>{"extra dart that fires behind you", "+50% damage", "3 darts firing behind and +33% damage!"})
         },
         {
-            "raven",
+            UpgradeType.Raven,
             new UpgradePath("raven", new List<string>{"heat-seeking bomb targets closest enemy", "gain an additional raven", "+33% damage and -20% cooldown!"})
         },
         {
-            "starfish",
+            UpgradeType.Starfish,
             new UpgradePath("starfish", new List<string>{"orbits around you, wreaking havoc", "+20% orbit duration", "+50% orbit duration and -30% cooldown!"})
         }
     };
@@ -81,88 +86,88 @@ public class LevelUpUI : MonoBehaviour
      * Returns a tuple of random level upgrade indices that are valid
      */
     (int, int) GetRandomValidChoice() {
-        int option1 = Random.Range(0, AvailableProjectileUpgrades.Count);
+        int option1 = Random.Range(0, _availableUpgradeTypes.Count);
         int option2;
 
         // select a second option that is different from the first option if the number of available
         // projectiles is greater than 1
-        do 
+        do
         {
-            option2 = Random.Range(0, AvailableProjectileUpgrades.Count);
-        } while (AvailableProjectileUpgrades.Count > 1 && option2 == option1);
+            option2 = Random.Range(0, _availableUpgradeTypes.Count);
+        } while (_availableUpgradeTypes.Count > 1 && option2 == option1);
         return (option1, option2);
     }
 
     /**
      * Given a set of option choices, update the UI accordingly
      */
-    void SetLevelOptionUI(int option1, int option2) 
+    void SetLevelOptionUI(int option1, int option2)
     {
-        string optionTitle = AvailableProjectileUpgrades[option1];
-        int optionLevel = UpgradeData[optionTitle].CurrentLevel + 1;
-        string optionStats = UpgradeData[optionTitle].GetLevelStats(optionLevel);
-        _levelOption1.Set(title: optionTitle, description: "Level " + optionLevel, stats: optionStats);
+        UpgradeType optionTitle = _availableUpgradeTypes[option1];
+        int optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
+        string optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
+        _levelOption1.Set(upgradeType: optionTitle, description: "Level " + optionLevel, stats: optionStats);
 
         if (option1 == option2) {
-            _levelOption2.Set("ALL OTHER UPGRADES MAXED OUT", "", "");
+            _levelOption2.SetMaxedOut();
         } else {
-            optionTitle = AvailableProjectileUpgrades[option2];
-            optionLevel = UpgradeData[optionTitle].CurrentLevel + 1;
-            optionStats = UpgradeData[optionTitle].GetLevelStats(optionLevel);
-            _levelOption2.Set(title: optionTitle, description: "Level " + optionLevel, stats: optionStats);
+            optionTitle = _availableUpgradeTypes[option2];
+            optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
+            optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
+            _levelOption2.Set(upgradeType: optionTitle, description: "Level " + optionLevel, stats: optionStats);
         }
     }
 
     void SelectUpgrade(int selectedUpgradeIndex)
     {
-        string selectedUpgrade = AvailableProjectileUpgrades[selectedUpgradeIndex];
-        
-        UpgradeData[selectedUpgrade].LevelUp(); // level up the selected upgrade
+        UpgradeType _selectedUpgradeType = _availableUpgradeTypes[selectedUpgradeIndex];
 
-        if (UpgradeData[selectedUpgrade].CurrentLevel == MAX_LEVEL) 
+        _upgradeData[_selectedUpgradeType].LevelUp(); // level up the selected upgrade
+
+        if (_upgradeData[_selectedUpgradeType].CurrentLevel == MAX_LEVEL)
         {
             // take the upgrade out of the pool if it's maxed out
-            for (int i = 0; i < AvailableProjectileUpgrades.Count; i++)
+            for (int i = 0; i < _availableUpgradeTypes.Count; i++)
             {
-                if (AvailableProjectileUpgrades[i] == selectedUpgrade) 
+                if (_availableUpgradeTypes[i] == _selectedUpgradeType)
                 {
-                    AvailableProjectileUpgrades.RemoveAt(i);
+                    _availableUpgradeTypes.RemoveAt(i);
                     break;
                 }
             }
         }
 
-        int newLevel = UpgradeData[selectedUpgrade].CurrentLevel;
-     
-        switch(selectedUpgrade) 
+        int newLevel = _upgradeData[_selectedUpgradeType].CurrentLevel;
+
+        switch(_selectedUpgradeType)
         {
-            case "count++": 
+            case UpgradeType.CountUp:
                 ProjectileBase.UpgradeCount(newLevel);
                 // add upgrade to the active upgrades container in the hud
                 // i think we need an EventListener like we do in Pickup.cs:84, maybe?
                 // _activePickupContainer.transform.Find("Count").gameObject.SetActive(true);
                 break;
-            case "cooldown++":
+            case UpgradeType.CooldownDown:
                 ProjectileBase.UpgradeCooldown(newLevel);
                 break;
-            case "damage++":
+            case UpgradeType.DamageUp:
                 ProjectileBase.UpgradeDamage(newLevel);
                 break;
-            case "dart":
+            case UpgradeType.Dart:
                 Dart.UpgradeDart(newLevel);
                 break;
-            case "raven":
+            case UpgradeType.Raven:
                 Raven.UpgradeRaven(newLevel);
                 break;
-            case "starfish":
+            case UpgradeType.Starfish:
                 Starfish.UpgradeStarfish(newLevel);
                 break;
             default: break;
         }
 
         // resume the game and exit the level up popup
-        Time.timeScale = 1; 
+        Time.timeScale = 1;
         Destroy(gameObject);
-        
+
     }
 }
