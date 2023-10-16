@@ -28,12 +28,12 @@ public class ProjectileBase : MonoBehaviour {
             Destroy(this.gameObject);
         }
         else if (other.gameObject.tag == "Barrier") {
-            // Destroy the dart
+            // Destroy the projectile
             Destroy(this.gameObject);
         }
     }
 
-    // Deal damage to the enemy because they were hit by a dart
+    // Deal damage to the enemy because they were hit by a projectile
     virtual protected void DamageEnemy(Enemy enemy) {}
 
     public static void UpgradeDamage(int level)
@@ -51,9 +51,6 @@ public class ProjectileBase : MonoBehaviour {
             BaseDamage = (int) (BaseDamage * 2);
         }
 
-        Dart.Damage = (int) (BaseDamage * Dart.BaseDamagePercentage);
-        Raven.Damage = (int) (BaseDamage * Raven.BaseDamagePercentage);
-        Starfish.Damage = (int) (BaseDamage * Starfish.BaseDamagePercentage);
     }
 
     public static void UpgradeCooldown(int level)
@@ -70,22 +67,16 @@ public class ProjectileBase : MonoBehaviour {
         {
             BaseCooldownPercentage = 0.3f;
         }
-
-        Dart.Cooldown = BaseCooldownPercentage * Dart.StartingCooldown;
-        Raven.Cooldown = BaseCooldownPercentage * Raven.StartingCooldown;
-        Starfish.Cooldown = BaseCooldownPercentage * Starfish.StartingCooldown;
     }
 
     public static void UpgradeCount(int level)
     {
-        if (level == 3) 
+        if (level == 3)
         {
-            Dart.SpreadInDegrees += 20;
             BaseCount += 2;
         }
         else
         {
-            Dart.SpreadInDegrees += 10;
             BaseCount++;
         }
     }

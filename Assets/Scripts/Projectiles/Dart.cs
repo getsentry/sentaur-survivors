@@ -10,11 +10,10 @@ public class Dart : ProjectileBase
     private float _areaOfEffectRange = 0.25f;
 
     // properties true for all darts
-    public static int Damage = BaseDamage;
+    public static int Damage => (int)(BaseDamage * BaseDamagePercentage);
     public static float BaseDamagePercentage = 1f;
     public static float StartingCooldown = 1.8f;
-    public static float Cooldown = 1.8f;
-    public static float SpreadInDegrees = 10f;
+    public static float Cooldown => BaseCooldownPercentage * StartingCooldown;
 
     public static float Speed = 10.0f;
     public static int AdditionalDarts = 0;
@@ -124,12 +123,10 @@ public class Dart : ProjectileBase
         else if (level == 2)
         {
             BaseDamagePercentage = 1.5f;
-            Damage = (int) (BaseDamage * BaseDamagePercentage);
         }
         else if (level == 3)
         {
             BaseDamagePercentage = 2f;
-            Damage = (int) (BaseDamage * BaseDamagePercentage);
             AdditionalDarts += 2;
         }   
     }

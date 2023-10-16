@@ -9,10 +9,11 @@ public class Raven : ProjectileBase
     private float _areaOfEffectRange = 1.0f;
 
     // properties true for all ravens
-    public static int Damage;
+    public static int Damage => (int)(BaseDamage * BaseDamagePercentage);
+
     public static float BaseDamagePercentage = 1.5f;
     public static float StartingCooldown = 6f;
-    public static float Cooldown = 6f;
+    public static float Cooldown => BaseCooldownPercentage * StartingCooldown;
     public static bool IsEnabled = false;
 
     public static float Speed = 12.0f;
@@ -121,8 +122,6 @@ public class Raven : ProjectileBase
         if (level == 1)
         {
             IsEnabled = true;
-            Damage = (int) (BaseDamage * BaseDamagePercentage);
-            Cooldown = StartingCooldown * BaseCooldownPercentage;
             TimeElapsedSinceLastRaven = Cooldown - 1f; // launch a raven as soon as it's enabled
         }
         else if (level == 2)
@@ -132,9 +131,7 @@ public class Raven : ProjectileBase
         else if (level == 3)
         {
             BaseDamagePercentage = 2f;
-            Damage = (int) (BaseDamage * BaseDamagePercentage);
             StartingCooldown *= 0.8f;
-            Cooldown = StartingCooldown * BaseCooldownPercentage;
         }
     }
 }

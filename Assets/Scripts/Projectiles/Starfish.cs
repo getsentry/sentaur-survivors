@@ -5,10 +5,10 @@ using UnityEngine;
 public class Starfish : ProjectileBase
 {
     // properties true for all starfish
-    public static int Damage;
+    public static int Damage => (int)(BaseDamage * BaseDamagePercentage);
     public static float BaseDamagePercentage = 0.9f;
     public static float StartingCooldown = 5f;
-    public static float Cooldown = 5f;
+    public static float Cooldown => BaseCooldownPercentage * StartingCooldown;
     public static bool IsEnabled = false;
     
     public static float Duration = 5f;
@@ -77,21 +77,17 @@ public class Starfish : ProjectileBase
         if (level == 1)
         {
             IsEnabled = true;
-            Damage = (int) (BaseDamage * BaseDamagePercentage);
-            Cooldown = StartingCooldown * BaseCooldownPercentage;
             TimeElapsedSinceLastStarfish = Cooldown - 1f; // launch a starfish as soon as its enabled
         }
         else if (level == 2)
         {
             Duration *= 1.2f;
             BaseDamagePercentage = 1.2f;
-            Damage = (int) (BaseDamage * BaseDamagePercentage);
         }
         else if (level == 3)
         {
             Duration *= 1.5f;
             StartingCooldown *= 0.7f;
-            Cooldown = StartingCooldown * BaseCooldownPercentage;
         }
     }
 }
