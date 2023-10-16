@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
     private IEnumerator coroutine;
     private bool _isDead = false;
 
-    private GameManager _gameManager;
+    private BattleSceneManager _gameManager;
 
     // Start is called before the first frame update
 
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
     void Awake() {
         _rigidBody = GetComponent<Rigidbody2D>();
 
-        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<BattleSceneManager>();
     }
 
     void Start()
