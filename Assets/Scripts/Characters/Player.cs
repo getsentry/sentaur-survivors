@@ -160,15 +160,9 @@ public class Player : MonoBehaviour
         if (Raven.TimeElapsedSinceLastRaven > Raven.Cooldown)
         {
             Raven.TimeElapsedSinceLastRaven = 0.0f;
-            int numberOfRavens = Raven.BaseCount + Raven.AdditionalRavens;
-            for (int i = 0; i < numberOfRavens; i++)
-            {
-                var raven = Instantiate(_ravenPrefab);
-                raven.identifier = i;
-                raven.transform.parent = transform.parent;
-                raven.TargetClosestEnemy();
-            }
-            Raven.CurrentTargets.Clear(); // reset raven targeting
+
+            // note: parent transform is the parent container
+            Raven.Fire(_ravenPrefab, transform.parent);
         }
     }
 
@@ -186,15 +180,10 @@ public class Player : MonoBehaviour
         if (Starfish.TimeElapsedSinceLastStarfish > Starfish.Cooldown)
         {
             Starfish.TimeElapsedSinceLastStarfish = 0.0f;
-            int numberOfStarfish = Starfish.BaseCount + Starfish.AdditionalStarfish;
-            float degreesBetweenStarfish = 360 / numberOfStarfish;
-            for (int i = 0; i < numberOfStarfish; i++)
-            {
-                _starfishPrefab.DegreesToNextStarfish = degreesBetweenStarfish;
-                _starfishPrefab.identifier = i;
-                var starfish = Instantiate(_starfishPrefab);
-                starfish.transform.parent = transform;
-            }
+
+            // note: parent transform is the player (because starfish orbits)
+            //       around the player
+            Starfish.Fire(_starfishPrefab, this.transform);
         }
     }
 

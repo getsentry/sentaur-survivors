@@ -23,6 +23,18 @@ public class Starfish : ProjectileBase
     private GameObject _player;
     private float _timeElapsedSinceActivated = 0.0f;
 
+    public static void Fire(Starfish _starfishPrefab, Transform parentTransform) {
+        int numberOfStarfish = Starfish.BaseCount + Starfish.AdditionalStarfish;
+        float degreesBetweenStarfish = 360 / numberOfStarfish;
+        for (int i = 0; i < numberOfStarfish; i++)
+        {
+            _starfishPrefab.DegreesToNextStarfish = degreesBetweenStarfish;
+            _starfishPrefab.identifier = i;
+            var starfish = Instantiate(_starfishPrefab);
+            starfish.transform.parent = parentTransform;
+        }
+
+    }
     void Start()
     {
         _player = GameObject.Find("Player");

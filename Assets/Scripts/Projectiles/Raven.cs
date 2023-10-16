@@ -26,6 +26,19 @@ public class Raven : ProjectileBase
     private Vector3 _direction;
     private GameObject _player;
 
+    public static void Fire(Raven _ravenPrefab, Transform parentTransform) {
+
+        int numberOfRavens = Raven.BaseCount + Raven.AdditionalRavens;
+        for (int i = 0; i < numberOfRavens; i++)
+        {
+            var raven = Instantiate(_ravenPrefab);
+            raven.identifier = i;
+            raven.transform.parent = parentTransform;
+            raven.TargetClosestEnemy();
+        }
+        Raven.CurrentTargets.Clear(); // reset raven targeting
+    }
+
     new void Awake()
     {
         base.Awake();
@@ -51,6 +64,8 @@ public class Raven : ProjectileBase
 
     private GameObject GetTarget() 
     {
+        // TODO: this iteraates through every single enemy which is really bad
+        // TODO: ^^^^^
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject target = null;
         float distance = Mathf.Infinity;
