@@ -6,6 +6,8 @@ A Sentry-themed Vampire Survivors clone written for Unity in C# featuring:
 * 5 different enemies
 * 3 tactical item pickups
 
+🍿 Watch [the trailer on YouTube](https://www.youtube.com/watch?v=8z4T97gJ7Rg).
+
 ![](/Media/gameplay.gif?raw=true)
 
 ## Dependencies
