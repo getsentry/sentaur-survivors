@@ -10,6 +10,22 @@ A Sentry-themed Vampire Survivors clone written for Unity in C# featuring:
 
 ![](/Media/gameplay.gif?raw=true)
 
+## Playing the game
+
+### Where to get it
+
+You have a couple choices for playing:
+
+* [Play the game in your browser via webGL](https://bentlegen.itch.io/sentaur-survivors)
+* [Download binaries for macOS and Windows](https://github.com/getsentry/sentaur-survivors/releases)
+
+### How to play
+
+* WASD to move
+* Mouse to aim
+* Defeat enemies and pick up XP
+* Survive!
+
 ## Dependencies
 
 Requires Unity 2022.3.7f1.
