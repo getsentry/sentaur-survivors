@@ -82,3 +82,6 @@ crashlytics-build.properties
 
 # But keep the demo packages themselves.
 !/Assets/Plugins/Sirenix/Demos/*.unitypackage 
+
+# Ignore Sentry CLI options
+/Assets/Plugins/Sentry/SentryCliOptions.*
