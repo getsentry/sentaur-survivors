@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using Sentry;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -142,8 +143,10 @@ public class LevelUpUI : MonoBehaviour
         var upgradeEvent = new UpgradeEventData(selectedUpgradeType, newLevel);
         EventManager.TriggerEvent("UpgradeChosen", new EventData(upgradeEvent));
 
+        SentrySdk.Metrics.Increment("upgrade_selected",
+            tags: new Dictionary<string, string> { { "type", selectedUpgradeType.ToString() } } );
 
-        // resume the game and exit the level up popup
+    // resume the game and exit the level up popup
         Time.timeScale = 1;
         Destroy(gameObject);
     }
