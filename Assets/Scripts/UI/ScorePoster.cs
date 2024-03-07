@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
+using System.Globalization;
 using System.Net.Http;
+using System.Runtime.Serialization.Json;
 using Sentry;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.Text.Json;
 
 [Serializable]
 public class ScoreEntry
@@ -13,9 +16,9 @@ public class ScoreEntry
     public Guid Key;
     public string Name;
     public string Email;
-    public TimeSpan Duration;
+    public string Duration;
     public int Score;
-    public DateTimeOffset Timestamp;
+    public string Timestamp;
 }
 
 public class ScorePoster : MonoBehaviour
@@ -47,11 +50,11 @@ public class ScorePoster : MonoBehaviour
             Key = new Guid(),
             Name = _nameField.text,
             Email = _emailField.text,
+            Duration = TimeSpan.FromSeconds(Time.timeSinceLevelLoad).ToString(),
             Score = _gameManager.GetScore(),
-            Timestamp = DateTime.Now,
-            Duration = TimeSpan.FromSeconds(Time.timeSinceLevelLoad)
+            Timestamp = DateTime.Now.ToString("o")
         };
-        
+
         var json = JsonUtility.ToJson(score);
         
         using var www = UnityWebRequest.Post("http://localhost:5203/score", json, "application/json");
