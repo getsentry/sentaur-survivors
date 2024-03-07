@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using Sentry;
 using UnityEngine;
@@ -9,11 +8,11 @@ using UnityEngine.UI;
  */
 public class LevelUpUI : MonoBehaviour
 {
-
     // fyi: title -> upgrade name, description -> level, stats -> description
     // leveling up an upgrade, changes the stats to new level, increases the level #
 
-    public List<UpgradeType> _availableUpgradeTypes = new List<UpgradeType>{
+    public static List<UpgradeType> _availableUpgradeTypes = new List<UpgradeType>
+    {
         UpgradeType.CountUp,
         UpgradeType.CooldownDown,
         UpgradeType.DamageUp,
@@ -22,34 +21,73 @@ public class LevelUpUI : MonoBehaviour
         UpgradeType.Starfish
     };
 
-    public static Dictionary<UpgradeType, UpgradePath> _upgradeData = new Dictionary<UpgradeType, UpgradePath>{
+    public static Dictionary<UpgradeType, UpgradePath> _upgradeData = new Dictionary<
+        UpgradeType,
+        UpgradePath
+    >
+    {
         {
             UpgradeType.CountUp,
-            new UpgradePath(new List<string>{"2 of each projectile", "3 of each projectile", "5 of each projectile!"})
+            new UpgradePath(
+                new List<string>
+                {
+                    "2 of each projectile",
+                    "3 of each projectile",
+                    "5 of each projectile!"
+                }
+            )
         },
         {
             UpgradeType.CooldownDown,
-            new UpgradePath(new List<string>{"-20% cooldown time", "-25% cooldown time", "-50% cooldown time!"})
+            new UpgradePath(
+                new List<string>
+                {
+                    "-20% cooldown time",
+                    "-25% cooldown time",
+                    "-50% cooldown time!"
+                }
+            )
         },
         {
             UpgradeType.DamageUp,
-            new UpgradePath(new List<string>{"+30% damage", "+60% damage", "+100% damage!"})
+            new UpgradePath(new List<string> { "+30% damage", "+60% damage", "+100% damage!" })
         },
         {
             UpgradeType.Dart,
-            new UpgradePath(new List<string>{"extra dart that fires behind you", "+50% damage", "3 darts firing behind and +33% damage!"})
+            new UpgradePath(
+                new List<string>
+                {
+                    "extra dart that fires behind you",
+                    "+50% damage",
+                    "3 darts firing behind and +33% damage!"
+                }
+            )
         },
         {
             UpgradeType.Raven,
-            new UpgradePath(new List<string>{"heat-seeking bomb targets closest enemy", "gain an additional raven", "+33% damage and -20% cooldown!"})
+            new UpgradePath(
+                new List<string>
+                {
+                    "heat-seeking bomb targets closest enemy",
+                    "gain an additional raven",
+                    "+33% damage and -20% cooldown!"
+                }
+            )
         },
         {
             UpgradeType.Starfish,
-            new UpgradePath(new List<string>{"orbits around you, wreaking havoc", "+20% orbit duration", "+50% orbit duration and -30% cooldown!"})
+            new UpgradePath(
+                new List<string>
+                {
+                    "orbits around you, wreaking havoc",
+                    "+20% orbit duration",
+                    "+50% orbit duration and -30% cooldown!"
+                }
+            )
         }
     };
 
-   private int MAX_LEVEL = 3;
+    private int MAX_LEVEL = 3;
 
     [SerializeField]
     private LevelOption _levelOption1;
@@ -62,8 +100,7 @@ public class LevelUpUI : MonoBehaviour
     // [Tooltip("The parent UI element containing the active upgrades")]
     // private GameObject _activeUpgradesContainer;
 
-    void Awake() {
-    }
+    void Awake() { }
 
     // Start is called before the first frame update
     void Start()
@@ -85,7 +122,8 @@ public class LevelUpUI : MonoBehaviour
     /**
      * Returns a tuple of random level upgrade indices that are valid
      */
-    (UpgradeType, UpgradeType) GetRandomUpgradeChoices() {
+    (UpgradeType, UpgradeType) GetRandomUpgradeChoices()
+    {
         int option1 = Random.Range(0, _availableUpgradeTypes.Count);
         int option2;
 
@@ -109,15 +147,26 @@ public class LevelUpUI : MonoBehaviour
         UpgradeType optionTitle = option1;
         int optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
         string optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
-        _levelOption1.Set(upgradeType: optionTitle, description: "Level " + optionLevel, stats: optionStats);
+        _levelOption1.Set(
+            upgradeType: optionTitle,
+            description: "Level " + optionLevel,
+            stats: optionStats
+        );
 
-        if (option1 == option2) {
+        if (option1 == option2)
+        {
             _levelOption2.SetMaxedOut();
-        } else {
+        }
+        else
+        {
             optionTitle = option2;
             optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
             optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
-            _levelOption2.Set(upgradeType: optionTitle, description: "Level " + optionLevel, stats: optionStats);
+            _levelOption2.Set(
+                upgradeType: optionTitle,
+                description: "Level " + optionLevel,
+                stats: optionStats
+            );
         }
     }
 
@@ -143,10 +192,12 @@ public class LevelUpUI : MonoBehaviour
         var upgradeEvent = new UpgradeEventData(selectedUpgradeType, newLevel);
         EventManager.TriggerEvent("UpgradeChosen", new EventData(upgradeEvent));
 
-        SentrySdk.Metrics.Increment("upgrade_selected",
-            tags: new Dictionary<string, string> { { "type", selectedUpgradeType.ToString() } } );
+        SentrySdk.Metrics.Increment(
+            "upgrade_selected",
+            tags: new Dictionary<string, string> { { "type", selectedUpgradeType.ToString() } }
+        );
 
-    // resume the game and exit the level up popup
+        // resume the game and exit the level up popup
         Time.timeScale = 1;
         Destroy(gameObject);
     }
