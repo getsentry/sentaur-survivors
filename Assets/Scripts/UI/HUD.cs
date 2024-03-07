@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +12,8 @@ public class HUD : MonoBehaviour
     private TextMeshProUGUI _gameOverText;
     private TextMeshProUGUI _currentLevelText;
 
+    [SerializeField]
+    private GameObject _postScore;
     [SerializeField]
     private GameObject _tryAgain;
 
@@ -85,9 +85,10 @@ public class HUD : MonoBehaviour
     {
         _gameOverText.text = "GAME OVER";
         _gameOverText.enabled = true;
-
+        
         _quit.SetActive(true);
         _tryAgain.SetActive(true);
+        _postScore.SetActive(true);
     }
 
     public void SetCurrentLevel(int level)

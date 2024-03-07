@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class BattleSceneManager : MonoBehaviour
 {
@@ -85,6 +88,7 @@ public class BattleSceneManager : MonoBehaviour
 
     // the player's accumulated score so far
     private int _score = 0;
+    public int GetScore() => _score;
 
     // the score a player must get to for the next weapon upgrade
     private int _nextLevelScoreMilestone;
