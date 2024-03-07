@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 /**
@@ -10,7 +9,6 @@ using UnityEngine.UI;
  */
 public class HUD : MonoBehaviour
 {
-
     private TextMeshProUGUI _scoreText;
     private TextMeshProUGUI _timeElapsedText;
     private TextMeshProUGUI _gameOverText;
@@ -18,12 +16,14 @@ public class HUD : MonoBehaviour
 
     [SerializeField]
     private GameObject _tryAgain;
+
     [SerializeField]
     private GameObject _quit;
 
     private XpBar _xpBar;
-    
-    void Awake() {
+
+    void Awake()
+    {
         // get score text component from child
         _scoreText = transform.Find("Score").GetComponent<TextMeshProUGUI>();
         _timeElapsedText = transform.Find("TimeElapsed").GetComponent<TextMeshProUGUI>();
@@ -32,21 +32,20 @@ public class HUD : MonoBehaviour
 
         _xpBar = transform.Find("XpBar").GetComponent<XpBar>();
 
-
         var _tryAgainButton = _tryAgain.GetComponent<Button>();
-        _tryAgainButton.onClick.AddListener(() => {
+        _tryAgainButton.onClick.AddListener(() =>
+        {
             EventManager.TriggerEvent("TryAgain");
         });
 
         var _quitButton = _quit.GetComponent<Button>();
-        _quitButton.onClick.AddListener(() => {
+        _quitButton.onClick.AddListener(() =>
+        {
             EventManager.TriggerEvent("Quit");
         });
     }
-    void Start()
-    {
 
-    }
+    void Start() { }
 
     // Update is called once per frame
     void Update()
@@ -58,27 +57,32 @@ public class HUD : MonoBehaviour
         _timeElapsedText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    public void SetScore(int score) {
+    public void SetScore(int score)
+    {
         _scoreText.text = score.ToString();
     }
 
-    public void SetXp(float xp) {
+    public void SetXp(float xp)
+    {
         _xpBar.SetXp(xp);
     }
 
-    public void ShowPause() {
+    public void ShowPause()
+    {
         _gameOverText.text = "PAUSED";
         _gameOverText.enabled = true;
 
         _quit.SetActive(true);
     }
 
-    public void HidePause() {
+    public void HidePause()
+    {
         _gameOverText.enabled = false;
         _quit.SetActive(false);
     }
-    
-    public void ShowGameOver() {
+
+    public void ShowGameOver()
+    {
         _gameOverText.text = "GAME OVER";
         _gameOverText.enabled = true;
 
@@ -86,7 +90,8 @@ public class HUD : MonoBehaviour
         _tryAgain.SetActive(true);
     }
 
-    public void SetCurrentLevel(int level) {
+    public void SetCurrentLevel(int level)
+    {
         _currentLevelText.text = "Level " + (level + 1);
     }
 }

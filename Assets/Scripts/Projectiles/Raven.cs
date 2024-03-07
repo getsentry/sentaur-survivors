@@ -18,7 +18,7 @@ public class Raven : ProjectileBase
 
     public static float Speed = 12.0f;
     public static int AdditionalRavens = 0;
-    public static List<GameObject> CurrentTargets = new List<GameObject>{}; 
+    public static List<GameObject> CurrentTargets = new List<GameObject> { };
     public static float TimeElapsedSinceLastRaven;
     private static float _distanceOutsidePlayer = 1.25f;
 
@@ -26,8 +26,8 @@ public class Raven : ProjectileBase
     private Vector3 _direction;
     private GameObject _player;
 
-    public static void Fire(Raven _ravenPrefab, Transform parentTransform) {
-
+    public static void Fire(Raven _ravenPrefab, Transform parentTransform)
+    {
         int numberOfRavens = Raven.BaseCount + Raven.AdditionalRavens;
         for (int i = 0; i < numberOfRavens; i++)
         {
@@ -46,7 +46,7 @@ public class Raven : ProjectileBase
         _player = GameObject.Find("Player");
     }
 
-    public void TargetClosestEnemy() 
+    public void TargetClosestEnemy()
     {
         GameObject target = GetTarget();
         if (target == null)
@@ -59,10 +59,11 @@ public class Raven : ProjectileBase
         SetDirection(direction);
 
         // initial position
-        transform.position = _player.transform.position + direction.normalized * _distanceOutsidePlayer;
+        transform.position =
+            _player.transform.position + direction.normalized * _distanceOutsidePlayer;
     }
 
-    private GameObject GetTarget() 
+    private GameObject GetTarget()
     {
         // TODO: this iteraates through every single enemy which is really bad
         // TODO: ^^^^^
@@ -118,14 +119,19 @@ public class Raven : ProjectileBase
         // find all enemies within _areaOfEffectRange unit of enemy hit using raycast
         initialEnemy.TakeDamage(Damage);
 
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(initialEnemy.transform.position, _areaOfEffectRange, Vector2.zero);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(
+            initialEnemy.transform.position,
+            _areaOfEffectRange,
+            Vector2.zero
+        );
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy"))
             {
                 Enemy enemyHit = hit.collider.gameObject.GetComponent<Enemy>();
                 // dont hit initial enemy twice
-                if (enemyHit != initialEnemy) {
+                if (enemyHit != initialEnemy)
+                {
                     enemyHit.TakeDamage(Damage);
                 }
             }

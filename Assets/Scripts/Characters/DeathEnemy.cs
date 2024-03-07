@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeathEnemy : Enemy
 {
-    override protected Vector2 DetermineDirection(GameObject player)
+    protected override Vector2 DetermineDirection(GameObject player)
     {
         // get direction facing player
         Vector2 direction = Player.Instance.transform.position - transform.position;
@@ -12,8 +12,7 @@ public class DeathEnemy : Enemy
         return Vector3.Normalize(direction);
     }
 
-
-    override protected void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
 

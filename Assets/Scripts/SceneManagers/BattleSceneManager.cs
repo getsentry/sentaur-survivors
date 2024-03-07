@@ -5,7 +5,6 @@ using UnityEngine.Tilemaps;
 
 public class BattleSceneManager : MonoBehaviour
 {
-
     [Header("Game Properties")]
     [SerializeField]
     [Tooltip("How frequently enemies spawn (in seconds)")]
@@ -91,26 +90,28 @@ public class BattleSceneManager : MonoBehaviour
     private int _nextLevelScoreMilestone;
 
     [SerializeField]
-    private int[] _levelMilestones = {
-      50, // level 2
-      150, 
-      350, 
-      650, 
-      1050, 
-      1550, 
-      2200, 
-      3000, 
-      4000, // level 10
-      5250, 
-      6800, 
-      8750, 
-      11200, 
-      14250, 
-      18000, 
-      22500, 
-      28000, // level 18 (max)
+    private int[] _levelMilestones =
+    {
+        50, // level 2
+        150,
+        350,
+        650,
+        1050,
+        1550,
+        2200,
+        3000,
+        4000, // level 10
+        5250,
+        6800,
+        8750,
+        11200,
+        14250,
+        18000,
+        22500,
+        28000, // level 18 (max)
     }; // for testing: {50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900};
     private int _nextLevelXpMilestone;
+
     // trackinf the previous level score milestone for xp bar
     private int _prevLevelXpMilestone;
     private int _previousLevel = 0;
@@ -119,19 +120,21 @@ public class BattleSceneManager : MonoBehaviour
     private float _lastSpawnRampUp = 0.0f;
     private int _spawnRampUpInterval = 10;
 
-    public enum EnemyType {
+    public enum EnemyType
+    {
         Sentaur = 0,
         Ant = 1,
         Head = 2,
-        Mantis= 3
+        Mantis = 3
     };
 
     // what level enemies start appearing
-    private Dictionary<EnemyType, int> _levelEnemyGate = new  Dictionary<EnemyType, int> {
-        {EnemyType.Sentaur, 0}, // start
-        {EnemyType.Ant, 2}, // level 3
-        {EnemyType.Head, 4}, // level 5
-        {EnemyType.Mantis, 6}, // level 7
+    private Dictionary<EnemyType, int> _levelEnemyGate = new Dictionary<EnemyType, int>
+    {
+        { EnemyType.Sentaur, 0 }, // start
+        { EnemyType.Ant, 2 }, // level 3
+        { EnemyType.Head, 4 }, // level 5
+        { EnemyType.Mantis, 6 }, // level 7
     };
 
     [SerializeField]
@@ -142,16 +145,14 @@ public class BattleSceneManager : MonoBehaviour
     [Tooltip("How much to increase the max hitpoints of enemies by each interval")]
     private int _hpRampUpValue = 10;
 
-
     private float _lastHpRampUp = 0.0f;
 
-    
     // By how much each enemy's hit points is modified when spawned
     private int _enemyHitPointModifier = 0;
 
     private float _lastPickupSpawnTime = 0.0f;
 
-    private int _pickupsOnScreen = 0; 
+    private int _pickupsOnScreen = 0;
 
     private enum GameState
     {
@@ -169,7 +170,6 @@ public class BattleSceneManager : MonoBehaviour
 
     private float _gameStartTime;
     private bool _isDeathEnemyPresent = false;
-
 
     // Start is called before the first frame update
     void Start()
@@ -193,45 +193,74 @@ public class BattleSceneManager : MonoBehaviour
 
         SetCurrentLevel(_currentLevel);
 
-        EventManager.AddListener("EnemyDestroyed", (eventData) =>
-        {
-            OnEnemyDestroyed((int)eventData.Data);
-        });
-        EventManager.AddListener("PickupGrabbed", (eventData) =>
-        {
-            OnPickupGrabbed((List<object>)eventData.Data);
-        });
-        EventManager.AddListener("PickupExpired", (eventData) => {
-            OnPickupExpired((string)eventData.Data);
-        });
-        EventManager.AddListener("PlayerDeath", (eventData) =>
-        {
-            OnPlayerDeath();
-        });
-        EventManager.AddListener("XpEarned", (eventData) => {
-            OnXpEarned((int)eventData.Data);
-        });
+        EventManager.AddListener(
+            "EnemyDestroyed",
+            (eventData) =>
+            {
+                OnEnemyDestroyed((int)eventData.Data);
+            }
+        );
+        EventManager.AddListener(
+            "PickupGrabbed",
+            (eventData) =>
+            {
+                OnPickupGrabbed((List<object>)eventData.Data);
+            }
+        );
+        EventManager.AddListener(
+            "PickupExpired",
+            (eventData) =>
+            {
+                OnPickupExpired((string)eventData.Data);
+            }
+        );
+        EventManager.AddListener(
+            "PlayerDeath",
+            (eventData) =>
+            {
+                OnPlayerDeath();
+            }
+        );
+        EventManager.AddListener(
+            "XpEarned",
+            (eventData) =>
+            {
+                OnXpEarned((int)eventData.Data);
+            }
+        );
 
-        EventManager.AddListener("TryAgain", (eventData) => {
-            OnTryAgain();
-        });
+        EventManager.AddListener(
+            "TryAgain",
+            (eventData) =>
+            {
+                OnTryAgain();
+            }
+        );
 
-        EventManager.AddListener("Quit", (eventData) => {
-            OnQuit();
-        });
+        EventManager.AddListener(
+            "Quit",
+            (eventData) =>
+            {
+                OnQuit();
+            }
+        );
 
-        EventManager.AddListener("UpgradeChosen", (eventData) => {
-            OnUpgradeChosen((UpgradeEventData)eventData.Data);
-        });
-
+        EventManager.AddListener(
+            "UpgradeChosen",
+            (eventData) =>
+            {
+                OnUpgradeChosen((UpgradeEventData)eventData.Data);
+            }
+        );
     }
+
     private void OnPickupGrabbed(List<object> eventData)
     {
-        int scoreValue = (int) eventData[0];
+        int scoreValue = (int)eventData[0];
         SetScore(_score + scoreValue);
         _pickupsOnScreen -= 1;
 
-        string pickupName = (string) eventData[1];
+        string pickupName = (string)eventData[1];
 
         if (pickupName != "Hotdog")
         {
@@ -255,22 +284,33 @@ public class BattleSceneManager : MonoBehaviour
         AddScore(xp);
     }
 
-    private void OnQuit() {
+    private void OnQuit()
+    {
         Application.Quit();
     }
 
-    private void OnTryAgain() {
+    private void OnTryAgain()
+    {
         // reload this scene
-        UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            "BattleScene",
+            UnityEngine.SceneManagement.LoadSceneMode.Single
+        );
     }
 
-    private void UpdateXpProgress() {
-        float xpProgress;        
-        if (_currentLevel == 0) 
+    private void UpdateXpProgress()
+    {
+        float xpProgress;
+        if (_currentLevel == 0)
         {
             xpProgress = 1.0f * _xp / _nextLevelXpMilestone;
-        } else {
-            xpProgress = 1.0f * (_xp - _prevLevelXpMilestone) / (_nextLevelXpMilestone - _prevLevelXpMilestone);
+        }
+        else
+        {
+            xpProgress =
+                1.0f
+                * (_xp - _prevLevelXpMilestone)
+                / (_nextLevelXpMilestone - _prevLevelXpMilestone);
         }
         _hud.SetXp(xpProgress);
     }
@@ -280,10 +320,11 @@ public class BattleSceneManager : MonoBehaviour
         SetScore(_score + scoreValue);
     }
 
-    public void PauseGame() {
+    public void PauseGame()
+    {
         _gameState = GameState.Paused;
 
-       // stop playing the background music when the game stops
+        // stop playing the background music when the game stops
         _backgroundMusic.Stop();
 
         // STOP THE GAME
@@ -293,7 +334,8 @@ public class BattleSceneManager : MonoBehaviour
         _hud.ShowPause();
     }
 
-    public void UnpauseGame() {
+    public void UnpauseGame()
+    {
         _gameState = GameState.Playing;
 
         // resume playing the background music when the game resumes
@@ -307,7 +349,7 @@ public class BattleSceneManager : MonoBehaviour
     }
 
     private void OnPlayerDeath()
-    {   
+    {
         _gameState = GameState.GameOver;
         // stop playing the background music when the game stops
         _backgroundMusic.Stop();
@@ -340,7 +382,6 @@ public class BattleSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (_gameState == GameState.Playing)
@@ -367,11 +408,11 @@ public class BattleSceneManager : MonoBehaviour
             _lastEnemySpawnTime = Time.time;
 
             Spawn();
-
         }
 
         // ramp up spawn rate
-        if (Time.time - _lastSpawnRampUp > _spawnRampUpInterval) {
+        if (Time.time - _lastSpawnRampUp > _spawnRampUpInterval)
+        {
             _enemySpawnRate -= 0.05f;
             _enemySpawnRate = Mathf.Max(_enemySpawnRate, _enemySpawnRateFloor);
 
@@ -379,20 +420,30 @@ public class BattleSceneManager : MonoBehaviour
         }
 
         // ramp up enemy hp
-        if (Time.time - _lastHpRampUp > _hpRampUpInterval) {
+        if (Time.time - _lastHpRampUp > _hpRampUpInterval)
+        {
             _enemyHitPointModifier += _hpRampUpValue;
 
-            Debug.Log("Enemy HP modifier is now " + _enemyHitPointModifier + " (" + (int)(Time.time - _lastHpRampUp) + "s elapsed )");
+            Debug.Log(
+                "Enemy HP modifier is now "
+                    + _enemyHitPointModifier
+                    + " ("
+                    + (int)(Time.time - _lastHpRampUp)
+                    + "s elapsed )"
+            );
             _lastHpRampUp = Time.time;
         }
-        if (_pickupsOnScreen < _maxPickupsOnScreen && Time.time - _lastPickupSpawnTime > _pickupSpawnRate)
+        if (
+            _pickupsOnScreen < _maxPickupsOnScreen
+            && Time.time - _lastPickupSpawnTime > _pickupSpawnRate
+        )
         {
             _lastPickupSpawnTime = Time.time;
-            
+
             SpawnPickup();
         }
 
-        if (_xp >= _nextLevelXpMilestone && _currentLevel < _levelMilestones.Length) 
+        if (_xp >= _nextLevelXpMilestone && _currentLevel < _levelMilestones.Length)
         {
             _currentLevel++;
             Debug.Log("GameManager.Update: Level Up!");
@@ -400,11 +451,11 @@ public class BattleSceneManager : MonoBehaviour
             _previousLevel = _currentLevel - 1;
 
             SetCurrentLevel(_currentLevel);
-            
-            // reset xp bar to 0 after leveling up 
+
+            // reset xp bar to 0 after leveling up
             _hud.SetXp(0);
 
-            // we don't want to set the next milestone if we just reached the final level (there 
+            // we don't want to set the next milestone if we just reached the final level (there
             // are no more milestones)
             if (_currentLevel < _levelMilestones.Length)
             {
@@ -413,14 +464,13 @@ public class BattleSceneManager : MonoBehaviour
             }
             GameObject levelUpUI = Instantiate(_levelUpUIPrefab);
         }
-
-        
     }
 
     /**
-      * Returns the bounding box of the camera viewport in world space coordinates 
+      * Returns the bounding box of the camera viewport in world space coordinates
       */
-    private Bounds GetViewportBounds() {
+    private Bounds GetViewportBounds()
+    {
         // get the bounding box of the camera viewport in world space coordinates
         // camera viewport has the following coordinate system:
         //   (0, 0) is bottom left
@@ -443,17 +493,17 @@ public class BattleSceneManager : MonoBehaviour
     /**
      * Returns a random position within the spane area
      */
-    private Vector3 GetRandomSpawnPoint() {
+    private Vector3 GetRandomSpawnPoint()
+    {
         var rectTransform = _spawnPlane.GetComponent<RectTransform>();
         // get bounds of rect transform
-        var rectTransformWorldBounds = new Bounds(
-            rectTransform.position,
-            rectTransform.rect.size
-        );
+        var rectTransformWorldBounds = new Bounds(rectTransform.position, rectTransform.rect.size);
 
         var floorSpawnCoord = new Vector3(
             Random.Range(rectTransformWorldBounds.min.x, rectTransformWorldBounds.max.x),
-            Random.Range(rectTransformWorldBounds.min.y, rectTransformWorldBounds.max.y), 0.0f);
+            Random.Range(rectTransformWorldBounds.min.y, rectTransformWorldBounds.max.y),
+            0.0f
+        );
 
         return floorSpawnCoord;
     }
@@ -461,13 +511,15 @@ public class BattleSceneManager : MonoBehaviour
     /**
      * Returns a random spawnable position outside of the viewport
      */
-    private Vector3 GetRandomSpawnPointOutsideViewport() {
+    private Vector3 GetRandomSpawnPointOutsideViewport()
+    {
         // convert to bounds
         var viewportBounds = GetViewportBounds();
 
-       // randomly choose a coordinate until one is found that is outside the viewport
+        // randomly choose a coordinate until one is found that is outside the viewport
         Vector3 floorSpawnCoord;
-        do {
+        do
+        {
             // choose a random coordinate within rectTransformWorldBounds
             floorSpawnCoord = GetRandomSpawnPoint();
 
@@ -480,25 +532,30 @@ public class BattleSceneManager : MonoBehaviour
     /**
      * Spawns random enemies depending on the level
      */
-    private void Spawn() {
+    private void Spawn()
+    {
         GameObject prefab;
 
         int spawnRange = (int)EnemyType.Sentaur;
 
         // determine what range of enemies to spawn based on level
-        if (_currentLevel >= _levelEnemyGate[EnemyType.Ant]) {
+        if (_currentLevel >= _levelEnemyGate[EnemyType.Ant])
+        {
             spawnRange = (int)EnemyType.Ant;
         }
-        if (_currentLevel >= _levelEnemyGate[EnemyType.Head]) {
+        if (_currentLevel >= _levelEnemyGate[EnemyType.Head])
+        {
             spawnRange = (int)EnemyType.Head;
         }
-        if (_currentLevel >= _levelEnemyGate[EnemyType.Mantis]) {
+        if (_currentLevel >= _levelEnemyGate[EnemyType.Mantis])
+        {
             spawnRange = (int)EnemyType.Mantis;
         }
 
         int spawnChoice = Random.Range((int)EnemyType.Sentaur, spawnRange + 1);
 
-        switch (spawnChoice) {
+        switch (spawnChoice)
+        {
             case (int)EnemyType.Sentaur:
                 prefab = _sentaurEnemyPrefab;
                 break;
@@ -540,17 +597,21 @@ public class BattleSceneManager : MonoBehaviour
         int flipX = 1;
 
         int spawnCount = 0;
-        while (spawnCount < count) {
+        while (spawnCount < count)
+        {
             GameObject enemy = Instantiate(prefab);
             enemy.GetComponent<Enemy>().hitpoints += _enemyHitPointModifier;
             enemy.transform.parent = _levelContainer.transform;
 
             // from initial position, fan out enemies to the left and right
-            spawnPosition = initialPosition + new Vector3(
-                distanceOffsetX * ((1 + spawnCount) / 2) * flipX, 
-                // randomize y within (2, 2)
-                Random.Range(0, maxRangeY),
-                0);
+            spawnPosition =
+                initialPosition
+                + new Vector3(
+                    distanceOffsetX * ((1 + spawnCount) / 2) * flipX,
+                    // randomize y within (2, 2)
+                    Random.Range(0, maxRangeY),
+                    0
+                );
             enemy.transform.position = spawnPosition;
 
             spawnCount++;
@@ -558,14 +619,15 @@ public class BattleSceneManager : MonoBehaviour
         }
     }
 
-    private void SpawnDeath() {
+    private void SpawnDeath()
+    {
         GameObject death = Instantiate(_deathEnemyPrefab);
         death.transform.parent = _levelContainer.transform;
         death.transform.position = GetRandomSpawnPointOutsideViewport();
         _gameStartTime = Time.time;
     }
 
-    private void SpawnPickup() 
+    private void SpawnPickup()
     {
         if (_pickupsOnScreen >= _maxPickupsOnScreen)
         {
@@ -579,9 +641,10 @@ public class BattleSceneManager : MonoBehaviour
         _pickupsOnScreen++;
     }
 
-    private void OnUpgradeChosen(UpgradeEventData upgradeEvent) {
+    private void OnUpgradeChosen(UpgradeEventData upgradeEvent)
+    {
         var newLevel = upgradeEvent.Level;
-        switch(upgradeEvent.UpgradeType)
+        switch (upgradeEvent.UpgradeType)
         {
             case UpgradeType.CountUp:
                 ProjectileBase.UpgradeCount(newLevel);
@@ -604,8 +667,8 @@ public class BattleSceneManager : MonoBehaviour
             case UpgradeType.Starfish:
                 Starfish.UpgradeStarfish(newLevel);
                 break;
-            default: break;
+            default:
+                break;
         }
-
     }
 }

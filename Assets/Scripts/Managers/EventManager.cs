@@ -1,10 +1,9 @@
 /* Adapted from:
  * https://learn.unity.com/tutorial/create-a-simple-messaging-system-with-events#5cf5960fedbc2a281acd21fa */
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using System.Collections.Generic;
-
 
 public class EventData
 {

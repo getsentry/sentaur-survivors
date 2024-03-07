@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,7 +25,7 @@ public class Pickup : MonoBehaviour
     [Tooltip("Sprite for the umbrella pickup")]
     private Sprite _umbrellaSprite;
 
-    private enum PickupType 
+    private enum PickupType
     {
         Hotdog,
         Skateboard,
@@ -40,7 +40,7 @@ public class Pickup : MonoBehaviour
     void Start()
     {
         // randomize pickup type
-        pickupType = (PickupType) pickupTypesArray.GetValue(random.Next(pickupTypesArray.Length));
+        pickupType = (PickupType)pickupTypesArray.GetValue(random.Next(pickupTypesArray.Length));
 
         switch (pickupType)
         {
@@ -65,7 +65,7 @@ public class Pickup : MonoBehaviour
 
             switch (pickupType)
             {
-                case PickupType.Hotdog: 
+                case PickupType.Hotdog:
                     player.HealDamage(_healAmount);
                     break;
                 case PickupType.Skateboard:
@@ -74,15 +74,15 @@ public class Pickup : MonoBehaviour
                 case PickupType.Umbrella:
                     player.ReduceDamage(0.5f, true);
                     break;
-                default: 
-                break;
+                default:
+                    break;
             }
 
             // Destroy the pickup
             Destroy(this.gameObject);
 
             // trigger an event that lets people know this was picked up
-            List<object> eventData = new List<object>{_scoreValue, pickupType.ToString()};
+            List<object> eventData = new List<object> { _scoreValue, pickupType.ToString() };
             EventManager.TriggerEvent("PickupGrabbed", new EventData(eventData));
         }
     }

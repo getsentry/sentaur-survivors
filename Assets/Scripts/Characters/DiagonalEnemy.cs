@@ -7,19 +7,20 @@ public class DiagonalEnemy : Enemy
 {
     Vector2 _direction;
 
-    override protected void Awake() {
+    protected override void Awake()
+    {
         base.Awake();
 
         // initialize a random direction
         _direction = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
-
     }
-    override protected Vector2 DetermineDirection(GameObject player)
+
+    protected override Vector2 DetermineDirection(GameObject player)
     {
         return Vector3.Normalize(_direction);
     }
 
-    override protected void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
 

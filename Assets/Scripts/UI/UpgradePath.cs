@@ -42,6 +42,5 @@ public class UpgradePath
             Debug.Log(e.Message);
             return "";
         }
-
     }
 }
