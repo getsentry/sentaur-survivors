@@ -11,7 +11,7 @@ public class LevelUpUI : MonoBehaviour
     // fyi: title -> upgrade name, description -> level, stats -> description
     // leveling up an upgrade, changes the stats to new level, increases the level #
 
-    public static List<UpgradeType> _availableUpgradeTypes = new List<UpgradeType>
+    private static List<UpgradeType> _availableUpgradeTypes = new List<UpgradeType>
     {
         UpgradeType.CountUp,
         UpgradeType.CooldownDown,
@@ -21,7 +21,7 @@ public class LevelUpUI : MonoBehaviour
         UpgradeType.Starfish
     };
 
-    public static Dictionary<UpgradeType, UpgradePath> _upgradeData = new Dictionary<
+    private static Dictionary<UpgradeType, UpgradePath> _upgradeData = new Dictionary<
         UpgradeType,
         UpgradePath
     >
