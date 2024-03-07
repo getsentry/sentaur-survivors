@@ -10,7 +10,7 @@ public class Starfish : ProjectileBase
     public static float StartingCooldown = 5f;
     public static float Cooldown => BaseCooldownPercentage * StartingCooldown;
     public static bool IsEnabled = false;
-    
+
     public static float Duration = 5f;
     public static float DegreesPerFrame = 180f;
     public static bool IsActive = false;
@@ -18,12 +18,13 @@ public class Starfish : ProjectileBase
     public static float TimeElapsedSinceLastStarfish;
     private static float _distanceOutsidePlayer = 2f;
 
-    public float DegreesToNextStarfish; 
+    public float DegreesToNextStarfish;
     public int identifier;
     private GameObject _player;
     private float _timeElapsedSinceActivated = 0.0f;
 
-    public static void Fire(Starfish _starfishPrefab, Transform parentTransform) {
+    public static void Fire(Starfish _starfishPrefab, Transform parentTransform)
+    {
         int numberOfStarfish = Starfish.BaseCount + Starfish.AdditionalStarfish;
         float degreesBetweenStarfish = 360 / numberOfStarfish;
         for (int i = 0; i < numberOfStarfish; i++)
@@ -33,16 +34,21 @@ public class Starfish : ProjectileBase
             var starfish = Instantiate(_starfishPrefab);
             starfish.transform.parent = parentTransform;
         }
-
     }
+
     void Start()
     {
         _player = GameObject.Find("Player");
         IsActive = true;
 
-         // starting position
-        transform.position = _player.transform.position + new Vector3(1f,0,0).normalized * _distanceOutsidePlayer;
-        transform.RotateAround(_player.transform.position, Vector3.forward, DegreesToNextStarfish * identifier);
+        // starting position
+        transform.position =
+            _player.transform.position + new Vector3(1f, 0, 0).normalized * _distanceOutsidePlayer;
+        transform.RotateAround(
+            _player.transform.position,
+            Vector3.forward,
+            DegreesToNextStarfish * identifier
+        );
     }
 
     // Update is called once per frame
@@ -58,10 +64,14 @@ public class Starfish : ProjectileBase
 
     void LateUpdate()
     {
-        transform.RotateAround(_player.transform.position, Vector3.forward, DegreesPerFrame * Time.deltaTime);
+        transform.RotateAround(
+            _player.transform.position,
+            Vector3.forward,
+            DegreesPerFrame * Time.deltaTime
+        );
     }
 
-    override protected void OnTriggerEnter2D(Collider2D other)
+    protected override void OnTriggerEnter2D(Collider2D other)
     {
         // if the starfish collides with an enemy, damage the enemy
         if (other.gameObject.tag == "Enemy")
@@ -69,9 +79,9 @@ public class Starfish : ProjectileBase
             var enemy = other.gameObject.GetComponent<Enemy>();
 
             SoundManager.Instance.PlayHitSound();
-            
+
             DamageEnemy(enemy);
-        } 
+        }
         else if (other.gameObject.tag == "Barrier")
         {
             Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), other);

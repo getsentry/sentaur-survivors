@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     [SerializeField]
     [Tooltip("The prefab for the player's dart (starting projectile)")]
     private Dart _dartPrefab;
@@ -68,16 +67,20 @@ public class Player : MonoBehaviour
 
     static Player _instance;
 
-    public static Player Instance {
-        get {
-            if (_instance == null) {
+    public static Player Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
                 _instance = GameObject.FindObjectOfType<Player>();
             }
             return _instance;
         }
     }
 
-    void Awake() {
+    void Awake()
+    {
         _rigidBody = GetComponent<Rigidbody2D>();
 
         _gameManager = GameObject.Find("GameManager").GetComponent<BattleSceneManager>();
@@ -85,7 +88,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-
         _baseMoveRate = _playerMoveRate;
 
         // get a reference to the Healthbar component
@@ -99,7 +101,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isDead) {
+        if (_isDead)
+        {
             return;
         }
 
@@ -112,15 +115,18 @@ public class Player : MonoBehaviour
         lastPosition = transform.position;
 
         var movementVector = new Vector2(
-            Input.GetAxis("Horizontal") *  _playerMoveRate,
+            Input.GetAxis("Horizontal") * _playerMoveRate,
             Input.GetAxis("Vertical") * _playerMoveRate
         );
         _rigidBody.velocity = movementVector;
 
         movement.x = Input.GetAxisRaw("Horizontal");
-        if (movement.x > 0) {
+        if (movement.x > 0)
+        {
             facingRight = true;
-        } else if (movement.x < 0) {
+        }
+        else if (movement.x < 0)
+        {
             facingRight = false;
         } // if 0, don't modify
         movement.y = Input.GetAxisRaw("Vertical");
@@ -135,7 +141,8 @@ public class Player : MonoBehaviour
         UpdatePickups();
     }
 
-    void UpdateDarts() {
+    void UpdateDarts()
+    {
         if (Dart.IsShooting)
         {
             // if the dart is already firing, exit early (we only start counting
@@ -151,8 +158,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    void UpdateRavens() {
-        if (!Raven.IsEnabled) {
+    void UpdateRavens()
+    {
+        if (!Raven.IsEnabled)
+        {
             return;
         }
 
@@ -166,12 +175,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    void UpdateStarfish() {
-        if (!Starfish.IsEnabled) {
+    void UpdateStarfish()
+    {
+        if (!Starfish.IsEnabled)
+        {
             return;
         }
 
-        if (Starfish.IsActive) {
+        if (Starfish.IsActive)
+        {
             // if starfish is already orbiting nothing to do
             return;
         }
@@ -187,7 +199,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    void UpdatePickups() {
+    void UpdatePickups()
+    {
         // remove pickup effects if any are time-based and expiring
         if (_hasPickedUpSkateboard)
         {
@@ -216,15 +229,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    IEnumerator Wait(float _waitTime) {
+    IEnumerator Wait(float _waitTime)
+    {
         _isDead = true;
         yield return new WaitForSeconds(_waitTime);
         // emit player death event
         EventManager.TriggerEvent("PlayerDeath");
     }
+
     public void TakeDamage(int damage = 0)
     {
-        _hitPoints -= (int) (damage * (1 - _damageReductionAmount));
+        _hitPoints -= (int)(damage * (1 - _damageReductionAmount));
         _hitPoints = Math.Max(_hitPoints, 0); // don't let the player have negative hit points
 
         _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
@@ -234,25 +249,23 @@ public class Player : MonoBehaviour
             animator.SetTrigger("Dead");
             coroutine = Wait(1.2f);
             StartCoroutine(coroutine);
-
-        } else {
+        }
+        else
+        {
             // play damage sound effect
             takeDamageSound.Play();
         }
     }
 
-    public void HealDamage(int healAmount = 0) {
+    public void HealDamage(int healAmount = 0)
+    {
         _hitPoints += healAmount;
         _hitPoints = Math.Min(_hitPoints, 100); // don't let the player have more than 100 hit points
 
         _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
 
-        Vector2 textPosition = new Vector2(
-            transform.position.x,
-            transform.position.y + 1.0f
-        );
+        Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
         _playerTextPrefab.Spawn(transform.root, textPosition, "+" + healAmount + " health!");
-
     }
 
     public void SpeedUp(int newSpeed, bool hasSkateboard = false)
@@ -260,10 +273,7 @@ public class Player : MonoBehaviour
         _playerMoveRate = newSpeed;
         _hasPickedUpSkateboard = hasSkateboard;
 
-        Vector2 textPosition = new Vector2(
-            transform.position.x,
-            transform.position.y + 1.0f
-        );
+        Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
         string speedRate = (newSpeed / _baseMoveRate).ToString();
         _playerTextPrefab.Spawn(transform.root, textPosition, speedRate + "x speed!");
 
@@ -279,12 +289,13 @@ public class Player : MonoBehaviour
         _damageReductionAmount = reductionPercentage;
         _hasPickedUpUmbrella = hasUmbrella;
 
-        Vector2 textPosition = new Vector2(
-            transform.position.x,
-            transform.position.y + 1.0f
+        Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
+        string formatPercentage = (reductionPercentage * 100).ToString();
+        _playerTextPrefab.Spawn(
+            transform.root,
+            textPosition,
+            formatPercentage + "% dmg reduction!"
         );
-        string formatPercentage = (reductionPercentage*100).ToString();
-        _playerTextPrefab.Spawn(transform.root, textPosition, formatPercentage + "% dmg reduction!");
 
         if (_hasPickedUpUmbrella)
         {

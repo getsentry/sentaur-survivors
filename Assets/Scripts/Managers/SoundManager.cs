@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
     private static SoundManager _instance;
 
     public static SoundManager Instance => _instance;
+
     void Awake()
     {
         if (_instance == null)
@@ -27,14 +28,16 @@ public class SoundManager : MonoBehaviour
         Init();
     }
 
-    public void Init() {
+    public void Init()
+    {
         _enemyHitSound = GetComponent<AudioSource>();
-
     }
 
-    public void PlayHitSound() {
+    public void PlayHitSound()
+    {
         // don't play the sound if it's too soon
-        if (Time.time - _timeOfLastHitSound < _hitSoundCooldown) {
+        if (Time.time - _timeOfLastHitSound < _hitSoundCooldown)
+        {
             return;
         }
 

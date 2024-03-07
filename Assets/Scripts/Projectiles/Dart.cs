@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Profiling;
@@ -39,14 +38,14 @@ public class Dart : ProjectileBase
                 ShootADart(prefab, player, direction * -1);
             }
 
-            yield return new WaitForSeconds(_shootingInterval);            
+            yield return new WaitForSeconds(_shootingInterval);
             // get new updates mouse coords inbetween shots
             direction = CalculateDirection(player);
         }
 
         // accounting for case where # of backwards darts > # of forwards darts
         int remainingDarts = AdditionalDarts - BaseCount;
-        if (remainingDarts > 0) 
+        if (remainingDarts > 0)
         {
             direction *= -1;
             for (int i = 0; i < remainingDarts; i++)
@@ -67,7 +66,8 @@ public class Dart : ProjectileBase
         dart.transform.parent = player.transform.parent;
 
         // initial position
-        dart.transform.position = player.transform.position + direction.normalized * _distanceOutsidePlayer;
+        dart.transform.position =
+            player.transform.position + direction.normalized * _distanceOutsidePlayer;
 
         dart.SetDirection(direction);
     }
@@ -76,7 +76,7 @@ public class Dart : ProjectileBase
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 direction = mousePosition - player.transform.position;
-        
+
         return direction;
     }
 
@@ -95,31 +95,35 @@ public class Dart : ProjectileBase
     // Deal damage to the enemy because they were hit by a dart
     override protected void DamageEnemy(Enemy initialEnemy)
     {
-
         initialEnemy.TakeDamage(Damage);
         // why 5000? -- the result of experimenting with different values (!)
         initialEnemy.Knockback(_direction, 5000);
 
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(initialEnemy.transform.position, _areaOfEffectRange, Vector2.zero);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(
+            initialEnemy.transform.position,
+            _areaOfEffectRange,
+            Vector2.zero
+        );
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy"))
             {
                 Enemy enemyHit = hit.collider.gameObject.GetComponent<Enemy>();
                 // dont hit initial enemy twice
-                if (enemyHit != initialEnemy) {
+                if (enemyHit != initialEnemy)
+                {
                     enemyHit.TakeDamage(Damage);
                 }
             }
         }
     }
 
-    public static void UpgradeDart(int level) 
+    public static void UpgradeDart(int level)
     {
         if (level == 1)
         {
             AdditionalDarts++;
-        } 
+        }
         else if (level == 2)
         {
             BaseDamagePercentage = 1.5f;
@@ -128,6 +132,6 @@ public class Dart : ProjectileBase
         {
             BaseDamagePercentage = 2f;
             AdditionalDarts += 2;
-        }   
+        }
     }
 }

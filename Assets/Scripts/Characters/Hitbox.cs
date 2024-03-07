@@ -8,13 +8,14 @@ public class Hitbox : MonoBehaviour
 
     public Enemy Enemy => _parentEnemy;
 
-    void Awake() {
+    void Awake()
+    {
         _parentEnemy = transform.parent.GetComponent<Enemy>();
     }
 
-    public void Disable() {
+    public void Disable()
+    {
         // disable collider
         GetComponent<Collider2D>().enabled = false;
     }
-
 }

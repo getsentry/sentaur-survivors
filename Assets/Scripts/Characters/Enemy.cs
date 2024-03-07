@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
 using DG.Tweening;
+using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     [Tooltip("How much XP the player earns")]
     private int _xpValue = 10;
-    
+
     [SerializeField]
     protected float _speed = 1f;
 
@@ -51,7 +50,8 @@ public class Enemy : MonoBehaviour
 
     protected Rigidbody2D _rigidbody2D;
 
-    virtual protected void Awake() {
+    protected virtual void Awake()
+    {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
 
@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour
 
     // Update is called once per frame
     protected void Update()
-    {   
+    {
         // move towards the player character
         GameObject player = GameObject.Find("Player");
         if (player != null)
@@ -76,10 +76,11 @@ public class Enemy : MonoBehaviour
     /**
      * Returns a normalized vector in the direction of the desired movement
      */
-    virtual protected Vector2 DetermineDirection(GameObject player) {
+    virtual protected Vector2 DetermineDirection(GameObject player)
+    {
         return Vector3.Normalize(player.transform.position - transform.position);
     }
-    
+
     // a collision handler that is called when the enemy collides with another object
     virtual protected void OnCollisionEnter2D(UnityEngine.Collision2D collision)
     {
@@ -91,77 +92,87 @@ public class Enemy : MonoBehaviour
 
             // Destroy the enemy (for now they explode if they touch the player)
             Death();
-            
         }
     }
-    
-    // material flash trick from: https://www.youtube.com/watch?v=9rZkiEyS66I
-    public void Flash() {
 
-        if (_flashCoroutine != null) {
+    // material flash trick from: https://www.youtube.com/watch?v=9rZkiEyS66I
+    public void Flash()
+    {
+        if (_flashCoroutine != null)
+        {
             StopCoroutine(_flashCoroutine);
         }
         _flashCoroutine = StartCoroutine(FlashCoroutine());
     }
 
-    private IEnumerator FlashCoroutine() {
+    private IEnumerator FlashCoroutine()
+    {
         _spriteRenderer.material = _flashMaterial;
         yield return new WaitForSeconds(_flashDuration);
         _spriteRenderer.material = _originalMaterial;
     }
 
-    public void Knockback(Vector2 direction, float force) {
+    public void Knockback(Vector2 direction, float force)
+    {
         _rigidbody2D.AddForce(direction * force);
     }
-    
-    virtual public void Death(bool leaveXp = false) {
+
+    public virtual void Death(bool leaveXp = false)
+    {
         // disable all colliders and hitboxes
         // -- that way enemy can't get hit again while they're dying/shrinking
         DisableHitboxes();
 
         // shrink (scale to 1) before being destroyed
-        transform.DOScale(0.01f, _deathAnimDuration).OnComplete(() => {
-            if (leaveXp) {
-                // instantiate an xp drop at this position
-                var xpDrop = Instantiate(_xpDropPrefab, transform.position, Quaternion.identity);
-                xpDrop.SetXp(_xpValue);
-            }
-            Destroy(gameObject);
-        });
+        transform
+            .DOScale(0.01f, _deathAnimDuration)
+            .OnComplete(() =>
+            {
+                if (leaveXp)
+                {
+                    // instantiate an xp drop at this position
+                    var xpDrop = Instantiate(
+                        _xpDropPrefab,
+                        transform.position,
+                        Quaternion.identity
+                    );
+                    xpDrop.SetXp(_xpValue);
+                }
+                Destroy(gameObject);
+            });
     }
 
-    protected void DisableHitboxes() {
+    protected void DisableHitboxes()
+    {
         var collider = GetComponent<Collider2D>();
         collider.enabled = false;
 
         // get hitbox and disable
         var hitbox = GetComponentInChildren<Hitbox>();
         hitbox.Disable();
-
     }
 
     // Deal damage to the player because they touched
-    private void DamagePlayer(Player player) {
+    private void DamagePlayer(Player player)
+    {
         Debug.Log("Enemy.DamagePlayer: Player was damaged by " + gameObject.name);
 
         player.TakeDamage(_collisionDamage);
     }
 
-    public void TakeDamage(int damage) {
+    public void TakeDamage(int damage)
+    {
         Flash();
 
         hitpoints -= damage;
         hitpoints = Mathf.Max(hitpoints, 0); // don't let the enemy have negative hit points
 
         // spawn the damage text above the enemy by 1 unit (32px)
-        var damageTextPosition = new Vector2(
-            transform.position.x,
-            transform.position.y + 1.0f
-        );
+        var damageTextPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
         _damageTextPrefab.Spawn(transform.root, damageTextPosition, damage);
 
-        if (hitpoints == 0) {
-
+        if (hitpoints == 0)
+        {
             Death(leaveXp: true);
 
             EventManager.TriggerEvent("EnemyDestroyed", new EventData(_scoreValue));
