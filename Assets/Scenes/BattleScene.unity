@@ -8505,7 +8505,7 @@ MonoBehaviour:
   _maxPickupsOnScreen: 5
   _currentLevel: 0
   _maxWaveSizeScaleFactor: 0.6
-  _deathAppearanceTime: 600
+  _deathAppearanceTime: 360
   _spawnPlane: {fileID: 120418087}
   _xp: 0
   _sentaurEnemyPrefab: {fileID: 1001074756204391216, guid: ce6ca319e4496403782aea5ae869c333, type: 3}
