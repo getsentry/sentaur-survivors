@@ -97,13 +97,13 @@ public class BattleSceneManager : MonoBehaviour
     private int[] _levelMilestones =
     {
         50, // level 2
-        150,
-        350,
-        650,
-        1050,
-        1550,
-        2200,
-        3000,
+        125,
+        275,
+        500,
+        900,
+        1450,
+        2100,
+        2900,
         4000, // level 10
         5250,
         6800,
