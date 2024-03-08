@@ -35,7 +35,7 @@ public class BattleSceneManager : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Time when death appears (in seconds)")]
-    private float _deathAppearanceTime = 600; // 10 minutes
+    private float _deathAppearanceTime = 360; // 6 minutes
 
     [SerializeField]
     [Tooltip("The plane to spawn enemies on")]
@@ -88,6 +88,7 @@ public class BattleSceneManager : MonoBehaviour
 
     // the player's accumulated score so far
     private int _score = 0;
+
     public int GetScore() => _score;
 
     // the score a player must get to for the next weapon upgrade
