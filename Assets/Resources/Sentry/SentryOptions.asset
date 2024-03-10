@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SentryOptions
   m_EditorClassIdentifier: 
   <Enabled>k__BackingField: 1
-  <Dsn>k__BackingField: https://3f9a9d1f41f5de33a56c3c9d161fb3e4@o447951.ingest.sentry.io/4506836904050688
+  <Dsn>k__BackingField: https://51d37596b32ed6061bc06b890384700f@o87286.ingest.us.sentry.io/4506887648706560
   <CaptureInEditor>k__BackingField: 1
   <EnableLogDebouncing>k__BackingField: 0
   <DebounceTimeLog>k__BackingField: 1000
