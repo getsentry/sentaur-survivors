@@ -1,14 +1,11 @@
 using System;
 using System.Collections;
-using System.Globalization;
 using System.Net.Http;
-using System.Runtime.Serialization.Json;
 using Sentry;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using System.Text.Json;
 
 [Serializable]
 public class ScoreEntry
@@ -29,13 +26,27 @@ public class ScorePoster : MonoBehaviour
     private TMP_InputField _emailField;
     [SerializeField] 
     private Button _submitButton;
-
+    
     private BattleSceneManager _gameManager;
+    private DemoConfiguration _demoConfig;
     
     private void Awake()
     {
         _gameManager = GameObject.Find("GameManager").GetComponent<BattleSceneManager>();
+        _demoConfig = Resources.Load("DemoConfig") as DemoConfiguration;
+        
         _submitButton.onClick.AddListener(OnSubmit);
+    }
+
+    public void OnEnable()
+    {
+        if (_demoConfig == null 
+            || !_demoConfig.Enabled 
+            || string.IsNullOrEmpty(_demoConfig.ApiUrl) 
+            || string.IsNullOrEmpty(_demoConfig.Psk))
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void OnSubmit()
@@ -57,7 +68,7 @@ public class ScorePoster : MonoBehaviour
 
         var json = JsonUtility.ToJson(score);
         
-        using var www = UnityWebRequest.Post("http://localhost:5203/score", json, "application/json");
+        using var www = UnityWebRequest.Post(_demoConfig.ApiUrl, json, "application/json");
         
         yield return www.SendWebRequest();
 
