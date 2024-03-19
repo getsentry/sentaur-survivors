@@ -26,7 +26,8 @@ public class Pickup : MonoBehaviour
     {
         Hotdog,
         Skateboard,
-        Umbrella
+        Umbrella,
+        Money
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -47,6 +48,7 @@ public class Pickup : MonoBehaviour
                 case PickupType.Umbrella:
                     player.ReduceDamage(0.5f, _effectDuration);
                     break;
+                case PickupType.Money: // only increments score, nothing else
                 default:
                     break;
             }
