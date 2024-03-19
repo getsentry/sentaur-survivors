@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healAmount: 30
   _scoreValue: 50
+  _effectDuration: 10
   _pickupType: 1
 --- !u!61 &8459684996225841193
 BoxCollider2D:
