@@ -8,15 +8,21 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
     [SerializeField]
+    [Tooltip("How much this heals the player for, if applicable")]
     private int _healAmount = 30;
 
     [SerializeField]
+    [Tooltip("How much score this pickup is worth")]
     private int _scoreValue = 50;
+
+    [SerializeField]
+    [Tooltip("How long the effect lasts (instants have 0 duration)")]
+    private float _effectDuration = 0;
 
     [SerializeField]
     private PickupType _pickupType;
 
-    private enum PickupType
+    public enum PickupType
     {
         Hotdog,
         Skateboard,
@@ -36,10 +42,10 @@ public class Pickup : MonoBehaviour
                     player.HealDamage(_healAmount);
                     break;
                 case PickupType.Skateboard:
-                    player.SpeedUp(5, true);
+                    player.SpeedUp(5, _effectDuration);
                     break;
                 case PickupType.Umbrella:
-                    player.ReduceDamage(0.5f, true);
+                    player.ReduceDamage(0.5f, _effectDuration);
                     break;
                 default:
                     break;

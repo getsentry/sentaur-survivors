@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -31,12 +33,6 @@ public class Player : MonoBehaviour
     private float _playerMoveRate = 2.5f;
     private float _baseMoveRate;
 
-    private bool _hasPickedUpSkateboard = false;
-    private float _timeElapsedSinceLastSkateboard = 0.0f;
-
-    private bool _hasPickedUpUmbrella = false;
-    private float _timeElapsedSinceLastUmbrella = 0.0f;
-
     [SerializeField]
     [Tooltip("The prefab to use for the player text")]
     private PlayerText _playerTextPrefab;
@@ -48,6 +44,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     [Tooltip("How much damage is reduced for the player")]
     private float _damageReductionAmount = 0.0f;
+
+    private Dictionary<Pickup.PickupType, float> _activePlayerEffects =
+        new Dictionary<Pickup.PickupType, float>();
 
     private HealthBar _healthBar;
     public Animator animator;
@@ -62,8 +61,6 @@ public class Player : MonoBehaviour
     private bool _isDead = false;
 
     private BattleSceneManager _gameManager;
-
-    // Start is called before the first frame update
 
     static Player _instance;
 
@@ -201,31 +198,29 @@ public class Player : MonoBehaviour
 
     void UpdatePickups()
     {
-        // remove pickup effects if any are time-based and expiring
-        if (_hasPickedUpSkateboard)
+        foreach (KeyValuePair<Pickup.PickupType, float> kv in _activePlayerEffects.ToList())
         {
-            _timeElapsedSinceLastSkateboard += Time.deltaTime;
-            if (_timeElapsedSinceLastSkateboard > _timeBasedPickupDuration)
+            if (Time.time < kv.Value)
             {
-                // reset player move speed back to normal if time is up for skateboard pickup
-                _hasPickedUpSkateboard = false;
-                _playerMoveRate = _baseMoveRate;
-                _timeElapsedSinceLastSkateboard = 0.0f;
-                EventManager.TriggerEvent("PickupExpired", new EventData("Skateboard"));
+                continue;
             }
-        }
 
-        if (_hasPickedUpUmbrella)
-        {
-            _timeElapsedSinceLastUmbrella += Time.deltaTime;
-            if (_timeElapsedSinceLastUmbrella > _timeBasedPickupDuration)
+            switch (kv.Key)
             {
-                // reset player damage reduction to 0
-                _hasPickedUpUmbrella = false;
-                _damageReductionAmount = 0.0f;
-                _timeElapsedSinceLastUmbrella = 0.0f;
-                EventManager.TriggerEvent("PickupExpired", new EventData("Umbrella"));
+                case Pickup.PickupType.Skateboard:
+                    _playerMoveRate = _baseMoveRate;
+                    _activePlayerEffects.Remove(Pickup.PickupType.Skateboard);
+                    EventManager.TriggerEvent("PickupExpired", new EventData("Skateboard"));
+                    break;
+                case Pickup.PickupType.Umbrella:
+                    _damageReductionAmount = 0f;
+                    _activePlayerEffects.Remove(Pickup.PickupType.Umbrella);
+                    EventManager.TriggerEvent("PickupExpired", new EventData("Umbrella"));
+                    break;
+                default:
+                    throw new Exception("Unknown Pickup Type: " + kv.Key.ToString());
             }
+            _activePlayerEffects.Remove(kv.Key);
         }
     }
 
@@ -268,26 +263,21 @@ public class Player : MonoBehaviour
         _playerTextPrefab.Spawn(transform.root, textPosition, "+" + healAmount + " health!");
     }
 
-    public void SpeedUp(int newSpeed, bool hasSkateboard = false)
+    public void SpeedUp(int newSpeed, float duration = 0)
     {
         _playerMoveRate = newSpeed;
-        _hasPickedUpSkateboard = hasSkateboard;
+        _activePlayerEffects[Pickup.PickupType.Skateboard] = Time.time + duration;
 
         Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
         string speedRate = (newSpeed / _baseMoveRate).ToString();
         _playerTextPrefab.Spawn(transform.root, textPosition, speedRate + "x speed!");
-
-        if (_hasPickedUpSkateboard)
-        {
-            // need to reset in case player already had an active skateboard
-            _timeElapsedSinceLastSkateboard = 0.0f;
-        }
     }
 
-    public void ReduceDamage(float reductionPercentage, bool hasUmbrella = false)
+    public void ReduceDamage(float reductionPercentage, float duration = 0f)
     {
         _damageReductionAmount = reductionPercentage;
-        _hasPickedUpUmbrella = hasUmbrella;
+
+        _activePlayerEffects[Pickup.PickupType.Umbrella] = Time.time + duration;
 
         Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
         string formatPercentage = (reductionPercentage * 100).ToString();
@@ -296,10 +286,5 @@ public class Player : MonoBehaviour
             textPosition,
             formatPercentage + "% dmg reduction!"
         );
-
-        if (_hasPickedUpUmbrella)
-        {
-            _timeElapsedSinceLastUmbrella = 0.0f;
-        }
     }
 }
