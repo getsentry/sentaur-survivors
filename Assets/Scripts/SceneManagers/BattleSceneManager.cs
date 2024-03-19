@@ -67,8 +67,8 @@ public class BattleSceneManager : MonoBehaviour
     private GameObject _deathEnemyPrefab;
 
     [SerializeField]
-    [Tooltip("The pickup prefab to spawn")]
-    private GameObject _pickupPrefab;
+    [Tooltip("List of pickup prefabs to randomly spawn")]
+    private GameObject[] _pickupPrefabs;
 
     [SerializeField]
     [Tooltip("The level up UI prefab to spawn")]
@@ -174,6 +174,8 @@ public class BattleSceneManager : MonoBehaviour
 
     private float _gameStartTime;
     private bool _isDeathEnemyPresent = false;
+
+    private static System.Random random = new System.Random();
 
     // Start is called before the first frame update
     void Start()
@@ -638,7 +640,9 @@ public class BattleSceneManager : MonoBehaviour
             return;
         }
 
-        GameObject pickup = Instantiate(_pickupPrefab as GameObject);
+        int index = random.Next(_pickupPrefabs.Length);
+
+        GameObject pickup = Instantiate(_pickupPrefabs[index]);
         pickup.transform.parent = _levelContainer.transform;
 
         pickup.transform.position = GetRandomSpawnPoint();
