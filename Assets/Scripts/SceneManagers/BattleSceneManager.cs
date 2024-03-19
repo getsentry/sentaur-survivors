@@ -267,8 +267,9 @@ public class BattleSceneManager : MonoBehaviour
         _pickupsOnScreen -= 1;
 
         string pickupName = (string)eventData[1];
+        float effectDuration = (float)eventData[2];
 
-        if (pickupName != "Hotdog" && pickupName != "Money")
+        if (effectDuration > 0)
         {
             _activePickupContainer.transform.Find(pickupName).gameObject.SetActive(true);
         }
