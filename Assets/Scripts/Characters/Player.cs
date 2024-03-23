@@ -38,10 +38,6 @@ public class Player : MonoBehaviour
     private PlayerText _playerTextPrefab;
 
     [SerializeField]
-    [Tooltip("How long a time-based pickup should last")]
-    private float _timeBasedPickupDuration = 10f;
-
-    [SerializeField]
     [Tooltip("How much damage is reduced for the player")]
     private float _damageReductionAmount = 0.0f;
 
