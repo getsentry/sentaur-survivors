@@ -199,6 +199,6 @@ public class LevelUpUI : MonoBehaviour
 
         // resume the game and exit the level up popup
         Time.timeScale = 1;
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

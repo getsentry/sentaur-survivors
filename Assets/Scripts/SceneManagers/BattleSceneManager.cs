@@ -72,7 +72,7 @@ public class BattleSceneManager : MonoBehaviour
 
     [SerializeField]
     [Tooltip("The level up UI prefab to spawn")]
-    private GameObject _levelUpUIPrefab;
+    private GameObject _levelUpUI;
 
     [SerializeField]
     [Tooltip("The parent UI element containing the active pickups")]
@@ -88,6 +88,7 @@ public class BattleSceneManager : MonoBehaviour
 
     // the player's accumulated score so far
     private int _score = 0;
+
     public int GetScore() => _score;
 
     // the score a player must get to for the next weapon upgrade
@@ -469,7 +470,7 @@ public class BattleSceneManager : MonoBehaviour
                 _nextLevelXpMilestone = _levelMilestones[_currentLevel];
                 _prevLevelXpMilestone = _levelMilestones[_previousLevel];
             }
-            GameObject levelUpUI = Instantiate(_levelUpUIPrefab);
+            _levelUpUI.SetActive(true);
         }
     }
 
