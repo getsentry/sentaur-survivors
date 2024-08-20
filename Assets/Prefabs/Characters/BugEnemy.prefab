@@ -112,7 +112,6 @@ MonoBehaviour:
   _flashMaterial: {fileID: 2100000, guid: fd4fa7d682b474410a971d96b6c0d276, type: 2}
   _flashDuration: 0.2
   _deathAnimDuration: 0.5
-  _enemyHitSound: {fileID: 0}
 --- !u!61 &1832744029709189115
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -145,7 +144,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.029083505, y: -0.3524242}
+  m_Offset: {x: -0.010486633, y: -0.43449563}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -156,7 +155,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7775965, y: 0.2951516}
+  m_Size: {x: 0.6984562, y: 0.38308525}
   m_EdgeRadius: 0
 --- !u!50 &6295179934123336098
 Rigidbody2D:

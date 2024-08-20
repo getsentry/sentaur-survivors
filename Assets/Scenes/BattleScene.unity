@@ -1127,7 +1127,7 @@ GameObject:
   - component: {fileID: 527090878}
   - component: {fileID: 527090882}
   - component: {fileID: 527090881}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Walls
   m_TagString: Barrier
   m_Icon: {fileID: 0}
@@ -5597,7 +5597,7 @@ GameObject:
   - component: {fileID: 739222994}
   - component: {fileID: 739222996}
   - component: {fileID: 739222995}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Obstacles
   m_TagString: Barrier
   m_Icon: {fileID: 0}
