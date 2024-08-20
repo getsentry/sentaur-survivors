@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3600334310735166755}
   - component: {fileID: 6784210260469842379}
-  - component: {fileID: 6178801690770967218}
+  - component: {fileID: 1343200912990620583}
   - component: {fileID: 1832744029709189115}
   - component: {fileID: 6295179934123336098}
   - component: {fileID: -4973739486306597661}
@@ -90,7 +90,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6178801690770967218
+--- !u!114 &1343200912990620583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,14 +99,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1001074756204391216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832a57f2615dd4cb49fd7044fe0e6de5, type: 3}
+  m_Script: {fileID: 11500000, guid: 8088140997c844c14a99f5c8c574ee35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _collisionDamage: 20
-  hitpoints: 30
-  _scoreValue: 50
-  _xpValue: 25
-  _speed: 3
+  hitpoints: 25
+  _scoreValue: 40
+  _xpValue: 20
+  _speed: 2.5
   _damageTextPrefab: {fileID: 3046976478099630124, guid: f3d91c6924ee1487984efd1cdf4dab92, type: 3}
   _xpDropPrefab: {fileID: 4537481635261412375, guid: 41573deea9de44cd3a8532bf5d4f24fc, type: 3}
   _flashMaterial: {fileID: 2100000, guid: fd4fa7d682b474410a971d96b6c0d276, type: 2}
