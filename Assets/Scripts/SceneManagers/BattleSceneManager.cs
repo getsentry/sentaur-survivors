@@ -67,6 +67,10 @@ public class BattleSceneManager : MonoBehaviour
     private GameObject _deathEnemyPrefab;
 
     [SerializeField]
+    [Tooltip("The linear enemy prefab to spawn")]
+    private GameObject _linearEnemyPrefab;
+
+    [SerializeField]
     [Tooltip("List of pickup prefabs to randomly spawn")]
     private GameObject[] _pickupPrefabs;
 

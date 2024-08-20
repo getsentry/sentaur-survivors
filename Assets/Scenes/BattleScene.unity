@@ -8513,6 +8513,7 @@ MonoBehaviour:
   _headEnemyPrefab: {fileID: 1001074756204391216, guid: 4ab86a383f1ae471d98843b26bdc03cb, type: 3}
   _mantisEnemyPrefab: {fileID: 1001074756204391216, guid: 5cf322e9a8a9b4558a6ff0eb1fe01569, type: 3}
   _deathEnemyPrefab: {fileID: 1001074756204391216, guid: b5ed0a0f1681f414cb7f4e96615eff9e, type: 3}
+  _linearEnemyPrefab: {fileID: 1001074756204391216, guid: 13615944a37654f909032747ae273c6a, type: 3}
   _pickupPrefabs:
   - {fileID: 3306419623360918530, guid: a183b145bbc554a52aae5bc71fb06d98, type: 3}
   - {fileID: 3306419623360918530, guid: 3ef75a713fc044582be99ff13e620184, type: 3}
