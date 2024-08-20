@@ -95,15 +95,21 @@ public class LevelUpUI : MonoBehaviour
     [SerializeField]
     private LevelOption _levelOption2;
 
+    private Button _option1Button;
+    private Button _option2Button;
+
     // this is in GameManager.cs, but idk how to access it from here
     // [SerializeField]
     // [Tooltip("The parent UI element containing the active upgrades")]
     // private GameObject _activeUpgradesContainer;
 
-    void Awake() { }
+    void Awake()
+    {
+        _option1Button = _levelOption1.GetComponent<Button>();
+        _option2Button = _levelOption2.GetComponent<Button>();
+    }
 
-    // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         // pause the game
         Time.timeScale = 0;
@@ -112,11 +118,14 @@ public class LevelUpUI : MonoBehaviour
 
         SetLevelOptionUI(upgradeChoice1, upgradeChoice2);
 
-        var option1Button = _levelOption1.GetComponent<Button>();
-        var option2Button = _levelOption2.GetComponent<Button>();
+        _option1Button.onClick.AddListener(() => SelectUpgrade(upgradeChoice1));
+        _option2Button.onClick.AddListener(() => SelectUpgrade(upgradeChoice2));
+    }
 
-        option1Button.onClick.AddListener(() => SelectUpgrade(upgradeChoice1));
-        option2Button.onClick.AddListener(() => SelectUpgrade(upgradeChoice2));
+    void OnDisable()
+    {
+        _option1Button.onClick.RemoveAllListeners();
+        _option2Button.onClick.RemoveAllListeners();
     }
 
     /**
@@ -136,6 +145,7 @@ public class LevelUpUI : MonoBehaviour
 
         UpgradeType upgradeType1 = _availableUpgradeTypes[option1];
         UpgradeType upgradeType2 = _availableUpgradeTypes[option2];
+
         return (upgradeType1, upgradeType2);
     }
 
