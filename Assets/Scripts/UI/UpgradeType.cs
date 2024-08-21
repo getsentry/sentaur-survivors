@@ -10,5 +10,8 @@ public enum UpgradeType
 
     Dart,
     Raven,
-    Starfish
+    Starfish,
+
+    // DLC
+    Schnitzel
 }

@@ -18,7 +18,8 @@ public class LevelUpUI : MonoBehaviour
         UpgradeType.DamageUp,
         UpgradeType.Dart,
         UpgradeType.Raven,
-        UpgradeType.Starfish
+        UpgradeType.Starfish,
+        UpgradeType.Schnitzel
     };
 
     private static Dictionary<UpgradeType, UpgradePath> _upgradeData = new Dictionary<
@@ -82,6 +83,17 @@ public class LevelUpUI : MonoBehaviour
                     "orbits around you, wreaking havoc",
                     "+20% orbit duration",
                     "+50% orbit duration and -30% cooldown!"
+                }
+            )
+        },
+        {
+            UpgradeType.Schnitzel,
+            new UpgradePath(
+                new List<string>
+                {
+                    "its like an axe",
+                    "+50% AOE",
+                    "extra schnitzel and +33% damage!"
                 }
             )
         }

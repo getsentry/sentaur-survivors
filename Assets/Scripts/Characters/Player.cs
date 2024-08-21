@@ -21,6 +21,10 @@ public class Player : MonoBehaviour
     private Starfish _starfishPrefab;
 
     [SerializeField]
+    [Tooltip("The prefab for the player's Schnitzel")]
+    private Schnitzel _schnitzelPrefab;
+
+    [SerializeField]
     [Tooltip("How many hit points the player has")]
     private int _hitPoints = 100;
 
@@ -131,6 +135,7 @@ public class Player : MonoBehaviour
         UpdateDarts();
         UpdateRavens();
         UpdateStarfish();
+        UpdateSchnitzel();
         UpdatePickups();
     }
 
@@ -189,6 +194,25 @@ public class Player : MonoBehaviour
             // note: parent transform is the player (because starfish orbits)
             //       around the player
             Starfish.Fire(_starfishPrefab, this.transform);
+        }
+    }
+
+    void UpdateSchnitzel()
+    {
+        if (Schnitzel.IsShooting)
+        {
+            return;
+        }
+
+        if (!Schnitzel.IsEnabled)
+        {
+            return;
+        }
+
+        Schnitzel.TimeElapsedSinceLastSchnitzel += Time.deltaTime;
+        if (Schnitzel.TimeElapsedSinceLastSchnitzel > Schnitzel.Cooldown)
+        {
+            StartCoroutine(Schnitzel.ShootSchnitzels(_schnitzelPrefab, gameObject));
         }
     }
 

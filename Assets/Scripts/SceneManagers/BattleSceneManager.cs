@@ -767,6 +767,9 @@ public class BattleSceneManager : MonoBehaviour
             case UpgradeType.Starfish:
                 Starfish.UpgradeStarfish(newLevel);
                 break;
+            case UpgradeType.Schnitzel:
+                Schnitzel.UpgradeSchnitzel(newLevel);
+                break;
             default:
                 break;
         }

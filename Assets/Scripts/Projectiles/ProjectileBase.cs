@@ -27,13 +27,17 @@ public class ProjectileBase : MonoBehaviour
 
             SoundManager.Instance.PlayHitSound();
 
-            Destroy(this.gameObject);
+            OnHit();
         }
         else if (other.gameObject.tag == "Barrier")
         {
-            // Destroy the projectile
-            Destroy(this.gameObject);
+            OnHit();
         }
+    }
+
+    protected virtual void OnHit()
+    {
+        Destroy(this.gameObject);
     }
 
     // Deal damage to the enemy because they were hit by a projectile

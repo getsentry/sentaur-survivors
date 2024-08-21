@@ -250,11 +250,11 @@ MonoBehaviour:
   _dartPrefab: {fileID: -1238747304094502698, guid: f4b2f15faddfa43ee9ea450e341989a3, type: 3}
   _ravenPrefab: {fileID: 1783361906523289645, guid: 73dffc90c37874381bd50b09415a2c82, type: 3}
   _starfishPrefab: {fileID: 4760811041620966471, guid: 33fd1a5d339ac4354ba91c77597adb88, type: 3}
+  _schnitzelPrefab: {fileID: 8194018987037890526, guid: af50a2a7f0c834ebf90a6f2724b0f298, type: 3}
   _hitPoints: 100
   _maxHitPoints: 100
   _playerMoveRate: 2.5
   _playerTextPrefab: {fileID: 6641011122887962878, guid: 3ea27dc667a9e45bf86b7c93c22dc8db, type: 3}
-  _timeBasedPickupDuration: 10
   _damageReductionAmount: 0
   animator: {fileID: 1002860201738508437}
   takeDamageSound: {fileID: 0}

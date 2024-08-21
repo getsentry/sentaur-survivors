@@ -30,6 +30,10 @@ public class LevelOption : MonoBehaviour
     [Tooltip("Sprite for the starfish upgrade")]
     private Sprite _starfishSprite;
 
+    [SerializeField]
+    [Tooltip("Sprite for the schnitzel upgrade")]
+    private Sprite _schnitzelSprite;
+
     private TextMeshProUGUI _title;
     private TextMeshProUGUI _description;
     private TextMeshProUGUI _stats;
@@ -81,6 +85,10 @@ public class LevelOption : MonoBehaviour
             case UpgradeType.Starfish:
                 _title.text = "starfish";
                 _icon.sprite = _starfishSprite;
+                break;
+            case UpgradeType.Schnitzel:
+                _title.text = "schnitzel";
+                _icon.sprite = _schnitzelSprite;
                 break;
             default:
                 break;
