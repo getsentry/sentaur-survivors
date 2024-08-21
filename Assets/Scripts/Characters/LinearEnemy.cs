@@ -57,6 +57,12 @@ public class LinearEnemy : Enemy
 
         var timeElapsed = Time.time - _timeAtSpawn;
         transform.localScale = _targetScale * Math.Min(1, timeElapsed);
+
+        // if 30 seconds have elapsed, kill this (it's off the screen by now)
+        if (timeElapsed > 30)
+        {
+            Death();
+        }
     }
 
     protected override Vector2 DetermineDirection(GameObject player)
