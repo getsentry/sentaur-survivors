@@ -10,8 +10,8 @@ public class Schnitzel : ProjectileBase
 
     // properties true for all schnitzel
     public static int Damage => (int)(BaseDamage * BaseDamagePercentage);
-    public static float BaseDamagePercentage = 1f;
-    public static float StartingCooldown = 1.8f;
+    public static float BaseDamagePercentage = 0.85f;
+    public static float StartingCooldown = 2.5f;
     public static float Cooldown => BaseCooldownPercentage * StartingCooldown;
 
     public static float Speed = 5.0f;
@@ -21,7 +21,7 @@ public class Schnitzel : ProjectileBase
     public static bool IsEnabled = false;
 
     private static float _distanceOutsidePlayer = 1.25f;
-    private static float _shootingInterval = 0.4f; // time between consecutive schnitzel
+    private static float _shootingInterval = 0.25f; // time between consecutive schnitzel
 
     private Vector3 _direction;
 

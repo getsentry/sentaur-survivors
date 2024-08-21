@@ -33697,6 +33697,7 @@ MonoBehaviour:
   _dartSprite: {fileID: 21300000, guid: 7065380beeb504112b67e70f625d51e3, type: 3}
   _ravenSprite: {fileID: -41011132, guid: 2d1db680ea22a4dd78b6c2918a56aa0e, type: 3}
   _starfishSprite: {fileID: 900386594, guid: f973a0cae040d40648faf1d1eab27ad7, type: 3}
+  _schnitzelSprite: {fileID: 21300000, guid: acf14ff16f87c4b4db7ad79a39aab264, type: 3}
 --- !u!224 &6445608978296428708
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33739,6 +33740,7 @@ MonoBehaviour:
   _dartSprite: {fileID: 21300000, guid: 7065380beeb504112b67e70f625d51e3, type: 3}
   _ravenSprite: {fileID: -41011132, guid: 2d1db680ea22a4dd78b6c2918a56aa0e, type: 3}
   _starfishSprite: {fileID: 900386594, guid: f973a0cae040d40648faf1d1eab27ad7, type: 3}
+  _schnitzelSprite: {fileID: 21300000, guid: acf14ff16f87c4b4db7ad79a39aab264, type: 3}
 --- !u!224 &6699254774424834910
 RectTransform:
   m_ObjectHideFlags: 0
