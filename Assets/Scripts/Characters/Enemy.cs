@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected virtual void Update()
     {
         // move towards the player character
         GameObject player = GameObject.Find("Player");

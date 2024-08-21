@@ -5,6 +5,8 @@ public class LinearEnemy : Enemy
 {
     Vector2 _direction;
 
+    float _timeAtSpawn;
+
     public enum Direction
     {
         Up = 0,
@@ -16,7 +18,10 @@ public class LinearEnemy : Enemy
     protected override void Awake()
     {
         base.Awake();
+
+        _timeAtSpawn = Time.time;
         SetDirection(Direction.Up);
+        transform.localScale = new Vector3(0, 0);
     }
 
     public void SetDirection(Direction direction)
@@ -38,8 +43,21 @@ public class LinearEnemy : Enemy
         }
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        var timeElapsed = Time.time - _timeAtSpawn;
+        transform.localScale = new Vector3(1, 1) * Math.Min(1, timeElapsed);
+    }
+
     protected override Vector2 DetermineDirection(GameObject player)
     {
-        return Vector3.Normalize(_direction);
+        // "ease out" this enemy's movement so they start slow at first, then
+        // speed up to max speed
+        var timeElapsed = Time.time - _timeAtSpawn;
+        timeElapsed = Math.Min(1, timeElapsed);
+
+        // ignores player and moves in a straight line
+        return Vector3.Normalize(_direction) * timeElapsed;
     }
 }
