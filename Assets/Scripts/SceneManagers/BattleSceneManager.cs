@@ -446,7 +446,7 @@ public class BattleSceneManager : MonoBehaviour
         {
             _lastWaveSpawnTime = Time.time;
 
-            SpawnWave(_currentLevel / 2);
+            SpawnWave((_currentLevel + 1) / 2);
         }
 
         // ramp up spawn rate

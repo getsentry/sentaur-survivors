@@ -50,6 +50,9 @@ public class Enemy : MonoBehaviour
 
     protected Rigidbody2D _rigidbody2D;
 
+    private bool _isDead = false;
+    protected bool IsDead => _isDead;
+
     protected virtual void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -119,6 +122,8 @@ public class Enemy : MonoBehaviour
 
     public virtual void Death(bool leaveXp = false)
     {
+        _isDead = true;
+
         // disable all colliders and hitboxes
         // -- that way enemy can't get hit again while they're dying/shrinking
         DisableHitboxes();

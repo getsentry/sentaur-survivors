@@ -49,6 +49,12 @@ public class LinearEnemy : Enemy
     protected override void Update()
     {
         base.Update();
+
+        if (IsDead)
+        {
+            return;
+        }
+
         var timeElapsed = Time.time - _timeAtSpawn;
         transform.localScale = _targetScale * Math.Min(1, timeElapsed);
     }
