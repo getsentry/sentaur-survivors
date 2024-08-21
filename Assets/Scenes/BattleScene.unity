@@ -8563,6 +8563,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemySpawnRate: 2
   _enemySpawnRateFloor: 0.5
+  _linearHeadSpawnRate: 30
+  _linearHeadSpawnRateFloor: 8
+  _linearHeadSpawnLevelFloor: 3
   _pickupSpawnRate: 2
   _maxPickupsOnScreen: 5
   _currentLevel: 0

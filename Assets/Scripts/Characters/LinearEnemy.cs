@@ -7,6 +7,8 @@ public class LinearEnemy : Enemy
 
     float _timeAtSpawn;
 
+    Vector3 _targetScale;
+
     public enum Direction
     {
         Up = 0,
@@ -18,6 +20,7 @@ public class LinearEnemy : Enemy
     protected override void Awake()
     {
         base.Awake();
+        _targetScale = transform.localScale;
 
         _timeAtSpawn = Time.time;
         SetDirection(Direction.Up);
@@ -47,7 +50,7 @@ public class LinearEnemy : Enemy
     {
         base.Update();
         var timeElapsed = Time.time - _timeAtSpawn;
-        transform.localScale = new Vector3(1, 1) * Math.Min(1, timeElapsed);
+        transform.localScale = _targetScale * Math.Min(1, timeElapsed);
     }
 
     protected override Vector2 DetermineDirection(GameObject player)

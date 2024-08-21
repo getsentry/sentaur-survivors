@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4909442466296662449}
@@ -106,7 +106,7 @@ MonoBehaviour:
   hitpoints: 25
   _scoreValue: 40
   _xpValue: 20
-  _speed: 2.5
+  _speed: 3
   _damageTextPrefab: {fileID: 3046976478099630124, guid: f3d91c6924ee1487984efd1cdf4dab92, type: 3}
   _xpDropPrefab: {fileID: 4537481635261412375, guid: 41573deea9de44cd3a8532bf5d4f24fc, type: 3}
   _flashMaterial: {fileID: 2100000, guid: fd4fa7d682b474410a971d96b6c0d276, type: 2}

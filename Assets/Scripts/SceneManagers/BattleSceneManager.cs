@@ -14,11 +14,20 @@ public class BattleSceneManager : MonoBehaviour
     private float _enemySpawnRate = 2.0f;
 
     [SerializeField]
-    private float _waveSpawnRate = 2.0f;
-
-    [SerializeField]
     [Tooltip("The fastest possible spawn rate for enemies (in seconds)")]
     private float _enemySpawnRateFloor = 0.5f;
+
+    [SerializeField]
+    [Tooltip("How frequently waves of linear heads spawn (in seconds)")]
+    private float _linearHeadSpawnRate = 30.0f;
+
+    [SerializeField]
+    [Tooltip("The slowest possible spawn rate for waves of linear heads (in seconds)")]
+    private float _linearHeadSpawnRateFloor = 8.0f; // 5s
+
+    [SerializeField]
+    [Tooltip("What level linear head waves start spawning")]
+    private int _linearHeadSpawnLevelFloor = 3;
 
     [SerializeField]
     [Tooltip("How frequently pickups spawn (in seconds)")]
@@ -139,8 +148,9 @@ public class BattleSceneManager : MonoBehaviour
     {
         Sentaur = 0,
         Ant = 1,
-        Head = 2,
-        Mantis = 3
+        DiagonalHead = 2,
+        Mantis = 3,
+        LinearHead = 4,
     };
 
     // what level enemies start appearing
@@ -148,7 +158,7 @@ public class BattleSceneManager : MonoBehaviour
     {
         { EnemyType.Sentaur, 0 }, // start
         { EnemyType.Ant, 2 }, // level 3
-        { EnemyType.Head, 4 }, // level 5
+        { EnemyType.DiagonalHead, 4 }, // level 5
         { EnemyType.Mantis, 6 }, // level 7
     };
 
@@ -429,11 +439,14 @@ public class BattleSceneManager : MonoBehaviour
             Spawn();
         }
 
-        if (Time.time - _lastWaveSpawnTime > _waveSpawnRate)
+        if (
+            Time.time - _lastWaveSpawnTime > _linearHeadSpawnRate
+            && _currentLevel >= _linearHeadSpawnLevelFloor
+        )
         {
             _lastWaveSpawnTime = Time.time;
 
-            SpawnWave(5);
+            SpawnWave(_currentLevel / 2);
         }
 
         // ramp up spawn rate
@@ -441,6 +454,9 @@ public class BattleSceneManager : MonoBehaviour
         {
             _enemySpawnRate -= 0.05f;
             _enemySpawnRate = Mathf.Max(_enemySpawnRate, _enemySpawnRateFloor);
+
+            _linearHeadSpawnRate -= 1.5f;
+            _linearHeadSpawnRate = Mathf.Max(_linearHeadSpawnRate, _linearHeadSpawnRateFloor);
 
             _lastSpawnRampUp = Time.time;
         }
@@ -569,9 +585,9 @@ public class BattleSceneManager : MonoBehaviour
         {
             spawnRange = (int)EnemyType.Ant;
         }
-        if (_currentLevel >= _levelEnemyGate[EnemyType.Head])
+        if (_currentLevel >= _levelEnemyGate[EnemyType.DiagonalHead])
         {
-            spawnRange = (int)EnemyType.Head;
+            spawnRange = (int)EnemyType.DiagonalHead;
         }
         if (_currentLevel >= _levelEnemyGate[EnemyType.Mantis])
         {
@@ -588,7 +604,7 @@ public class BattleSceneManager : MonoBehaviour
             case (int)EnemyType.Ant:
                 prefab = _antEnemyPrefab;
                 break;
-            case (int)EnemyType.Head:
+            case (int)EnemyType.DiagonalHead:
                 prefab = _headEnemyPrefab;
                 break;
             case (int)EnemyType.Mantis:
