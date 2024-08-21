@@ -14,6 +14,9 @@ public class BattleSceneManager : MonoBehaviour
     private float _enemySpawnRate = 2.0f;
 
     [SerializeField]
+    private float _waveSpawnRate = 2.0f;
+
+    [SerializeField]
     [Tooltip("The fastest possible spawn rate for enemies (in seconds)")]
     private float _enemySpawnRateFloor = 0.5f;
 
@@ -126,6 +129,9 @@ public class BattleSceneManager : MonoBehaviour
     private int _previousLevel = 0;
 
     private float _lastEnemySpawnTime = 0.0f;
+
+    private float _lastWaveSpawnTime = 0.0f;
+
     private float _lastSpawnRampUp = 0.0f;
     private int _spawnRampUpInterval = 10;
 
@@ -197,6 +203,7 @@ public class BattleSceneManager : MonoBehaviour
         _backgroundMusic = GameObject.Find("Level").GetComponent<AudioSource>();
 
         _lastEnemySpawnTime = Time.time;
+        _lastWaveSpawnTime = Time.time;
         _lastPickupSpawnTime = Time.time;
         _pickupsOnScreen = 1;
 
@@ -422,6 +429,13 @@ public class BattleSceneManager : MonoBehaviour
             Spawn();
         }
 
+        if (Time.time - _lastWaveSpawnTime > _waveSpawnRate)
+        {
+            _lastWaveSpawnTime = Time.time;
+
+            SpawnWave(5);
+        }
+
         // ramp up spawn rate
         if (Time.time - _lastSpawnRampUp > _spawnRampUpInterval)
         {
@@ -593,10 +607,68 @@ public class BattleSceneManager : MonoBehaviour
         //   level 6-7: 1-4 enemies
         //   level 8:   1-5 enemies ... etc
         int waveSize = Random.Range(1, (int)(_currentLevel * _maxWaveSizeScaleFactor));
-        SpawnEnemyWave(prefab, waveSize);
+        SpawnEnemies(prefab, waveSize);
     }
 
-    private void SpawnEnemyWave(GameObject prefab, int count)
+    private GameObject InstantiateEnemy(GameObject gameObject)
+    {
+        GameObject enemy = Instantiate(gameObject);
+        enemy.GetComponent<Enemy>().hitpoints += _enemyHitPointModifier;
+        enemy.transform.parent = _levelContainer.transform;
+        return enemy;
+    }
+
+    private void SpawnWave(int count)
+    {
+        LinearEnemy.Direction direction = (LinearEnemy.Direction)Random.Range(0, 4);
+
+        Vector3 initialOffset = Vector3.zero;
+        Vector3 betweenOffset = Vector3.zero;
+
+        switch (direction)
+        {
+            case LinearEnemy.Direction.Up:
+                // then location is player position - 5 units in the y direction
+                initialOffset = new Vector3(-count / 2f, -10, 0);
+                betweenOffset = new Vector3(1, 0, 0);
+                break;
+            case LinearEnemy.Direction.Down:
+                // then location is player position + 5 units in the y direction
+                initialOffset = new Vector3(count / 2f, 10, 0);
+                betweenOffset = new Vector3(-1, 0, 0);
+                break;
+            case LinearEnemy.Direction.Left:
+                // then location is player position + 5 units in the x direction
+                initialOffset = new Vector3(10, -count / 2f, 0);
+                betweenOffset = new Vector3(0, 1, 0);
+                break;
+            case LinearEnemy.Direction.Right:
+                // then location is player position - 5 units in the x direction
+                initialOffset = new Vector3(-10, count / 2f, 0);
+                betweenOffset = new Vector3(0, -1, 0);
+                break;
+        }
+
+        Vector3 spawnPosition;
+
+        int spawnCount = 0;
+        while (spawnCount < count)
+        {
+            GameObject enemy = InstantiateEnemy(_linearEnemyPrefab);
+
+            Vector3 initialPosition = Player.Instance.transform.position + initialOffset;
+
+            // from initial position, fan out enemies
+            spawnPosition = initialPosition + spawnCount * betweenOffset;
+
+            enemy.transform.position = spawnPosition;
+            enemy.GetComponent<LinearEnemy>().SetDirection(direction);
+
+            spawnCount++;
+        }
+    }
+
+    private void SpawnEnemies(GameObject prefab, int count)
     {
         Vector3 initialPosition = GetRandomSpawnPointOutsideViewport();
 
@@ -611,9 +683,7 @@ public class BattleSceneManager : MonoBehaviour
         int spawnCount = 0;
         while (spawnCount < count)
         {
-            GameObject enemy = Instantiate(prefab);
-            enemy.GetComponent<Enemy>().hitpoints += _enemyHitPointModifier;
-            enemy.transform.parent = _levelContainer.transform;
+            GameObject enemy = InstantiateEnemy(prefab);
 
             // from initial position, fan out enemies to the left and right
             spawnPosition =

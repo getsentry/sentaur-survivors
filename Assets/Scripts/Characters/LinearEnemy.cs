@@ -5,24 +5,34 @@ public class LinearEnemy : Enemy
 {
     Vector2 _direction;
 
+    public enum Direction
+    {
+        Up = 0,
+        Down = 1,
+        Left = 2,
+        Right = 3
+    }
+
     protected override void Awake()
     {
         base.Awake();
+        SetDirection(Direction.Up);
+    }
 
-        // initialize a random direction
-        System.Random rnd = new System.Random();
-        switch (rnd.Next(0, 4))
+    public void SetDirection(Direction direction)
+    {
+        switch (direction)
         {
-            case 0: // up
+            case Direction.Up:
                 _direction = new Vector3(0, 1);
                 break;
-            case 1: // down
+            case Direction.Down:
                 _direction = new Vector3(0, -1);
                 break;
-            case 2: // left
+            case Direction.Left:
                 _direction = new Vector3(-1, 0);
                 break;
-            case 3: // right
+            case Direction.Right:
                 _direction = new Vector3(1, 0);
                 break;
         }
