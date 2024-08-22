@@ -20,32 +20,62 @@ public class ScoreEntry
 
 public class ScorePoster : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject _root;
     [SerializeField] 
     private TMP_InputField _nameField;
-    [SerializeField] 
-    private TMP_InputField _emailField;
     [SerializeField] 
     private Button _submitButton;
     
     private BattleSceneManager _gameManager;
     private DemoConfiguration _demoConfig;
+    private TextMeshProUGUI _buttonText;
+
+    private string _jwtToken;
     
     private void Awake()
     {
         _gameManager = GameObject.Find("GameManager").GetComponent<BattleSceneManager>();
         _demoConfig = Resources.Load("DemoConfig") as DemoConfiguration;
+        _buttonText = _submitButton.GetComponentInChildren<TextMeshProUGUI>();
         
         _submitButton.onClick.AddListener(OnSubmit);
     }
 
-    public void OnEnable()
+    public void Start()
     {
-        if (_demoConfig == null 
-            || !_demoConfig.Enabled 
-            || string.IsNullOrEmpty(_demoConfig.ApiUrl) 
-            || string.IsNullOrEmpty(_demoConfig.Psk))
+        // Doing this in start so everything else can awake
+        if (_demoConfig != null && _demoConfig.Enabled && !string.IsNullOrEmpty(_demoConfig.ApiUrl))
         {
-            gameObject.SetActive(false);
+            StartCoroutine(Login());
+        }
+    }
+
+    public void Enable()
+    {
+        // If we did not manage to login during `Awake` (which means scene loading) then we do not display the upload screen
+        if (_jwtToken != null)
+        {
+            _root.SetActive(true);
+        }
+    }
+    
+    IEnumerator Login()
+    {
+        var json = JsonUtility.ToJson(_demoConfig.User);
+        
+        using var www = UnityWebRequest.Post(_demoConfig.ApiUrl + "/token", json, "application/json");
+        yield return www.SendWebRequest();
+        
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Login to leaderboard successful.");
+            _jwtToken = www.downloadHandler.text.Replace("\"", "");
+        }
+        else
+        {
+            Debug.Log("Login to leaderboard failed.");
+            _jwtToken = null;
         }
     }
 
@@ -60,30 +90,34 @@ public class ScorePoster : MonoBehaviour
         {
             Key = new Guid(),
             Name = _nameField.text,
-            Email = _emailField.text,
             Duration = TimeSpan.FromSeconds(Time.timeSinceLevelLoad).ToString(),
             Score = _gameManager.GetScore(),
             Timestamp = DateTime.Now.ToString("o")
         };
 
         var json = JsonUtility.ToJson(score);
+
+        var uploadTransaction = SentrySdk.StartTransaction("scoreposter", "upload");
+        SentrySdk.ConfigureScope(scope => scope.Transaction = uploadTransaction);
         
-        using var www = UnityWebRequest.Post(_demoConfig.ApiUrl, json, "application/json");
-        
+        using var www = UnityWebRequest.Post(_demoConfig.ApiUrl + "/score", json, "application/json");
+        www.SetRequestHeader("Authorization", "Bearer " + _jwtToken);
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.Log("Failed to upload score.");
+            Debug.Log("Uploading score to leaderboard failed.");
             SentrySdk.CaptureException(new HttpRequestException("Failed to upload score."));
             
-            var buttonText = _submitButton.GetComponentInChildren<TextMeshProUGUI>();
-            buttonText.text = "Retry";
+            _buttonText.text = "Retry";
+            uploadTransaction.Finish(SpanStatus.Unavailable);
         }
         else
         {
+            Debug.Log("Uploading score to leaderboard was successful.");
             _submitButton.interactable = false;
-            Debug.Log("Score uploaded.");
+            _buttonText.text = "Posted!";
+            uploadTransaction.Finish(SpanStatus.Ok);
         }
     }
 }

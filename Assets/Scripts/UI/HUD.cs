@@ -13,7 +13,7 @@ public class HUD : MonoBehaviour
     private TextMeshProUGUI _currentLevelText;
 
     [SerializeField]
-    private GameObject _postScore;
+    private ScorePoster _scorePoster;
     [SerializeField]
     private GameObject _tryAgain;
 
@@ -88,7 +88,7 @@ public class HUD : MonoBehaviour
         
         _quit.SetActive(true);
         _tryAgain.SetActive(true);
-        _postScore.SetActive(true);
+        _scorePoster.Enable();
     }
 
     public void SetCurrentLevel(int level)
