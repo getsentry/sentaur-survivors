@@ -10,12 +10,11 @@ public class Schnitzel : ProjectileBase
 
     // properties true for all schnitzel
     public static int Damage => (int)(BaseDamage * BaseDamagePercentage);
-    public static float BaseDamagePercentage = 0.85f;
-    public static float StartingCooldown = 2.5f;
+    public static float BaseDamagePercentage = 0.75f;
+    public static float StartingCooldown = 3.0f;
     public static float Cooldown => BaseCooldownPercentage * StartingCooldown;
 
     public static float Speed = 5.0f;
-    public static int AdditionalSchnitzels = 0;
     public static float TimeElapsedSinceLastSchnitzel;
     public static bool IsShooting = false;
     public static bool IsEnabled = false;
@@ -25,6 +24,8 @@ public class Schnitzel : ProjectileBase
 
     public static float MaxLifetimeInSeconds = 10.0f;
     public static float KnockbackForce = 500f;
+
+    public static float Scale = 1.0f;
 
     private Vector3 _direction;
     private float _creationTime;
@@ -67,6 +68,9 @@ public class Schnitzel : ProjectileBase
         // initial position
         schnitzel.transform.position =
             player.transform.position + direction.normalized * _distanceOutsidePlayer;
+
+        // adjust scale
+        schnitzel.transform.localScale = new Vector3(Scale, Scale, Scale);
 
         schnitzel.SetDirection(direction);
     }
@@ -141,16 +145,14 @@ public class Schnitzel : ProjectileBase
         if (level == 1)
         {
             IsEnabled = true;
-            AdditionalSchnitzels++;
         }
         else if (level == 2)
         {
-            BaseDamagePercentage = 1.5f;
+            Scale *= 1.4f;
         }
         else if (level == 3)
         {
-            BaseDamagePercentage = 2f;
-            AdditionalSchnitzels += 2;
+            Scale *= 1.4f;
         }
     }
 }
