@@ -27,7 +27,8 @@ public class Pickup : MonoBehaviour
         Hotdog,
         Skateboard,
         Umbrella,
-        Money
+        Money,
+        Mozart
     }
 
     private void OnTriggerEnter2D(Collider2D other)

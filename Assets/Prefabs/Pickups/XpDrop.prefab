@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 560094644412875311}
   m_Layer: 0
   m_Name: XpDrop
-  m_TagString: Untagged
+  m_TagString: XpDrop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,7 +84,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.3127494
 --- !u!212 &1689499869201206464
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ TagManager:
   - Barrier
   - Characters
   - Projectiles
+  - XpDrop
   layers:
   - Default
   - TransparentFX

@@ -8522,6 +8522,7 @@ MonoBehaviour:
   - {fileID: 3306419623360918530, guid: 3ef75a713fc044582be99ff13e620184, type: 3}
   - {fileID: 3306419623360918530, guid: a52115208a32b485e8a9cf76bda0d02b, type: 3}
   - {fileID: 3306419623360918530, guid: 6a6fc5df2c0c74e1581dfb8507d41f99, type: 3}
+  - {fileID: 3306419623360918530, guid: c62e469089fde4fc98d1c3363f2ea177, type: 3}
   _levelUpUI: {fileID: 3736684284675310825}
   _activePickupContainer: {fileID: 1213143403}
   _activeUpgradesContainer: {fileID: 2111087225}

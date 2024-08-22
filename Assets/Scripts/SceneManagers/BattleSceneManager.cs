@@ -294,10 +294,27 @@ public class BattleSceneManager : MonoBehaviour
         string pickupName = (string)eventData[1];
         float effectDuration = (float)eventData[2];
 
+        if (pickupName == "Mozart")
+        {
+            StartCoroutine(SetAllXpDropsToMoving());
+        }
         if (effectDuration > 0)
         {
             _activePickupContainer.transform.Find(pickupName).gameObject.SetActive(true);
         }
+    }
+
+    // empty co-routine
+    private IEnumerator SetAllXpDropsToMoving()
+    {
+        // get all xp drops and set moving = true
+        var xpDrops = GameObject.FindGameObjectsWithTag("XpDrop");
+        Debug.Log("Got x xp drops: " + xpDrops.Length);
+        foreach (var xpDrop in xpDrops)
+        {
+            xpDrop.GetComponent<XpDrop>().SetMoving();
+        }
+        yield return null;
     }
 
     private void OnPickupExpired(string pickupName)

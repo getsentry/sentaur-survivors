@@ -14,6 +14,11 @@ public class XpDrop : MonoBehaviour
     [SerializeField]
     private float _moveSpeed = 5f;
 
+    public void SetMoving(bool moving = true)
+    {
+        _moving = moving;
+    }
+
     public void SetXp(int xp)
     {
         _xp = xp;
