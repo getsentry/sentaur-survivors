@@ -23,7 +23,16 @@ public class Schnitzel : ProjectileBase
     private static float _distanceOutsidePlayer = 1.25f;
     private static float _shootingInterval = 0.25f; // time between consecutive schnitzel
 
+    public static float MaxLifetimeInSeconds = 10.0f;
+    public static float KnockbackForce = 500f;
+
     private Vector3 _direction;
+    private float _creationTime;
+
+    public void Start()
+    {
+        _creationTime = Time.time;
+    }
 
     public static IEnumerator ShootSchnitzels(Schnitzel prefab, GameObject player)
     {
@@ -91,7 +100,7 @@ public class Schnitzel : ProjectileBase
     {
         initialEnemy.TakeDamage(Damage);
         // why 1000? -- the result of experimenting with different values (!)
-        initialEnemy.Knockback(_direction, 1000);
+        initialEnemy.Knockback(_direction, KnockbackForce);
 
         RaycastHit2D[] hits = Physics2D.CircleCastAll(
             initialEnemy.transform.position,
@@ -119,6 +128,12 @@ public class Schnitzel : ProjectileBase
 
         // gravity pushes the schnitzel down
         _rigidbody2D.velocity += Physics2D.gravity * Time.deltaTime;
+
+        // if 10 seconds has passed destroy (off the screen somewhere)
+        if (Time.time - _creationTime > MaxLifetimeInSeconds)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public static void UpgradeSchnitzel(int level)
