@@ -10,7 +10,7 @@ public class Schnitzel : ProjectileBase
 
     // properties true for all schnitzel
     public static int Damage => (int)(BaseDamage * BaseDamagePercentage);
-    public static float BaseDamagePercentage = 0.75f;
+    public static float BaseDamagePercentage = 0.8f;
     public static float StartingCooldown = 3.0f;
     public static float Cooldown => BaseCooldownPercentage * StartingCooldown;
 
@@ -23,12 +23,14 @@ public class Schnitzel : ProjectileBase
     private static float _shootingInterval = 0.25f; // time between consecutive schnitzel
 
     public static float MaxLifetimeInSeconds = 10.0f;
-    public static float KnockbackForce = 500f;
+    public static float KnockbackForce = 1000f;
 
     public static float Scale = 1.0f;
 
     private Vector3 _direction;
     private float _creationTime;
+
+    private HashSet<int> enemiesHit = new HashSet<int>();
 
     public void Start()
     {
@@ -53,6 +55,18 @@ public class Schnitzel : ProjectileBase
         TimeElapsedSinceLastSchnitzel = 0.0f;
         IsShooting = false;
         yield return null;
+    }
+
+    protected override void OnDamage(Enemy enemy)
+    {
+        // each projectile can only damage an enemy once
+        if (enemiesHit.Contains(enemy.GetInstanceID()))
+        {
+            return;
+        }
+
+        enemiesHit.Add(enemy.GetInstanceID());
+        base.OnDamage(enemy);
     }
 
     protected override void OnHit()

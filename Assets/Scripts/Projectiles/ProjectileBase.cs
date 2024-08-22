@@ -23,16 +23,20 @@ public class ProjectileBase : MonoBehaviour
             var hitbox = other.gameObject.GetComponent<Hitbox>();
             var enemy = hitbox.Enemy;
 
-            DamageEnemy(enemy);
-
             SoundManager.Instance.PlayHitSound();
 
+            OnDamage(enemy);
             OnHit();
         }
         else if (other.gameObject.tag == "Barrier")
         {
             OnHit();
         }
+    }
+
+    protected virtual void OnDamage(Enemy enemy)
+    {
+        DamageEnemy(enemy);
     }
 
     protected virtual void OnHit()
