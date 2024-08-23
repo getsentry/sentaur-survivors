@@ -154,7 +154,7 @@ public class Raven : ProjectileBase
         }
         else if (level == 3)
         {
-            AreaOfEffectModifier = 1.8f;
+            AreaOfEffectModifier = 1.6f;
         }
     }
 }

@@ -71,7 +71,7 @@ public class LevelUpUI : MonoBehaviour
                 {
                     "heat-seeking bomb targets closest enemy",
                     "+33% damage and +20% cooldown!",
-                    "+80% area of effect"
+                    "+60% area of effect"
                 }
             )
         },
