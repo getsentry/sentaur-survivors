@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Sentry;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 /**
  * Encapsulates behavior of LevelUpUI prefab
@@ -22,78 +24,8 @@ public class LevelUpUI : MonoBehaviour
         UpgradeType.Schnitzel
     };
 
-    private static Dictionary<UpgradeType, UpgradePath> _upgradeData = new Dictionary<
-        UpgradeType,
-        UpgradePath
-    >
-    {
-        {
-            UpgradeType.CountUp,
-            new UpgradePath(
-                new List<string>
-                {
-                    "+1 of each projectile",
-                    "+1 of each projectile",
-                    "+2 of each projectile!"
-                }
-            )
-        },
-        {
-            UpgradeType.CooldownDown,
-            new UpgradePath(
-                new List<string>
-                {
-                    "-20% cooldown time",
-                    "-25% cooldown time",
-                    "-50% cooldown time!"
-                }
-            )
-        },
-        {
-            UpgradeType.DamageUp,
-            new UpgradePath(new List<string> { "+30% damage", "+60% damage", "+100% damage!" })
-        },
-        {
-            UpgradeType.Dart,
-            new UpgradePath(
-                new List<string>
-                {
-                    "+1 dart that fires behind you",
-                    "+50% damage",
-                    "+2 dart firing behind and +33% damage!"
-                }
-            )
-        },
-        {
-            UpgradeType.Raven,
-            new UpgradePath(
-                new List<string>
-                {
-                    "heat-seeking bomb targets closest enemy",
-                    "+33% damage and +20% cooldown!",
-                    "+60% area of effect"
-                }
-            )
-        },
-        {
-            UpgradeType.Starfish,
-            new UpgradePath(
-                new List<string>
-                {
-                    "orbits around you, wreaking havoc",
-                    "+20% orbit duration",
-                    "+50% orbit duration and -30% cooldown!"
-                }
-            )
-        },
-        {
-            UpgradeType.Schnitzel,
-            new UpgradePath(
-                new List<string> { "its like an axe", "+40% area of effect", "+30% area of effect" }
-            )
-        }
-    };
-
+    private static Dictionary<UpgradeType, UpgradePath> _upgradeData;
+    
     private int MAX_LEVEL = 3;
 
     [SerializeField]
@@ -109,6 +41,81 @@ public class LevelUpUI : MonoBehaviour
     // [SerializeField]
     // [Tooltip("The parent UI element containing the active upgrades")]
     // private GameObject _activeUpgradesContainer;
+
+    public static void Reset()
+    {
+        _upgradeData = new Dictionary<
+            UpgradeType,
+            UpgradePath
+        >
+        {
+            {
+                UpgradeType.CountUp,
+                new UpgradePath(
+                    new List<string>
+                    {
+                        "+1 of each projectile",
+                        "+1 of each projectile",
+                        "+2 of each projectile!"
+                    }
+                )
+            },
+            {
+                UpgradeType.CooldownDown,
+                new UpgradePath(
+                    new List<string>
+                    {
+                        "-20% cooldown time",
+                        "-25% cooldown time",
+                        "-50% cooldown time!"
+                    }
+                )
+            },
+            {
+                UpgradeType.DamageUp,
+                new UpgradePath(new List<string> { "+30% damage", "+60% damage", "+100% damage!" })
+            },
+            {
+                UpgradeType.Dart,
+                new UpgradePath(
+                    new List<string>
+                    {
+                        "+1 dart that fires behind you",
+                        "+50% damage",
+                        "+2 dart firing behind and +33% damage!"
+                    }
+                )
+            },
+            {
+                UpgradeType.Raven,
+                new UpgradePath(
+                    new List<string>
+                    {
+                        "heat-seeking bomb targets closest enemy",
+                        "+33% damage and +20% cooldown!",
+                        "+60% area of effect"
+                    }
+                )
+            },
+            {
+                UpgradeType.Starfish,
+                new UpgradePath(
+                    new List<string>
+                    {
+                        "orbits around you, wreaking havoc",
+                        "+20% orbit duration",
+                        "+50% orbit duration and -30% cooldown!"
+                    }
+                )
+            },
+            {
+                UpgradeType.Schnitzel,
+                new UpgradePath(
+                    new List<string> { "its like an axe", "+40% area of effect", "+30% area of effect" }
+                )
+            }
+        };
+    }
 
     void Awake()
     {

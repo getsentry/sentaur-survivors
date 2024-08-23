@@ -223,6 +223,13 @@ public class BattleSceneManager : MonoBehaviour
 
         SetCurrentLevel(_currentLevel);
 
+        ProjectileBase.Reset();
+        Dart.Reset();
+        Starfish.Reset();
+        Raven.Reset();
+        Schnitzel.Reset();
+        LevelUpUI.Reset();
+
         EventManager.AddListener(
             "EnemyDestroyed",
             (eventData) =>

@@ -11,6 +11,13 @@ public class ProjectileBase : MonoBehaviour
     public static float BaseCooldownPercentage = 1f;
     public static int BaseCount = 1;
 
+    public static void Reset()
+    { 
+        BaseDamage = 10;
+        BaseCooldownPercentage = 1f;
+        BaseCount = 1;
+    }
+
     protected void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();

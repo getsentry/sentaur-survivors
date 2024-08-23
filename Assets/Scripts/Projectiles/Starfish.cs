@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,19 @@ public class Starfish : ProjectileBase
     public int identifier;
     private GameObject _player;
     private float _timeElapsedSinceActivated = 0.0f;
+
+    public static void Reset()
+    {
+        BaseDamagePercentage = 0.8f;
+        StartingCooldown = 5f;
+        IsEnabled = false;
+
+        Duration = 5f;
+        DegreesPerFrame = 180f;
+        IsActive = false;
+        AdditionalStarfish = 0;
+        _distanceOutsidePlayer = 2f;
+    }
 
     public static void Fire(Starfish _starfishPrefab, Transform parentTransform)
     {

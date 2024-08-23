@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Profiling;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Schnitzel : ProjectileBase
 {
@@ -31,6 +33,24 @@ public class Schnitzel : ProjectileBase
     private float _creationTime;
 
     private HashSet<int> enemiesHit = new HashSet<int>();
+
+    public static void Reset()
+    {
+        BaseDamagePercentage = 0.8f;
+        StartingCooldown = 3.0f;
+
+        Speed = 5.0f;
+        IsShooting = false;
+        IsEnabled = false;
+
+        _distanceOutsidePlayer = 1.25f;
+        _shootingInterval = 0.25f; // time between consecutive schnitzel
+
+        MaxLifetimeInSeconds = 10.0f;
+        KnockbackForce = 1000f;
+
+        Scale = 1.0f;
+    }
 
     public void Start()
     {

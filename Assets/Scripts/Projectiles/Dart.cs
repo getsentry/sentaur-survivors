@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Profiling;
@@ -23,6 +24,19 @@ public class Dart : ProjectileBase
     private static float _shootingInterval = 0.4f; // time between consecutive darts
 
     private Vector3 _direction;
+
+    public static void Reset()
+    {
+        BaseDamagePercentage = 1f;
+        StartingCooldown = 1.8f;
+
+        Speed = 10.0f;
+        AdditionalDarts = 0;
+        IsShooting = false;
+
+        _distanceOutsidePlayer = 1.25f;
+        _shootingInterval = 0.4f; // time between consecutive darts
+    }
 
     public static IEnumerator ShootDarts(Dart prefab, GameObject player)
     {

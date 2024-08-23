@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,18 @@ public class Raven : ProjectileBase
     public int identifier;
     private Vector3 _direction;
     private GameObject _player;
+
+    public static void Reset()
+    {
+        BaseDamagePercentage = 1.5f;
+        StartingCooldown = 6f;
+        IsEnabled = false;
+
+        Speed = 12.0f;
+        AdditionalRavens = 0;
+        CurrentTargets = new List<GameObject> { };
+        _distanceOutsidePlayer = 1.25f;
+    }
 
     public static void Fire(Raven _ravenPrefab, Transform parentTransform)
     {
