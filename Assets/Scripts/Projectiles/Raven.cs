@@ -22,6 +22,8 @@ public class Raven : ProjectileBase
     public static float TimeElapsedSinceLastRaven;
     private static float _distanceOutsidePlayer = 1.25f;
 
+    public static float AreaOfEffectModifier = 1.0f;
+
     public int identifier;
     private Vector3 _direction;
     private GameObject _player;
@@ -121,7 +123,7 @@ public class Raven : ProjectileBase
 
         RaycastHit2D[] hits = Physics2D.CircleCastAll(
             initialEnemy.transform.position,
-            _areaOfEffectRange,
+            _areaOfEffectRange * AreaOfEffectModifier,
             Vector2.zero
         );
         foreach (RaycastHit2D hit in hits)
@@ -147,12 +149,12 @@ public class Raven : ProjectileBase
         }
         else if (level == 2)
         {
-            AdditionalRavens++;
+            BaseDamagePercentage = 2f;
+            StartingCooldown *= 0.8f;
         }
         else if (level == 3)
         {
-            BaseDamagePercentage = 2f;
-            StartingCooldown *= 0.8f;
+            AreaOfEffectModifier = 1.8f;
         }
     }
 }

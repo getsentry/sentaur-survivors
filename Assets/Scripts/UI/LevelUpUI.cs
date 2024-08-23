@@ -32,9 +32,9 @@ public class LevelUpUI : MonoBehaviour
             new UpgradePath(
                 new List<string>
                 {
-                    "2 of each projectile",
-                    "3 of each projectile",
-                    "5 of each projectile!"
+                    "+1 of each projectile",
+                    "+1 of each projectile",
+                    "+2 of each projectile!"
                 }
             )
         },
@@ -58,9 +58,9 @@ public class LevelUpUI : MonoBehaviour
             new UpgradePath(
                 new List<string>
                 {
-                    "extra dart that fires behind you",
+                    "+1 dart that fires behind you",
                     "+50% damage",
-                    "3 darts firing behind and +33% damage!"
+                    "+2 dart firing behind and +33% damage!"
                 }
             )
         },
@@ -70,8 +70,8 @@ public class LevelUpUI : MonoBehaviour
                 new List<string>
                 {
                     "heat-seeking bomb targets closest enemy",
-                    "gain an additional raven",
-                    "+33% damage and -20% cooldown!"
+                    "+33% damage and +20% cooldown!",
+                    "+80% area of effect"
                 }
             )
         },
