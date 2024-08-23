@@ -13,19 +13,10 @@ public class LevelUpUI : MonoBehaviour
     // fyi: title -> upgrade name, description -> level, stats -> description
     // leveling up an upgrade, changes the stats to new level, increases the level #
 
-    private static List<UpgradeType> _availableUpgradeTypes = new List<UpgradeType>
-    {
-        UpgradeType.CountUp,
-        UpgradeType.CooldownDown,
-        UpgradeType.DamageUp,
-        UpgradeType.Dart,
-        UpgradeType.Raven,
-        UpgradeType.Starfish,
-        UpgradeType.Schnitzel
-    };
+    private static List<UpgradeType> _availableUpgradeTypes;
 
     private static Dictionary<UpgradeType, UpgradePath> _upgradeData;
-    
+
     private int MAX_LEVEL = 3;
 
     [SerializeField]
@@ -44,10 +35,18 @@ public class LevelUpUI : MonoBehaviour
 
     public static void Reset()
     {
-        _upgradeData = new Dictionary<
-            UpgradeType,
-            UpgradePath
-        >
+        _availableUpgradeTypes = new List<UpgradeType>
+        {
+            UpgradeType.CountUp,
+            UpgradeType.CooldownDown,
+            UpgradeType.DamageUp,
+            UpgradeType.Dart,
+            UpgradeType.Raven,
+            UpgradeType.Starfish,
+            UpgradeType.Schnitzel
+        };
+
+        _upgradeData = new Dictionary<UpgradeType, UpgradePath>
         {
             {
                 UpgradeType.CountUp,
@@ -111,7 +110,12 @@ public class LevelUpUI : MonoBehaviour
             {
                 UpgradeType.Schnitzel,
                 new UpgradePath(
-                    new List<string> { "its like an axe", "+40% area of effect", "+30% area of effect" }
+                    new List<string>
+                    {
+                        "its like an axe",
+                        "+40% area of effect",
+                        "+30% area of effect"
+                    }
                 )
             }
         };
