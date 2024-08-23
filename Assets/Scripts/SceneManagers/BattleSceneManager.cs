@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class BattleSceneManager : MonoBehaviour
@@ -467,7 +465,8 @@ public class BattleSceneManager : MonoBehaviour
         {
             _lastWaveSpawnTime = Time.time;
 
-            SpawnWave((_currentLevel + 1) / 2);
+            bool isDoubleWave = Time.time - _gameStartTime > _deathAppearanceTime - 60;
+            SpawnWave((_currentLevel + 1) / 2, isDoubleWave);
         }
 
         // ramp up spawn rate
@@ -661,10 +660,39 @@ public class BattleSceneManager : MonoBehaviour
         return enemy;
     }
 
-    private void SpawnWave(int count)
+    private void SpawnWave(int count, bool doubleWave = false)
     {
-        LinearEnemy.Direction direction = (LinearEnemy.Direction)Random.Range(0, 4);
+        var direction = SpawnWave(count, (LinearEnemy.Direction)Random.Range(0, 4));
 
+        if (!doubleWave)
+        {
+            return;
+        }
+
+        LinearEnemy.Direction secondWaveDirection;
+        switch (direction)
+        {
+            case LinearEnemy.Direction.Up:
+                secondWaveDirection = LinearEnemy.Direction.Down;
+                break;
+            case LinearEnemy.Direction.Down:
+                secondWaveDirection = LinearEnemy.Direction.Up;
+                break;
+            case LinearEnemy.Direction.Left:
+                secondWaveDirection = LinearEnemy.Direction.Right;
+                break;
+            case LinearEnemy.Direction.Right:
+                secondWaveDirection = LinearEnemy.Direction.Left;
+                break;
+            default:
+                throw new System.Exception("GameManager.Update: Invalid wave direction");
+        }
+
+        SpawnWave(count, secondWaveDirection);
+    }
+
+    private LinearEnemy.Direction SpawnWave(int count, LinearEnemy.Direction direction)
+    {
         Vector3 initialOffset = Vector3.zero;
         Vector3 betweenOffset = Vector3.zero;
 
@@ -709,6 +737,7 @@ public class BattleSceneManager : MonoBehaviour
 
             spawnCount++;
         }
+        return direction;
     }
 
     private void SpawnEnemies(GameObject prefab, int count)
