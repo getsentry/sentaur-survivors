@@ -35,7 +35,7 @@ public class BattleSceneManager : MonoBehaviour
 
     [SerializeField]
     [Tooltip("The maximum number of pickups allowed on screen at any given moment")]
-    private int _maxPickupsOnScreen = 5;
+    private int _maxPickupsOnScreen = 7;
 
     [SerializeField]
     [Tooltip("The current level")]
@@ -115,24 +115,25 @@ public class BattleSceneManager : MonoBehaviour
     {
         50, // level 2
         150,
-        350,
-        650,
-        1050,
-        1550,
-        2200,
-        3000,
-        4000, // level 10
+        300,
+        550,
+        900,
+        1400,
+        2050,
+        2900,
+        3950, // level 10
         5250,
-        6800,
-        8750,
+        6850,
+        8800,
         11200,
         14250,
         18000,
-        22500,
-        28000,
-        35000,
-        44000, // level 20
-        55000, // level 21 (max)
+        22600,
+        28250,
+        35200,
+        43800, // level 20
+        54500,
+        68000, // level 22 (max)
     }; // for testing: {50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900};
     private int _nextLevelXpMilestone;
 
@@ -643,6 +644,12 @@ public class BattleSceneManager : MonoBehaviour
         //   level 6-7: 1-4 enemies
         //   level 8:   1-5 enemies ... etc
         int waveSize = Random.Range(1, (int)(_currentLevel * _maxWaveSizeScaleFactor));
+
+        if (spawnChoice == (int)EnemyType.DiagonalHead)
+        {
+            // halve the number of heads
+            waveSize = Math.Max(1, waveSize / 2);
+        }
         SpawnEnemies(prefab, waveSize);
     }
 

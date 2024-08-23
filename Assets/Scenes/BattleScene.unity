@@ -8358,7 +8358,7 @@ MonoBehaviour:
   _activePickupContainer: {fileID: 1213143403}
   _activeUpgradesContainer: {fileID: 2111087225}
   _backgroundMusic: {fileID: 0}
-  _levelMilestones: 32000000960000005e0100008a0200001a0400000e06000098080000b80b0000a00f000082140000901a00002e220000c02b0000aa37000050460000e4570000606d0000b8880000e0ab0000d8d60000
+  _levelMilestones: 32000000960000002c01000026020000840300007805000002080000540b00006e0f000082140000c21a000060220000c02b0000aa37000050460000485800005a6e00008089000018ab0000e4d40000a0090100
   _hpRampUpInterval: 60
   _hpRampUpValue: 5
 --- !u!4 &1361049654
@@ -32735,7 +32735,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4961075627311851740, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
       propertyPath: orthographic size
-      value: 11.71875
+      value: 8.4375
       objectReference: {fileID: 0}
     - target: {fileID: 5032271188091294264, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
       propertyPath: m_Enabled

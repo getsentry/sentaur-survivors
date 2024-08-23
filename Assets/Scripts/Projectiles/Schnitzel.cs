@@ -166,7 +166,7 @@ public class Schnitzel : ProjectileBase
         }
         else if (level == 3)
         {
-            Scale *= 1.4f;
+            Scale *= 1.3f;
         }
     }
 }

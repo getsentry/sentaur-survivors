@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healAmount: 0
-  _scoreValue: 500
+  _scoreValue: 5000
   _effectDuration: 0
   _pickupType: 3
 --- !u!61 &8459684996225841193

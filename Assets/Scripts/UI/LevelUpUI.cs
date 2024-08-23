@@ -89,7 +89,7 @@ public class LevelUpUI : MonoBehaviour
         {
             UpgradeType.Schnitzel,
             new UpgradePath(
-                new List<string> { "its like an axe", "+40% area of effect", "+40% area of effect" }
+                new List<string> { "its like an axe", "+40% area of effect", "+30% area of effect" }
             )
         }
     };

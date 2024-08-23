@@ -6,7 +6,7 @@ public class Starfish : ProjectileBase
 {
     // properties true for all starfish
     public static int Damage => (int)(BaseDamage * BaseDamagePercentage);
-    public static float BaseDamagePercentage = 0.8f;
+    public static float BaseDamagePercentage = 0.85f;
     public static float StartingCooldown = 5f;
     public static float Cooldown => BaseCooldownPercentage * StartingCooldown;
     public static bool IsEnabled = false;
