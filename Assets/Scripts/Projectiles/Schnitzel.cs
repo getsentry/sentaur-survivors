@@ -11,7 +11,7 @@ public class Schnitzel : ProjectileBase
     // properties true for all schnitzel
     public static int Damage => (int)(BaseDamage * BaseDamagePercentage);
     public static float BaseDamagePercentage = 0.8f;
-    public static float StartingCooldown = 3.0f;
+    public static float StartingCooldown = 2.9f;
     public static float Cooldown => BaseCooldownPercentage * StartingCooldown;
 
     public static float Speed = 5.0f;
