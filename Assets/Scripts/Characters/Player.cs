@@ -10,19 +10,19 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("The prefab for the player's dart (starting projectile)")]
-    private Dart _dartPrefab;
+    private DartProjectile _dartPrefab;
 
     [SerializeField]
     [Tooltip("The prefab for the player's Raven")]
-    private Raven _ravenPrefab;
+    private RavenProjectile _ravenPrefab;
 
     [SerializeField]
     [Tooltip("The prefab for the player's Starfish")]
-    private Starfish _starfishPrefab;
+    private StarfishProjectile _starfishPrefab;
 
     [SerializeField]
     [Tooltip("The prefab for the player's Schnitzel")]
-    private Schnitzel _schnitzelPrefab;
+    private SchnitzelProjectile _schnitzelPrefab;
 
     [SerializeField]
     [Tooltip("How many hit points the player has")]
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
 
         takeDamageSound = GetComponent<AudioSource>();
 
-        Dart.TimeElapsedSinceLastDart = Dart.Cooldown - 1f; // shoot right when the game starts
+        DartProjectile.TimeElapsedSinceLastDart = DartProjectile.Cooldown - 1f; // shoot right when the game starts
     }
 
     // Update is called once per frame
@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
 
     void UpdateDarts()
     {
-        if (Dart.IsShooting)
+        if (DartProjectile.IsShooting)
         {
             // if the dart is already firing, exit early (we only start counting
             // after the dart has CEASED firing)
@@ -152,70 +152,73 @@ public class Player : MonoBehaviour
         }
 
         // once enough time has elapsed, fire the darts
-        Dart.TimeElapsedSinceLastDart += Time.deltaTime;
-        if (Dart.TimeElapsedSinceLastDart > Dart.Cooldown && !Dart.IsShooting)
+        DartProjectile.TimeElapsedSinceLastDart += Time.deltaTime;
+        if (
+            DartProjectile.TimeElapsedSinceLastDart > DartProjectile.Cooldown
+            && !DartProjectile.IsShooting
+        )
         {
-            StartCoroutine(Dart.ShootDarts(_dartPrefab, gameObject));
+            StartCoroutine(DartProjectile.ShootDarts(_dartPrefab, gameObject));
         }
     }
 
     void UpdateRavens()
     {
-        if (!Raven.IsEnabled)
+        if (!RavenProjectile.IsEnabled)
         {
             return;
         }
 
-        Raven.TimeElapsedSinceLastRaven += Time.deltaTime;
-        if (Raven.TimeElapsedSinceLastRaven > Raven.Cooldown)
+        RavenProjectile.TimeElapsedSinceLastRaven += Time.deltaTime;
+        if (RavenProjectile.TimeElapsedSinceLastRaven > RavenProjectile.Cooldown)
         {
-            Raven.TimeElapsedSinceLastRaven = 0.0f;
+            RavenProjectile.TimeElapsedSinceLastRaven = 0.0f;
 
             // note: parent transform is the parent container
-            Raven.Fire(_ravenPrefab, transform.parent);
+            RavenProjectile.Fire(_ravenPrefab, transform.parent);
         }
     }
 
     void UpdateStarfish()
     {
-        if (!Starfish.IsEnabled)
+        if (!StarfishProjectile.IsEnabled)
         {
             return;
         }
 
-        if (Starfish.IsActive)
+        if (StarfishProjectile.IsActive)
         {
             // if starfish is already orbiting nothing to do
             return;
         }
 
-        Starfish.TimeElapsedSinceLastStarfish += Time.deltaTime;
-        if (Starfish.TimeElapsedSinceLastStarfish > Starfish.Cooldown)
+        StarfishProjectile.TimeElapsedSinceLastStarfish += Time.deltaTime;
+        if (StarfishProjectile.TimeElapsedSinceLastStarfish > StarfishProjectile.Cooldown)
         {
-            Starfish.TimeElapsedSinceLastStarfish = 0.0f;
+            StarfishProjectile.TimeElapsedSinceLastStarfish = 0.0f;
 
             // note: parent transform is the player (because starfish orbits)
             //       around the player
-            Starfish.Fire(_starfishPrefab, this.transform);
+            StarfishProjectile.Fire(_starfishPrefab, this.transform);
         }
     }
 
     void UpdateSchnitzel()
     {
-        if (Schnitzel.IsShooting)
+        if (SchnitzelProjectile.IsShooting)
         {
             return;
         }
 
-        if (!Schnitzel.IsEnabled)
+        if (!SchnitzelProjectile.IsEnabled)
         {
             return;
         }
 
-        Schnitzel.TimeElapsedSinceLastSchnitzel += Time.deltaTime;
-        if (Schnitzel.TimeElapsedSinceLastSchnitzel > Schnitzel.Cooldown)
+        SchnitzelProjectile.TimeElapsedSinceLastSchnitzel += Time.deltaTime;
+        if (SchnitzelProjectile.TimeElapsedSinceLastSchnitzel > SchnitzelProjectile.Cooldown)
         {
-            StartCoroutine(Schnitzel.ShootSchnitzels(_schnitzelPrefab, gameObject));
+            StartCoroutine(SchnitzelProjectile.ShootSchnitzels(_schnitzelPrefab, gameObject));
         }
     }
 

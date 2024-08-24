@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Starfish : ProjectileBase
+public class StarfishProjectile : ProjectileBase
 {
     // properties true for all starfish
     public static int Damage => (int)(BaseDamage * BaseDamagePercentage);
@@ -37,9 +37,9 @@ public class Starfish : ProjectileBase
         _distanceOutsidePlayer = 2f;
     }
 
-    public static void Fire(Starfish _starfishPrefab, Transform parentTransform)
+    public static void Fire(StarfishProjectile _starfishPrefab, Transform parentTransform)
     {
-        int numberOfStarfish = Starfish.BaseCount + Starfish.AdditionalStarfish;
+        int numberOfStarfish = StarfishProjectile.BaseCount + StarfishProjectile.AdditionalStarfish;
         float degreesBetweenStarfish = 360 / numberOfStarfish;
         for (int i = 0; i < numberOfStarfish; i++)
         {

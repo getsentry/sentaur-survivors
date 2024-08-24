@@ -5,7 +5,7 @@ using Unity.Profiling;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Schnitzel : ProjectileBase
+public class SchnitzelProjectile : ProjectileBase
 {
     [SerializeField]
     private float _areaOfEffectRange = 0.25f;
@@ -57,7 +57,7 @@ public class Schnitzel : ProjectileBase
         _creationTime = Time.time;
     }
 
-    public static IEnumerator ShootSchnitzels(Schnitzel prefab, GameObject player)
+    public static IEnumerator ShootSchnitzels(SchnitzelProjectile prefab, GameObject player)
     {
         IsShooting = true;
         Vector3 direction = CalculateDirection(player);
@@ -94,9 +94,13 @@ public class Schnitzel : ProjectileBase
         // no-op (don't destroy schnitzel on hit)
     }
 
-    private static void ShootOneSchnitzel(Schnitzel prefab, GameObject player, Vector3 direction)
+    private static void ShootOneSchnitzel(
+        SchnitzelProjectile prefab,
+        GameObject player,
+        Vector3 direction
+    )
     {
-        Schnitzel schnitzel = Instantiate(prefab);
+        SchnitzelProjectile schnitzel = Instantiate(prefab);
         schnitzel.transform.parent = player.transform.parent;
 
         // initial position

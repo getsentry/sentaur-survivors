@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Raven : ProjectileBase
+public class RavenProjectile : ProjectileBase
 {
     [SerializeField]
     [Tooltip("How much AOE range this effect has on hit")]
@@ -41,9 +41,9 @@ public class Raven : ProjectileBase
         _distanceOutsidePlayer = 1.25f;
     }
 
-    public static void Fire(Raven _ravenPrefab, Transform parentTransform)
+    public static void Fire(RavenProjectile _ravenPrefab, Transform parentTransform)
     {
-        int numberOfRavens = Raven.BaseCount + Raven.AdditionalRavens;
+        int numberOfRavens = RavenProjectile.BaseCount + RavenProjectile.AdditionalRavens;
         for (int i = 0; i < numberOfRavens; i++)
         {
             var raven = Instantiate(_ravenPrefab);
@@ -51,7 +51,7 @@ public class Raven : ProjectileBase
             raven.transform.parent = parentTransform;
             raven.TargetClosestEnemy();
         }
-        Raven.CurrentTargets.Clear(); // reset raven targeting
+        RavenProjectile.CurrentTargets.Clear(); // reset raven targeting
     }
 
     new void Awake()

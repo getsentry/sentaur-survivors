@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Profiling;
 using UnityEngine;
 
-public class Dart : ProjectileBase
+public class DartProjectile : ProjectileBase
 {
     [SerializeField]
     private float _areaOfEffectRange = 0.25f;
@@ -38,7 +38,7 @@ public class Dart : ProjectileBase
         _shootingInterval = 0.4f; // time between consecutive darts
     }
 
-    public static IEnumerator ShootDarts(Dart prefab, GameObject player)
+    public static IEnumerator ShootDarts(DartProjectile prefab, GameObject player)
     {
         IsShooting = true;
         Vector3 direction = CalculateDirection(player);
@@ -74,9 +74,9 @@ public class Dart : ProjectileBase
         yield return null;
     }
 
-    private static void ShootADart(Dart prefab, GameObject player, Vector3 direction)
+    private static void ShootADart(DartProjectile prefab, GameObject player, Vector3 direction)
     {
-        Dart dart = Instantiate(prefab);
+        DartProjectile dart = Instantiate(prefab);
         dart.transform.parent = player.transform.parent;
 
         // initial position

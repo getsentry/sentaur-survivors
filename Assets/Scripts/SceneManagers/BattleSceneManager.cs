@@ -224,10 +224,10 @@ public class BattleSceneManager : MonoBehaviour
         SetCurrentLevel(_currentLevel);
 
         ProjectileBase.Reset();
-        Dart.Reset();
-        Starfish.Reset();
-        Raven.Reset();
-        Schnitzel.Reset();
+        DartProjectile.Reset();
+        StarfishProjectile.Reset();
+        RavenProjectile.Reset();
+        SchnitzelProjectile.Reset();
         LevelUpUI.Reset();
 
         EventManager.AddListener(
@@ -795,16 +795,16 @@ public class BattleSceneManager : MonoBehaviour
                 ProjectileBase.UpgradeDamage(newLevel);
                 break;
             case UpgradeType.Dart:
-                Dart.UpgradeDart(newLevel);
+                DartProjectile.UpgradeDart(newLevel);
                 break;
             case UpgradeType.Raven:
-                Raven.UpgradeRaven(newLevel);
+                RavenProjectile.UpgradeRaven(newLevel);
                 break;
             case UpgradeType.Starfish:
-                Starfish.UpgradeStarfish(newLevel);
+                StarfishProjectile.UpgradeStarfish(newLevel);
                 break;
             case UpgradeType.Schnitzel:
-                Schnitzel.UpgradeSchnitzel(newLevel);
+                SchnitzelProjectile.UpgradeSchnitzel(newLevel);
                 break;
             default:
                 break;
