@@ -297,18 +297,20 @@ public class BattleSceneManager : MonoBehaviour
         SetScore(_score + scoreValue);
         _pickupsOnScreen -= 1;
 
-        string pickupName = (string)eventData[1];
+        GameObject pickupGameObj = (GameObject)eventData[1];
         float effectDuration = (float)eventData[2];
 
-        if (effectDuration > 0)
-        {
-            _activePickupContainer.transform.Find(pickupName).gameObject.SetActive(true);
-        }
+        //TODO: bring back
+        // if (effectDuration > 0)
+        // {
+        //     _activePickupContainer.transform.Find(pickupName).gameObject.SetActive(true);
+        // }
     }
 
     private void OnPickupExpired(string pickupName)
     {
-        _activePickupContainer.transform.Find(pickupName).gameObject.SetActive(false);
+        // TODO bring back
+        // _activePickupContainer.transform.Find(pickupName).gameObject.SetActive(false);
     }
 
     private void OnXpEarned(int xp)

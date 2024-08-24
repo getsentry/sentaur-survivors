@@ -45,8 +45,14 @@ public class Player : MonoBehaviour
     [Tooltip("How much damage is reduced for the player")]
     private float _damageReductionAmount = 0.0f;
 
-    private Dictionary<PickupBase.PickupType, float> _activePlayerEffects =
-        new Dictionary<PickupBase.PickupType, float>();
+    public enum PlayerEffectTypes
+    {
+        SpeedUp,
+        DamageResist,
+    }
+
+    private Dictionary<PlayerEffectTypes, float> _activePlayerEffects =
+        new Dictionary<PlayerEffectTypes, float>();
 
     private HealthBar _healthBar;
     public Animator animator;
@@ -218,7 +224,7 @@ public class Player : MonoBehaviour
 
     void UpdatePickups()
     {
-        foreach (KeyValuePair<PickupBase.PickupType, float> kv in _activePlayerEffects.ToList())
+        foreach (KeyValuePair<PlayerEffectTypes, float> kv in _activePlayerEffects.ToList())
         {
             if (Time.time < kv.Value)
             {
@@ -227,14 +233,14 @@ public class Player : MonoBehaviour
 
             switch (kv.Key)
             {
-                case PickupBase.PickupType.Skateboard:
+                case PlayerEffectTypes.SpeedUp:
                     _playerMoveRate = _baseMoveRate;
-                    _activePlayerEffects.Remove(PickupBase.PickupType.Skateboard);
+                    _activePlayerEffects.Remove(PlayerEffectTypes.SpeedUp);
                     EventManager.TriggerEvent("PickupExpired", new EventData("Skateboard"));
                     break;
-                case PickupBase.PickupType.Umbrella:
+                case PlayerEffectTypes.DamageResist:
                     _damageReductionAmount = 0f;
-                    _activePlayerEffects.Remove(PickupBase.PickupType.Umbrella);
+                    _activePlayerEffects.Remove(PlayerEffectTypes.DamageResist);
                     EventManager.TriggerEvent("PickupExpired", new EventData("Umbrella"));
                     break;
                 default:
@@ -283,21 +289,21 @@ public class Player : MonoBehaviour
         _playerTextPrefab.Spawn(transform.root, textPosition, "+" + healAmount + " health!");
     }
 
-    public void SpeedUp(int newSpeed, float duration = 0)
+    public void ApplySpeedUp(int newSpeed, float duration = 0)
     {
         _playerMoveRate = newSpeed;
-        _activePlayerEffects[PickupBase.PickupType.Skateboard] = Time.time + duration;
+        _activePlayerEffects[PlayerEffectTypes.SpeedUp] = Time.time + duration;
 
         Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
         string speedRate = (newSpeed / _baseMoveRate).ToString();
         _playerTextPrefab.Spawn(transform.root, textPosition, speedRate + "x speed!");
     }
 
-    public void ReduceDamage(float reductionPercentage, float duration = 0f)
+    public void ApplyDamageResist(float reductionPercentage, float duration = 0f)
     {
         _damageReductionAmount = reductionPercentage;
 
-        _activePlayerEffects[PickupBase.PickupType.Umbrella] = Time.time + duration;
+        _activePlayerEffects[PlayerEffectTypes.DamageResist] = Time.time + duration;
 
         Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
         string formatPercentage = (reductionPercentage * 100).ToString();

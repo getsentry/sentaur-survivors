@@ -7,6 +7,6 @@ public class DamageResistPickup : PickupBase
 
     protected override void OnCollect(Player player)
     {
-        player.ReduceDamage(_damageReduction, _effectDuration);
+        player.ApplyDamageResist(_damageReduction, _effectDuration);
     }
 }

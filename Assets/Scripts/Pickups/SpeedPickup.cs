@@ -8,6 +8,6 @@ public class SpeedPickup : PickupBase
 
     protected override void OnCollect(Player player)
     {
-        player.SpeedUp(_newSpeed, _effectDuration);
+        player.ApplySpeedUp(_newSpeed, _effectDuration);
     }
 }
