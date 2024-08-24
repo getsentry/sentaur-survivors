@@ -7,6 +7,11 @@ public class HealPickup : PickupBase
 
     protected override void OnCollect(Player player)
     {
-        player.HealDamage(_healAmount);
+        player.ApplyHeal(_healAmount);
+    }
+
+    protected override string GetEffectText()
+    {
+        return $"+{_healAmount} HP!";
     }
 }

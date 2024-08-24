@@ -9,4 +9,10 @@ public class DamageResistPickup : PickupBase
     {
         player.ApplyDamageResist(_damageReduction, _effectDuration);
     }
+
+    protected override string GetEffectText()
+    {
+        string formatPercentage = (_damageReduction * 100).ToString();
+        return $"+{formatPercentage}% DMG resist!";
+    }
 }

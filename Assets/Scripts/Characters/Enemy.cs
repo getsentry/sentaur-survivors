@@ -162,7 +162,7 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Enemy.DamagePlayer: Player was damaged by " + gameObject.name);
 
-        player.TakeDamage(_collisionDamage);
+        player.ApplyDamage(_collisionDamage);
     }
 
     public void TakeDamage(int damage)

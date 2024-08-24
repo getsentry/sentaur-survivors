@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scoreValue: 50
   _effectDuration: 10
-  _pickupType: 1
-  _newSpeed: 5
+  _effectText: 
+  _speedMultiple: 2
 --- !u!212 &2235537914035941605
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -11,6 +11,10 @@ public class PickupBase : MonoBehaviour
     [Tooltip("How long the effect lasts (instants have 0 duration)")]
     protected float _effectDuration = 0;
 
+    [SerializeField]
+    [Tooltip("The text that will be displayed in the UI when this pickup is collected")]
+    protected string _effectText;
+
     public Sprite Icon => GetComponent<SpriteRenderer>().sprite;
 
     protected virtual void OnCollect(Player player) { }
@@ -24,6 +28,8 @@ public class PickupBase : MonoBehaviour
 
             OnCollect(player);
 
+            Player.Instance.SpawnPlayerText(GetEffectText());
+
             // Destroy the pickup
             Destroy(this.gameObject);
 
@@ -31,5 +37,10 @@ public class PickupBase : MonoBehaviour
             List<object> eventData = new List<object> { _scoreValue, gameObject, _effectDuration };
             EventManager.TriggerEvent("PickupGrabbed", new EventData(eventData));
         }
+    }
+
+    protected virtual string GetEffectText()
+    {
+        return _effectText;
     }
 }

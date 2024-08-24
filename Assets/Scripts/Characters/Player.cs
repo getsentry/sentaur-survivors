@@ -258,7 +258,7 @@ public class Player : MonoBehaviour
         EventManager.TriggerEvent("PlayerDeath");
     }
 
-    public void TakeDamage(int damage = 0)
+    public void ApplyDamage(int damage = 0)
     {
         _hitPoints -= (int)(damage * (1 - _damageReductionAmount));
         _hitPoints = Math.Max(_hitPoints, 0); // don't let the player have negative hit points
@@ -278,39 +278,29 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void HealDamage(int healAmount = 0)
+    public void ApplyHeal(int healAmount = 0)
     {
         _hitPoints += healAmount;
         _hitPoints = Math.Min(_hitPoints, 100); // don't let the player have more than 100 hit points
 
         _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
-
-        Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
-        _playerTextPrefab.Spawn(transform.root, textPosition, "+" + healAmount + " health!");
     }
 
-    public void ApplySpeedUp(int newSpeed, float duration = 0)
+    public void ApplySpeedUp(int speedMultiple, float duration = 0)
     {
-        _playerMoveRate = newSpeed;
+        _playerMoveRate *= speedMultiple;
         _activePlayerEffects[PlayerEffectTypes.SpeedUp] = Time.time + duration;
-
-        Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
-        string speedRate = (newSpeed / _baseMoveRate).ToString();
-        _playerTextPrefab.Spawn(transform.root, textPosition, speedRate + "x speed!");
     }
 
     public void ApplyDamageResist(float reductionPercentage, float duration = 0f)
     {
         _damageReductionAmount = reductionPercentage;
-
         _activePlayerEffects[PlayerEffectTypes.DamageResist] = Time.time + duration;
+    }
 
+    public void SpawnPlayerText(string text)
+    {
         Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
-        string formatPercentage = (reductionPercentage * 100).ToString();
-        _playerTextPrefab.Spawn(
-            transform.root,
-            textPosition,
-            formatPercentage + "% dmg reduction!"
-        );
+        _playerTextPrefab.Spawn(transform.root, textPosition, text);
     }
 }

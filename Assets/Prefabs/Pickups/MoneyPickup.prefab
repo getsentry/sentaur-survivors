@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scoreValue: 5000
   _effectDuration: 0
-  _pickupType: 3
+  _effectText: +5000 points!
 --- !u!212 &2235537914035941605
 SpriteRenderer:
   m_ObjectHideFlags: 0
