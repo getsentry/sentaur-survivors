@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MozartPickup : PickupBase
+public class XPMagnetPickup : PickupBase
 {
     protected override void OnCollect(Player player)
     {

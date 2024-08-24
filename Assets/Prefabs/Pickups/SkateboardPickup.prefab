@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5054089494736014737}
+  - component: {fileID: -777987664654913731}
   - component: {fileID: 2235537914035941605}
-  - component: {fileID: 1646993205500651323}
   - component: {fileID: 8459684996225841193}
   m_Layer: 0
   m_Name: SkateboardPickup
@@ -34,6 +34,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-777987664654913731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3306419623360918530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa06202f60e64f4f941f50f13d10dd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreValue: 50
+  _effectDuration: 10
+  _pickupType: 1
+  _newSpeed: 5
 --- !u!212 &2235537914035941605
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -86,22 +102,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1646993205500651323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3306419623360918530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fac4098d86d04d2184062b7557edeff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healAmount: 30
-  _scoreValue: 100
-  _effectDuration: 10
-  _pickupType: 1
 --- !u!61 &8459684996225841193
 BoxCollider2D:
   m_ObjectHideFlags: 0

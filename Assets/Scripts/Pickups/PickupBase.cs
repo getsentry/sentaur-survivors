@@ -1,23 +1,15 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PickupBase : MonoBehaviour
 {
     [SerializeField]
-    [Tooltip("How much this heals the player for, if applicable")]
-    private int _healAmount = 30;
-
-    [SerializeField]
     [Tooltip("How much score this pickup is worth")]
-    private int _scoreValue = 50;
+    protected int _scoreValue = 50;
 
     [SerializeField]
     [Tooltip("How long the effect lasts (instants have 0 duration)")]
-    private float _effectDuration = 0;
+    protected float _effectDuration = 0;
 
     [SerializeField]
     protected PickupType _pickupType;
@@ -31,24 +23,7 @@ public class PickupBase : MonoBehaviour
         Mozart
     }
 
-    protected virtual void OnCollect(Player player)
-    {
-        switch (_pickupType)
-        {
-            case PickupType.Hotdog:
-                player.HealDamage(_healAmount);
-                break;
-            case PickupType.Skateboard:
-                player.SpeedUp(5, _effectDuration);
-                break;
-            case PickupType.Umbrella:
-                player.ReduceDamage(0.5f, _effectDuration);
-                break;
-            case PickupType.Money: // only increments score, nothing else
-            default:
-                break;
-        }
-    }
+    protected virtual void OnCollect(Player player) { }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -66,6 +41,7 @@ public class PickupBase : MonoBehaviour
             List<object> eventData = new List<object>
             {
                 _scoreValue,
+                // classname to string
                 _pickupType.ToString(),
                 _effectDuration
             };

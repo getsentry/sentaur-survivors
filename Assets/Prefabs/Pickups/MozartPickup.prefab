@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d09e6ada1b1694a018fc52fac6c953da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healAmount: 0
   _scoreValue: 25
   _effectDuration: 0
   _pickupType: 4
