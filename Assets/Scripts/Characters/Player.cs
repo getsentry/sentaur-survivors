@@ -45,8 +45,8 @@ public class Player : MonoBehaviour
     [Tooltip("How much damage is reduced for the player")]
     private float _damageReductionAmount = 0.0f;
 
-    private Dictionary<Pickup.PickupType, float> _activePlayerEffects =
-        new Dictionary<Pickup.PickupType, float>();
+    private Dictionary<PickupBase.PickupType, float> _activePlayerEffects =
+        new Dictionary<PickupBase.PickupType, float>();
 
     private HealthBar _healthBar;
     public Animator animator;
@@ -218,7 +218,7 @@ public class Player : MonoBehaviour
 
     void UpdatePickups()
     {
-        foreach (KeyValuePair<Pickup.PickupType, float> kv in _activePlayerEffects.ToList())
+        foreach (KeyValuePair<PickupBase.PickupType, float> kv in _activePlayerEffects.ToList())
         {
             if (Time.time < kv.Value)
             {
@@ -227,14 +227,14 @@ public class Player : MonoBehaviour
 
             switch (kv.Key)
             {
-                case Pickup.PickupType.Skateboard:
+                case PickupBase.PickupType.Skateboard:
                     _playerMoveRate = _baseMoveRate;
-                    _activePlayerEffects.Remove(Pickup.PickupType.Skateboard);
+                    _activePlayerEffects.Remove(PickupBase.PickupType.Skateboard);
                     EventManager.TriggerEvent("PickupExpired", new EventData("Skateboard"));
                     break;
-                case Pickup.PickupType.Umbrella:
+                case PickupBase.PickupType.Umbrella:
                     _damageReductionAmount = 0f;
-                    _activePlayerEffects.Remove(Pickup.PickupType.Umbrella);
+                    _activePlayerEffects.Remove(PickupBase.PickupType.Umbrella);
                     EventManager.TriggerEvent("PickupExpired", new EventData("Umbrella"));
                     break;
                 default:
@@ -286,7 +286,7 @@ public class Player : MonoBehaviour
     public void SpeedUp(int newSpeed, float duration = 0)
     {
         _playerMoveRate = newSpeed;
-        _activePlayerEffects[Pickup.PickupType.Skateboard] = Time.time + duration;
+        _activePlayerEffects[PickupBase.PickupType.Skateboard] = Time.time + duration;
 
         Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
         string speedRate = (newSpeed / _baseMoveRate).ToString();
@@ -297,7 +297,7 @@ public class Player : MonoBehaviour
     {
         _damageReductionAmount = reductionPercentage;
 
-        _activePlayerEffects[Pickup.PickupType.Umbrella] = Time.time + duration;
+        _activePlayerEffects[PickupBase.PickupType.Umbrella] = Time.time + duration;
 
         Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
         string formatPercentage = (reductionPercentage * 100).ToString();

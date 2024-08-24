@@ -5,7 +5,7 @@ using System.Diagnostics.Tracing;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Pickup : MonoBehaviour
+public class PickupBase : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("How much this heals the player for, if applicable")]
@@ -20,7 +20,7 @@ public class Pickup : MonoBehaviour
     private float _effectDuration = 0;
 
     [SerializeField]
-    private PickupType _pickupType;
+    protected PickupType _pickupType;
 
     public enum PickupType
     {
@@ -31,6 +31,25 @@ public class Pickup : MonoBehaviour
         Mozart
     }
 
+    protected virtual void OnCollect(Player player)
+    {
+        switch (_pickupType)
+        {
+            case PickupType.Hotdog:
+                player.HealDamage(_healAmount);
+                break;
+            case PickupType.Skateboard:
+                player.SpeedUp(5, _effectDuration);
+                break;
+            case PickupType.Umbrella:
+                player.ReduceDamage(0.5f, _effectDuration);
+                break;
+            case PickupType.Money: // only increments score, nothing else
+            default:
+                break;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         // if the player touches the pickup, destroy the pickup
@@ -38,21 +57,7 @@ public class Pickup : MonoBehaviour
         {
             var player = other.gameObject.GetComponent<Player>();
 
-            switch (_pickupType)
-            {
-                case PickupType.Hotdog:
-                    player.HealDamage(_healAmount);
-                    break;
-                case PickupType.Skateboard:
-                    player.SpeedUp(5, _effectDuration);
-                    break;
-                case PickupType.Umbrella:
-                    player.ReduceDamage(0.5f, _effectDuration);
-                    break;
-                case PickupType.Money: // only increments score, nothing else
-                default:
-                    break;
-            }
+            OnCollect(player);
 
             // Destroy the pickup
             Destroy(this.gameObject);
