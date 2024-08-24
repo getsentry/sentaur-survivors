@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     [Tooltip("How fast the player moves (how exaclty I don't know)")]
     private float _playerMoveRate = 2.5f;
+
     private float _baseMoveRate;
 
     [SerializeField]
@@ -50,9 +51,6 @@ public class Player : MonoBehaviour
         SpeedUp,
         DamageResist,
     }
-
-    private Dictionary<PlayerEffectTypes, float> _activePlayerEffects =
-        new Dictionary<PlayerEffectTypes, float>();
 
     private HealthBar _healthBar;
     public Animator animator;
@@ -142,7 +140,6 @@ public class Player : MonoBehaviour
         UpdateRavens();
         UpdateStarfish();
         UpdateSchnitzel();
-        UpdatePickups();
     }
 
     void UpdateDarts()
@@ -222,34 +219,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void UpdatePickups()
-    {
-        foreach (KeyValuePair<PlayerEffectTypes, float> kv in _activePlayerEffects.ToList())
-        {
-            if (Time.time < kv.Value)
-            {
-                continue;
-            }
-
-            switch (kv.Key)
-            {
-                case PlayerEffectTypes.SpeedUp:
-                    _playerMoveRate = _baseMoveRate;
-                    _activePlayerEffects.Remove(PlayerEffectTypes.SpeedUp);
-                    EventManager.TriggerEvent("PickupExpired", new EventData("Skateboard"));
-                    break;
-                case PlayerEffectTypes.DamageResist:
-                    _damageReductionAmount = 0f;
-                    _activePlayerEffects.Remove(PlayerEffectTypes.DamageResist);
-                    EventManager.TriggerEvent("PickupExpired", new EventData("Umbrella"));
-                    break;
-                default:
-                    throw new Exception("Unknown Pickup Type: " + kv.Key.ToString());
-            }
-            _activePlayerEffects.Remove(kv.Key);
-        }
-    }
-
     IEnumerator Wait(float _waitTime)
     {
         _isDead = true;
@@ -286,16 +255,34 @@ public class Player : MonoBehaviour
         _healthBar.SetHealth(1.0f * _hitPoints / _maxHitPoints);
     }
 
-    public void ApplySpeedUp(int speedMultiple, float duration = 0)
+    public void ApplySpeedUp(int speedMultiple, float duration = 0f)
     {
         _playerMoveRate *= speedMultiple;
-        _activePlayerEffects[PlayerEffectTypes.SpeedUp] = Time.time + duration;
+        if (duration > 0)
+        {
+            StartCoroutine(RestoreSpeed(duration));
+        }
+    }
+
+    public IEnumerator RestoreSpeed(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        _playerMoveRate = _baseMoveRate;
     }
 
     public void ApplyDamageResist(float reductionPercentage, float duration = 0f)
     {
         _damageReductionAmount = reductionPercentage;
-        _activePlayerEffects[PlayerEffectTypes.DamageResist] = Time.time + duration;
+        if (duration > 0)
+        {
+            StartCoroutine(RestoreDamageResist(duration));
+        }
+    }
+
+    public IEnumerator RestoreDamageResist(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        _damageReductionAmount = 0f;
     }
 
     public void SpawnPlayerText(string text)
