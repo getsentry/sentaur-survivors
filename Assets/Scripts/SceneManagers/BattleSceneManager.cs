@@ -90,7 +90,7 @@ public class BattleSceneManager : MonoBehaviour
 
     [SerializeField]
     [Tooltip("The parent UI element containing the active pickups")]
-    private GameObject _activePickupContainer;
+    private ActivePickupsUI _activePickupsUI;
 
     [SerializeField]
     [Tooltip("The parent UI element containing the active upgrades")]
@@ -245,13 +245,6 @@ public class BattleSceneManager : MonoBehaviour
             }
         );
         EventManager.AddListener(
-            "PickupExpired",
-            (eventData) =>
-            {
-                OnPickupExpired((string)eventData.Data);
-            }
-        );
-        EventManager.AddListener(
             "PlayerDeath",
             (eventData) =>
             {
@@ -298,19 +291,14 @@ public class BattleSceneManager : MonoBehaviour
         _pickupsOnScreen -= 1;
 
         GameObject pickupGameObj = (GameObject)eventData[1];
+        PickupBase pickup = pickupGameObj.GetComponent<PickupBase>();
         float effectDuration = (float)eventData[2];
 
-        //TODO: bring back
-        // if (effectDuration > 0)
-        // {
-        //     _activePickupContainer.transform.Find(pickupName).gameObject.SetActive(true);
-        // }
-    }
-
-    private void OnPickupExpired(string pickupName)
-    {
-        // TODO bring back
-        // _activePickupContainer.transform.Find(pickupName).gameObject.SetActive(false);
+        // active effects get denoted in the UI
+        if (effectDuration > 0)
+        {
+            _activePickupsUI.Add(pickup.Icon, effectDuration);
+        }
     }
 
     private void OnXpEarned(int xp)
