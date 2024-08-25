@@ -15,7 +15,7 @@ public class Raven : WeaponBase
     public float Speed = 12.0f;
     public int AdditionalRavens = 0;
     public List<GameObject> CurrentTargets = new List<GameObject> { };
-    public float TimeElapsedSinceLastRaven;
+    public float TimeElapsedSinceLastRaven = 0;
     private float _distanceOutsidePlayer = 1.25f;
 
     public float AreaOfEffectModifier = 1.0f;
@@ -30,23 +30,21 @@ public class Raven : WeaponBase
         _player = GameObject.Find("Player");
     }
 
-    void Start()
+    // Update is called once per frame
+    void Update()
     {
-        BaseDamagePercentage = 1.5f;
-        StartingCooldown = 6f;
-        IsEnabled = false;
-
-        Speed = 12.0f;
-        AdditionalRavens = 0;
-        CurrentTargets = new List<GameObject> { };
-        _distanceOutsidePlayer = 1.25f;
+        TimeElapsedSinceLastRaven += Time.deltaTime;
     }
 
-    // Update is called once per frame
-    void Update() { }
-
-    public void Fire(Transform parentTransform)
+    public bool CanFire()
     {
+        return IsEnabled && TimeElapsedSinceLastRaven >= Cooldown;
+    }
+
+    public void Fire(Transform parentTransform, Vector2 originPosition)
+    {
+        TimeElapsedSinceLastRaven = 0.0f;
+
         int numberOfRavens = RavenProjectile.BaseCount;
         for (int i = 0; i < numberOfRavens; i++)
         {
@@ -54,6 +52,7 @@ public class Raven : WeaponBase
 
             projectile.Initialize(Damage, Speed, AreaOfEffectModifier);
             projectile.identifier = i;
+            projectile.transform.position = originPosition;
             projectile.transform.parent = parentTransform;
             TargetClosestEnemy(projectile);
         }
@@ -120,7 +119,6 @@ public class Raven : WeaponBase
         if (level == 1)
         {
             IsEnabled = true;
-            TimeElapsedSinceLastRaven = Cooldown - 1f; // launch a raven as soon as it's enabled
         }
         else if (level == 2)
         {

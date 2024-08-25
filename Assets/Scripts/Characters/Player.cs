@@ -13,8 +13,7 @@ public class Player : MonoBehaviour
     private DartProjectile _dartPrefab;
 
     [SerializeField]
-    [Tooltip("The prefab for the player's Raven")]
-    private RavenProjectile _ravenPrefab;
+    private Raven _raven;
 
     [SerializeField]
     [Tooltip("The prefab for the player's Starfish")]
@@ -164,18 +163,10 @@ public class Player : MonoBehaviour
 
     void UpdateRavens()
     {
-        if (!RavenProjectile.IsEnabled)
+        if (_raven.CanFire())
         {
-            return;
-        }
-
-        RavenProjectile.TimeElapsedSinceLastRaven += Time.deltaTime;
-        if (RavenProjectile.TimeElapsedSinceLastRaven > RavenProjectile.Cooldown)
-        {
-            RavenProjectile.TimeElapsedSinceLastRaven = 0.0f;
-
             // note: parent transform is the parent container
-            RavenProjectile.Fire(_ravenPrefab, transform.parent);
+            _raven.Fire(transform.parent, transform.position);
         }
     }
 
