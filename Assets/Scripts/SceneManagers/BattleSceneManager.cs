@@ -795,10 +795,12 @@ public class BattleSceneManager : MonoBehaviour
                 ProjectileBase.UpgradeDamage(newLevel);
                 break;
             case UpgradeType.Dart:
-                DartProjectile.UpgradeDart(newLevel);
+                // DartProjectile.UpgradeDart(newLevel);
+                // TODO FIX THIS
                 break;
             case UpgradeType.Raven:
                 // RavenProjectile.UpgradeRaven(newLevel);
+                // TODO FIX THIS
                 break;
             case UpgradeType.Starfish:
                 StarfishProjectile.UpgradeStarfish(newLevel);

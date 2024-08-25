@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,13 +8,12 @@ public class Raven : WeaponBase
 
     public float BaseDamagePercentage = 1.5f;
     public float StartingCooldown = 6f;
-    public float Cooldown => BaseCooldownPercentage * StartingCooldown;
-    public bool IsEnabled = true;
 
     public float Speed = 12.0f;
     public int AdditionalRavens = 0;
     public List<GameObject> CurrentTargets = new List<GameObject> { };
     public float TimeElapsedSinceLastRaven = 0;
+
     private float _distanceOutsidePlayer = 1.25f;
 
     public float AreaOfEffectModifier = 1.0f;
@@ -25,25 +23,15 @@ public class Raven : WeaponBase
     [SerializeField]
     private RavenProjectile _ravenPrefab;
 
-    public void Awake()
+    public void Start()
     {
-        _player = GameObject.Find("Player");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        TimeElapsedSinceLastRaven += Time.deltaTime;
-    }
-
-    public bool CanFire()
-    {
-        return IsEnabled && TimeElapsedSinceLastRaven >= Cooldown;
+        IsEnabled = true;
+        _player = Player.Instance.gameObject;
     }
 
     public void Fire(Transform parentTransform, Vector2 originPosition)
     {
-        TimeElapsedSinceLastRaven = 0.0f;
+        base.Fire();
 
         int numberOfRavens = RavenProjectile.BaseCount;
         for (int i = 0; i < numberOfRavens; i++)

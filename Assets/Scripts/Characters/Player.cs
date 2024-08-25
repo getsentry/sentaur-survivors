@@ -9,8 +9,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    [Tooltip("The prefab for the player's dart (starting projectile)")]
-    private DartProjectile _dartPrefab;
+    private Dart _dart;
 
     [SerializeField]
     private Raven _raven;
@@ -94,8 +93,6 @@ public class Player : MonoBehaviour
         _healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
 
         takeDamageSound = GetComponent<AudioSource>();
-
-        DartProjectile.TimeElapsedSinceLastDart = DartProjectile.Cooldown - 1f; // shoot right when the game starts
     }
 
     // Update is called once per frame
@@ -143,21 +140,10 @@ public class Player : MonoBehaviour
 
     void UpdateDarts()
     {
-        if (DartProjectile.IsShooting)
+        if (_dart.CanFire())
         {
-            // if the dart is already firing, exit early (we only start counting
-            // after the dart has CEASED firing)
-            return;
-        }
-
-        // once enough time has elapsed, fire the darts
-        DartProjectile.TimeElapsedSinceLastDart += Time.deltaTime;
-        if (
-            DartProjectile.TimeElapsedSinceLastDart > DartProjectile.Cooldown
-            && !DartProjectile.IsShooting
-        )
-        {
-            StartCoroutine(DartProjectile.ShootDarts(_dartPrefab, gameObject));
+            // note: parent transform is the parent container
+            _dart.Fire(transform.parent, transform.position);
         }
     }
 

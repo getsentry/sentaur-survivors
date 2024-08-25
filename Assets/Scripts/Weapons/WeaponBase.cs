@@ -8,6 +8,12 @@ public class WeaponBase : MonoBehaviour
 
     public int BaseCount = 1;
 
+    protected float TimeElapsedSinceLastFire = 0.0f;
+
+    public bool IsEnabled = false;
+
+    public float Cooldown => BaseCooldownPercentage;
+
     private void Start()
     {
         BaseDamage = 10;
@@ -17,8 +23,16 @@ public class WeaponBase : MonoBehaviour
 
     private void Update()
     {
-        // Add weapon behavior code here
+        TimeElapsedSinceLastFire += Time.deltaTime;
     }
 
-    // Add other methods and functions for weapon functionality
+    public bool CanFire()
+    {
+        return IsEnabled && TimeElapsedSinceLastFire >= Cooldown;
+    }
+
+    protected virtual void Fire()
+    {
+        TimeElapsedSinceLastFire = 0.0f;
+    }
 }
