@@ -7,7 +7,7 @@ public class Dart : WeaponBase
     // properties true for all darts
     public int Damage => (int)(BaseDamage * BaseDamagePercentage);
     public float BaseDamagePercentage = 1f;
-    public float StartingCooldown = 1.8f;
+    public float InitialCooldown = 1.8f;
 
     public float Speed = 10.0f;
     public int AdditionalDarts = 0;
@@ -24,6 +24,7 @@ public class Dart : WeaponBase
 
     public void Start()
     {
+        StartingCooldown = InitialCooldown;
         IsEnabled = true;
         _player = Player.Instance.gameObject;
     }
@@ -99,7 +100,7 @@ public class Dart : WeaponBase
         return direction;
     }
 
-    public void UpgradeDart(int level)
+    public void Upgrade(int level)
     {
         if (level == 1)
         {

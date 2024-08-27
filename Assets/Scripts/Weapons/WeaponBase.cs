@@ -12,7 +12,9 @@ public class WeaponBase : MonoBehaviour
 
     public bool IsEnabled = false;
 
-    public float Cooldown => BaseCooldownPercentage;
+    public float Cooldown => StartingCooldown * BaseCooldownPercentage;
+
+    protected float StartingCooldown = 1.8f;
 
     private void Start()
     {

@@ -7,7 +7,7 @@ public class Raven : WeaponBase
     public int Damage => (int)(BaseDamage * BaseDamagePercentage);
 
     public float BaseDamagePercentage = 1.5f;
-    public float StartingCooldown = 6f;
+    public float InitialCooldown = 6f;
 
     public float Speed = 12.0f;
     public int AdditionalRavens = 0;
@@ -25,7 +25,7 @@ public class Raven : WeaponBase
 
     public void Start()
     {
-        IsEnabled = true;
+        StartingCooldown = InitialCooldown;
         _player = Player.Instance.gameObject;
     }
 
@@ -111,7 +111,7 @@ public class Raven : WeaponBase
         else if (level == 2)
         {
             BaseDamagePercentage = 2f;
-            StartingCooldown *= 0.8f;
+            InitialCooldown *= 0.8f;
         }
         else if (level == 3)
         {
