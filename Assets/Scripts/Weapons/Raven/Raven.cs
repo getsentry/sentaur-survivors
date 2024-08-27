@@ -10,9 +10,7 @@ public class Raven : WeaponBase
     public float InitialCooldown = 6f;
 
     public float Speed = 12.0f;
-    public int AdditionalRavens = 0;
     public List<GameObject> CurrentTargets = new List<GameObject> { };
-    public float TimeElapsedSinceLastRaven = 0;
 
     private float _distanceOutsidePlayer = 1.25f;
 

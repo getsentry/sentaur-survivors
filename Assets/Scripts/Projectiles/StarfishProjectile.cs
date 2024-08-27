@@ -5,73 +5,52 @@ using UnityEngine;
 
 public class StarfishProjectile : ProjectileBase
 {
-    // properties true for all starfish
-    public static int Damage => (int)(BaseDamage * BaseDamagePercentage);
-    public static float BaseDamagePercentage = 0.85f;
-    public static float StartingCooldown = 5f;
-    public static float Cooldown => BaseCooldownPercentage * StartingCooldown;
-    public static bool IsEnabled = false;
+    private int _damage;
+    private float _duration;
+    private float _degrees;
 
-    public static float Duration = 5f;
-    public static float DegreesPerFrame = 180f;
-    public static bool IsActive = false;
-    public static int AdditionalStarfish = 0;
-    public static float TimeElapsedSinceLastStarfish;
     private static float _distanceOutsidePlayer = 2f;
+    public static float DegreesPerFrame = 180f;
 
     public float DegreesToNextStarfish;
     public int identifier;
     private GameObject _player;
     private float _timeElapsedSinceActivated = 0.0f;
 
-    public static void Reset()
+    public void Initialize(int damage, float duration, float degrees)
     {
-        BaseDamagePercentage = 0.8f;
-        StartingCooldown = 5f;
-        IsEnabled = false;
+        _damage = damage;
+        _duration = duration;
+        _degrees = degrees;
 
-        Duration = 5f;
-        DegreesPerFrame = 180f;
-        IsActive = false;
-        AdditionalStarfish = 0;
-        _distanceOutsidePlayer = 2f;
-    }
-
-    public static void Fire(StarfishProjectile _starfishPrefab, Transform parentTransform)
-    {
-        int numberOfStarfish = StarfishProjectile.BaseCount + StarfishProjectile.AdditionalStarfish;
-        float degreesBetweenStarfish = 360 / numberOfStarfish;
-        for (int i = 0; i < numberOfStarfish; i++)
-        {
-            _starfishPrefab.DegreesToNextStarfish = degreesBetweenStarfish;
-            _starfishPrefab.identifier = i;
-            var starfish = Instantiate(_starfishPrefab);
-            starfish.transform.parent = parentTransform;
-        }
+        Debug.Log(
+            "Starfish initialized with damage: "
+                + _damage
+                + ", degrees: "
+                + _degrees
+                + ", duration: "
+                + _duration
+        );
     }
 
     void Start()
     {
         _player = GameObject.Find("Player");
-        IsActive = true;
 
         // starting position
         transform.position =
             _player.transform.position + new Vector3(1f, 0, 0).normalized * _distanceOutsidePlayer;
-        transform.RotateAround(
-            _player.transform.position,
-            Vector3.forward,
-            DegreesToNextStarfish * identifier
-        );
+
+        Debug.Log("Starfish starting position: " + transform.position);
+        transform.RotateAround(_player.transform.position, Vector3.forward, _degrees * identifier);
     }
 
     // Update is called once per frame
     void Update()
     {
         _timeElapsedSinceActivated += Time.deltaTime;
-        if (_timeElapsedSinceActivated > Duration)
+        if (_timeElapsedSinceActivated > _duration)
         {
-            IsActive = false;
             Destroy(gameObject);
         }
     }
@@ -105,25 +84,6 @@ public class StarfishProjectile : ProjectileBase
     // Deal damage to the enemy because they were hit by a dart
     override protected void DamageEnemy(Enemy enemy)
     {
-        enemy.TakeDamage(Damage);
-    }
-
-    public static void UpgradeStarfish(int level)
-    {
-        if (level == 1)
-        {
-            IsEnabled = true;
-            TimeElapsedSinceLastStarfish = Cooldown - 1f; // launch a starfish as soon as its enabled
-        }
-        else if (level == 2)
-        {
-            Duration *= 1.2f;
-            BaseDamagePercentage = 1.2f;
-        }
-        else if (level == 3)
-        {
-            Duration *= 1.5f;
-            StartingCooldown *= 0.7f;
-        }
+        enemy.TakeDamage(_damage);
     }
 }

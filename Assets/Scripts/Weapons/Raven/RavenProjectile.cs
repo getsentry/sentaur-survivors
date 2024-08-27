@@ -10,11 +10,10 @@ public class RavenProjectile : ProjectileBase
     private float _areaOfEffectRange = 1.0f;
 
     public int identifier;
-    private Vector3 _direction;
 
+    private Vector3 _direction;
     private int _damage;
     private float _speed;
-
     private float _areaOfEffectModifier;
 
     public void Initialize(int damage, float speed, float areaOfEffectModifier)

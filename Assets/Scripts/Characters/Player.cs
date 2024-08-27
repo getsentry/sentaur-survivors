@@ -15,8 +15,7 @@ public class Player : MonoBehaviour
     private Raven _raven;
 
     [SerializeField]
-    [Tooltip("The prefab for the player's Starfish")]
-    private StarfishProjectile _starfishPrefab;
+    private Starfish _starfish;
 
     [SerializeField]
     [Tooltip("The prefab for the player's Schnitzel")]
@@ -158,25 +157,9 @@ public class Player : MonoBehaviour
 
     void UpdateStarfish()
     {
-        if (!StarfishProjectile.IsEnabled)
+        if (_starfish.CanFire())
         {
-            return;
-        }
-
-        if (StarfishProjectile.IsActive)
-        {
-            // if starfish is already orbiting nothing to do
-            return;
-        }
-
-        StarfishProjectile.TimeElapsedSinceLastStarfish += Time.deltaTime;
-        if (StarfishProjectile.TimeElapsedSinceLastStarfish > StarfishProjectile.Cooldown)
-        {
-            StarfishProjectile.TimeElapsedSinceLastStarfish = 0.0f;
-
-            // note: parent transform is the player (because starfish orbits)
-            //       around the player
-            StarfishProjectile.Fire(_starfishPrefab, this.transform);
+            _starfish.Fire(transform, transform.position);
         }
     }
 

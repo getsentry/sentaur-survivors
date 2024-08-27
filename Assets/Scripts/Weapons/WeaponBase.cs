@@ -23,12 +23,12 @@ public class WeaponBase : MonoBehaviour
         BaseCount = 1;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         TimeElapsedSinceLastFire += Time.deltaTime;
     }
 
-    public bool CanFire()
+    public virtual bool CanFire()
     {
         return IsEnabled && TimeElapsedSinceLastFire >= Cooldown;
     }

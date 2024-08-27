@@ -798,11 +798,10 @@ public class BattleSceneManager : MonoBehaviour
                 GameObject.Find("Dart").GetComponent<Dart>().Upgrade(newLevel);
                 break;
             case UpgradeType.Raven:
-                // get raven
                 GameObject.Find("Raven").GetComponent<Raven>().Upgrade(newLevel);
                 break;
             case UpgradeType.Starfish:
-                StarfishProjectile.UpgradeStarfish(newLevel);
+                GameObject.Find("Starfish").GetComponent<Starfish>().Upgrade(newLevel);
                 break;
             case UpgradeType.Schnitzel:
                 SchnitzelProjectile.UpgradeSchnitzel(newLevel);

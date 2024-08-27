@@ -10,7 +10,7 @@ public class Dart : WeaponBase
     public float InitialCooldown = 1.8f;
 
     public float Speed = 10.0f;
-    public int AdditionalDarts = 0;
+    public int AdditionalDarts = 0; // NOTE: rear-shooting darts
     public float TimeElapsedSinceLastDart;
     public bool IsShooting = false;
 
