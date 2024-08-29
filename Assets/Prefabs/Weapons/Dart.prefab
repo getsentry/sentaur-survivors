@@ -44,14 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c84f4f9395044e90875a442a439c87a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseDamage: 10
-  BaseCooldownPercentage: 1
-  BaseCount: 1
-  IsEnabled: 0
-  BaseDamagePercentage: 1
-  StartingCooldown: 1.8
+  _isEnabled: 0
+  _startingCooldown: 1.8
+  _baseDamagePercentage: 1
   Speed: 10
   AdditionalDarts: 0
-  TimeElapsedSinceLastDart: 0
   IsShooting: 0
   _dartProjectilePrefab: {fileID: -1238747304094502698, guid: f4b2f15faddfa43ee9ea450e341989a3, type: 3}

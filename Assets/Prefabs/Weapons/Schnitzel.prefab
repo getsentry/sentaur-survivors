@@ -44,10 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d279d45005cbf471da3528a6f4e2e03b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseDamage: 10
-  BaseCooldownPercentage: 1
-  BaseCount: 1
-  IsEnabled: 0
+  _isEnabled: 0
+  _startingCooldown: 2.9
   BaseDamagePercentage: 0.8
   InitialCooldown: 2.9
   Speed: 5

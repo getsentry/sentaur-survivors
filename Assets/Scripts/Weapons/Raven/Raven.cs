@@ -3,12 +3,6 @@ using UnityEngine;
 
 public class Raven : WeaponBase
 {
-    // properties true for all ravens
-    public int Damage => (int)(BaseDamage * BaseDamagePercentage);
-
-    public float BaseDamagePercentage = 1.5f;
-    public float InitialCooldown = 6f;
-
     public float Speed = 12.0f;
     public List<GameObject> CurrentTargets = new List<GameObject> { };
 
@@ -23,7 +17,6 @@ public class Raven : WeaponBase
 
     public void Start()
     {
-        StartingCooldown = InitialCooldown;
         _player = Player.Instance.gameObject;
     }
 
@@ -31,7 +24,7 @@ public class Raven : WeaponBase
     {
         base.Fire();
 
-        for (int i = 0; i < BaseCount; i++)
+        for (int i = 0; i < _baseCount; i++)
         {
             var projectile = Instantiate(_ravenPrefab);
 
@@ -103,12 +96,12 @@ public class Raven : WeaponBase
     {
         if (level == 1)
         {
-            IsEnabled = true;
+            _isEnabled = true;
         }
         else if (level == 2)
         {
-            BaseDamagePercentage = 2f;
-            InitialCooldown *= 0.8f;
+            _baseDamagePercentage = 2f;
+            _startingCooldown *= 0.8f;
         }
         else if (level == 3)
         {

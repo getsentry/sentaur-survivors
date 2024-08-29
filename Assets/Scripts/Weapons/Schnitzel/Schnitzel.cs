@@ -3,13 +3,8 @@ using UnityEngine;
 
 public class Schnitzel : WeaponBase
 {
-    // properties true for all schnitzel
-    public int Damage => (int)(BaseDamage * BaseDamagePercentage);
-    public float BaseDamagePercentage = 0.8f;
-    public float InitialCooldown = 2.9f;
-
+    [SerializeField]
     public float Speed = 5.0f;
-    public float TimeElapsedSinceLastSchnitzel;
 
     private float _distanceOutsidePlayer = 1.25f;
     private float _shootingInterval = 0.25f; // time between consecutive schnitzel
@@ -18,11 +13,6 @@ public class Schnitzel : WeaponBase
 
     [SerializeField]
     private SchnitzelProjectile _schnitzelPrefab;
-
-    public void Start()
-    {
-        StartingCooldown = InitialCooldown;
-    }
 
     public void Fire(Transform parentTransform, Vector2 originPosition)
     {
@@ -36,7 +26,7 @@ public class Schnitzel : WeaponBase
         Vector3 direction = CalculateDirection(player);
 
         // shoot the base number of schnitzel
-        for (int i = 0; i < BaseCount; i++)
+        for (int i = 0; i < _baseCount; i++)
         {
             ShootOneSchnitzel(prefab, player, direction);
 
@@ -45,7 +35,6 @@ public class Schnitzel : WeaponBase
             direction = CalculateDirection(player);
         }
 
-        TimeElapsedSinceLastSchnitzel = 0.0f;
         yield return null;
     }
 
@@ -77,7 +66,7 @@ public class Schnitzel : WeaponBase
     {
         if (level == 1)
         {
-            IsEnabled = true;
+            _isEnabled = true;
         }
         else if (level == 2)
         {

@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Starfish : WeaponBase
 {
-    // properties true for all starfish
-    public int Damage => (int)(BaseDamage * BaseDamagePercentage);
-    public float BaseDamagePercentage = 0.85f;
-    public float InitialCooldown = 1f;
-
     public float Duration = 5f;
 
     public float DegreesToNextStarfish;
@@ -19,23 +14,21 @@ public class Starfish : WeaponBase
 
     public void Start()
     {
-        StartingCooldown = InitialCooldown;
-
         // hack; when starfish inits, time elapsed starts at duration (see CanFire note)
-        TimeElapsedSinceLastFire = Duration;
+        _timeElapsedSinceLastFire = Duration;
     }
 
     public override bool CanFire()
     {
         // starfish cooldown doesn't reset until duration is over
-        return IsEnabled && TimeElapsedSinceLastFire >= Cooldown + Duration;
+        return _isEnabled && _timeElapsedSinceLastFire >= Cooldown + Duration;
     }
 
     public void Fire(Transform parentTransform, Vector3 origin)
     {
         base.Fire();
 
-        int numberOfStarfish = BaseCount;
+        int numberOfStarfish = _baseCount;
         float degreesBetweenStarfish = 360 / numberOfStarfish;
 
         for (int i = 0; i < numberOfStarfish; i++)
@@ -52,17 +45,17 @@ public class Starfish : WeaponBase
     {
         if (level == 1)
         {
-            IsEnabled = true;
+            _isEnabled = true;
         }
         else if (level == 2)
         {
             Duration *= 1.2f;
-            BaseDamagePercentage = 1.2f;
+            _baseDamagePercentage = 1.2f;
         }
         else if (level == 3)
         {
             Duration *= 1.5f;
-            StartingCooldown *= 0.7f;
+            _startingCooldown *= 0.7f;
         }
     }
 }

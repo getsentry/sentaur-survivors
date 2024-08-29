@@ -44,3 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b14723eded74f51aa81dacbdbbb280, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isEnabled: 0
+  _startingCooldown: 6
+  _baseDamagePercentage: 1.5
+  BaseDamagePercentage: 1.5
+  InitialCooldown: 6
+  Speed: 12
+  CurrentTargets: []
+  AreaOfEffectModifier: 1
+  _ravenPrefab: {fileID: 0}

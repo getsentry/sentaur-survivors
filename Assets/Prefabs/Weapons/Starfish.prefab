@@ -44,14 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa634c4596c7c42a08aaedd43d7be1d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseDamage: 10
-  BaseCooldownPercentage: 1
-  BaseCount: 1
-  IsEnabled: 0
-  BaseDamagePercentage: 0.85
-  InitialCooldown: 5
+  _isEnabled: 0
+  _startingCooldown: 5
+  _baseDamagePercentage: 0.85
   Duration: 5
-  IsActive: 0
   DegreesToNextStarfish: 0
   identifier: 0
   _starfishProjectilePrefab: {fileID: 4760811041620966471, guid: 33fd1a5d339ac4354ba91c77597adb88, type: 3}

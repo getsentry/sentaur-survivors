@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class Dart : WeaponBase
 {
-    // properties true for all darts
-    public int Damage => (int)(BaseDamage * BaseDamagePercentage);
-    public float BaseDamagePercentage = 1f;
-    public float InitialCooldown = 1.8f;
-
     public float Speed = 10.0f;
     public int AdditionalDarts = 0; // NOTE: rear-shooting darts
-    public float TimeElapsedSinceLastDart;
     public bool IsShooting = false;
 
     private float _distanceOutsidePlayer = 1.25f;
@@ -24,8 +18,7 @@ public class Dart : WeaponBase
 
     public void Start()
     {
-        StartingCooldown = InitialCooldown;
-        IsEnabled = true;
+        _isEnabled = true;
         _player = Player.Instance.gameObject;
     }
 
@@ -49,7 +42,7 @@ public class Dart : WeaponBase
         Vector3 direction = CalculateDirection(_player);
 
         // shoot the base number of darts
-        for (int i = 0; i < BaseCount; i++)
+        for (int i = 0; i < _baseCount; i++)
         {
             ShootADart(_dartProjectilePrefab, _player, direction);
             if (AdditionalDarts > i)
@@ -63,7 +56,7 @@ public class Dart : WeaponBase
         }
 
         // accounting for case where # of backwards darts > # of forwards darts
-        int remainingDarts = AdditionalDarts - BaseCount;
+        int remainingDarts = AdditionalDarts - _baseCount;
         if (remainingDarts > 0)
         {
             direction *= -1;
@@ -74,7 +67,6 @@ public class Dart : WeaponBase
             }
         }
 
-        TimeElapsedSinceLastDart = 0.0f;
         IsShooting = false;
         yield return null;
     }
@@ -108,11 +100,11 @@ public class Dart : WeaponBase
         }
         else if (level == 2)
         {
-            BaseDamagePercentage = 1.5f;
+            _baseDamagePercentage = 1.5f;
         }
         else if (level == 3)
         {
-            BaseDamagePercentage = 2f;
+            _baseDamagePercentage = 2f;
             AdditionalDarts += 2;
         }
     }

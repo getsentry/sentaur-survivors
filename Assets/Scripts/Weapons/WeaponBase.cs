@@ -1,20 +1,28 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponBase : MonoBehaviour
 {
-    protected float TimeElapsedSinceLastFire = 0.0f;
+    [SerializeField]
+    protected bool _isEnabled = false;
 
-    public bool IsEnabled = false;
+    [SerializeField]
+    protected float _startingCooldown;
 
-    protected WeaponManager _weaponManager;
+    [SerializeField]
+    public float _baseDamagePercentage = 0.8f;
 
-    protected float StartingCooldown = 1.8f;
-    public float Cooldown => StartingCooldown * BaseCooldownPercentage;
+    public float Cooldown => _startingCooldown * _baseCooldownPercentage;
+    public int Damage => (int)(_baseDamage * _baseDamagePercentage);
+
+    protected float _timeElapsedSinceLastFire = 0.0f;
 
     // proxied
-    public int BaseDamage => _weaponManager.BaseDamage;
-    public float BaseCooldownPercentage => _weaponManager.BaseCooldownPercentage;
-    public int BaseCount => _weaponManager.BaseCount;
+    protected int _baseDamage => _weaponManager.BaseDamage;
+    protected float _baseCooldownPercentage => _weaponManager.BaseCooldownPercentage;
+    protected int _baseCount => _weaponManager.BaseCount;
+
+    protected WeaponManager _weaponManager;
 
     private void Awake()
     {
@@ -23,16 +31,16 @@ public class WeaponBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        TimeElapsedSinceLastFire += Time.deltaTime;
+        _timeElapsedSinceLastFire += Time.deltaTime;
     }
 
     public virtual bool CanFire()
     {
-        return IsEnabled && TimeElapsedSinceLastFire >= Cooldown;
+        return _isEnabled && _timeElapsedSinceLastFire >= Cooldown;
     }
 
     protected virtual void Fire()
     {
-        TimeElapsedSinceLastFire = 0.0f;
+        _timeElapsedSinceLastFire = 0.0f;
     }
 }
