@@ -1,20 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Profiling;
 using UnityEngine;
 
 public class ProjectileBase : MonoBehaviour
 {
     protected Rigidbody2D _rigidbody2D;
-    public static int BaseDamage = 10;
-    public static float BaseCooldownPercentage = 1f;
-
-    public static void Reset()
-    {
-        BaseDamage = 10;
-        BaseCooldownPercentage = 1f;
-    }
 
     protected void Awake()
     {

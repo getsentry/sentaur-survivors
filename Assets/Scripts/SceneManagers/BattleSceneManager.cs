@@ -223,11 +223,6 @@ public class BattleSceneManager : MonoBehaviour
 
         SetCurrentLevel(_currentLevel);
 
-        ProjectileBase.Reset();
-        DartProjectile.Reset();
-        StarfishProjectile.Reset();
-        RavenProjectile.Reset();
-        SchnitzelProjectile.Reset();
         LevelUpUI.Reset();
 
         EventManager.AddListener(
@@ -780,19 +775,19 @@ public class BattleSceneManager : MonoBehaviour
     private void OnUpgradeChosen(UpgradeEventData upgradeEvent)
     {
         var newLevel = upgradeEvent.Level;
+
+        var weaponManager = Player.Instance.WeaponManager;
+
         switch (upgradeEvent.UpgradeType)
         {
             case UpgradeType.CountUp:
-                ProjectileBase.UpgradeCount(newLevel);
-                // add upgrade to the active upgrades container in the hud
-                // i think we need an EventListener like we do in Pickup.cs:84, maybe?
-                // _activePickupContainer.transform.Find("Count").gameObject.SetActive(true);
+                weaponManager.UpgradeCount(newLevel);
                 break;
             case UpgradeType.CooldownDown:
-                ProjectileBase.UpgradeCooldown(newLevel);
+                weaponManager.UpgradeCooldown(newLevel);
                 break;
             case UpgradeType.DamageUp:
-                ProjectileBase.UpgradeDamage(newLevel);
+                weaponManager.UpgradeDamage(newLevel);
                 break;
             case UpgradeType.Dart:
                 GameObject.Find("Dart").GetComponent<Dart>().Upgrade(newLevel);

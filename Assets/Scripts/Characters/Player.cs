@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     private Schnitzel _schnitzel;
 
     [SerializeField]
+    public WeaponManager WeaponManager;
+
+    [SerializeField]
     [Tooltip("The prefab for the player's Schnitzel")]
     private SchnitzelProjectile _schnitzelPrefab;
 

@@ -2,25 +2,23 @@ using UnityEngine;
 
 public class WeaponBase : MonoBehaviour
 {
-    public int BaseDamage = 10;
-
-    public float BaseCooldownPercentage = 1f;
-
-    public int BaseCount = 1;
-
     protected float TimeElapsedSinceLastFire = 0.0f;
 
     public bool IsEnabled = false;
 
-    public float Cooldown => StartingCooldown * BaseCooldownPercentage;
+    protected WeaponManager _weaponManager;
 
     protected float StartingCooldown = 1.8f;
+    public float Cooldown => StartingCooldown * BaseCooldownPercentage;
 
-    private void Start()
+    // proxied
+    public int BaseDamage => _weaponManager.BaseDamage;
+    public float BaseCooldownPercentage => _weaponManager.BaseCooldownPercentage;
+    public int BaseCount => _weaponManager.BaseCount;
+
+    private void Awake()
     {
-        BaseDamage = 10;
-        BaseCooldownPercentage = 1f;
-        BaseCount = 1;
+        _weaponManager = GameObject.Find("WeaponManager").GetComponent<WeaponManager>();
     }
 
     protected virtual void Update()
@@ -36,49 +34,5 @@ public class WeaponBase : MonoBehaviour
     protected virtual void Fire()
     {
         TimeElapsedSinceLastFire = 0.0f;
-    }
-
-    public void UpgradeDamage(int level)
-    {
-        if (level == 1)
-        {
-            BaseDamage = (int)(BaseDamage * 1.3);
-        }
-        else if (level == 2)
-        {
-            BaseDamage = (int)(BaseDamage * 1.6);
-        }
-        else if (level == 3)
-        {
-            BaseDamage = (int)(BaseDamage * 2);
-        }
-    }
-
-    public void UpgradeCooldown(int level)
-    {
-        if (level == 1)
-        {
-            BaseCooldownPercentage = 0.8f;
-        }
-        else if (level == 2)
-        {
-            BaseCooldownPercentage = 0.6f;
-        }
-        else if (level == 3)
-        {
-            BaseCooldownPercentage = 0.3f;
-        }
-    }
-
-    public void UpgradeCount(int level)
-    {
-        if (level == 3)
-        {
-            BaseCount += 2;
-        }
-        else
-        {
-            BaseCount++;
-        }
     }
 }

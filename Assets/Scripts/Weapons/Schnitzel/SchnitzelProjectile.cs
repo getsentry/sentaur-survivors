@@ -15,7 +15,6 @@ public class SchnitzelProjectile : ProjectileBase
 
     // properties true for all schnitzel
     private static float _distanceOutsidePlayer = 1.25f;
-    private static float _shootingInterval = 0.25f; // time between consecutive schnitzel
 
     public static float MaxLifetimeInSeconds = 10.0f;
     public static float KnockbackForce = 1000f;

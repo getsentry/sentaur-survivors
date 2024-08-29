@@ -31,8 +31,7 @@ public class Raven : WeaponBase
     {
         base.Fire();
 
-        int numberOfRavens = RavenProjectile.BaseCount;
-        for (int i = 0; i < numberOfRavens; i++)
+        for (int i = 0; i < BaseCount; i++)
         {
             var projectile = Instantiate(_ravenPrefab);
 
