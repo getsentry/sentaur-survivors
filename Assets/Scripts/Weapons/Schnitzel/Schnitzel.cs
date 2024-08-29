@@ -1,9 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Profiling;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Schnitzel : WeaponBase
 {
