@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     private Starfish _starfish;
 
     [SerializeField]
+    private Schnitzel _schnitzel;
+
+    [SerializeField]
     [Tooltip("The prefab for the player's Schnitzel")]
     private SchnitzelProjectile _schnitzelPrefab;
 
@@ -165,20 +168,9 @@ public class Player : MonoBehaviour
 
     void UpdateSchnitzel()
     {
-        if (SchnitzelProjectile.IsShooting)
+        if (_schnitzel.CanFire())
         {
-            return;
-        }
-
-        if (!SchnitzelProjectile.IsEnabled)
-        {
-            return;
-        }
-
-        SchnitzelProjectile.TimeElapsedSinceLastSchnitzel += Time.deltaTime;
-        if (SchnitzelProjectile.TimeElapsedSinceLastSchnitzel > SchnitzelProjectile.Cooldown)
-        {
-            StartCoroutine(SchnitzelProjectile.ShootSchnitzels(_schnitzelPrefab, gameObject));
+            _schnitzel.Fire(transform, transform.position);
         }
     }
 

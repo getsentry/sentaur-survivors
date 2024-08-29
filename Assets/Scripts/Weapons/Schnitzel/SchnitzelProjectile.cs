@@ -10,17 +10,10 @@ public class SchnitzelProjectile : ProjectileBase
     [SerializeField]
     private float _areaOfEffectRange = 0.25f;
 
+    private float _speed;
+    private int _damage;
+
     // properties true for all schnitzel
-    public static int Damage => (int)(BaseDamage * BaseDamagePercentage);
-    public static float BaseDamagePercentage = 0.8f;
-    public static float StartingCooldown = 2.9f;
-    public static float Cooldown => BaseCooldownPercentage * StartingCooldown;
-
-    public static float Speed = 5.0f;
-    public static float TimeElapsedSinceLastSchnitzel;
-    public static bool IsShooting = false;
-    public static bool IsEnabled = false;
-
     private static float _distanceOutsidePlayer = 1.25f;
     private static float _shootingInterval = 0.25f; // time between consecutive schnitzel
 
@@ -34,47 +27,15 @@ public class SchnitzelProjectile : ProjectileBase
 
     private HashSet<int> enemiesHit = new HashSet<int>();
 
-    public static void Reset()
-    {
-        BaseDamagePercentage = 0.8f;
-        StartingCooldown = 3.0f;
-
-        Speed = 5.0f;
-        IsShooting = false;
-        IsEnabled = false;
-
-        _distanceOutsidePlayer = 1.25f;
-        _shootingInterval = 0.25f; // time between consecutive schnitzel
-
-        MaxLifetimeInSeconds = 10.0f;
-        KnockbackForce = 1000f;
-
-        Scale = 1.0f;
-    }
-
     public void Start()
     {
         _creationTime = Time.time;
     }
 
-    public static IEnumerator ShootSchnitzels(SchnitzelProjectile prefab, GameObject player)
+    public void Initialize(int damage, float speed)
     {
-        IsShooting = true;
-        Vector3 direction = CalculateDirection(player);
-
-        // shoot the base number of schnitzel
-        for (int i = 0; i < BaseCount; i++)
-        {
-            ShootOneSchnitzel(prefab, player, direction);
-
-            yield return new WaitForSeconds(_shootingInterval);
-            // get new updates mouse coords inbetween shots
-            direction = CalculateDirection(player);
-        }
-
-        TimeElapsedSinceLastSchnitzel = 0.0f;
-        IsShooting = false;
-        yield return null;
+        _damage = damage;
+        _speed = speed;
     }
 
     protected override void OnDamage(Enemy enemy)
@@ -113,14 +74,6 @@ public class SchnitzelProjectile : ProjectileBase
         schnitzel.SetDirection(direction);
     }
 
-    private static Vector3 CalculateDirection(GameObject player)
-    {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 direction = mousePosition - player.transform.position;
-
-        return direction;
-    }
-
     public void SetDirection(Vector3 direction)
     {
         _direction.y = Random.Range(1f, 1.6f);
@@ -134,13 +87,13 @@ public class SchnitzelProjectile : ProjectileBase
         // rotate the dart to face the direction it's moving
         var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        _rigidbody2D.velocity = _direction * Speed;
+        _rigidbody2D.velocity = _direction * _speed;
     }
 
     // Deal damage to the enemy because they were hit by a dart
     override protected void DamageEnemy(Enemy initialEnemy)
     {
-        initialEnemy.TakeDamage(Damage);
+        initialEnemy.TakeDamage(_damage);
         // why 1000? -- the result of experimenting with different values (!)
         initialEnemy.Knockback(_direction, KnockbackForce);
 
@@ -157,7 +110,7 @@ public class SchnitzelProjectile : ProjectileBase
                 // dont hit initial enemy twice
                 if (enemyHit != initialEnemy)
                 {
-                    enemyHit.TakeDamage(Damage);
+                    enemyHit.TakeDamage(_damage);
                 }
             }
         }
@@ -175,22 +128,6 @@ public class SchnitzelProjectile : ProjectileBase
         if (Time.time - _creationTime > MaxLifetimeInSeconds)
         {
             Destroy(gameObject);
-        }
-    }
-
-    public static void UpgradeSchnitzel(int level)
-    {
-        if (level == 1)
-        {
-            IsEnabled = true;
-        }
-        else if (level == 2)
-        {
-            Scale *= 1.4f;
-        }
-        else if (level == 3)
-        {
-            Scale *= 1.3f;
         }
     }
 }

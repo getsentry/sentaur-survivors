@@ -23,8 +23,6 @@ public class Starfish : WeaponBase
 
         // hack; when starfish inits, time elapsed starts at duration (see CanFire note)
         TimeElapsedSinceLastFire = Duration;
-
-        IsEnabled = true;
     }
 
     public override bool CanFire()

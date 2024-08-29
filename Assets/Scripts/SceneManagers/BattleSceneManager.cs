@@ -804,7 +804,7 @@ public class BattleSceneManager : MonoBehaviour
                 GameObject.Find("Starfish").GetComponent<Starfish>().Upgrade(newLevel);
                 break;
             case UpgradeType.Schnitzel:
-                SchnitzelProjectile.UpgradeSchnitzel(newLevel);
+                GameObject.Find("Schnitzel").GetComponent<Schnitzel>().Upgrade(newLevel);
                 break;
             default:
                 break;
