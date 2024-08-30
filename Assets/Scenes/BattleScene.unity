@@ -30710,6 +30710,10 @@ PrefabInstance:
       propertyPath: _ravenPrefab
       value: 
       objectReference: {fileID: 1783361906523289645, guid: 73dffc90c37874381bd50b09415a2c82, type: 3}
+    - target: {fileID: 2205568597176363839, guid: 4c3545b2234564ab382559e5e2db585c, type: 3}
+      propertyPath: _ravenProjectilePrefab
+      value: 
+      objectReference: {fileID: 1783361906523289645, guid: 73dffc90c37874381bd50b09415a2c82, type: 3}
     - target: {fileID: 3476222383509152590, guid: 4c3545b2234564ab382559e5e2db585c, type: 3}
       propertyPath: m_Name
       value: Raven

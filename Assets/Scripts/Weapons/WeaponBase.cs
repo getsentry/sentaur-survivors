@@ -31,7 +31,10 @@ public class WeaponBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        _timeElapsedSinceLastFire += Time.deltaTime;
+        if (_isEnabled)
+        {
+            _timeElapsedSinceLastFire += Time.deltaTime;
+        }
     }
 
     public virtual bool CanFire()
