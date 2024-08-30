@@ -4,12 +4,16 @@ using UnityEngine;
 public class Schnitzel : WeaponBase
 {
     [SerializeField]
-    public float Speed = 5.0f;
+    private float _speed = 5.0f;
 
-    private float _distanceOutsidePlayer = 1.25f;
+    [SerializeField]
+    private float _spawnDistanceOutsidePlayer = 1.25f;
+
+    [SerializeField]
     private float _shootingInterval = 0.25f; // time between consecutive schnitzel
 
-    public float Scale = 1.0f;
+    [SerializeField]
+    private float _scale = 1.0f;
 
     [SerializeField]
     private SchnitzelProjectile _schnitzelPrefab;
@@ -49,15 +53,15 @@ public class Schnitzel : WeaponBase
     private void ShootOneSchnitzel(SchnitzelProjectile prefab, GameObject player, Vector3 direction)
     {
         SchnitzelProjectile schnitzel = Instantiate(prefab);
-        schnitzel.Initialize(Damage, Speed);
+        schnitzel.Initialize(Damage, _speed);
         schnitzel.transform.parent = player.transform.parent;
 
         // initial position
         schnitzel.transform.position =
-            player.transform.position + direction.normalized * _distanceOutsidePlayer;
+            player.transform.position + direction.normalized * _spawnDistanceOutsidePlayer;
 
         // adjust scale
-        schnitzel.transform.localScale = new Vector3(Scale, Scale, Scale);
+        schnitzel.transform.localScale = new Vector3(_scale, _scale, _scale);
 
         schnitzel.SetDirection(direction);
     }
@@ -70,11 +74,11 @@ public class Schnitzel : WeaponBase
         }
         else if (level == 2)
         {
-            Scale *= 1.4f;
+            _scale *= 1.4f;
         }
         else if (level == 3)
         {
-            Scale *= 1.3f;
+            _scale *= 1.3f;
         }
     }
 }

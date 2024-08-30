@@ -3,17 +3,23 @@ using UnityEngine;
 
 public class Raven : WeaponBase
 {
-    public float Speed = 12.0f;
-    public List<GameObject> CurrentTargets = new List<GameObject> { };
-
-    private float _distanceOutsidePlayer = 1.25f;
-
-    public float AreaOfEffectModifier = 1.0f;
-
-    private GameObject _player;
+    [SerializeField]
+    [Tooltip("Projectile speed as it leaves player")]
+    private float _speed = 12.0f;
 
     [SerializeField]
-    private RavenProjectile _ravenPrefab;
+    [Tooltip("Modifies AOE of emitted projectiles")]
+    private float _areaOfEffectModifier = 1.0f;
+
+    [SerializeField]
+    [Tooltip("Distance from player to spawn raven")]
+    private float _spawnDistanceOutsidePlayer = 1.25f;
+
+    [SerializeField]
+    private RavenProjectile _ravenProjectilePrefab;
+
+    private List<GameObject> _currentTargets = new List<GameObject> { };
+    private GameObject _player;
 
     public void Start()
     {
@@ -26,15 +32,15 @@ public class Raven : WeaponBase
 
         for (int i = 0; i < _baseCount; i++)
         {
-            var projectile = Instantiate(_ravenPrefab);
+            var projectile = Instantiate(_ravenProjectilePrefab);
 
-            projectile.Initialize(Damage, Speed, AreaOfEffectModifier);
+            projectile.Initialize(Damage, _speed, _areaOfEffectModifier);
             projectile.identifier = i;
             projectile.transform.position = originPosition;
             projectile.transform.parent = parentTransform;
             TargetClosestEnemy(projectile);
         }
-        CurrentTargets.Clear(); // reset raven targeting
+        _currentTargets.Clear(); // reset raven targeting
     }
 
     public void TargetClosestEnemy(RavenProjectile projectile)
@@ -51,7 +57,7 @@ public class Raven : WeaponBase
 
         // initial position
         transform.position =
-            _player.transform.position + direction.normalized * _distanceOutsidePlayer;
+            _player.transform.position + direction.normalized * _spawnDistanceOutsidePlayer;
     }
 
     private GameObject GetTarget()
@@ -65,7 +71,7 @@ public class Raven : WeaponBase
         bool isAlreadyTargeted = false;
         foreach (GameObject enemy in enemies)
         {
-            foreach (GameObject targetedEnemy in CurrentTargets)
+            foreach (GameObject targetedEnemy in _currentTargets)
             {
                 if (ReferenceEquals(enemy, targetedEnemy))
                 {
@@ -88,7 +94,7 @@ public class Raven : WeaponBase
                 distance = curDistance;
             }
         }
-        CurrentTargets.Add(target);
+        _currentTargets.Add(target);
         return target;
     }
 
@@ -105,7 +111,7 @@ public class Raven : WeaponBase
         }
         else if (level == 3)
         {
-            AreaOfEffectModifier = 1.6f;
+            _areaOfEffectModifier = 1.6f;
         }
     }
 }

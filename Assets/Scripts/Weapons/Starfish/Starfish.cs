@@ -5,7 +5,7 @@ using UnityEngine;
 public class Starfish : WeaponBase
 {
     [SerializeField]
-    public float Duration = 5f;
+    private float _duration = 5f;
 
     [SerializeField]
     private StarfishProjectile _starfishProjectilePrefab;
@@ -13,13 +13,13 @@ public class Starfish : WeaponBase
     public void Start()
     {
         // hack; when starfish inits, time elapsed starts at duration (see CanFire note)
-        _timeElapsedSinceLastFire = Duration;
+        _timeElapsedSinceLastFire = _duration;
     }
 
     public override bool CanFire()
     {
         // starfish cooldown doesn't reset until duration is over
-        return _isEnabled && _timeElapsedSinceLastFire >= Cooldown + Duration;
+        return _isEnabled && _timeElapsedSinceLastFire >= Cooldown + _duration;
     }
 
     public void Fire(Transform parentTransform, Vector3 origin)
@@ -32,7 +32,7 @@ public class Starfish : WeaponBase
         for (int i = 0; i < numberOfStarfish; i++)
         {
             var starfish = Instantiate(_starfishProjectilePrefab);
-            starfish.Initialize(Damage, Duration, degreesBetweenStarfish * i);
+            starfish.Initialize(Damage, _duration, degreesBetweenStarfish * i);
             starfish.transform.parent = parentTransform;
         }
     }
@@ -45,12 +45,12 @@ public class Starfish : WeaponBase
         }
         else if (level == 2)
         {
-            Duration *= 1.2f;
+            _duration *= 1.2f;
             _baseDamagePercentage = 1.2f;
         }
         else if (level == 3)
         {
-            Duration *= 1.5f;
+            _duration *= 1.5f;
             _startingCooldown *= 0.7f;
         }
     }

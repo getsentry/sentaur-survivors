@@ -1,16 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Dart : WeaponBase
 {
-    public float Speed = 10.0f;
-    public int AdditionalDarts = 0; // NOTE: rear-shooting darts
-    public bool IsShooting = false;
+    [SerializeField]
+    private float _speed = 10.0f;
 
-    private float _distanceOutsidePlayer = 1.25f;
+    [SerializeField]
+    private int _rearFiringDartCount = 0; // NOTE: rear-shooting darts
+
+    [SerializeField]
+    private float _spawnDistanceOutsidePlayer = 1.25f;
+
+    [SerializeField]
     private float _shootingInterval = 0.4f; // time between consecutive darts
 
+    private bool _isShooting = false;
     private GameObject _player;
 
     [SerializeField]
@@ -26,7 +31,7 @@ public class Dart : WeaponBase
     {
         base.Fire();
 
-        if (IsShooting)
+        if (_isShooting)
         {
             // if the dart is already firing, exit early (we only start counting
             // after the dart has CEASED firing)
@@ -38,14 +43,14 @@ public class Dart : WeaponBase
 
     public IEnumerator ShootDarts()
     {
-        IsShooting = true;
+        _isShooting = true;
         Vector3 direction = CalculateDirection(_player);
 
         // shoot the base number of darts
         for (int i = 0; i < _baseCount; i++)
         {
             ShootADart(_dartProjectilePrefab, _player, direction);
-            if (AdditionalDarts > i)
+            if (_rearFiringDartCount > i)
             {
                 ShootADart(_dartProjectilePrefab, _player, direction * -1);
             }
@@ -56,7 +61,7 @@ public class Dart : WeaponBase
         }
 
         // accounting for case where # of backwards darts > # of forwards darts
-        int remainingDarts = AdditionalDarts - _baseCount;
+        int remainingDarts = _rearFiringDartCount - _baseCount;
         if (remainingDarts > 0)
         {
             direction *= -1;
@@ -67,19 +72,19 @@ public class Dart : WeaponBase
             }
         }
 
-        IsShooting = false;
+        _isShooting = false;
         yield return null;
     }
 
     private void ShootADart(DartProjectile prefab, GameObject player, Vector3 direction)
     {
         DartProjectile dart = Instantiate(prefab);
-        dart.Initialize(Damage, Speed);
+        dart.Initialize(Damage, _speed);
         dart.transform.parent = player.transform.parent;
 
         // initial position
         dart.transform.position =
-            player.transform.position + direction.normalized * _distanceOutsidePlayer;
+            player.transform.position + direction.normalized * _spawnDistanceOutsidePlayer;
 
         dart.SetDirection(direction);
     }
@@ -96,7 +101,7 @@ public class Dart : WeaponBase
     {
         if (level == 1)
         {
-            AdditionalDarts++;
+            _rearFiringDartCount++;
         }
         else if (level == 2)
         {
@@ -105,7 +110,7 @@ public class Dart : WeaponBase
         else if (level == 3)
         {
             _baseDamagePercentage = 2f;
-            AdditionalDarts += 2;
+            _rearFiringDartCount += 2;
         }
     }
 }
