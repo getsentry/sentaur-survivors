@@ -215,7 +215,7 @@ public class Player : MonoBehaviour
 
     public void ApplySpeedUp(int speedMultiple, float duration = 0f)
     {
-        _playerMoveRate *= speedMultiple;
+        _playerMoveRate = _baseMoveRate * speedMultiple;
         if (duration > 0)
         {
             StartCoroutine(RestoreSpeed(duration));
