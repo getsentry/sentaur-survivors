@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Starfish : WeaponBase
 {
+    [SerializeField]
     public float Duration = 5f;
-
-    public float DegreesToNextStarfish;
-    public int identifier;
 
     [SerializeField]
     private StarfishProjectile _starfishProjectilePrefab;
@@ -33,10 +31,8 @@ public class Starfish : WeaponBase
 
         for (int i = 0; i < numberOfStarfish; i++)
         {
-            _starfishProjectilePrefab.DegreesToNextStarfish = degreesBetweenStarfish;
-            _starfishProjectilePrefab.identifier = i;
             var starfish = Instantiate(_starfishProjectilePrefab);
-            starfish.Initialize(Damage, Duration, DegreesToNextStarfish);
+            starfish.Initialize(Damage, Duration, degreesBetweenStarfish * i);
             starfish.transform.parent = parentTransform;
         }
     }

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StarfishProjectile : ProjectileBase
@@ -9,11 +6,12 @@ public class StarfishProjectile : ProjectileBase
     private float _duration;
     private float _degrees;
 
-    private static float _distanceOutsidePlayer = 2f;
-    public static float DegreesPerFrame = 180f;
+    [SerializeField]
+    private float _distanceOutsidePlayer = 2f;
 
-    public float DegreesToNextStarfish;
-    public int identifier;
+    [SerializeField]
+    private float _degreesPerFrame = 180f;
+
     private GameObject _player;
     private float _timeElapsedSinceActivated = 0.0f;
 
@@ -22,15 +20,6 @@ public class StarfishProjectile : ProjectileBase
         _damage = damage;
         _duration = duration;
         _degrees = degrees;
-
-        Debug.Log(
-            "Starfish initialized with damage: "
-                + _damage
-                + ", degrees: "
-                + _degrees
-                + ", duration: "
-                + _duration
-        );
     }
 
     void Start()
@@ -42,7 +31,7 @@ public class StarfishProjectile : ProjectileBase
             _player.transform.position + new Vector3(1f, 0, 0).normalized * _distanceOutsidePlayer;
 
         Debug.Log("Starfish starting position: " + transform.position);
-        transform.RotateAround(_player.transform.position, Vector3.forward, _degrees * identifier);
+        transform.RotateAround(_player.transform.position, Vector3.forward, _degrees);
     }
 
     // Update is called once per frame
@@ -60,7 +49,7 @@ public class StarfishProjectile : ProjectileBase
         transform.RotateAround(
             _player.transform.position,
             Vector3.forward,
-            DegreesPerFrame * Time.deltaTime
+            _degreesPerFrame * Time.deltaTime
         );
     }
 
