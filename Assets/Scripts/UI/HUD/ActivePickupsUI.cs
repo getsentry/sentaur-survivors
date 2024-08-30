@@ -15,9 +15,9 @@ class ActivePickupsUI : MonoBehaviour
             this.ExpirationTime = expirationTime;
         }
 
-        public void Extend(float expirationTime)
+        public ActivePickupState Extend(float duration)
         {
-            this.ExpirationTime = expirationTime;
+            return new ActivePickupState(this.GameObject, this.ExpirationTime + duration);
         }
     }
 
@@ -30,7 +30,7 @@ class ActivePickupsUI : MonoBehaviour
         if (_activePickups.ContainsKey(iconInstanceId))
         {
             // if the pickup is already active, extend its duration
-            _activePickups[iconInstanceId].Extend(Time.time + duration);
+            _activePickups[iconInstanceId] = _activePickups[iconInstanceId].Extend(duration);
             return;
         }
 
