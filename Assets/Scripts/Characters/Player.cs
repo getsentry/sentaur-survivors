@@ -71,6 +71,9 @@ public class Player : MonoBehaviour
 
     static Player _instance;
 
+    private float _restoreSpeedTime = 0.0f;
+    private float _restoreDamageResistTime = 0.0f;
+
     public static Player Instance
     {
         get
@@ -218,6 +221,7 @@ public class Player : MonoBehaviour
         _playerMoveRate = _baseMoveRate * speedMultiple;
         if (duration > 0)
         {
+            _restoreSpeedTime = Time.time + duration;
             StartCoroutine(RestoreSpeed(duration));
         }
     }
@@ -225,7 +229,10 @@ public class Player : MonoBehaviour
     public IEnumerator RestoreSpeed(float duration)
     {
         yield return new WaitForSeconds(duration);
-        _playerMoveRate = _baseMoveRate;
+        // note: the time at which to restore the speed could have been pushed out
+        if (Time.time > _restoreSpeedTime) {
+            _playerMoveRate = _baseMoveRate;
+        }
     }
 
     public void ApplyDamageResist(float reductionPercentage, float duration = 0f)
@@ -233,6 +240,7 @@ public class Player : MonoBehaviour
         _damageReductionAmount = reductionPercentage;
         if (duration > 0)
         {
+            _restoreDamageResistTime = Time.time + duration;
             StartCoroutine(RestoreDamageResist(duration));
         }
     }
@@ -240,7 +248,10 @@ public class Player : MonoBehaviour
     public IEnumerator RestoreDamageResist(float duration)
     {
         yield return new WaitForSeconds(duration);
-        _damageReductionAmount = 0f;
+        // note: the time at which to restore the damage resist could have been pushed out
+        if (Time.time > _restoreDamageResistTime) {
+            _damageReductionAmount = 0f;
+        }
     }
 
     public void SpawnPlayerText(string text)
