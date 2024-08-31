@@ -9,7 +9,7 @@ public class Raven : WeaponBase
 
     [SerializeField]
     [Tooltip("Modifies AOE of emitted projectiles")]
-    private float _areaOfEffectModifier = 1.0f;
+    private float _areaOfEffectRadius = 1.0f;
 
     [SerializeField]
     [Tooltip("Distance from player to spawn raven")]
@@ -34,12 +34,11 @@ public class Raven : WeaponBase
         {
             var projectile = Instantiate(_ravenProjectilePrefab);
 
-            projectile.Initialize(Damage, _speed, _areaOfEffectModifier);
-            projectile.identifier = i;
+            projectile.Initialize(Damage, _speed, _areaOfEffectRadius);
 
             projectile.transform.position = _player.transform.position;
             projectile.transform.parent = _player.transform.parent;
-            
+
             TargetClosestEnemy(projectile);
         }
         _currentTargets.Clear(); // reset raven targeting
@@ -113,7 +112,7 @@ public class Raven : WeaponBase
         }
         else if (level == 3)
         {
-            _areaOfEffectModifier = 1.6f;
+            _areaOfEffectRadius = 1.6f;
         }
     }
 }

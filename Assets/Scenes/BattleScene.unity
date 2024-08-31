@@ -7581,6 +7581,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1882345548}
     m_Modifications:
     - target: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
+      propertyPath: _isEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
       propertyPath: _schnitzelProjectilePrefab
       value: 
       objectReference: {fileID: 8194018987037890526, guid: af50a2a7f0c834ebf90a6f2724b0f298, type: 3}
@@ -30769,7 +30773,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2205568597176363839, guid: 4c3545b2234564ab382559e5e2db585c, type: 3}
       propertyPath: _isEnabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2205568597176363839, guid: 4c3545b2234564ab382559e5e2db585c, type: 3}
       propertyPath: _ravenPrefab

@@ -15,6 +15,9 @@ public class Dart : WeaponBase
     [SerializeField]
     private float _shootingInterval = 0.4f; // time between consecutive darts
 
+    [SerializeField]
+    private float _areaOfEffectRadius = 0.25f;
+
     private bool _isShooting = false;
     private GameObject _player;
 
@@ -79,7 +82,7 @@ public class Dart : WeaponBase
     private void ShootADart(DartProjectile prefab, GameObject player, Vector3 direction)
     {
         DartProjectile dart = Instantiate(prefab);
-        dart.Initialize(Damage, _speed);
+        dart.Initialize(Damage, _speed, _areaOfEffectRadius);
         dart.transform.parent = player.transform.parent;
 
         // initial position

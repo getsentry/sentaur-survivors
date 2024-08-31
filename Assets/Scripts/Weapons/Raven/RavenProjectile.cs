@@ -3,22 +3,17 @@ using UnityEngine;
 
 public class RavenProjectile : ProjectileBase
 {
-    [SerializeField]
-    [Tooltip("How much AOE range this effect has on hit")]
-    private float _areaOfEffectRange = 1.0f;
-
-    public int identifier;
-
     private Vector3 _direction;
+
     private int _damage;
     private float _speed;
-    private float _areaOfEffectModifier;
+    private float _areaOfEffectRadius;
 
-    public void Initialize(int damage, float speed, float areaOfEffectModifier)
+    public void Initialize(int damage, float speed, float areaOfEffectRadius)
     {
         _damage = damage;
         _speed = speed;
-        _areaOfEffectModifier = areaOfEffectModifier;
+        _areaOfEffectRadius = areaOfEffectRadius;
     }
 
     public void SetDirection(Vector3 direction)
@@ -36,10 +31,6 @@ public class RavenProjectile : ProjectileBase
     // Deal damage to the enemy because they were hit by the raven
     override protected void DamageEnemy(Enemy initialEnemy)
     {
-        SplashDamage(
-            initialEnemy.transform.position,
-            _areaOfEffectRange * _areaOfEffectModifier,
-            _damage
-        );
+        SplashDamage(initialEnemy.transform.position, _areaOfEffectRadius, _damage);
     }
 }

@@ -2,19 +2,16 @@ using UnityEngine;
 
 public class DartProjectile : ProjectileBase
 {
-    [SerializeField]
-    private float _areaOfEffectRange = 0.25f;
-
     private Vector3 _direction;
     private int _damage;
     private float _speed;
-    private float _areaOfEffectModifier;
+    private float _areaOfEffectRadius;
 
     public void Initialize(int damage, float speed, float areaOfEffectModifier = 1.0f)
     {
         _damage = damage;
         _speed = speed;
-        _areaOfEffectModifier = areaOfEffectModifier;
+        _areaOfEffectRadius = areaOfEffectModifier;
     }
 
     public void SetDirection(Vector3 direction)
@@ -36,10 +33,6 @@ public class DartProjectile : ProjectileBase
         initialEnemy.Knockback(_direction, 5000);
 
         // dart actually does some minor splash damage
-        SplashDamage(
-            initialEnemy.transform.position,
-            _areaOfEffectRange * _areaOfEffectModifier,
-            _damage
-        );
+        SplashDamage(initialEnemy.transform.position, _areaOfEffectRadius, _damage);
     }
 }
