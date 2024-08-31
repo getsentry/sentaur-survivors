@@ -24,13 +24,12 @@ public class StarfishProjectile : ProjectileBase
 
     void Start()
     {
-        _player = GameObject.Find("Player");
+        _player = Player.Instance.gameObject;
 
         // starting position
         transform.position =
             _player.transform.position + new Vector3(1f, 0, 0).normalized * _distanceOutsidePlayer;
 
-        Debug.Log("Starfish starting position: " + transform.position);
         transform.RotateAround(_player.transform.position, Vector3.forward, _degrees);
     }
 

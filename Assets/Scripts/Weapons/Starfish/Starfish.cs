@@ -22,7 +22,7 @@ public class Starfish : WeaponBase
         return _isEnabled && _timeElapsedSinceLastFire >= Cooldown + _duration;
     }
 
-    public void Fire(Transform parentTransform, Vector3 origin)
+    public override void Fire()
     {
         base.Fire();
 
@@ -33,7 +33,7 @@ public class Starfish : WeaponBase
         {
             var starfish = Instantiate(_starfishProjectilePrefab);
             starfish.Initialize(Damage, _duration, degreesBetweenStarfish * i);
-            starfish.transform.parent = parentTransform;
+            starfish.transform.parent = this.transform;
         }
     }
 

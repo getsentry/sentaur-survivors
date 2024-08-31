@@ -1,12 +1,34 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
+    [SerializeField]
     public int BaseDamage = 10;
 
+    [SerializeField]
     public float BaseCooldownPercentage = 1f;
 
+    [SerializeField]
     public int BaseCount = 1;
+
+    private List<WeaponBase> _weapons = new List<WeaponBase>();
+
+    public void Awake()
+    {
+        _weapons.AddRange(GetComponentsInChildren<WeaponBase>());
+    }
+
+    public void Update()
+    {
+        foreach (var weapon in _weapons)
+        {
+            if (weapon.CanFire())
+            {
+                weapon.Fire();
+            }
+        }
+    }
 
     public void UpgradeDamage(int level)
     {

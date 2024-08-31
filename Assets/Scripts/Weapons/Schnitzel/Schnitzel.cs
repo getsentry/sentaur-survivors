@@ -16,23 +16,25 @@ public class Schnitzel : WeaponBase
     private float _scale = 1.0f;
 
     [SerializeField]
-    private SchnitzelProjectile _schnitzelPrefab;
+    private SchnitzelProjectile _schnitzelProjectilePrefab;
 
-    public void Fire(Transform parentTransform, Vector2 originPosition)
+    public override void Fire()
     {
         base.Fire();
 
-        StartCoroutine(ShootSchnitzels(_schnitzelPrefab, Player.Instance.gameObject));
+        var player = Player.Instance.gameObject;
+        StartCoroutine(ShootSchnitzels(player));
     }
 
-    public IEnumerator ShootSchnitzels(SchnitzelProjectile prefab, GameObject player)
+    public IEnumerator ShootSchnitzels(GameObject player)
     {
+        SchnitzelProjectile schnitzelProjectilePrefab = _schnitzelProjectilePrefab;
         Vector3 direction = CalculateDirection(player);
 
         // shoot the base number of schnitzel
         for (int i = 0; i < _baseCount; i++)
         {
-            ShootOneSchnitzel(prefab, player, direction);
+            ShootOneSchnitzel(schnitzelProjectilePrefab, player, direction);
 
             yield return new WaitForSeconds(_shootingInterval);
             // get new updates mouse coords inbetween shots

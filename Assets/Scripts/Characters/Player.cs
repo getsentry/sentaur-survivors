@@ -9,18 +9,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private Dart _dart;
-
-    [SerializeField]
-    private Raven _raven;
-
-    [SerializeField]
-    private Starfish _starfish;
-
-    [SerializeField]
-    private Schnitzel _schnitzel;
-
-    [SerializeField]
     public WeaponManager WeaponManager;
 
     [SerializeField]
@@ -139,45 +127,6 @@ public class Player : MonoBehaviour
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Speed", movement.sqrMagnitude);
         animator.SetBool("FacingRight", facingRight);
-
-        UpdateDarts();
-        UpdateRavens();
-        UpdateStarfish();
-        UpdateSchnitzel();
-    }
-
-    void UpdateDarts()
-    {
-        if (_dart.CanFire())
-        {
-            // note: parent transform is the parent container
-            _dart.Fire(transform.parent, transform.position);
-        }
-    }
-
-    void UpdateRavens()
-    {
-        if (_raven.CanFire())
-        {
-            // note: parent transform is the parent container
-            _raven.Fire(transform.parent, transform.position);
-        }
-    }
-
-    void UpdateStarfish()
-    {
-        if (_starfish.CanFire())
-        {
-            _starfish.Fire(transform, transform.position);
-        }
-    }
-
-    void UpdateSchnitzel()
-    {
-        if (_schnitzel.CanFire())
-        {
-            _schnitzel.Fire(transform, transform.position);
-        }
     }
 
     IEnumerator Wait(float _waitTime)
@@ -230,7 +179,8 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         // note: the time at which to restore the speed could have been pushed out
-        if (Time.time > _restoreSpeedTime) {
+        if (Time.time > _restoreSpeedTime)
+        {
             _playerMoveRate = _baseMoveRate;
         }
     }
@@ -249,7 +199,8 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         // note: the time at which to restore the damage resist could have been pushed out
-        if (Time.time > _restoreDamageResistTime) {
+        if (Time.time > _restoreDamageResistTime)
+        {
             _damageReductionAmount = 0f;
         }
     }

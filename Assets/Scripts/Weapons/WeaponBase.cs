@@ -42,7 +42,7 @@ public class WeaponBase : MonoBehaviour
         return _isEnabled && _timeElapsedSinceLastFire >= Cooldown;
     }
 
-    protected virtual void Fire()
+    public virtual void Fire()
     {
         _timeElapsedSinceLastFire = 0.0f;
     }

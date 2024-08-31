@@ -26,7 +26,7 @@ public class Raven : WeaponBase
         _player = Player.Instance.gameObject;
     }
 
-    public void Fire(Transform parentTransform, Vector2 originPosition)
+    public override void Fire()
     {
         base.Fire();
 
@@ -36,8 +36,10 @@ public class Raven : WeaponBase
 
             projectile.Initialize(Damage, _speed, _areaOfEffectModifier);
             projectile.identifier = i;
-            projectile.transform.position = originPosition;
-            projectile.transform.parent = parentTransform;
+
+            projectile.transform.position = _player.transform.position;
+            projectile.transform.parent = _player.transform.parent;
+            
             TargetClosestEnemy(projectile);
         }
         _currentTargets.Clear(); // reset raven targeting

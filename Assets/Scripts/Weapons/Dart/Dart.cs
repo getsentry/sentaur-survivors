@@ -27,7 +27,7 @@ public class Dart : WeaponBase
         _player = Player.Instance.gameObject;
     }
 
-    public void Fire(Transform parent, Vector3 origin)
+    public override void Fire()
     {
         base.Fire();
 
