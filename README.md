@@ -2,11 +2,11 @@
 
 A Sentry-themed Vampire Survivors clone written for Unity in C# featuring:
 * Fast paced 2D shoot 'em up action!
-* 3 weapons with their own unique behavior and upgrade paths
-* 5 different enemies
-* 3 tactical item pickups
+* 4 weapons with their own unique behavior and upgrade paths
+* 6 different enemies
+* 5 tactical item pickups
 
-🍿 Watch [the trailer on YouTube](https://www.youtube.com/watch?v=8z4T97gJ7Rg).
+🍿 Watch [the original trailer on YouTube](https://www.youtube.com/watch?v=8z4T97gJ7Rg)
 
 ![](/Media/gameplay.gif?raw=true)
 
@@ -16,8 +16,7 @@ A Sentry-themed Vampire Survivors clone written for Unity in C# featuring:
 
 You have a couple choices for playing:
 
-* [Play the game in your browser via webGL](https://bentlegen.itch.io/sentaur-survivors)
-* [Download binaries for macOS and Windows](https://github.com/getsentry/sentaur-survivors/releases)
+* [Download binaries for macOS](https://github.com/getsentry/sentaur-survivors/releases/latest)
 
 ### How to play
 
@@ -36,31 +35,19 @@ See [CONTRIBUTING](CONTRIBUTING.md).
 
 ## Leaderboard / Top 10
 
-To get on the leaderboard, open up a pull request with a change to this README and a screenshot.
-
-| Player                                   | Platform   | Score  | Time  | Date    |
-| ---------------------------------------- | ---------- | ------ | ----- | ------- |
-| [Dan Fuller](github.com/wedamija)        | macOS      | 263228 | 10:22 | 8/25/23 |
-| [William Mak](github.com/wmak)           | macOS      | 241599 | 10:49 | 8/28/23 |
-| [Billy Vong](github.com/billyvong)       | Windows    | 236838 | 10:06 | 8/28/23 |
-| [David Wang](github.com/davidenwang)     | macOS      | 224095 | 10:08 | 8/29/23 |
-| [Ben Vinegar](github.com/benvinegar)     | macOS      | 222712 | 10:16 | 8/25/23 |
-| [Olivier Williams](github.com/olivier-w) | Windows    | 215862 | 10:15 | 8/29/23 |
-| [Chad Whitacre](github.com/chadwhitacre) | macOS      | 203858 | 10:08 | 8/29/23 |
-| Spencer Murray                           | macOS      | 198705 | 10:03 | 8/25/23 |
-| [Seiji Chew](github.com/schew2381)       | macOS      | 196124 | 10:05 | 8/25/23 |
-| Lucas Hatae                              | macOS      | 192689 | 10:05 | 8/25/23 |
-
+Live leaderboard: http://sentaur-survivor.com
 
 ## Credits
 
 Sentaur Survivors was originally developed in a single week as part of [@getsentry's](https://github.com/getsentry) internal 2023 Hack Week event. The development team was:
 
+* Ben Vinegar ([@benvinegar](https://github.com/benvinegar)) - general game programming, project lead
 * Michelle Fu ([@mifu67](https://github.com/mifu67)) - art/animation for title screen, player character, pickups, icons + programming
 * Olivier Williams ([@olivier-w](https://github.com/olivier-w)) - UI design and sound effects + programming
 * Isabella Enriquez ([@isabellaenriquez)](https://github.com/isabellaenriquez) - weapon and projectile systems
 * Daniel Cardozo - art for level tileset, Sentaur art/animation
-* Ben Vinegar ([@benvinegar](https://github.com/benvinegar)) - general game programming
+* Stefan Jandl ([@bitsandfoxes](https://github.com/bitsandfoxes) - leaderboard, random fixes
+* Bruno Garcia ([@bruno-garcia](https://github.com/bruno-garcia) - leaderboard
 
 Ant and Mantis art/animation by [Hannah Katz](https://dribbble.com/HKatz) is taken from [sentry-defenses](https://github.com/getsentry/sentry-defenses) (another @getsentry game project).
 
