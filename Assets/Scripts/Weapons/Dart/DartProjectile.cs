@@ -32,26 +32,14 @@ public class DartProjectile : ProjectileBase
     // Deal damage to the enemy because they were hit by a dart
     override protected void DamageEnemy(Enemy initialEnemy)
     {
-        initialEnemy.TakeDamage(_damage);
         // why 5000? -- the result of experimenting with different values (!)
         initialEnemy.Knockback(_direction, 5000);
 
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(
+        // dart actually does some minor splash damage
+        SplashDamage(
             initialEnemy.transform.position,
-            _areaOfEffectRange,
-            Vector2.zero
+            _areaOfEffectRange * _areaOfEffectModifier,
+            _damage
         );
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy"))
-            {
-                Enemy enemyHit = hit.collider.gameObject.GetComponent<Enemy>();
-                // dont hit initial enemy twice
-                if (enemyHit != initialEnemy)
-                {
-                    enemyHit.TakeDamage(_damage);
-                }
-            }
-        }
     }
 }

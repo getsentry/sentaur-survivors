@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RavenProjectile : ProjectileBase
@@ -35,25 +36,10 @@ public class RavenProjectile : ProjectileBase
     // Deal damage to the enemy because they were hit by the raven
     override protected void DamageEnemy(Enemy initialEnemy)
     {
-        // find all enemies within _areaOfEffectRange unit of enemy hit using raycast
-        initialEnemy.TakeDamage(_damage);
-
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(
+        SplashDamage(
             initialEnemy.transform.position,
             _areaOfEffectRange * _areaOfEffectModifier,
-            Vector2.zero
+            _damage
         );
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy"))
-            {
-                Enemy enemyHit = hit.collider.gameObject.GetComponent<Enemy>();
-                // dont hit initial enemy twice
-                if (enemyHit != initialEnemy)
-                {
-                    enemyHit.TakeDamage(_damage);
-                }
-            }
-        }
     }
 }

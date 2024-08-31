@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileBase : MonoBehaviour
@@ -43,5 +44,26 @@ public class ProjectileBase : MonoBehaviour
     void OnBecameInvisible()
     {
         Destroy(gameObject);
+    }
+
+    protected void SplashDamage(
+        Vector2 origin,
+        float radius,
+        int damage,
+        HashSet<Enemy> ignoreList = null
+    )
+    {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(origin, radius, Vector2.zero);
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy"))
+            {
+                Enemy enemyTarget = hit.collider.gameObject.GetComponent<Enemy>();
+                if (ignoreList == null || !ignoreList.Contains(enemyTarget))
+                {
+                    enemyTarget.TakeDamage(damage);
+                }
+            }
+        }
     }
 }
