@@ -39,15 +39,17 @@ Live leaderboard: http://sentaur-survivor.com
 
 ## Credits
 
-Sentaur Survivors was originally developed in a single week as part of [@getsentry's](https://github.com/getsentry) internal 2023 Hack Week event. The development team was:
+Sentaur Survivors was originally developed in a single week as part of [@getsentry's](https://github.com/getsentry) internal 2023 Hack Week event by:
 
 * Ben Vinegar ([@benvinegar](https://github.com/benvinegar)) - general game programming, project lead
 * Michelle Fu ([@mifu67](https://github.com/mifu67)) - art/animation for title screen, player character, pickups, icons + programming
 * Olivier Williams ([@olivier-w](https://github.com/olivier-w)) - UI design and sound effects + programming
 * Isabella Enriquez ([@isabellaenriquez)](https://github.com/isabellaenriquez) - weapon and projectile systems
 * Daniel Cardozo - art for level tileset, Sentaur art/animation
-* Stefan Jandl ([@bitsandfoxes](https://github.com/bitsandfoxes) - leaderboard, random fixes
-* Bruno Garcia ([@bruno-garcia](https://github.com/bruno-garcia) - leaderboard
+
+Other contributors:
+
+* Stefan Jandl ([@bitsandfoxes)](https://github.com/bitsandfoxes) - leaderboard, random fixes
 
 Ant and Mantis art/animation by [Hannah Katz](https://dribbble.com/HKatz) is taken from [sentry-defenses](https://github.com/getsentry/sentry-defenses) (another @getsentry game project).
 
