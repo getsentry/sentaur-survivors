@@ -50,7 +50,7 @@ public class Raven : WeaponBase
         if (target == null)
         {
             // nothing to target
-            Destroy(gameObject);
+            Destroy(projectile);
             return;
         }
         Vector3 direction = target.transform.position - _player.transform.position;

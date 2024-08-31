@@ -29,8 +29,6 @@ public class RavenProjectile : ProjectileBase
 
         _rigidbody2D.velocity = Vector3.Normalize(_direction) * _speed;
 
-        Debug.Log("Raven direction: " + direction);
-
         // rotate the raven to face the direction it's moving
         var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
