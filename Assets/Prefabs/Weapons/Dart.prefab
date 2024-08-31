@@ -46,8 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isEnabled: 0
   _startingCooldown: 1.8
-  _baseDamagePercentage: 1
-  Speed: 10
-  AdditionalDarts: 0
-  IsShooting: 0
+  _baseDamage: 10
+  _speed: 10
+  _rearFiringDartCount: 0
+  _spawnDistanceOutsidePlayer: 1.25
+  _shootingInterval: 0.4
+  _areaOfEffectRadius: 0.25
   _dartProjectilePrefab: {fileID: -1238747304094502698, guid: f4b2f15faddfa43ee9ea450e341989a3, type: 3}

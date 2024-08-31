@@ -32,7 +32,7 @@ public class Schnitzel : WeaponBase
         Vector3 direction = CalculateDirection(player);
 
         // shoot the base number of schnitzel
-        for (int i = 0; i < _baseCount; i++)
+        for (int i = 0; i < Count; i++)
         {
             ShootOneSchnitzel(schnitzelProjectilePrefab, player, direction);
 

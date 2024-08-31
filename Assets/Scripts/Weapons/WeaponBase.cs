@@ -10,17 +10,13 @@ public class WeaponBase : MonoBehaviour
     protected float _startingCooldown;
 
     [SerializeField]
-    public float _baseDamagePercentage = 0.8f;
+    public float _baseDamage;
 
-    public float Cooldown => _startingCooldown * _baseCooldownPercentage;
-    public int Damage => (int)(_baseDamage * _baseDamagePercentage);
+    public float Cooldown => _startingCooldown * _weaponManager.GlobalCooldownModifier;
+    public int Damage => (int)(_weaponManager.GlobalDamageModifier * _baseDamage);
+    public int Count => _weaponManager.GlobalCountModifier;
 
     protected float _timeElapsedSinceLastFire = 0.0f;
-
-    // proxied
-    protected int _baseDamage => _weaponManager.BaseDamage;
-    protected float _baseCooldownPercentage => _weaponManager.BaseCooldownPercentage;
-    protected int _baseCount => _weaponManager.BaseCount;
 
     protected WeaponManager _weaponManager;
 

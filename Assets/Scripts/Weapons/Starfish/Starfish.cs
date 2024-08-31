@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Starfish : WeaponBase
@@ -26,10 +24,10 @@ public class Starfish : WeaponBase
     {
         base.Fire();
 
-        int numberOfStarfish = _baseCount;
+        int numberOfStarfish = Count;
         float degreesBetweenStarfish = 360 / numberOfStarfish;
 
-        for (int i = 0; i < numberOfStarfish; i++)
+        for (int i = 0; i < Count; i++)
         {
             var starfish = Instantiate(_starfishProjectilePrefab);
             starfish.Initialize(Damage, _duration, degreesBetweenStarfish * i);
@@ -46,7 +44,7 @@ public class Starfish : WeaponBase
         else if (level == 2)
         {
             _duration *= 1.2f;
-            _baseDamagePercentage = 1.2f;
+            _baseDamage *= 1.2f;
         }
         else if (level == 3)
         {

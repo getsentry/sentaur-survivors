@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isEnabled: 0
   _startingCooldown: 2.9
-  _baseDamagePercentage: 0.8
+  _baseDamage: 8
   _speed: 5
   _spawnDistanceOutsidePlayer: 1.25
   _shootingInterval: 0.25

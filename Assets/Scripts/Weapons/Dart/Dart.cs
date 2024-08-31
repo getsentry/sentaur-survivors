@@ -50,7 +50,7 @@ public class Dart : WeaponBase
         Vector3 direction = CalculateDirection(_player);
 
         // shoot the base number of darts
-        for (int i = 0; i < _baseCount; i++)
+        for (int i = 0; i < Count; i++)
         {
             ShootADart(_dartProjectilePrefab, _player, direction);
             if (_rearFiringDartCount > i)
@@ -64,7 +64,7 @@ public class Dart : WeaponBase
         }
 
         // accounting for case where # of backwards darts > # of forwards darts
-        int remainingDarts = _rearFiringDartCount - _baseCount;
+        int remainingDarts = _rearFiringDartCount - Count;
         if (remainingDarts > 0)
         {
             direction *= -1;
@@ -108,11 +108,11 @@ public class Dart : WeaponBase
         }
         else if (level == 2)
         {
-            _baseDamagePercentage = 1.5f;
+            _baseDamage = 1.5f;
         }
         else if (level == 3)
         {
-            _baseDamagePercentage = 2f;
+            _baseDamage = 2f;
             _rearFiringDartCount += 2;
         }
     }

@@ -4,13 +4,13 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     [SerializeField]
-    public int BaseDamage = 10;
+    public float GlobalDamageModifier = 1.0f;
 
     [SerializeField]
-    public float BaseCooldownPercentage = 1f;
+    public float GlobalCooldownModifier = 1.0f;
 
     [SerializeField]
-    public int BaseCount = 1;
+    public int GlobalCountModifier = 1;
 
     private List<WeaponBase> _weapons = new List<WeaponBase>();
 
@@ -34,15 +34,15 @@ public class WeaponManager : MonoBehaviour
     {
         if (level == 1)
         {
-            BaseDamage = (int)(BaseDamage * 1.3);
+            GlobalDamageModifier = 1.3f;
         }
         else if (level == 2)
         {
-            BaseDamage = (int)(BaseDamage * 1.6);
+            GlobalDamageModifier = 1.6f;
         }
         else if (level == 3)
         {
-            BaseDamage = (int)(BaseDamage * 2);
+            GlobalDamageModifier = 2.0f;
         }
     }
 
@@ -50,15 +50,15 @@ public class WeaponManager : MonoBehaviour
     {
         if (level == 1)
         {
-            BaseCooldownPercentage = 0.8f;
+            GlobalCooldownModifier = 0.8f;
         }
         else if (level == 2)
         {
-            BaseCooldownPercentage = 0.6f;
+            GlobalCooldownModifier = 0.6f;
         }
         else if (level == 3)
         {
-            BaseCooldownPercentage = 0.3f;
+            GlobalCooldownModifier = 0.3f;
         }
     }
 
@@ -66,11 +66,11 @@ public class WeaponManager : MonoBehaviour
     {
         if (level == 3)
         {
-            BaseCount += 2;
+            GlobalCountModifier += 2;
         }
         else
         {
-            BaseCount++;
+            GlobalCountModifier++;
         }
     }
 }

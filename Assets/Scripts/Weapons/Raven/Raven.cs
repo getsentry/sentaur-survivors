@@ -30,7 +30,7 @@ public class Raven : WeaponBase
     {
         base.Fire();
 
-        for (int i = 0; i < _baseCount; i++)
+        for (int i = 0; i < Count; i++)
         {
             var projectile = Instantiate(_ravenProjectilePrefab);
 
@@ -55,7 +55,6 @@ public class Raven : WeaponBase
         }
         Vector3 direction = target.transform.position - _player.transform.position;
         projectile.SetDirection(direction);
-
         // initial position
         transform.position =
             _player.transform.position + direction.normalized * _spawnDistanceOutsidePlayer;
@@ -107,7 +106,7 @@ public class Raven : WeaponBase
         }
         else if (level == 2)
         {
-            _baseDamagePercentage = 2f;
+            _baseDamage = 2f;
             _startingCooldown *= 0.8f;
         }
         else if (level == 3)
