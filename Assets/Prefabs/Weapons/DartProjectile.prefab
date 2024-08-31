@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8163455182214889991}
   - component: {fileID: 6644716444989240341}
+  - component: {fileID: -1238747304094502698}
   - component: {fileID: -2341297887287861273}
   - component: {fileID: 9178797720591820366}
   - component: {fileID: -545504855336817619}
-  - component: {fileID: 1783361906523289645}
-  - component: {fileID: -6115867773689506686}
+  - component: {fileID: -4604950742776228915}
   m_Layer: 8
-  m_Name: Raven
+  m_Name: DartProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 1750925873
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -41011132, guid: 2d1db680ea22a4dd78b6c2918a56aa0e, type: 3}
+  m_Sprite: {fileID: -1437892036, guid: 5a5ba1533b6c24e50bbda5dd7fdf5e13, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -89,6 +89,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-1238747304094502698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6795985259155833977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2127f6dfae2f04ffc84e833ab2e54280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyHitSound: {fileID: 0}
+  _areaOfEffectRange: 0.25
 --- !u!61 &-2341297887287861273
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -125,7 +139,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -171,7 +185,7 @@ Animator:
   m_GameObject: {fileID: 6795985259155833977}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: af0aa42e94a8b40529ab9595ed927180, type: 2}
+  m_Controller: {fileID: 9100000, guid: 58464aebafda74e56afacc2b36dd68c0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -182,22 +196,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1783361906523289645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6795985259155833977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d308397a8e5e244e881ef0c689787b75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyHitSound: {fileID: 0}
-  _areaOfEffectRange: 1
-  identifier: 0
---- !u!82 &-6115867773689506686
+--- !u!82 &-4604950742776228915
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
