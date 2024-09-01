@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,9 +17,12 @@ public class Raven : WeaponBase
     private float _spawnDistanceOutsidePlayer = 1.25f;
 
     [SerializeField]
+    [Tooltip("Distance from player to detect enemies")]
+    private float _detectRadius = 12.0f;
+
+    [SerializeField]
     private RavenProjectile _ravenProjectilePrefab;
 
-    private List<GameObject> _currentTargets = new List<GameObject> { };
     private GameObject _player;
 
     public void Start()
@@ -30,15 +34,11 @@ public class Raven : WeaponBase
     {
         base.Fire();
 
-        for (int i = 0; i < Count; i++)
-        {
-            GameObject target = GetTarget();
-            if (target == null)
-            {
-                // nothing to target
-                return;
-            }
+        var targets = GetTargets(_detectRadius, Count);
 
+        // foreach
+        foreach (var target in targets)
+        {
             var projectile = Instantiate(_ravenProjectilePrefab);
 
             projectile.Initialize(Damage, _speed, _areaOfEffectRadius);
@@ -51,45 +51,56 @@ public class Raven : WeaponBase
             projectile.transform.position =
                 _player.transform.position + direction.normalized * _spawnDistanceOutsidePlayer;
         }
-        _currentTargets.Clear(); // reset raven targeting
     }
 
-    private GameObject GetTarget()
+    private List<GameObject> GetEnemiesWithinRange(float range)
     {
-        // TODO: this iteraates through every single enemy which is really bad
-        // TODO: ^^^^^
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject target = null;
-        float distance = Mathf.Infinity;
-        Vector3 position = _player.transform.position;
-        bool isAlreadyTargeted = false;
-        foreach (GameObject enemy in enemies)
+        List<GameObject> enemies = new List<GameObject> { };
+
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(
+            _player.transform.position,
+            range,
+            Vector2.zero
+        );
+        foreach (RaycastHit2D hit in hits)
         {
-            foreach (GameObject targetedEnemy in _currentTargets)
+            if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy"))
             {
-                if (ReferenceEquals(enemy, targetedEnemy))
+                enemies.Add(hit.collider.gameObject);
+            }
+        }
+        return enemies;
+    }
+
+    private List<GameObject> GetTargets(float radius, int count)
+    {
+        List<GameObject> enemies = GetEnemiesWithinRange(radius);
+        List<GameObject> targets = new List<GameObject> { };
+
+        Vector3 playerPosition = _player.transform.position;
+
+        var maxTargets = Math.Min(count, enemies.Count);
+        for (int i = 0; i < maxTargets; i++)
+        {
+            // find the next closest
+            float shortestDistance = Mathf.Infinity;
+            GameObject target = null;
+
+            foreach (GameObject enemy in enemies)
+            {
+                Vector3 diff = enemy.transform.position - playerPosition;
+                float enemyDistance = diff.sqrMagnitude;
+                if (enemyDistance < shortestDistance)
                 {
-                    // if this enemy is already targeted, skip over it to find our second closest so the second raven aims at a different enemy than the first raven
-                    isAlreadyTargeted = true;
-                    break;
+                    target = enemy;
+                    shortestDistance = enemyDistance;
                 }
             }
 
-            if (isAlreadyTargeted)
-            {
-                continue;
-            }
-
-            Vector3 diff = enemy.transform.position - position;
-            float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
-            {
-                target = enemy;
-                distance = curDistance;
-            }
+            enemies.Remove(target);
+            targets.Add(target);
         }
-        _currentTargets.Add(target);
-        return target;
+        return targets;
     }
 
     public void Upgrade(int level)
