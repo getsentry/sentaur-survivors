@@ -12,7 +12,7 @@ public class RavenUpgrades : UpgradeBase
     {
         // get raven
         var raven = FindObjectOfType<Raven>();
-        switch (_currentLevel)
+        switch (_level)
         {
             case 1:
                 raven.Enable();

@@ -212,15 +212,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5fe70a105da479ab5c9a1df694ecaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentLevel: 0
+  _level: 0
   _icon: {fileID: -41011132, guid: 2d1db680ea22a4dd78b6c2918a56aa0e, type: 3}
   _title: Raven
   _descriptions:
   - heat-seeking bomb targets closest enemy
   - +33% damage and +20% cooldown!
   - +60% area of effect
-  _level2DamageModifier: 1.33
-  _level3AreaOfEffectRadiusModifier: 1.6
+  _lvl2DamageMod: 1.33
+  _lvl3AreaOfEffectRadiusMod: 1.6
 --- !u!1 &170557571
 GameObject:
   m_ObjectHideFlags: 0
@@ -7710,7 +7710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9488effa5e03442da4c196d16afdc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentLevel: 0
+  _level: 0
   _icon: {fileID: 21300000, guid: d5250e5db3ce642448c7a5c9ffa33af9, type: 3}
   _title: Count++
   _descriptions:
@@ -7732,8 +7732,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1882345548}
     m_Modifications:
     - target: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
+      propertyPath: BaseDamage
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
       propertyPath: _isEnabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
+      propertyPath: _baseCooldown
+      value: 2.8
       objectReference: {fileID: 0}
     - target: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
       propertyPath: _schnitzelProjectilePrefab
@@ -30062,6 +30070,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1882345548}
     m_Modifications:
+    - target: {fileID: -801427770401400621, guid: dccb7313a4fb0404992368741d48aeb0, type: 3}
+      propertyPath: _speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -801427770401400621, guid: dccb7313a4fb0404992368741d48aeb0, type: 3}
+      propertyPath: BaseDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -801427770401400621, guid: dccb7313a4fb0404992368741d48aeb0, type: 3}
+      propertyPath: _baseCooldown
+      value: 1.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3476222383509152590, guid: dccb7313a4fb0404992368741d48aeb0, type: 3}
       propertyPath: m_Name
       value: Dart
@@ -30958,6 +30978,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1882345548}
     m_Modifications:
     - target: {fileID: 2205568597176363839, guid: 4c3545b2234564ab382559e5e2db585c, type: 3}
+      propertyPath: BaseDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2205568597176363839, guid: 4c3545b2234564ab382559e5e2db585c, type: 3}
       propertyPath: _isEnabled
       value: 0
       objectReference: {fileID: 0}
@@ -30965,6 +30989,10 @@ PrefabInstance:
       propertyPath: _ravenPrefab
       value: 
       objectReference: {fileID: 1783361906523289645, guid: 73dffc90c37874381bd50b09415a2c82, type: 3}
+    - target: {fileID: 2205568597176363839, guid: 4c3545b2234564ab382559e5e2db585c, type: 3}
+      propertyPath: _baseCooldown
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2205568597176363839, guid: 4c3545b2234564ab382559e5e2db585c, type: 3}
       propertyPath: _ravenProjectilePrefab
       value: 
@@ -31863,6 +31891,14 @@ PrefabInstance:
     - target: {fileID: 4894158285875328385, guid: b2fbcc052753c4374a4beea0c77b6ebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5358019133310574137, guid: b2fbcc052753c4374a4beea0c77b6ebb, type: 3}
+      propertyPath: BaseDamage
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5358019133310574137, guid: b2fbcc052753c4374a4beea0c77b6ebb, type: 3}
+      propertyPath: _baseCooldown
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33973,13 +34009,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b3dd2a3ab2a477faae51ce48d9c4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _countSprite: {fileID: 21300000, guid: d5250e5db3ce642448c7a5c9ffa33af9, type: 3}
-  _speedSprite: {fileID: 21300000, guid: 8094df7779b004b43b7cc37ee399539b, type: 3}
-  _damageSprite: {fileID: 21300000, guid: 4af40a0e588594a3c9e45068423eb312, type: 3}
-  _dartSprite: {fileID: 21300000, guid: 7065380beeb504112b67e70f625d51e3, type: 3}
-  _ravenSprite: {fileID: -41011132, guid: 2d1db680ea22a4dd78b6c2918a56aa0e, type: 3}
-  _starfishSprite: {fileID: 900386594, guid: f973a0cae040d40648faf1d1eab27ad7, type: 3}
-  _schnitzelSprite: {fileID: 21300000, guid: acf14ff16f87c4b4db7ad79a39aab264, type: 3}
 --- !u!224 &6445608978296428708
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34016,13 +34045,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b3dd2a3ab2a477faae51ce48d9c4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _countSprite: {fileID: 21300000, guid: d5250e5db3ce642448c7a5c9ffa33af9, type: 3}
-  _speedSprite: {fileID: 21300000, guid: 8094df7779b004b43b7cc37ee399539b, type: 3}
-  _damageSprite: {fileID: 21300000, guid: 4af40a0e588594a3c9e45068423eb312, type: 3}
-  _dartSprite: {fileID: 21300000, guid: 7065380beeb504112b67e70f625d51e3, type: 3}
-  _ravenSprite: {fileID: -41011132, guid: 2d1db680ea22a4dd78b6c2918a56aa0e, type: 3}
-  _starfishSprite: {fileID: 900386594, guid: f973a0cae040d40648faf1d1eab27ad7, type: 3}
-  _schnitzelSprite: {fileID: 21300000, guid: acf14ff16f87c4b4db7ad79a39aab264, type: 3}
 --- !u!224 &6699254774424834910
 RectTransform:
   m_ObjectHideFlags: 0

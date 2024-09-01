@@ -5,16 +5,22 @@ public class UpgradeBase : MonoBehaviour
     private static int MAX_LEVEL = 3;
 
     [SerializeField]
-    protected int _currentLevel;
+    protected int _level = 0; // 0 => inactive, 1 => level 1, ...
+    public int Level => _level + 1;
+    public int NextLevel => Level + 1;
 
     [SerializeField]
-    private Sprite _icon;
+    protected Sprite _icon;
+    public Sprite Icon => _icon;
 
     [SerializeField]
-    private string _title;
+    protected string _title;
+    public string Title => _title;
 
     [SerializeField]
-    private string[] _descriptions;
+    // NOTE: _descriptions starts at index 0, but level starts at 1
+    protected string[] _descriptions;
+    public string NextDescription => _descriptions[_level];
 
     private void Awake()
     {
@@ -27,7 +33,7 @@ public class UpgradeBase : MonoBehaviour
 
     public bool IsMaxLevel()
     {
-        return _currentLevel == MAX_LEVEL;
+        return _level == MAX_LEVEL;
     }
 
     public void LevelUp()
@@ -37,9 +43,9 @@ public class UpgradeBase : MonoBehaviour
             return;
         }
 
-        _currentLevel++;
+        _level++;
 
-        UpgradeToLevel(_currentLevel);
+        UpgradeToLevel(_level);
     }
 
     public virtual void UpgradeToLevel(int level)

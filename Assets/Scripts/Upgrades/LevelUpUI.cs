@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Sentry;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 /**
  * Encapsulates behavior of LevelUpUI prefab
@@ -13,17 +9,15 @@ public class LevelUpUI : MonoBehaviour
     // fyi: title -> upgrade name, description -> level, stats -> description
     // leveling up an upgrade, changes the stats to new level, increases the level #
 
-    private static List<UpgradeType> _availableUpgradeTypes;
+    // private static List<UpgradeType> _availableUpgradeTypes;
 
-    private static Dictionary<UpgradeType, UpgradePath> _upgradeData;
-
-    private int MAX_LEVEL = 3;
+    // private static Dictionary<UpgradeType, UpgradePath> _upgradeData;
 
     [SerializeField]
-    private LevelOption _levelOption1;
+    private LevelOptionUI _levelOption1;
 
     [SerializeField]
-    private LevelOption _levelOption2;
+    private LevelOptionUI _levelOption2;
 
     private Button _option1Button;
     private Button _option2Button;
@@ -35,6 +29,7 @@ public class LevelUpUI : MonoBehaviour
 
     public static void Reset()
     {
+        /*
         _availableUpgradeTypes = new List<UpgradeType>
         {
             UpgradeType.CountUp,
@@ -118,7 +113,7 @@ public class LevelUpUI : MonoBehaviour
                     }
                 )
             }
-        };
+        };*/
     }
 
     void Awake()
@@ -132,7 +127,9 @@ public class LevelUpUI : MonoBehaviour
         // pause the game
         Time.timeScale = 0;
 
-        (UpgradeType upgradeChoice1, UpgradeType upgradeChoice2) = GetRandomUpgradeChoices();
+        // get upgrade manager
+        (UpgradeBase upgradeChoice1, UpgradeBase upgradeChoice2) =
+            UpgradeManager.Instance.GetRandomUpgradeChoices();
 
         SetLevelOptionUI(upgradeChoice1, upgradeChoice2);
 
@@ -147,38 +144,19 @@ public class LevelUpUI : MonoBehaviour
     }
 
     /**
-     * Returns a tuple of random level upgrade indices that are valid
-     */
-    (UpgradeType, UpgradeType) GetRandomUpgradeChoices()
-    {
-        int option1 = Random.Range(0, _availableUpgradeTypes.Count);
-        int option2;
-
-        // select a second option that is different from the first option if the number of available
-        // projectiles is greater than 1
-        do
-        {
-            option2 = Random.Range(0, _availableUpgradeTypes.Count);
-        } while (_availableUpgradeTypes.Count > 1 && option2 == option1);
-
-        UpgradeType upgradeType1 = _availableUpgradeTypes[option1];
-        UpgradeType upgradeType2 = _availableUpgradeTypes[option2];
-
-        return (upgradeType1, upgradeType2);
-    }
-
-    /**
      * Given a set of option choices, update the UI accordingly
      */
-    void SetLevelOptionUI(UpgradeType option1, UpgradeType option2)
+    void SetLevelOptionUI(UpgradeBase option1, UpgradeBase option2)
     {
-        UpgradeType optionTitle = option1;
-        int optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
-        string optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
+        // UpgradeType optionTitle = option1;
+        // int optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
+
+        // string optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
         _levelOption1.Set(
-            upgradeType: optionTitle,
-            description: "Level " + optionLevel,
-            stats: optionStats
+            title: option1.Title,
+            description: "Level " + option1.NextLevel,
+            stats: option1.NextDescription,
+            icon: option1.Icon
         );
 
         if (option1 == option2)
@@ -187,43 +165,20 @@ public class LevelUpUI : MonoBehaviour
         }
         else
         {
-            optionTitle = option2;
-            optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
-            optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
+            // optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
+            // optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
             _levelOption2.Set(
-                upgradeType: optionTitle,
-                description: "Level " + optionLevel,
-                stats: optionStats
+                title: option2.Title,
+                description: "Level " + option2.NextLevel,
+                stats: option2.NextDescription,
+                icon: option2.Icon
             );
         }
     }
 
-    void SelectUpgrade(UpgradeType selectedUpgradeType)
+    void SelectUpgrade(UpgradeBase selectedUpgrade)
     {
-        _upgradeData[selectedUpgradeType].LevelUp(); // level up the selected upgrade
-
-        if (_upgradeData[selectedUpgradeType].CurrentLevel == MAX_LEVEL)
-        {
-            // take the upgrade out of the pool if it's maxed out
-            for (int i = 0; i < _availableUpgradeTypes.Count; i++)
-            {
-                if (_availableUpgradeTypes[i] == selectedUpgradeType)
-                {
-                    _availableUpgradeTypes.RemoveAt(i);
-                    break;
-                }
-            }
-        }
-
-        int newLevel = _upgradeData[selectedUpgradeType].CurrentLevel;
-
-        var upgradeEvent = new UpgradeEventData(selectedUpgradeType, newLevel);
-        EventManager.TriggerEvent("UpgradeChosen", new EventData(upgradeEvent));
-
-        SentrySdk.Metrics.Increment(
-            "upgrade_selected",
-            tags: new Dictionary<string, string> { { "type", selectedUpgradeType.ToString() } }
-        );
+        UpgradeManager.Instance.UpgradePath(selectedUpgrade);
 
         // resume the game and exit the level up popup
         Time.timeScale = 1;
