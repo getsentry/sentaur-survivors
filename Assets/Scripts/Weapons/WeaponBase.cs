@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponBase : MonoBehaviour
@@ -7,12 +6,12 @@ public class WeaponBase : MonoBehaviour
     protected bool _isEnabled = false;
 
     [SerializeField]
-    protected float _startingCooldown;
+    protected float _baseCooldown;
 
     [SerializeField]
     public float _baseDamage;
 
-    public float Cooldown => _startingCooldown * _weaponManager.GlobalCooldownModifier;
+    public float Cooldown => _baseCooldown * _weaponManager.GlobalCooldownModifier;
     public int Damage => (int)(_weaponManager.GlobalDamageModifier * _baseDamage);
     public int Count => _weaponManager.GlobalCountModifier;
 

@@ -112,7 +112,7 @@ public class Raven : WeaponBase
         else if (level == 2)
         {
             _baseDamage = 2f;
-            _startingCooldown *= 0.8f;
+            _baseCooldown *= 0.8f;
         }
         else if (level == 3)
         {

@@ -49,7 +49,7 @@ public class Starfish : WeaponBase
         else if (level == 3)
         {
             _duration *= 1.5f;
-            _startingCooldown *= 0.7f;
+            _baseCooldown *= 0.7f;
         }
     }
 }
