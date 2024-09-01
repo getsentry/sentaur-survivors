@@ -108,11 +108,11 @@ public class Dart : WeaponBase
         }
         else if (level == 2)
         {
-            _baseDamage *= 1.5f;
+            BaseDamage *= 1.5f;
         }
         else if (level == 3)
         {
-            _baseDamage *= 2f;
+            BaseDamage *= 2f;
             _rearFiringDartCount += 2;
         }
     }

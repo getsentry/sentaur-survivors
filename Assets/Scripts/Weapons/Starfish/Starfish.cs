@@ -44,7 +44,7 @@ public class Starfish : WeaponBase
         else if (level == 2)
         {
             _duration *= 1.2f;
-            _baseDamage *= 1.2f;
+            BaseDamage *= 1.2f;
         }
         else if (level == 3)
         {

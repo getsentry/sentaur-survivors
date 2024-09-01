@@ -9,10 +9,10 @@ public class WeaponBase : MonoBehaviour
     protected float _baseCooldown;
 
     [SerializeField]
-    public float _baseDamage;
+    public float BaseDamage;
 
     public float Cooldown => _baseCooldown * _weaponManager.GlobalCooldownModifier;
-    public int Damage => (int)(_weaponManager.GlobalDamageModifier * _baseDamage);
+    public int Damage => (int)(_weaponManager.GlobalDamageModifier * BaseDamage);
     public int Count => _weaponManager.GlobalCountModifier;
 
     protected float _timeElapsedSinceLastFire = 0.0f;
@@ -40,5 +40,10 @@ public class WeaponBase : MonoBehaviour
     public virtual void Fire()
     {
         _timeElapsedSinceLastFire = 0.0f;
+    }
+
+    public void Enable()
+    {
+        _isEnabled = true;
     }
 }

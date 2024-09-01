@@ -10,7 +10,6 @@ using UnityEngine;
 
 public class UpgradePath
 {
-    private string _name;
     private int _currentLevel;
     private List<string> _levelDesc;
 
