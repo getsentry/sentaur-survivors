@@ -32,32 +32,26 @@ public class Raven : WeaponBase
 
         for (int i = 0; i < Count; i++)
         {
+            GameObject target = GetTarget();
+            if (target == null)
+            {
+                // nothing to target
+                return;
+            }
+
             var projectile = Instantiate(_ravenProjectilePrefab);
 
             projectile.Initialize(Damage, _speed, _areaOfEffectRadius);
-
-            projectile.transform.position = _player.transform.position;
             projectile.transform.parent = _player.transform.parent;
 
-            TargetClosestEnemy(projectile);
+            Vector3 direction = target.transform.position - _player.transform.position;
+            projectile.SetDirection(direction);
+
+            // initial position
+            projectile.transform.position =
+                _player.transform.position + direction.normalized * _spawnDistanceOutsidePlayer;
         }
         _currentTargets.Clear(); // reset raven targeting
-    }
-
-    public void TargetClosestEnemy(RavenProjectile projectile)
-    {
-        GameObject target = GetTarget();
-        if (target == null)
-        {
-            // nothing to target
-            Destroy(projectile);
-            return;
-        }
-        Vector3 direction = target.transform.position - _player.transform.position;
-        projectile.SetDirection(direction);
-        // initial position
-        transform.position =
-            _player.transform.position + direction.normalized * _spawnDistanceOutsidePlayer;
     }
 
     private GameObject GetTarget()
