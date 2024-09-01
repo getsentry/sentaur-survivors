@@ -9,10 +9,6 @@ public class LevelUpUI : MonoBehaviour
     // fyi: title -> upgrade name, description -> level, stats -> description
     // leveling up an upgrade, changes the stats to new level, increases the level #
 
-    // private static List<UpgradeType> _availableUpgradeTypes;
-
-    // private static Dictionary<UpgradeType, UpgradePath> _upgradeData;
-
     [SerializeField]
     private LevelOptionUI _levelOption1;
 
@@ -22,24 +18,9 @@ public class LevelUpUI : MonoBehaviour
     private Button _option1Button;
     private Button _option2Button;
 
-    // this is in GameManager.cs, but idk how to access it from here
-    // [SerializeField]
-    // [Tooltip("The parent UI element containing the active upgrades")]
-    // private GameObject _activeUpgradesContainer;
-
     public static void Reset()
     {
         /*
-        _availableUpgradeTypes = new List<UpgradeType>
-        {
-            UpgradeType.CountUp,
-            UpgradeType.CooldownDown,
-            UpgradeType.DamageUp,
-            UpgradeType.Dart,
-            UpgradeType.Raven,
-            UpgradeType.Starfish,
-            UpgradeType.Schnitzel
-        };
 
         _upgradeData = new Dictionary<UpgradeType, UpgradePath>
         {
@@ -148,10 +129,6 @@ public class LevelUpUI : MonoBehaviour
      */
     void SetLevelOptionUI(UpgradeBase option1, UpgradeBase option2)
     {
-        // UpgradeType optionTitle = option1;
-        // int optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
-
-        // string optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
         _levelOption1.Set(
             title: option1.Title,
             description: "Level " + option1.NextLevel,
@@ -165,8 +142,6 @@ public class LevelUpUI : MonoBehaviour
         }
         else
         {
-            // optionLevel = _upgradeData[optionTitle].CurrentLevel + 1;
-            // optionStats = _upgradeData[optionTitle].GetLevelStats(optionLevel);
             _levelOption2.Set(
                 title: option2.Title,
                 description: "Level " + option2.NextLevel,
