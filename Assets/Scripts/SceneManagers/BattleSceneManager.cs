@@ -772,38 +772,4 @@ public class BattleSceneManager : MonoBehaviour
         pickup.transform.position = GetRandomSpawnPoint();
         _pickupsOnScreen++;
     }
-    /*
-        private void OnUpgradeChosen(UpgradeEventData upgradeEvent)
-        {
-            var newLevel = upgradeEvent.Level;
-    
-            var weaponManager = Player.Instance.WeaponManager;
-    
-            switch (upgradeEvent.UpgradeType)
-            {
-                case UpgradeType.CountUp:
-                    weaponManager.UpgradeCount(newLevel);
-                    break;
-                case UpgradeType.CooldownDown:
-                    weaponManager.UpgradeCooldown(newLevel);
-                    break;
-                case UpgradeType.DamageUp:
-                    weaponManager.UpgradeDamage(newLevel);
-                    break;
-                case UpgradeType.Dart:
-                    GameObject.Find("Dart").GetComponent<Dart>().Upgrade(newLevel);
-                    break;
-                case UpgradeType.Raven:
-                    GameObject.Find("Raven").GetComponent<Raven>().Upgrade(newLevel);
-                    break;
-                case UpgradeType.Starfish:
-                    GameObject.Find("Starfish").GetComponent<Starfish>().Upgrade(newLevel);
-                    break;
-                case UpgradeType.Schnitzel:
-                    GameObject.Find("Schnitzel").GetComponent<Schnitzel>().Upgrade(newLevel);
-                    break;
-                default:
-                    break;
-            }
-        }*/
 }
