@@ -3,6 +3,15 @@ using UnityEngine;
 class SchnitzelUpgradePath : WeaponUpgradePath
 {
     [SerializeField]
+    private string[] _description = new string[]
+    {
+        "it's like an axe",
+        "+40% area of effect",
+        "+30% area of effect"
+    };
+    protected override string[] Descriptions => _description;
+
+    [SerializeField]
     private float _lvl2Scale = 1.4f;
 
     [SerializeField]

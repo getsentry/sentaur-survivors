@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WeaponUpgradePath : UpgradePathBase
+public abstract class WeaponUpgradePath : UpgradePathBase
 {
     [SerializeField]
     private WeaponBase _weaponPrefab;

@@ -3,10 +3,19 @@ using UnityEngine;
 class StarfishUpgradePath : WeaponUpgradePath
 {
     [SerializeField]
-    private float _lvl2DurationMod = 1.2f;
+    private string[] _description = new string[]
+    {
+        "orbits around you, wreaking havoc",
+        "+40% orbit duration",
+        "+30% orbit duration and -30% cooldown!"
+    };
+    protected override string[] Descriptions => _description;
 
     [SerializeField]
-    private float _lvl3DurationMod = 1.5f;
+    private float _lvl2DurationMod = 1.4f;
+
+    [SerializeField]
+    private float _lvl3DurationMod = 1.3f;
     private float _lvl3CooldownMod = 0.7f;
 
     public override void UpgradeToLevel(int level)

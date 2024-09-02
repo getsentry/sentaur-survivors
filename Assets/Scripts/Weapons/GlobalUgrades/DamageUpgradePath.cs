@@ -3,6 +3,10 @@ using UnityEngine;
 public class DamageUpgradePath : UpgradePathBase
 {
     [SerializeField]
+    private string[] _descriptions = { "+30% damage", "+25% damage", "+25% damage!" };
+    protected override string[] Descriptions => _descriptions;
+
+    [SerializeField]
     private float[] _damageModifiersPerLevel = { 1.3f, 1.25f, 1.25f };
 
     public override void UpgradeToLevel(int level)

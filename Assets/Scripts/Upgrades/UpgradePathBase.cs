@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UpgradePathBase : MonoBehaviour
+public abstract class UpgradePathBase : MonoBehaviour
 {
     private static int MAX_LEVEL = 3;
 
@@ -19,18 +19,13 @@ public class UpgradePathBase : MonoBehaviour
 
     [SerializeField]
     // NOTE: _descriptions starts at index 0, but level starts at 1
-    protected string[] _descriptions =
-    {
-        "Level 1 description",
-        "Level 2 description",
-        "Level 3 description"
-    };
-    public string NextDescription => _descriptions[_level];
+    protected abstract string[] Descriptions { get; }
+    public string NextDescription => Descriptions[_level];
 
     private void Awake()
     {
         // assert _descriptions is not higher than max level
-        if (_descriptions.Length != MAX_LEVEL)
+        if (Descriptions.Length != MAX_LEVEL)
         {
             Debug.LogError("UpgradeBase: _descriptions length is not equal to MAX_LEVEL");
         }

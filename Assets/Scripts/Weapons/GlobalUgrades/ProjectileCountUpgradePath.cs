@@ -3,6 +3,15 @@ using UnityEngine;
 class ProjectileCountUpgradePath : UpgradePathBase
 {
     [SerializeField]
+    private string[] _descriptions =
+    {
+        "+1 of each projectile",
+        "+1 of each projectile",
+        "+2 of each projectile!"
+    };
+    protected override string[] Descriptions => _descriptions;
+
+    [SerializeField]
     private int[] _countModifiersPerLevel = { 2, 3, 5 };
 
     public override void UpgradeToLevel(int level)
