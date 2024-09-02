@@ -4,6 +4,8 @@ public class RavenUpgradePath : WeaponUpgradePath
 {
     [SerializeField]
     private float _lvl2DamageMod;
+
+    [SerializeField]
     private float _lvl2CooldownMod;
 
     [SerializeField]

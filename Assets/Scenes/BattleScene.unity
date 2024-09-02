@@ -221,6 +221,7 @@ MonoBehaviour:
   - +60% area of effect
   _weaponPrefab: {fileID: 2205568597176363839, guid: 4c3545b2234564ab382559e5e2db585c, type: 3}
   _lvl2DamageMod: 1.33
+  _lvl2CooldownMod: 0.8
   _lvl3AreaOfEffectRadiusMod: 1.6
 --- !u!1 &170557571
 GameObject:
