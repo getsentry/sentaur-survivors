@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnabled: 0
-  _baseCooldown: 5
+  BaseCooldown: 4
   BaseDamage: 15
   _speed: 12
   AreaOfEffectRadius: 1

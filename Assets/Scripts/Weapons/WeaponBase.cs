@@ -6,12 +6,12 @@ public class WeaponBase : MonoBehaviour
     protected bool _isEnabled = false;
 
     [SerializeField]
-    protected float _baseCooldown;
+    public float BaseCooldown;
 
     [SerializeField]
     public float BaseDamage;
 
-    public float Cooldown => _baseCooldown * _weaponManager.GlobalCooldownModifier;
+    public float Cooldown => BaseCooldown * _weaponManager.GlobalCooldownModifier;
     public int Damage => (int)(_weaponManager.GlobalDamageModifier * BaseDamage);
     public int Count => _weaponManager.GlobalCountModifier;
 

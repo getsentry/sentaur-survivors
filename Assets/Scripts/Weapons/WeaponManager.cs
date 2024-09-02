@@ -19,6 +19,13 @@ public class WeaponManager : MonoBehaviour
         _weapons.AddRange(GetComponentsInChildren<WeaponBase>());
     }
 
+    public void Add(WeaponBase weapon)
+    {
+        weapon.transform.parent = transform;
+
+        _weapons.Add(weapon);
+    }
+
     public void Update()
     {
         foreach (var weapon in _weapons)

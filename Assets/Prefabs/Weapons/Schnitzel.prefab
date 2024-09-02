@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnabled: 0
-  _baseCooldown: 3.8
+  BaseCooldown: 2.8
   BaseDamage: 8
   _speed: 5
   _spawnDistanceOutsidePlayer: 1.25
   _shootingInterval: 0.25
-  _scale: 1
+  Scale: 1
   _schnitzelProjectilePrefab: {fileID: 8194018987037890526, guid: af50a2a7f0c834ebf90a6f2724b0f298, type: 3}

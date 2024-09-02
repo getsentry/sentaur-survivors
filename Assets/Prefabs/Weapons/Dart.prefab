@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnabled: 0
-  _baseCooldown: 1.8
+  BaseCooldown: 1.8
   BaseDamage: 10
   _speed: 10
   RearFiringDartCount: 0

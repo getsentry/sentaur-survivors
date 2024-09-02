@@ -219,7 +219,7 @@ MonoBehaviour:
   - heat-seeking bomb targets closest enemy
   - +33% damage and +20% cooldown!
   - +60% area of effect
-  _weaponPrefab: {fileID: 0}
+  _weaponPrefab: {fileID: 2205568597176363839, guid: 4c3545b2234564ab382559e5e2db585c, type: 3}
   _lvl2DamageMod: 1.33
   _lvl3AreaOfEffectRadiusMod: 1.6
 --- !u!1 &170557571
@@ -892,6 +892,7 @@ Transform:
   - {fileID: 784979737}
   - {fileID: 130893741}
   - {fileID: 1721536220}
+  - {fileID: 1836248121}
   m_Father: {fileID: 996256050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &441343835
@@ -7725,79 +7726,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3600334310735166755, guid: b5ed0a0f1681f414cb7f4e96615eff9e, type: 3}
   m_PrefabInstance: {fileID: 449849008}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &809693221
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1882345548}
-    m_Modifications:
-    - target: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: BaseDamage
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: _isEnabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: _baseCooldown
-      value: 2.8
-      objectReference: {fileID: 0}
-    - target: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: _schnitzelProjectilePrefab
-      value: 
-      objectReference: {fileID: 8194018987037890526, guid: af50a2a7f0c834ebf90a6f2724b0f298, type: 3}
-    - target: {fileID: 3476222383509152590, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: m_Name
-      value: Schnitzel
-      objectReference: {fileID: 0}
-    - target: {fileID: 4894158285875328385, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4894158285875328385, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4894158285875328385, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4894158285875328385, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4894158285875328385, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4894158285875328385, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4894158285875328385, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4894158285875328385, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4894158285875328385, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4894158285875328385, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
 --- !u!1001 &854700013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30064,22 +29992,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608051141}
   m_CullTransparentMesh: 1
---- !u!4 &1634516006 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4894158285875328385, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-  m_PrefabInstance: {fileID: 809693221}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1634516007 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
-  m_PrefabInstance: {fileID: 809693221}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d279d45005cbf471da3528a6f4e2e03b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1635123374
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30558,8 +30470,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _level: 0
-  _icon: {fileID: 0}
-  _title: 
+  _icon: {fileID: 21300000, guid: 7065380beeb504112b67e70f625d51e3, type: 3}
+  _title: Dart
   _descriptions:
   - fires in a straight line
   - +1 dart firing backwards
@@ -30992,6 +30904,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &1836248120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1836248121}
+  - component: {fileID: 1836248122}
+  m_Layer: 0
+  m_Name: SchnitzelUpgradePath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1836248121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836248120}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 441343834}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1836248122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836248120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4b581e32dca44837b775e26609bb852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _level: 0
+  _icon: {fileID: 21300000, guid: acf14ff16f87c4b4db7ad79a39aab264, type: 3}
+  _title: Schnitzel
+  _descriptions:
+  - it's like an axe
+  - +40% area of effect
+  - +30% area of effect
+  _weaponPrefab: {fileID: -2724762005279238218, guid: f29d7771c50b64b0f9a0a54f2a12292a, type: 3}
+  _lvl2Scale: 1.4
+  _lvl3Scale: 1.3
 --- !u!1 &1838798710
 GameObject:
   m_ObjectHideFlags: 0
@@ -31201,7 +31167,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1147372094}
-  - {fileID: 1634516006}
   m_Father: {fileID: 702887974}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1882345549
@@ -33379,7 +33344,7 @@ PrefabInstance:
     - target: {fileID: 292671231893397069, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
       propertyPath: _schnitzel
       value: 
-      objectReference: {fileID: 1634516007}
+      objectReference: {fileID: 0}
     - target: {fileID: 292671231893397069, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
       propertyPath: WeaponManager
       value: 

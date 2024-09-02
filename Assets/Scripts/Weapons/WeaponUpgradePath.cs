@@ -10,8 +10,8 @@ public class WeaponUpgradePath : UpgradePathBase
     public void Activate()
     {
         _weapon = Instantiate(_weaponPrefab);
-        _weapon.transform.parent = FindObjectOfType<WeaponManager>().transform;
-
         _weapon.Enable();
+
+        Player.Instance.WeaponManager.Add(_weapon);
     }
 }
