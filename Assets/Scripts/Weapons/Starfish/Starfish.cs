@@ -33,5 +33,14 @@ public class Starfish : WeaponBase
             starfish.Initialize(Damage, Duration, degreesBetweenStarfish * i);
             starfish.transform.parent = this.transform;
         }
+
+        // reset cooldown after duration
+        StartCoroutine(ResetCooldownAfterDuration());
+    }
+
+    private System.Collections.IEnumerator ResetCooldownAfterDuration()
+    {
+        yield return new WaitForSeconds(Duration);
+        ResetCooldown();
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WeaponBase : MonoBehaviour
+public abstract class WeaponBase : MonoBehaviour
 {
     [SerializeField]
     protected bool _isEnabled = false;
@@ -38,6 +38,11 @@ public class WeaponBase : MonoBehaviour
     }
 
     public virtual void Fire()
+    {
+        ResetCooldown();
+    }
+
+    public virtual void ResetCooldown()
     {
         _timeElapsedSinceLastFire = 0.0f;
     }

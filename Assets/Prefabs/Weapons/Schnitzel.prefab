@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnabled: 0
-  BaseCooldown: 2.8
+  BaseCooldown: 2.9
   BaseDamage: 8
   _speed: 5
   _spawnDistanceOutsidePlayer: 1.25

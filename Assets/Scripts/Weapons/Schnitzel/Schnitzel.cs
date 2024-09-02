@@ -41,6 +41,9 @@ public class Schnitzel : WeaponBase
             direction = CalculateDirection(player);
         }
 
+        // reset cooldown after all schnitzels fired
+        ResetCooldown();
+
         yield return null;
     }
 

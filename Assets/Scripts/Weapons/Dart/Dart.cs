@@ -75,6 +75,9 @@ public class Dart : WeaponBase
             }
         }
 
+        // reset cooldown after all darts have been shot
+        ResetCooldown();
+
         _isShooting = false;
         yield return null;
     }
