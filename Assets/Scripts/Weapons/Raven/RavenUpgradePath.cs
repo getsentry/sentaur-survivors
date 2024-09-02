@@ -3,13 +3,13 @@ using UnityEngine;
 public class RavenUpgradePath : WeaponUpgradePath
 {
     [SerializeField]
-    private float _lvl2DamageMod;
+    private float _lvl2DamageMod = 1.33f;
 
     [SerializeField]
-    private float _lvl2CooldownMod;
+    private float _lvl2CooldownMod = 0.8f;
 
     [SerializeField]
-    private float _lvl3AreaOfEffectRadiusMod;
+    private float _lvl3AreaOfEffectRadiusMod = 1.5f;
 
     public override void UpgradeToLevel(int level)
     {

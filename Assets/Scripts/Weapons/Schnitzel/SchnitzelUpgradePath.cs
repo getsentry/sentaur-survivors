@@ -3,10 +3,10 @@ using UnityEngine;
 class SchnitzelUpgradePath : WeaponUpgradePath
 {
     [SerializeField]
-    private float _lvl2Scale;
+    private float _lvl2Scale = 1.4f;
 
     [SerializeField]
-    private float _lvl3Scale;
+    private float _lvl3Scale = 1.3f;
 
     public override void UpgradeToLevel(int level)
     {

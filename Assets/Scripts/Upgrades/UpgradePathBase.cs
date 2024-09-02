@@ -14,12 +14,17 @@ public class UpgradePathBase : MonoBehaviour
     public Sprite Icon => _icon;
 
     [SerializeField]
-    protected string _title;
+    protected string _title = "n/a";
     public string Title => _title;
 
     [SerializeField]
     // NOTE: _descriptions starts at index 0, but level starts at 1
-    protected string[] _descriptions;
+    protected string[] _descriptions =
+    {
+        "Level 1 description",
+        "Level 2 description",
+        "Level 3 description"
+    };
     public string NextDescription => _descriptions[_level];
 
     private void Awake()
