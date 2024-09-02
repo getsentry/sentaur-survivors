@@ -130,8 +130,7 @@ public class BattleSceneManager : MonoBehaviour
         25800,
         31350,
         38000, // level 20
-        46000,
-        55600, // level 22 (max)
+        46000, // level 21 (max)
     }; // for testing: {50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900};
     private int _nextLevelXpMilestone;
 
