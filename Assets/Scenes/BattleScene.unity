@@ -349,6 +349,57 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3600334310735166755, guid: ba9a3fb92cb4b4e8eb4baf75754235a3, type: 3}
   m_PrefabInstance: {fileID: 1635123374}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &185777652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 185777653}
+  - component: {fileID: 185777654}
+  m_Layer: 0
+  m_Name: CooldownUpgradePath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &185777653
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185777652}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 441343834}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &185777654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185777652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c98aadd575a3415d91c117258b2d6db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _level: 0
+  _icon: {fileID: 21300000, guid: 8094df7779b004b43b7cc37ee399539b, type: 3}
+  _title: Cooldown++
+  _descriptions:
+  - -20% cooldown time
+  - -25% cooldown time
+  - -50% cooldown time!
 --- !u!1001 &229857960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -892,6 +943,7 @@ Transform:
   m_Children:
   - {fileID: 784979737}
   - {fileID: 1101724734}
+  - {fileID: 185777653}
   - {fileID: 1836248121}
   - {fileID: 130893741}
   - {fileID: 1721536220}
@@ -31232,53 +31284,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 996256050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1882345547
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1882345548}
-  - component: {fileID: 1882345549}
-  m_Layer: 7
-  m_Name: WeaponManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1882345548
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882345547}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 702887974}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1882345549
+--- !u!114 &1882345549 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1700775371577408911, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
+  m_PrefabInstance: {fileID: 4086352640654554052}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882345547}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91bd7a4cb211b4c32bfc08d33b3d4ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalDamageModifier: 1
-  GlobalCooldownModifier: 1
-  GlobalCountModifier: 1
 --- !u!1 &1932945646
 GameObject:
   m_ObjectHideFlags: 0
@@ -33409,10 +33425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 71829853537045655, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1882345548}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
 --- !u!224 &4107652790464639195
