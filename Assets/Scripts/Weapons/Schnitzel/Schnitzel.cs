@@ -13,7 +13,7 @@ public class Schnitzel : WeaponBase
     private float _shootingInterval = 0.25f; // time between consecutive schnitzel
 
     [SerializeField]
-    private float _scale = 1.0f;
+    public float Scale = 1.0f;
 
     [SerializeField]
     private SchnitzelProjectile _schnitzelProjectilePrefab;
@@ -63,24 +63,8 @@ public class Schnitzel : WeaponBase
             player.transform.position + direction.normalized * _spawnDistanceOutsidePlayer;
 
         // adjust scale
-        schnitzel.transform.localScale = new Vector3(_scale, _scale, _scale);
+        schnitzel.transform.localScale = new Vector3(Scale, Scale, Scale);
 
         schnitzel.SetDirection(direction);
-    }
-
-    public void Upgrade(int level)
-    {
-        if (level == 1)
-        {
-            _isEnabled = true;
-        }
-        else if (level == 2)
-        {
-            _scale *= 1.4f;
-        }
-        else if (level == 3)
-        {
-            _scale *= 1.3f;
-        }
     }
 }

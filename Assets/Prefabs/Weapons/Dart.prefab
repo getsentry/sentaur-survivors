@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnabled: 0
-  _startingCooldown: 1.8
-  _baseDamage: 10
+  BaseCooldown: 1.8
+  BaseDamage: 10
   _speed: 10
-  _rearFiringDartCount: 0
+  RearFiringDartCount: 0
   _spawnDistanceOutsidePlayer: 1.25
   _shootingInterval: 0.4
   _areaOfEffectRadius: 0.25

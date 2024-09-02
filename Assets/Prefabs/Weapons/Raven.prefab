@@ -45,9 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnabled: 0
-  _startingCooldown: 6
-  _baseDamage: 15
+  BaseCooldown: 4
+  BaseDamage: 15
   _speed: 12
-  _areaOfEffectRadius: 1
+  AreaOfEffectRadius: 1
   _spawnDistanceOutsidePlayer: 1.25
+  _detectRadius: 12
   _ravenProjectilePrefab: {fileID: 1783361906523289645, guid: 73dffc90c37874381bd50b09415a2c82, type: 3}

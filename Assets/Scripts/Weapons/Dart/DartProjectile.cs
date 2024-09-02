@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DartProjectile : ProjectileBase
@@ -32,7 +33,15 @@ public class DartProjectile : ProjectileBase
         // why 5000? -- the result of experimenting with different values (!)
         initialEnemy.Knockback(_direction, 5000);
 
+        // deal damage to initial enemy
+        initialEnemy.TakeDamage(_damage);
+
         // dart actually does some minor splash damage
-        SplashDamage(initialEnemy.transform.position, _areaOfEffectRadius, _damage);
+        SplashDamage(
+            initialEnemy.transform.position,
+            _areaOfEffectRadius,
+            _damage,
+            new HashSet<Enemy>() { initialEnemy }
+        );
     }
 }

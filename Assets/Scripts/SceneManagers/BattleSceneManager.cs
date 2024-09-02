@@ -130,8 +130,7 @@ public class BattleSceneManager : MonoBehaviour
         25800,
         31350,
         38000, // level 20
-        46000,
-        55600, // level 22 (max)
+        46000, // level 21 (max)
     }; // for testing: {50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900};
     private int _nextLevelXpMilestone;
 
@@ -223,8 +222,6 @@ public class BattleSceneManager : MonoBehaviour
 
         SetCurrentLevel(_currentLevel);
 
-        LevelUpUI.Reset();
-
         EventManager.AddListener(
             "EnemyDestroyed",
             (eventData) =>
@@ -267,14 +264,6 @@ public class BattleSceneManager : MonoBehaviour
             (eventData) =>
             {
                 OnQuit();
-            }
-        );
-
-        EventManager.AddListener(
-            "UpgradeChosen",
-            (eventData) =>
-            {
-                OnUpgradeChosen((UpgradeEventData)eventData.Data);
             }
         );
     }
@@ -770,39 +759,5 @@ public class BattleSceneManager : MonoBehaviour
 
         pickup.transform.position = GetRandomSpawnPoint();
         _pickupsOnScreen++;
-    }
-
-    private void OnUpgradeChosen(UpgradeEventData upgradeEvent)
-    {
-        var newLevel = upgradeEvent.Level;
-
-        var weaponManager = Player.Instance.WeaponManager;
-
-        switch (upgradeEvent.UpgradeType)
-        {
-            case UpgradeType.CountUp:
-                weaponManager.UpgradeCount(newLevel);
-                break;
-            case UpgradeType.CooldownDown:
-                weaponManager.UpgradeCooldown(newLevel);
-                break;
-            case UpgradeType.DamageUp:
-                weaponManager.UpgradeDamage(newLevel);
-                break;
-            case UpgradeType.Dart:
-                GameObject.Find("Dart").GetComponent<Dart>().Upgrade(newLevel);
-                break;
-            case UpgradeType.Raven:
-                GameObject.Find("Raven").GetComponent<Raven>().Upgrade(newLevel);
-                break;
-            case UpgradeType.Starfish:
-                GameObject.Find("Starfish").GetComponent<Starfish>().Upgrade(newLevel);
-                break;
-            case UpgradeType.Schnitzel:
-                GameObject.Find("Schnitzel").GetComponent<Schnitzel>().Upgrade(newLevel);
-                break;
-            default:
-                break;
-        }
     }
 }

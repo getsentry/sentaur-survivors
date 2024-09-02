@@ -10,7 +10,7 @@ public class Raven : WeaponBase
 
     [SerializeField]
     [Tooltip("Modifies AOE of emitted projectiles")]
-    private float _areaOfEffectRadius = 1.0f;
+    public float AreaOfEffectRadius = 1.0f;
 
     [SerializeField]
     [Tooltip("Distance from player to spawn raven")]
@@ -41,7 +41,7 @@ public class Raven : WeaponBase
         {
             var projectile = Instantiate(_ravenProjectilePrefab);
 
-            projectile.Initialize(Damage, _speed, _areaOfEffectRadius);
+            projectile.Initialize(Damage, _speed, AreaOfEffectRadius);
             projectile.transform.parent = _player.transform.parent;
 
             Vector3 direction = target.transform.position - _player.transform.position;
@@ -101,22 +101,5 @@ public class Raven : WeaponBase
             targets.Add(target);
         }
         return targets;
-    }
-
-    public void Upgrade(int level)
-    {
-        if (level == 1)
-        {
-            _isEnabled = true;
-        }
-        else if (level == 2)
-        {
-            _baseDamage = 2f;
-            _baseCooldown *= 0.8f;
-        }
-        else if (level == 3)
-        {
-            _areaOfEffectRadius = 1.6f;
-        }
     }
 }

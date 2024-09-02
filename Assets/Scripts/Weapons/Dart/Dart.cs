@@ -7,7 +7,7 @@ public class Dart : WeaponBase
     private float _speed = 10.0f;
 
     [SerializeField]
-    private int _rearFiringDartCount = 0; // NOTE: rear-shooting darts
+    public int RearFiringDartCount = 0; // NOTE: rear-shooting darts
 
     [SerializeField]
     private float _spawnDistanceOutsidePlayer = 1.25f;
@@ -53,7 +53,7 @@ public class Dart : WeaponBase
         for (int i = 0; i < Count; i++)
         {
             ShootADart(_dartProjectilePrefab, _player, direction);
-            if (_rearFiringDartCount > i)
+            if (RearFiringDartCount > i)
             {
                 ShootADart(_dartProjectilePrefab, _player, direction * -1);
             }
@@ -64,7 +64,7 @@ public class Dart : WeaponBase
         }
 
         // accounting for case where # of backwards darts > # of forwards darts
-        int remainingDarts = _rearFiringDartCount - Count;
+        int remainingDarts = RearFiringDartCount - Count;
         if (remainingDarts > 0)
         {
             direction *= -1;
@@ -98,22 +98,5 @@ public class Dart : WeaponBase
         Vector3 direction = mousePosition - player.transform.position;
 
         return direction;
-    }
-
-    public void Upgrade(int level)
-    {
-        if (level == 1)
-        {
-            _rearFiringDartCount++;
-        }
-        else if (level == 2)
-        {
-            _baseDamage *= 1.5f;
-        }
-        else if (level == 3)
-        {
-            _baseDamage *= 2f;
-            _rearFiringDartCount += 2;
-        }
     }
 }
