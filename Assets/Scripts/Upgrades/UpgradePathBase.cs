@@ -6,7 +6,7 @@ public class UpgradePathBase : MonoBehaviour
 
     [SerializeField]
     protected int _level = 0; // 0 => inactive, 1 => level 1, ...
-    public int Level => _level + 1;
+    public int Level => _level;
     public int NextLevel => Level + 1;
 
     [SerializeField]

@@ -102,21 +102,4 @@ public class Raven : WeaponBase
         }
         return targets;
     }
-
-    public void Upgrade(int level)
-    {
-        if (level == 1)
-        {
-            _isEnabled = true;
-        }
-        else if (level == 2)
-        {
-            BaseDamage = 2f;
-            _baseCooldown *= 0.8f;
-        }
-        else if (level == 3)
-        {
-            AreaOfEffectRadius = 1.6f;
-        }
-    }
 }
