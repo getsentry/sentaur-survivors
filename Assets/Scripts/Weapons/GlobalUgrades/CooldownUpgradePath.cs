@@ -1,5 +1,8 @@
+using UnityEngine;
+
 class CooldownUpgradePath : UpgradePathBase
 {
+    [SerializeField]
     private float[] _cooldownModifiersPerLevel = { 0.8f, 0.75f, 0.5f };
 
     public override void UpgradeToLevel(int level)

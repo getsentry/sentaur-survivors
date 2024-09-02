@@ -266,15 +266,6 @@ public class BattleSceneManager : MonoBehaviour
                 OnQuit();
             }
         );
-
-        /*
-                EventManager.AddListener(
-                    "UpgradeChosen",
-                    (eventData) =>
-                    {
-                        OnUpgradeChosen((UpgradeEventData)eventData.Data);
-                    }
-                );*/
     }
 
     private void OnPickupGrabbed(List<object> eventData)
