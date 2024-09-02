@@ -222,8 +222,6 @@ public class BattleSceneManager : MonoBehaviour
 
         SetCurrentLevel(_currentLevel);
 
-        LevelUpUI.Reset();
-
         EventManager.AddListener(
             "EnemyDestroyed",
             (eventData) =>

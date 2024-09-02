@@ -22,9 +22,3 @@ public class DamageUpgradePath : UpgradePathBase
         }
     }
 }
-/*
-
-            {
-                UpgradeType.DamageUp,
-                new UpgradePath(new List<string> { "+30% damage", "+60% damage", "+100% damage!" })
-            },*/
