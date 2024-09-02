@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnabled: 0
-  _startingCooldown: 5
-  _baseDamage: 8
+  _baseCooldown: 5
+  BaseDamage: 8
   _duration: 5
   _starfishProjectilePrefab: {fileID: 4760811041620966471, guid: 33fd1a5d339ac4354ba91c77597adb88, type: 3}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-class CountUpUpgrades : UpgradeBase
+class ProjectileCountUpgradePath : UpgradePathBase
 {
     [SerializeField]
     private int[] _countModifiersPerLevel = { 2, 3, 5 };

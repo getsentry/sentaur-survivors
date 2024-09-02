@@ -4,7 +4,7 @@ using UnityEngine;
 
 class UpgradeManager : MonoBehaviour
 {
-    List<UpgradeBase> _availableUpgrades = new List<UpgradeBase>();
+    List<UpgradePathBase> _availableUpgrades = new List<UpgradePathBase>();
 
     private static UpgradeManager _instance;
 
@@ -22,13 +22,17 @@ class UpgradeManager : MonoBehaviour
 
     public void Awake()
     {
-        _availableUpgrades.AddRange(GetComponentsInChildren<UpgradeBase>());
+        _availableUpgrades.AddRange(GetComponentsInChildren<UpgradePathBase>());
+
+        // dart starts at level 1
+        GetComponentInChildren<DartUpgradePath>()
+            .LevelUp();
     }
 
     /**
       * Returns a tuple of random upgrade paths that are valid
       */
-    public (UpgradeBase, UpgradeBase) GetRandomUpgradeChoices()
+    public (UpgradePathBase, UpgradePathBase) GetRandomUpgradePaths()
     {
         int option1 = Random.Range(0, _availableUpgrades.Count);
         int option2;
@@ -43,7 +47,7 @@ class UpgradeManager : MonoBehaviour
         return (_availableUpgrades[option1], _availableUpgrades[option2]);
     }
 
-    public void UpgradePath(UpgradeBase upgradePath)
+    public void LevelUpUpgradePath(UpgradePathBase upgradePath)
     {
         upgradePath.LevelUp(); // level up the selected upgrade
 

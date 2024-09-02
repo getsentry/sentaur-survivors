@@ -109,8 +109,8 @@ public class LevelUpUI : MonoBehaviour
         Time.timeScale = 0;
 
         // get upgrade manager
-        (UpgradeBase upgradeChoice1, UpgradeBase upgradeChoice2) =
-            UpgradeManager.Instance.GetRandomUpgradeChoices();
+        (UpgradePathBase upgradeChoice1, UpgradePathBase upgradeChoice2) =
+            UpgradeManager.Instance.GetRandomUpgradePaths();
 
         SetLevelOptionUI(upgradeChoice1, upgradeChoice2);
 
@@ -127,7 +127,7 @@ public class LevelUpUI : MonoBehaviour
     /**
      * Given a set of option choices, update the UI accordingly
      */
-    void SetLevelOptionUI(UpgradeBase option1, UpgradeBase option2)
+    void SetLevelOptionUI(UpgradePathBase option1, UpgradePathBase option2)
     {
         _levelOption1.Set(
             title: option1.Title,
@@ -151,9 +151,9 @@ public class LevelUpUI : MonoBehaviour
         }
     }
 
-    void SelectUpgrade(UpgradeBase selectedUpgrade)
+    void SelectUpgrade(UpgradePathBase selectedUpgrade)
     {
-        UpgradeManager.Instance.UpgradePath(selectedUpgrade);
+        UpgradeManager.Instance.LevelUpUpgradePath(selectedUpgrade);
 
         // resume the game and exit the level up popup
         Time.timeScale = 1;

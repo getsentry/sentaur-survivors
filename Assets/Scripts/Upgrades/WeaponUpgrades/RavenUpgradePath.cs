@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RavenUpgrades : UpgradeBase
+public class RavenUpgradePath : WeaponUpgradePath
 {
     [SerializeField]
     private float _lvl2DamageMod = 1.33f;
@@ -10,12 +10,11 @@ public class RavenUpgrades : UpgradeBase
 
     public override void UpgradeToLevel(int level)
     {
-        // get raven
-        var raven = FindObjectOfType<Raven>();
+        var raven = (Raven)_weapon;
         switch (_level)
         {
             case 1:
-                raven.Enable();
+                Activate();
                 break;
             case 2:
                 raven.BaseDamage *= _lvl2DamageMod;

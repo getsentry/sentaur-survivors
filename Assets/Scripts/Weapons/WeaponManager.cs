@@ -61,16 +61,4 @@ public class WeaponManager : MonoBehaviour
             GlobalCooldownModifier = 0.3f;
         }
     }
-
-    public void UpgradeCount(int level)
-    {
-        if (level == 3)
-        {
-            GlobalCountModifier += 2;
-        }
-        else
-        {
-            GlobalCountModifier++;
-        }
-    }
 }

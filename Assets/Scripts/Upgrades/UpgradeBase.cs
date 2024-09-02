@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UpgradeBase : MonoBehaviour
+public class UpgradePathBase : MonoBehaviour
 {
     private static int MAX_LEVEL = 3;
 
