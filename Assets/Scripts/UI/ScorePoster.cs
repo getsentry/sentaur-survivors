@@ -22,23 +22,25 @@ public class ScorePoster : MonoBehaviour
 {
     [SerializeField]
     private GameObject _root;
-    [SerializeField] 
+
+    [SerializeField]
     private TMP_InputField _nameField;
-    [SerializeField] 
+
+    [SerializeField]
     private Button _submitButton;
-    
+
     private BattleSceneManager _gameManager;
     private DemoConfiguration _demoConfig;
     private TextMeshProUGUI _buttonText;
 
     private string _jwtToken;
-    
+
     private void Awake()
     {
-        _gameManager = GameObject.Find("GameManager").GetComponent<BattleSceneManager>();
+        _gameManager = GameObject.Find("BattleSceneManager").GetComponent<BattleSceneManager>();
         _demoConfig = Resources.Load("DemoConfig") as DemoConfiguration;
         _buttonText = _submitButton.GetComponentInChildren<TextMeshProUGUI>();
-        
+
         _submitButton.onClick.AddListener(OnSubmit);
     }
 
@@ -59,14 +61,18 @@ public class ScorePoster : MonoBehaviour
             _root.SetActive(true);
         }
     }
-    
+
     IEnumerator Login()
     {
         var json = JsonUtility.ToJson(_demoConfig.User);
-        
-        using var www = UnityWebRequest.Post(_demoConfig.ApiUrl + "/token", json, "application/json");
+
+        using var www = UnityWebRequest.Post(
+            _demoConfig.ApiUrl + "/token",
+            json,
+            "application/json"
+        );
         yield return www.SendWebRequest();
-        
+
         if (www.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Login to leaderboard successful.");
@@ -81,7 +87,7 @@ public class ScorePoster : MonoBehaviour
 
     private void OnSubmit()
     {
-        StartCoroutine(UploadScore());        
+        StartCoroutine(UploadScore());
     }
 
     IEnumerator UploadScore()
@@ -99,8 +105,12 @@ public class ScorePoster : MonoBehaviour
 
         var uploadTransaction = SentrySdk.StartTransaction("scoreposter", "upload");
         SentrySdk.ConfigureScope(scope => scope.Transaction = uploadTransaction);
-        
-        using var www = UnityWebRequest.Post(_demoConfig.ApiUrl + "/score", json, "application/json");
+
+        using var www = UnityWebRequest.Post(
+            _demoConfig.ApiUrl + "/score",
+            json,
+            "application/json"
+        );
         www.SetRequestHeader("Authorization", "Bearer " + _jwtToken);
         yield return www.SendWebRequest();
 
@@ -108,7 +118,7 @@ public class ScorePoster : MonoBehaviour
         {
             Debug.Log("Uploading score to leaderboard failed.");
             SentrySdk.CaptureException(new HttpRequestException("Failed to upload score."));
-            
+
             _buttonText.text = "Retry";
             uploadTransaction.Finish(SpanStatus.Unavailable);
         }
