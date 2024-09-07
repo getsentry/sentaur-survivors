@@ -8,6 +8,8 @@ public class DamageText : MonoBehaviour
 {
     private TextMeshPro _text;
 
+    private Sequence _animSequence;
+
     void Awake()
     {
         _text = transform.Find("Text").GetComponent<TextMeshPro>();
@@ -27,12 +29,20 @@ public class DamageText : MonoBehaviour
         this.SetDamage(value);
 
         // make the text jump up
-        transform.DOLocalJump(
+        _animSequence = transform.DOLocalJump(
             transform.localPosition,
             1.0f, // jump power
             1, // num jumps
             0.5f // duration
         );
+    }
+
+    private void OnDestroy()
+    {
+        if (_animSequence != null)
+        {
+            _animSequence.Kill();
+        }
     }
 
     // usage: _damageTextPrefab.Spawn(transform, position, 10, 2.0f);

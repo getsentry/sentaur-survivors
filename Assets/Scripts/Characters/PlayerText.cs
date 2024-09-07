@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -7,6 +5,8 @@ using UnityEngine;
 public class PlayerText : MonoBehaviour
 {
     private TextMeshPro _text;
+
+    private Sequence _animSequence;
 
     void Awake()
     {
@@ -24,12 +24,20 @@ public class PlayerText : MonoBehaviour
         this.SetText(text);
 
         // make the text jump up
-        transform.DOLocalJump(
+        _animSequence = transform.DOLocalJump(
             transform.localPosition,
             1.5f, // jump power
             1, // num jumps
             1.5f // duration
         );
+    }
+
+    private void OnDestroy()
+    {
+        if (_animSequence != null)
+        {
+            _animSequence.Kill();
+        }
     }
 
     public PlayerText Spawn(Transform parent, Vector2 position, string text, float duration = 1.0f)
