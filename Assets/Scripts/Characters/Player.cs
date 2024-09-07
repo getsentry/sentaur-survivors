@@ -51,8 +51,6 @@ public class Player : MonoBehaviour
     private IEnumerator coroutine;
     private bool _isDead = false;
 
-    private BattleSceneManager _gameManager;
-
     static Player _instance;
 
     private float _restoreSpeedTime = 0.0f;
@@ -73,8 +71,6 @@ public class Player : MonoBehaviour
     void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-
-        _gameManager = GameObject.Find("GameManager").GetComponent<BattleSceneManager>();
     }
 
     void Start()
@@ -91,12 +87,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (_isDead)
-        {
-            return;
-        }
-
-        // get game manager
-        if (!_gameManager.IsPlaying)
         {
             return;
         }
