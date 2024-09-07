@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,9 +30,10 @@ public class LevelUpUI : MonoBehaviour
         // pause the game
         Time.timeScale = 0;
 
-        // get upgrade manager
-        (UpgradePathBase upgradeChoice1, UpgradePathBase upgradeChoice2) =
-            UpgradeManager.Instance.GetRandomUpgradePaths();
+        List<UpgradePathBase> paths = UpgradeManager.Instance.GetRandomUpgradePaths(2);
+
+        UpgradePathBase upgradeChoice1 = paths[0];
+        UpgradePathBase upgradeChoice2 = paths[1];
 
         SetLevelOptionUI(upgradeChoice1, upgradeChoice2);
 

@@ -47,6 +47,26 @@ class UpgradeManager : MonoBehaviour
         return (_availableUpgrades[option1], _availableUpgrades[option2]);
     }
 
+    /**
+      * Returns a tuple of random upgrade paths that are valid
+      */
+    public List<UpgradePathBase> GetRandomUpgradePaths(int count)
+    {
+        // make a copy of upgrade paths
+        List<UpgradePathBase> availableUpgrades = new List<UpgradePathBase>(_availableUpgrades);
+
+        List<UpgradePathBase> chosenUpgrades = new List<UpgradePathBase>();
+
+        while (chosenUpgrades.Count < count && availableUpgrades.Count > 0)
+        {
+            int option = Random.Range(0, availableUpgrades.Count);
+            chosenUpgrades.Add(availableUpgrades[option]);
+            availableUpgrades.RemoveAt(option);
+        }
+
+        return chosenUpgrades;
+    }
+
     public void LevelUpUpgradePath(UpgradePathBase upgradePath)
     {
         upgradePath.LevelUp(); // level up the selected upgrade
