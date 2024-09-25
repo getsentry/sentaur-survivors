@@ -9,9 +9,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private AudioClip _enemyHitSound;
 
-    [SerializeField]
-    private AudioClip _pickupSound;
-
     private float _timeOfLastHitSound = 0f;
 
     [SerializeField]
@@ -40,10 +37,9 @@ public class SoundManager : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
-    public void PlayPickupSound()
+    public void PlayPickupSound(AudioClip clip)
     {
-        // _audioSource.clip = _pickupSound;
-        _audioSource.PlayOneShot(_pickupSound);
+        _audioSource.PlayOneShot(clip);
     }
 
     public void PlayHitSound()
@@ -54,8 +50,11 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        // _audioSource.clip = _enemyHitSound;
-        _audioSource.PlayOneShot(_enemyHitSound);
+        // NOTE: don't use PlayOneShot on hit sounds because so many hits can
+        // happen that it can cause the audio source to die (no more sound for
+        // remainder of game session). Better to play manually.
+        _audioSource.clip = _enemyHitSound;
+        _audioSource.Play();
         _timeOfLastHitSound = Time.time;
     }
 }

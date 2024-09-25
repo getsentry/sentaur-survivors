@@ -46,9 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d09e6ada1b1694a018fc52fac6c953da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pickupSound: {fileID: 8300000, guid: 4a45c3d67edb843519890127da0f36f3, type: 3}
   _scoreValue: 25
   _effectDuration: 0
-  _pickupType: 4
+  _effectText: 
 --- !u!212 &2235537914035941605
 SpriteRenderer:
   m_ObjectHideFlags: 0
