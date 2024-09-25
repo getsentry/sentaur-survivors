@@ -28,6 +28,8 @@ public class PickupBase : MonoBehaviour
 
             OnCollect(player);
 
+            SoundManager.Instance.PlayPickupSound();
+
             Player.Instance.SpawnPlayerText(GetEffectText());
 
             // Destroy the pickup

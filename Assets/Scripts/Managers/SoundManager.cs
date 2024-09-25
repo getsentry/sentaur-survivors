@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    private AudioSource _enemyHitSound;
+    private AudioSource _audioSource;
+
+    [SerializeField]
+    private AudioClip _enemyHitSound;
+
+    [SerializeField]
+    private AudioClip _pickupSound;
+
     private float _timeOfLastHitSound = 0f;
 
     [SerializeField]
@@ -30,7 +37,13 @@ public class SoundManager : MonoBehaviour
 
     public void Init()
     {
-        _enemyHitSound = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    public void PlayPickupSound()
+    {
+        // _audioSource.clip = _pickupSound;
+        _audioSource.PlayOneShot(_pickupSound);
     }
 
     public void PlayHitSound()
@@ -41,7 +54,8 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        _enemyHitSound.Play();
+        // _audioSource.clip = _enemyHitSound;
+        _audioSource.PlayOneShot(_enemyHitSound);
         _timeOfLastHitSound = Time.time;
     }
 }
