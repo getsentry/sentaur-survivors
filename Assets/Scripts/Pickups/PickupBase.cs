@@ -4,6 +4,9 @@ using UnityEngine;
 public class PickupBase : MonoBehaviour
 {
     [SerializeField]
+    protected AudioClip _pickupSound;
+
+    [SerializeField]
     [Tooltip("How much score this pickup is worth")]
     protected int _scoreValue = 50;
 
@@ -27,6 +30,9 @@ public class PickupBase : MonoBehaviour
             var player = other.gameObject.GetComponent<Player>();
 
             OnCollect(player);
+
+            if (_pickupSound != null)
+                SoundManager.Instance.PlayPickupSound(_pickupSound);
 
             Player.Instance.SpawnPlayerText(GetEffectText());
 

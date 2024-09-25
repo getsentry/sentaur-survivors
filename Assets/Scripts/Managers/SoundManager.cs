@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    private AudioSource _enemyHitSound;
+    private AudioSource _audioSource;
+
+    [SerializeField]
+    private AudioClip _enemyHitSound;
+
     private float _timeOfLastHitSound = 0f;
 
     [SerializeField]
@@ -30,7 +34,12 @@ public class SoundManager : MonoBehaviour
 
     public void Init()
     {
-        _enemyHitSound = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    public void PlayPickupSound(AudioClip clip)
+    {
+        _audioSource.PlayOneShot(clip);
     }
 
     public void PlayHitSound()
@@ -41,7 +50,11 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        _enemyHitSound.Play();
+        // NOTE: don't use PlayOneShot on hit sounds because so many hits can
+        // happen that it can cause the audio source to die (no more sound for
+        // remainder of game session). Better to play manually.
+        _audioSource.clip = _enemyHitSound;
+        _audioSource.Play();
         _timeOfLastHitSound = Time.time;
     }
 }

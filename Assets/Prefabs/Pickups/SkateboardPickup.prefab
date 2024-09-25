@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa06202f60e64f4f941f50f13d10dd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pickupSound: {fileID: 8300000, guid: 4a45c3d67edb843519890127da0f36f3, type: 3}
   _scoreValue: 50
   _effectDuration: 10
   _effectText: 

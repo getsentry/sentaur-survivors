@@ -30320,6 +30320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a84c6500790949f9ac1a9421f7c7876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyHitSound: {fileID: 8300000, guid: f7b9b52a0dd6e49ebb93103f2f4c8e9f, type: 3}
+  _pickupSound: {fileID: 8300000, guid: 9f38fc745c8b64043b4a6a8d9ab8deab, type: 3}
   _hitSoundCooldown: 0.1
 --- !u!4 &1686016597
 Transform:
@@ -30346,7 +30348,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f7b9b52a0dd6e49ebb93103f2f4c8e9f, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.4
   m_Pitch: 1
