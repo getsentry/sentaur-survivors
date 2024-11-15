@@ -27,7 +27,7 @@ public class RavenProjectile : ProjectileBase
         _direction = direction.normalized;
         _direction.z = 0; // don't move in the z direction
 
-        _rigidbody2D.velocity = Vector3.Normalize(_direction) * _speed;
+        _rigidbody2D.linearVelocity = Vector3.Normalize(_direction) * _speed;
 
         // rotate the raven to face the direction it's moving
         var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;

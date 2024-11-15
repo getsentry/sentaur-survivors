@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour
         if (player != null)
         {
             var direction = DetermineDirection(player);
-            _rigidbody2D.velocity = direction * _speed;
+            _rigidbody2D.linearVelocity = direction * _speed;
 
             // flip sprite in x direction if moving left
             _spriteRenderer.flipX = direction.x < 0;

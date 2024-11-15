@@ -24,7 +24,7 @@ public class DartProjectile : ProjectileBase
         var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        _rigidbody2D.velocity = Vector3.Normalize(_direction) * _speed;
+        _rigidbody2D.linearVelocity = Vector3.Normalize(_direction) * _speed;
     }
 
     // Deal damage to the enemy because they were hit by a dart

@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
             Input.GetAxis("Horizontal") * _playerMoveRate,
             Input.GetAxis("Vertical") * _playerMoveRate
         );
-        _rigidBody.velocity = movementVector;
+        _rigidBody.linearVelocity = movementVector;
 
         movement.x = Input.GetAxisRaw("Horizontal");
         if (movement.x > 0)

@@ -38,7 +38,7 @@ public class SchnitzelProjectile : ProjectileBase
         // rotate the dart to face the direction it's moving
         var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        _rigidbody2D.velocity = _direction * _speed;
+        _rigidbody2D.linearVelocity = _direction * _speed;
     }
 
     protected override void OnDamage(Enemy enemy)
@@ -73,7 +73,7 @@ public class SchnitzelProjectile : ProjectileBase
         transform.Rotate(0, 0, 360 * Time.deltaTime);
 
         // gravity pushes the schnitzel down
-        _rigidbody2D.velocity += Physics2D.gravity * Time.deltaTime;
+        _rigidbody2D.linearVelocity += Physics2D.gravity * Time.deltaTime;
 
         // if 10 seconds has passed destroy (off the screen somewhere)
         if (Time.time - _creationTime > MaxLifetimeInSeconds)
