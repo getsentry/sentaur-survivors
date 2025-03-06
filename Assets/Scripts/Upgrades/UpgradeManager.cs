@@ -14,7 +14,7 @@ class UpgradeManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                _instance = GameObject.FindObjectOfType<UpgradeManager>();
+                _instance = FindFirstObjectByType<UpgradeManager>();
             }
             return _instance;
         }
@@ -85,10 +85,5 @@ class UpgradeManager : MonoBehaviour
                 }
             }
         }
-
-        SentrySdk.Metrics.Increment(
-            "upgrade_selected",
-            tags: new Dictionary<string, string> { { "type", upgradePath.Title } }
-        );
     }
 }

@@ -17,7 +17,7 @@ class CooldownUpgradePath : UpgradePathBase
 
     public override void UpgradeToLevel(int level)
     {
-        var weaponManager = FindObjectOfType<WeaponManager>();
+        var weaponManager = FindFirstObjectByType<WeaponManager>();
         switch (level)
         {
             case 1:

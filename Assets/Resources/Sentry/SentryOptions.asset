@@ -40,6 +40,7 @@ MonoBehaviour:
   <BreadcrumbsForAsserts>k__BackingField: 1
   <BreadcrumbsForErrors>k__BackingField: 1
   <BreadcrumbsForExceptions>k__BackingField: 1
+  <CaptureLogErrorEvents>k__BackingField: 1
   <MaxBreadcrumbs>k__BackingField: 100
   <ReportAssembliesMode>k__BackingField: 1
   <SendDefaultPii>k__BackingField: 0
@@ -61,12 +62,14 @@ MonoBehaviour:
   <AndroidNativeSupportEnabled>k__BackingField: 1
   <NdkIntegrationEnabled>k__BackingField: 1
   <NdkScopeSyncEnabled>k__BackingField: 1
+  <PostGenerateGradleProjectCallbackOrder>k__BackingField: 1
   <WindowsNativeSupportEnabled>k__BackingField: 1
   <MacosNativeSupportEnabled>k__BackingField: 1
   <LinuxNativeSupportEnabled>k__BackingField: 1
   <Il2CppLineNumberSupportEnabled>k__BackingField: 1
-  <RuntimeOptionsConfiguration>k__BackingField: {fileID: 11400000, guid: 1aaad7d1e63c143b58d3ed44c7037c78, type: 2}
+  <RuntimeOptionsConfiguration>k__BackingField: {fileID: 0}
   <BuildTimeOptionsConfiguration>k__BackingField: {fileID: 0}
+  <OptionsConfiguration>k__BackingField: {fileID: 0}
   <Debug>k__BackingField: 1
   <DebugOnlyInEditor>k__BackingField: 1
   <DiagnosticLevel>k__BackingField: 2

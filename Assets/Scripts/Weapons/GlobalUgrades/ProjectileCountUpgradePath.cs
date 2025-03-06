@@ -17,7 +17,7 @@ class ProjectileCountUpgradePath : UpgradePathBase
     public override void UpgradeToLevel(int level)
     {
         // get WeaponManager
-        var weaponManager = FindObjectOfType<WeaponManager>();
+        var weaponManager = FindFirstObjectByType<WeaponManager>();
         switch (level)
         {
             case 1:
