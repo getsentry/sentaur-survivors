@@ -19,6 +19,9 @@ public class HUD : MonoBehaviour
 
     [SerializeField]
     private GameObject _quit;
+    
+    [SerializeField]
+    private GameObject _cheating;
 
     private XpBar _xpBar;
 
@@ -73,12 +76,14 @@ public class HUD : MonoBehaviour
         _gameOverText.enabled = true;
 
         _quit.SetActive(true);
+        _cheating.SetActive(true);
     }
 
     public void HidePause()
     {
         _gameOverText.enabled = false;
         _quit.SetActive(false);
+        _cheating.SetActive(false);
     }
 
     public void ShowGameOver()
@@ -88,6 +93,7 @@ public class HUD : MonoBehaviour
         
         _quit.SetActive(true);
         _tryAgain.SetActive(true);
+        _cheating.SetActive(true);
         _scorePoster.Enable();
     }
 
