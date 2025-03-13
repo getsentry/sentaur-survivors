@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,11 @@ using UnityEngine.UI;
 
 public class TitleSceneManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _startButton;
+    [SerializeField] private GameObject _startButton;
 
-    [SerializeField]
-    private GameObject _quitButton;
+    [SerializeField] private GameObject _quitButton;
+
+    private GameObject selectedButton; 
 
     void Awake()
     {
@@ -18,8 +19,35 @@ public class TitleSceneManager : MonoBehaviour
         _quitButton.GetComponent<Button>().onClick.AddListener(QuitGame);
     }
 
-    // Update is called once per frame
-    void Update() { }
+    private void Start()
+    {
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_startButton);
+        _startButton = _startButton;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_startButton);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_quitButton);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (selectedButton == _startButton)
+            {
+                StartGame();
+            }
+            else
+            {
+                QuitGame();
+            }
+        }
+    }
 
     private void StartGame()
     {
