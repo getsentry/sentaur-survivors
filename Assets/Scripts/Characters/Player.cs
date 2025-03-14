@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    private InputAction _moveAction;
+    
     [SerializeField]
     public WeaponManager WeaponManager;
 
@@ -41,7 +44,6 @@ public class Player : MonoBehaviour
 
     private HealthBar _healthBar;
     public Animator animator;
-    Vector2 movement;
     bool facingRight = false;
 
     public AudioSource takeDamageSound;
@@ -70,6 +72,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        _moveAction = InputSystem.actions.FindAction("Move");
         _rigidBody = GetComponent<Rigidbody2D>();
     }
 
@@ -82,24 +85,20 @@ public class Player : MonoBehaviour
 
         takeDamageSound = GetComponent<AudioSource>();
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public void OnMove()
     {
         if (_isDead)
         {
             return;
         }
-
+        
         lastPosition = transform.position;
-
-        var movementVector = new Vector2(
-            Input.GetAxis("Horizontal") * _playerMoveRate,
-            Input.GetAxis("Vertical") * _playerMoveRate
-        );
+        
+        var movement = _moveAction.ReadValue<Vector2>();
+        var movementVector = movement.normalized * _playerMoveRate;
         _rigidBody.linearVelocity = movementVector;
-
-        movement.x = Input.GetAxisRaw("Horizontal");
+        
         if (movement.x > 0)
         {
             facingRight = true;
@@ -108,7 +107,6 @@ public class Player : MonoBehaviour
         {
             facingRight = false;
         } // if 0, don't modify
-        movement.y = Input.GetAxisRaw("Vertical");
 
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Speed", movement.sqrMagnitude);

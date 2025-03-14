@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 public class BattleSceneManager : MonoBehaviour
@@ -334,6 +335,9 @@ public class BattleSceneManager : MonoBehaviour
 
     public void PauseGame()
     {
+        InputSystem.actions.FindActionMap("Player").Disable();
+        InputSystem.actions.FindActionMap("UI").Enable();
+        
         _gameState = GameState.Paused;
 
         // stop playing the background music when the game stops
@@ -348,6 +352,9 @@ public class BattleSceneManager : MonoBehaviour
 
     public void UnpauseGame()
     {
+        InputSystem.actions.FindActionMap("Player").Enable();
+        InputSystem.actions.FindActionMap("UI").Disable();
+        
         _gameState = GameState.Playing;
 
         // resume playing the background music when the game resumes

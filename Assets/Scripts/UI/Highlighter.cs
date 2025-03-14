@@ -27,10 +27,9 @@ namespace UI
                 // If there is an actual button: Show the highlight colour
                 _selectable?.OnPointerEnter(null);
                 
-                if (_currentTween != null && _currentTween.IsActive())
+                if (_currentTween != null && _currentTween.IsActive() && _currentTween.IsPlaying())
                 {
-                    _currentTween.Kill();
-                    transform.localScale = _originalScale;
+                    return;
                 }
                 
                 _currentTween = transform.DOScale(bounceStrength, bounceDuration)

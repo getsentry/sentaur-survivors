@@ -1,5 +1,6 @@
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ namespace SceneManagers
 {
     public class TitleSceneManager : MonoBehaviour
     {
+        private InputAction _navigateAction;
+        
         [SerializeField] private GameObject startButton;
         [SerializeField] private GameObject quitButton;
         
@@ -17,27 +20,31 @@ namespace SceneManagers
 
         private void Awake()
         {
+            _navigateAction = InputSystem.actions.FindAction("Navigate");
             _startHighlighter = startButton.GetComponent<Highlighter>();
             _quitHighlighter = quitButton.GetComponent<Highlighter>();
         }
 
-        private void Update()
+        public void OnNavigate()
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            if (!_navigateAction.IsPressed())
+            {
+                return;
+            }
+            
+            var direction = _navigateAction.ReadValue<Vector2>();
+            if (direction.x < 0)
             {
                 SetHighlightedButton(_startHighlighter);
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            else if (direction.x > 0)
             {
                 SetHighlightedButton(_quitHighlighter);
             }
-
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
-            {
-                _highlightedButton.GetComponent<Button>().onClick.Invoke();
-            }
         }
-        
+
+        public void OnSubmit() => _highlightedButton?.GetComponent<Button>().onClick.Invoke();
+
         public void SetHighlightedButton(Highlighter highlighted)
         {
             _startHighlighter.Highlight(false);
@@ -46,7 +53,7 @@ namespace SceneManagers
             highlighted.Highlight();
             _highlightedButton = highlighted.gameObject;
         }
-    
+        
         public void StartGame()
         {
             Debug.Log("Start Game");
@@ -57,6 +64,12 @@ namespace SceneManagers
         {
             Debug.Log("Quit (Note this won't quit in the editor)");
             Application.Quit();
+        }
+        
+        private void UnityOfBugs()
+        {
+            Debug.Log("Loading UnityOfBugs");
+            SceneManager.LoadScene("1_Bugfarm", LoadSceneMode.Single);
         }
     }
 }

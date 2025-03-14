@@ -14,7 +14,7 @@ public class WeaponManager : MonoBehaviour
 
     private List<WeaponBase> _weapons = new List<WeaponBase>();
 
-    public void Awake()
+    private void Awake()
     {
         _weapons.AddRange(GetComponentsInChildren<WeaponBase>());
     }
@@ -26,7 +26,7 @@ public class WeaponManager : MonoBehaviour
         _weapons.Add(weapon);
     }
 
-    public void Update()
+    private void Update()
     {
         foreach (var weapon in _weapons)
         {

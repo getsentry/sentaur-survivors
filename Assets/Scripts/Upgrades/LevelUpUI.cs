@@ -1,5 +1,6 @@
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Upgrades
@@ -9,6 +10,9 @@ namespace Upgrades
  */
     public class LevelUpUI : MonoBehaviour
     {
+        private InputAction _navigateAction;
+        private InputAction _submitAction;
+        
         // fyi: title -> upgrade name, description -> level, stats -> description
         // leveling up an upgrade, changes the stats to new level, increases the level #
 
@@ -21,12 +25,18 @@ namespace Upgrades
 
         private void Awake()
         {
+            _navigateAction = InputSystem.actions.FindAction("Navigate");
+            _submitAction = InputSystem.actions.FindAction("Submit");
+            
             _option1Button = _levelOption1.GetComponent<Button>();
             _option2Button = _levelOption2.GetComponent<Button>();
         }
 
         private void OnEnable()
         {
+            InputSystem.actions.FindActionMap("Player").Disable();
+            InputSystem.actions.FindActionMap("UI").Enable();
+            
             // Pause the game
             Time.timeScale = 0;
 
@@ -40,23 +50,44 @@ namespace Upgrades
             _option2Button.onClick.AddListener(() => SelectUpgrade(upgradeChoice2));
         }
 
-        private void Update()
+        public void OnNavigate()
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            if (!gameObject.activeSelf)
+            {
+                return;
+            }
+            
+            if (!_navigateAction.IsPressed())
+            {
+                return;
+            }
+            
+            var direction = _navigateAction.ReadValue<Vector2>();
+            if (direction.x < 0)
             {
                 SetHighlightedButton(_option1Button);
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            else if (direction.x > 0)
             {
                 SetHighlightedButton(_option2Button);
             }
-        
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
-            {
-                _highlightedButton.onClick.Invoke();
-            }
         }
-    
+        
+        public void OnSubmit()
+        {
+            if (!gameObject.activeSelf)
+            {
+                return;
+            }
+            
+            if (!_submitAction.IsPressed())
+            {
+                return;
+            }
+            
+            _highlightedButton?.GetComponent<Button>().onClick.Invoke();
+        }
+
         public void SetHighlightedButton(Button button)
         {
             _option1Button.GetComponent<Highlighter>().Highlight(false);
@@ -99,6 +130,9 @@ namespace Upgrades
 
         private void SelectUpgrade(UpgradePathBase selectedUpgrade)
         {
+            InputSystem.actions.FindActionMap("Player").Enable();
+            InputSystem.actions.FindActionMap("UI").Disable();
+            
             UpgradeManager.Instance.LevelUpUpgradePath(selectedUpgrade);
 
             // Resume the game and exit the level up popup

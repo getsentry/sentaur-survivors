@@ -1,8 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Dart : WeaponBase
 {
+    private InputAction _lookAction;
+    private InputAction _mouseAction;
+    
     [SerializeField]
     private float _speed = 10.0f;
 
@@ -24,6 +28,12 @@ public class Dart : WeaponBase
     [SerializeField]
     private DartProjectile _dartProjectilePrefab;
 
+    private void Awake()
+    {
+        _lookAction = InputSystem.actions.FindAction("Look");
+        _mouseAction = InputSystem.actions.FindAction("Mouse");
+    }
+    
     public void Start()
     {
         _isEnabled = true;
@@ -97,9 +107,14 @@ public class Dart : WeaponBase
 
     private Vector3 CalculateDirection(GameObject player)
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 direction = mousePosition - player.transform.position;
-
-        return direction;
+        if (Gamepad.current != null)
+        {
+            return _lookAction.ReadValue<Vector2>();
+        }
+        
+        var mousePosition = Camera.main.ScreenToWorldPoint(_mouseAction.ReadValue<Vector2>());
+        var targetDirection = mousePosition - player.transform.position;
+        
+        return targetDirection;
     }
 }
