@@ -231,6 +231,8 @@ GameObject:
   - component: {fileID: 170557575}
   - component: {fileID: 170557574}
   - component: {fileID: 170557573}
+  - component: {fileID: 170557577}
+  - component: {fileID: 170557576}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -280,7 +282,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.9529412, g: 0.6784314, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -340,6 +342,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170557571}
   m_CullTransparentMesh: 1
+--- !u!114 &170557576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170557571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e019c97799524483f943ddcb3ad79625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceStrength: 1.2
+  bounceDuration: 0.1
+  bounceEase: 2
+--- !u!114 &170557577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170557571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 715298360}
+          m_TargetAssemblyTypeName: SceneManagers.HUDManager, Assembly-CSharp
+          m_MethodName: SetHighlightedButton
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 170557576}
+            m_ObjectArgumentAssemblyTypeName: UI.Highlighter, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &175258547
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,6 +398,8 @@ GameObject:
   - component: {fileID: 175258551}
   - component: {fileID: 175258550}
   - component: {fileID: 175258549}
+  - component: {fileID: 175258553}
+  - component: {fileID: 175258552}
   m_Layer: 5
   m_Name: Cheat Little
   m_TagString: Untagged
@@ -374,9 +422,9 @@ RectTransform:
   - {fileID: 1795979345}
   m_Father: {fileID: 1150410049}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 243.7}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 200, y: -122.5}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &175258549
@@ -401,7 +449,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.9529412, g: 0.6784314, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -473,6 +521,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 175258547}
   m_CullTransparentMesh: 1
+--- !u!114 &175258552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175258547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e019c97799524483f943ddcb3ad79625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceStrength: 1.2
+  bounceDuration: 0.1
+  bounceEase: 2
+--- !u!114 &175258553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175258547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 715298360}
+          m_TargetAssemblyTypeName: SceneManagers.HUDManager, Assembly-CSharp
+          m_MethodName: SetHighlightedButton
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 175258552}
+            m_ObjectArgumentAssemblyTypeName: UI.Highlighter, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!4 &182838738 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3600334310735166755, guid: ba9a3fb92cb4b4e8eb4baf75754235a3, type: 3}
@@ -5791,6 +5883,7 @@ GameObject:
   - component: {fileID: 715298356}
   - component: {fileID: 715298355}
   - component: {fileID: 715298359}
+  - component: {fileID: 715298360}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -5909,6 +6002,22 @@ MonoBehaviour:
   _tryAgain: {fileID: 1730555519}
   _quit: {fileID: 170557571}
   _cheating: {fileID: 1150410048}
+--- !u!114 &715298360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715298354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4627b659e92664c9c9262acb093e905f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tryAgainButton: {fileID: 1730555519}
+  quitButton: {fileID: 170557571}
+  cheatLittleButton: {fileID: 175258547}
+  cheatLotButton: {fileID: 2038997034}
 --- !u!1001 &719918155
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8790,6 +8899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1150410049}
   - component: {fileID: 1150410050}
+  - component: {fileID: 1150410051}
   m_Layer: 5
   m_Name: Cheating
   m_TagString: Untagged
@@ -8815,8 +8925,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 80, y: 80}
-  m_SizeDelta: {x: 400, y: 400}
+  m_AnchoredPosition: {x: 80, y: 0}
+  m_SizeDelta: {x: 400, y: 290}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1150410050
 MonoBehaviour:
@@ -8830,6 +8940,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 694b3cfb87804b6096e6d7aef1ea9f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1150410051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150410048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1213143403
 GameObject:
   m_ObjectHideFlags: 0
@@ -9111,7 +9247,7 @@ MonoBehaviour:
   _activePickupsUI: {fileID: 1213143406}
   _activeUpgradesContainer: {fileID: 2111087225}
   _backgroundMusic: {fileID: 0}
-  _levelMilestones: 01000000960000002c01000026020000840300007805000002080000540b00006e0f000082140000c21a0000602200008e2b00007e360000624300009e520000c8640000767a000070940000b0b3000030d90000
+  _levelMilestones: 32000000960000002c01000026020000840300007805000002080000540b00006e0f000082140000c21a0000602200008e2b00007e360000624300009e520000c8640000767a000070940000b0b3000030d90000
   _hpRampUpInterval: 60
   _hpRampUpValue: 5
 --- !u!4 &1361049654
@@ -30267,7 +30403,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -31076,6 +31212,8 @@ GameObject:
   - component: {fileID: 1730555523}
   - component: {fileID: 1730555522}
   - component: {fileID: 1730555521}
+  - component: {fileID: 1730555525}
+  - component: {fileID: 1730555524}
   m_Layer: 5
   m_Name: TryAgain
   m_TagString: Untagged
@@ -31125,7 +31263,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.9529412, g: 0.6784314, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -31185,6 +31323,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730555519}
   m_CullTransparentMesh: 1
+--- !u!114 &1730555524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730555519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e019c97799524483f943ddcb3ad79625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceStrength: 1.2
+  bounceDuration: 0.1
+  bounceEase: 2
+--- !u!114 &1730555525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730555519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 715298360}
+          m_TargetAssemblyTypeName: SceneManagers.HUDManager, Assembly-CSharp
+          m_MethodName: SetHighlightedButton
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1730555524}
+            m_ObjectArgumentAssemblyTypeName: UI.Highlighter, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!4 &1736315011 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3600334310735166755, guid: ce6ca319e4496403782aea5ae869c333, type: 3}
@@ -31787,7 +31969,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -32351,8 +32533,10 @@ GameObject:
   - component: {fileID: 2038997038}
   - component: {fileID: 2038997037}
   - component: {fileID: 2038997036}
+  - component: {fileID: 2038997040}
+  - component: {fileID: 2038997039}
   m_Layer: 5
-  m_Name: Cheat Big
+  m_Name: Cheat Lot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32373,9 +32557,9 @@ RectTransform:
   - {fileID: 669701934}
   m_Father: {fileID: 1150410049}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 116.3}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 200, y: -217.5}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2038997036
@@ -32400,7 +32584,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.9529412, g: 0.6784314, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -32472,6 +32656,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2038997034}
   m_CullTransparentMesh: 1
+--- !u!114 &2038997039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038997034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e019c97799524483f943ddcb3ad79625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceStrength: 1.2
+  bounceDuration: 0.1
+  bounceEase: 2
+--- !u!114 &2038997040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038997034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 715298360}
+          m_TargetAssemblyTypeName: SceneManagers.HUDManager, Assembly-CSharp
+          m_MethodName: SetHighlightedButton
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2038997039}
+            m_ObjectArgumentAssemblyTypeName: UI.Highlighter, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2050277061
 GameObject:
   m_ObjectHideFlags: 0

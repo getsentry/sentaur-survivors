@@ -25,7 +25,7 @@ namespace UI
             if (highlight)
             {
                 // If there is an actual button: Show the highlight colour
-                _selectable.OnPointerEnter(null);
+                _selectable?.OnPointerEnter(null);
                 
                 if (_currentTween != null && _currentTween.IsActive())
                 {
@@ -44,7 +44,7 @@ namespace UI
             else
             {
                 // Un-highlight the button
-                _selectable.OnPointerExit(null);
+                _selectable?.OnPointerExit(null);
             }
         }
 
