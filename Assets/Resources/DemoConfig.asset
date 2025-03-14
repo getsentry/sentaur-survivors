@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9ba42fbcfea443dae0540ef0f44176, type: 3}
   m_Name: DemoConfig
   m_EditorClassIdentifier: 
-  Enabled: 0
+  Enabled: 1
   ApiUrl: https://sentaur-leaderboard-f7z2cjcdzq-uc.a.run.app
   User:
     Username: sentaur_gdc
