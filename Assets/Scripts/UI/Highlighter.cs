@@ -1,6 +1,4 @@
-using System;
 using DG.Tweening;
-using DG.Tweening.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +6,9 @@ namespace UI
 {
     public class Highlighter : MonoBehaviour
     {
-        [SerializeField] private float bounceStrength;
-        [SerializeField] private float bounceDuration;
-        [SerializeField] private Ease bounceEase;
+        [SerializeField] private float bounceStrength = 1.5f;
+        [SerializeField] private float bounceDuration = 0.1f;
+        [SerializeField] private Ease bounceEase = Ease.InSine;
         
         private Selectable _selectable;
         private Tween _currentTween;
@@ -26,6 +24,7 @@ namespace UI
         {
             if (highlight)
             {
+                // If there is an actual button: Show the highlight colour
                 _selectable.OnPointerEnter(null);
                 
                 if (_currentTween != null && _currentTween.IsActive())
@@ -37,12 +36,14 @@ namespace UI
                 _currentTween = transform.DOScale(bounceStrength, bounceDuration)
                     .SetLoops(2, LoopType.Yoyo)
                     .SetEase(bounceEase)
+                    .SetUpdate(true)
                     .OnComplete(() => {
                         _currentTween = null;
                     });
             }
             else
             {
+                // Un-highlight the button
                 _selectable.OnPointerExit(null);
             }
         }

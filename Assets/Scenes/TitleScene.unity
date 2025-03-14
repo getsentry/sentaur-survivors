@@ -328,8 +328,8 @@ MonoBehaviour:
           m_MethodName: SetHighlightedButton
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 336748527}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+            m_ObjectArgument: {fileID: 336748530}
+            m_ObjectArgumentAssemblyTypeName: UI.Highlighter, Assembly-CSharp
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -621,7 +621,7 @@ GameObject:
   - component: {fileID: 1088436800}
   - component: {fileID: 1088436799}
   m_Layer: 5
-  m_Name: PlayButton
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -748,8 +748,8 @@ MonoBehaviour:
           m_MethodName: SetHighlightedButton
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1088436796}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+            m_ObjectArgument: {fileID: 1088436799}
+            m_ObjectArgumentAssemblyTypeName: UI.Highlighter, Assembly-CSharp
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -1289,8 +1289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c99c667ac3c774709aaa40a24a48f223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 1088436796}
-  quitButton: {fileID: 336748527}
+  startButton: {fileID: 1088436794}
+  quitButton: {fileID: 336748525}
 --- !u!1 &1455550795
 GameObject:
   m_ObjectHideFlags: 0
