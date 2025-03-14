@@ -1,63 +1,53 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TitleSceneManager : MonoBehaviour
+namespace SceneManagers
 {
-    [SerializeField] private GameObject _startButton;
-
-    [SerializeField] private GameObject _quitButton;
-
-    private GameObject selectedButton; 
-
-    void Awake()
+    public class TitleSceneManager : MonoBehaviour
     {
-        _startButton.GetComponent<Button>().onClick.AddListener(StartGame);
-        _quitButton.GetComponent<Button>().onClick.AddListener(QuitGame);
-    }
+        [SerializeField] private Button startButton;
+        [SerializeField] private Button quitButton;
 
-    private void Start()
-    {
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_startButton);
-        _startButton = _startButton;
-    }
+        private Button _highlightedButton;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        private void Update()
         {
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_startButton);
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_quitButton);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (selectedButton == _startButton)
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
-                StartGame();
+                SetHighlightedButton(startButton);
             }
-            else
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
-                QuitGame();
+                SetHighlightedButton(quitButton);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+            {
+                _highlightedButton.onClick.Invoke();
             }
         }
-    }
+        
+        public void SetHighlightedButton(Button button)
+        {
+            startButton.GetComponent<Highlighter>().Highlight(false);
+            quitButton.GetComponent<Highlighter>().Highlight(false);
+        
+            button.GetComponent<Highlighter>().Highlight();
+            _highlightedButton = button;
+        }
+    
+        public void StartGame()
+        {
+            Debug.Log("Start Game");
+            SceneManager.LoadScene("BattleScene", LoadSceneMode.Single);
+        }
 
-    private void StartGame()
-    {
-        Debug.Log("Start Game");
-        SceneManager.LoadScene("BattleScene", LoadSceneMode.Single);
-    }
-
-    private void QuitGame()
-    {
-        Debug.Log("Quit (Note this won't quit in the editor)");
-        Application.Quit();
+        public void QuitGame()
+        {
+            Debug.Log("Quit (Note this won't quit in the editor)");
+            Application.Quit();
+        }
     }
 }
