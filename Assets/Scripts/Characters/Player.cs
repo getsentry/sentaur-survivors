@@ -96,8 +96,7 @@ public class Player : MonoBehaviour
         lastPosition = transform.position;
         
         var movement = _moveAction.ReadValue<Vector2>();
-        var movementVector = movement.normalized * _playerMoveRate;
-        _rigidBody.linearVelocity = movementVector;
+        _rigidBody.linearVelocity = movement.normalized * _playerMoveRate;;
         
         if (movement.x > 0)
         {
@@ -107,9 +106,12 @@ public class Player : MonoBehaviour
         {
             facingRight = false;
         } // if 0, don't modify
+    }
 
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Speed", movement.sqrMagnitude);
+    private void Update()
+    {
+        animator.SetFloat("Horizontal", _rigidBody.linearVelocity.x);
+        animator.SetFloat("Speed", _rigidBody.linearVelocity.sqrMagnitude);
         animator.SetBool("FacingRight", facingRight);
     }
 
