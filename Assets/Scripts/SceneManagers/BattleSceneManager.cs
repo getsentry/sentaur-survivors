@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 public class BattleSceneManager : MonoBehaviour
-{
+{   
     [Header("Game Properties")]
     [SerializeField]
     [Tooltip("How frequently enemies spawn (in seconds)")]
@@ -199,7 +199,7 @@ public class BattleSceneManager : MonoBehaviour
     private bool _isDeathEnemyPresent = false;
 
     private static System.Random random = new System.Random();
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -398,17 +398,21 @@ public class BattleSceneManager : MonoBehaviour
         _hud.SetCurrentLevel(_currentLevel);
     }
 
+    public void OnPause()
+    {
+        if (_gameState == GameState.Playing)
+        {
+            PauseGame();
+        }
+        else if (_gameState == GameState.Paused)
+        {
+            UnpauseGame();
+        }
+    }
+    
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (_gameState == GameState.Playing)
-                PauseGame();
-            else if (_gameState == GameState.Paused)
-                UnpauseGame();
-        }
-
         if (_gameState != GameState.Playing)
         {
             return;
