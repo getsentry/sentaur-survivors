@@ -28,6 +28,8 @@ public class Dart : WeaponBase
     [SerializeField]
     private DartProjectile _dartProjectilePrefab;
 
+    private Vector3 _previousDirection;
+
     private void Awake()
     {
         _lookAction = InputSystem.actions.FindAction("Look");
@@ -88,6 +90,7 @@ public class Dart : WeaponBase
         // reset cooldown after all darts have been shot
         ResetCooldown();
 
+        _previousDirection = direction;
         _isShooting = false;
         yield return null;
     }
@@ -109,7 +112,13 @@ public class Dart : WeaponBase
     {
         if (Gamepad.current != null)
         {
-            return _lookAction.ReadValue<Vector2>();
+            var direction = _lookAction.ReadValue<Vector2>(); 
+            if (direction.magnitude < 0.1f)
+            {
+                return _previousDirection;
+            }
+
+            return direction;
         }
         
         var mousePosition = Camera.main.ScreenToWorldPoint(_mouseAction.ReadValue<Vector2>());
