@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
     [Tooltip("How much damage is reduced for the player")]
     private float _damageReductionAmount = 0.0f;
 
+    [SerializeField] private Transform arrow;
+    
     public enum PlayerEffectTypes
     {
         SpeedUp,

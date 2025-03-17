@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
 
 public class Dart : WeaponBase
 {
@@ -28,18 +29,37 @@ public class Dart : WeaponBase
     [SerializeField]
     private DartProjectile _dartProjectilePrefab;
 
-    private Vector3 _previousDirection;
+    private Vector3 _shootingDirection;
+    private Arrow _arrow;
 
     private void Awake()
     {
         _lookAction = InputSystem.actions.FindAction("Look");
         _mouseAction = InputSystem.actions.FindAction("Mouse");
+
+        _arrow = FindFirstObjectByType<Arrow>();
     }
     
     public void Start()
     {
         _isEnabled = true;
         _player = Player.Instance.gameObject;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        _shootingDirection = CalculateDirection(_player);
+        
+        // If we have a valid direction vector
+        if (_shootingDirection != Vector3.zero)
+        {
+            // Create a rotation where the arrow's right vector points in the direction
+            // This works better for 2D objects that should point in a direction
+            float angle = Mathf.Atan2(_shootingDirection.y, _shootingDirection.x) * Mathf.Rad2Deg;
+            _arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
     }
 
     public override void Fire()
@@ -59,30 +79,27 @@ public class Dart : WeaponBase
     public IEnumerator ShootDarts()
     {
         _isShooting = true;
-        Vector3 direction = CalculateDirection(_player);
-
+        
         // shoot the base number of darts
         for (int i = 0; i < Count; i++)
         {
-            ShootADart(_dartProjectilePrefab, _player, direction);
+            ShootADart(_dartProjectilePrefab, _player, _shootingDirection);
             if (RearFiringDartCount > i)
             {
-                ShootADart(_dartProjectilePrefab, _player, direction * -1);
+                ShootADart(_dartProjectilePrefab, _player, _shootingDirection * -1);
             }
 
             yield return new WaitForSeconds(_shootingInterval);
-            // get new updates mouse coords inbetween shots
-            direction = CalculateDirection(_player);
         }
 
         // accounting for case where # of backwards darts > # of forwards darts
         int remainingDarts = RearFiringDartCount - Count;
         if (remainingDarts > 0)
         {
-            direction *= -1;
+            _shootingDirection *= -1;
             for (int i = 0; i < remainingDarts; i++)
             {
-                ShootADart(_dartProjectilePrefab, _player, direction);
+                ShootADart(_dartProjectilePrefab, _player, _shootingDirection);
                 yield return new WaitForSeconds(_shootingInterval);
             }
         }
@@ -90,7 +107,6 @@ public class Dart : WeaponBase
         // reset cooldown after all darts have been shot
         ResetCooldown();
 
-        _previousDirection = direction;
         _isShooting = false;
         yield return null;
     }
@@ -115,7 +131,8 @@ public class Dart : WeaponBase
             var direction = _lookAction.ReadValue<Vector2>(); 
             if (direction.magnitude < 0.1f)
             {
-                return _previousDirection;
+                // Don't change it if we're not aiming
+                return _shootingDirection;
             }
 
             return direction;
