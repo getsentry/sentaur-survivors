@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 [Serializable]
 public class ScoreEntry
@@ -34,6 +35,7 @@ public class ScorePoster : MonoBehaviour
     private TextMeshProUGUI _buttonText;
 
     private string _jwtToken;
+    private HttpClient _httpClient;
 
     private void Awake()
     {
@@ -42,14 +44,15 @@ public class ScorePoster : MonoBehaviour
         _buttonText = _submitButton.GetComponentInChildren<TextMeshProUGUI>();
 
         _submitButton.onClick.AddListener(OnSubmit);
+        
     }
 
     public void Start()
     {
-        // Doing this in start so everything else can awake
         if (_demoConfig != null && _demoConfig.Enabled && !string.IsNullOrEmpty(_demoConfig.ApiUrl))
         {
-            StartCoroutine(Login());
+            _httpClient = new HttpClient(new SentryHttpMessageHandler());
+            _ = LoginAsync();
         }
     }
 
@@ -62,39 +65,48 @@ public class ScorePoster : MonoBehaviour
         }
     }
 
-    IEnumerator Login()
+    private async Task LoginAsync()
     {
-        var json = JsonUtility.ToJson(_demoConfig.User);
-
-        using var www = UnityWebRequest.Post(
-            _demoConfig.ApiUrl + "/token",
-            json,
-            "application/json"
-        );
-        yield return www.SendWebRequest();
-
-        if (www.result == UnityWebRequest.Result.Success)
+        var transaction = SentrySdk.StartTransaction("scoreposter", "login");
+        SentrySdk.ConfigureScope(scope => scope.Transaction = transaction);
+        
+        try
         {
-            Debug.Log("Login to leaderboard successful.");
-            _jwtToken = www.downloadHandler.text.Replace("\"", "");
+            var json = JsonUtility.ToJson(_demoConfig.User);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            
+            var response = await _httpClient.PostAsync(_demoConfig.ApiUrl + "/token", content);
+            if (response.IsSuccessStatusCode)
+            {
+                Debug.Log("Login to leaderboard successful.");
+                transaction.Finish(SpanStatus.Ok);
+                _jwtToken = (await response.Content.ReadAsStringAsync()).Replace("\"", "");
+            }
+            else
+            {
+                Debug.Log("Login to leaderboard failed.");
+                transaction.Finish(SpanStatus.Unavailable);
+                _jwtToken = null;
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Debug.Log("Login to leaderboard failed.");
+            Debug.LogError($"Login failed: {ex.Message}");
+            transaction.Finish(SpanStatus.InternalError);
             _jwtToken = null;
         }
     }
 
     private void OnSubmit()
     {
-        StartCoroutine(UploadScore());
+        _ = UploadScoreAsync();
     }
 
-    IEnumerator UploadScore()
+    private async Task UploadScoreAsync()
     {
         var score = new ScoreEntry
         {
-            Key = new Guid(),
+            Key = Guid.NewGuid(),
             Name = _nameField.text,
             Duration = TimeSpan.FromSeconds(Time.timeSinceLevelLoad).ToString(),
             Score = _gameManager.GetScore(),
@@ -102,32 +114,36 @@ public class ScorePoster : MonoBehaviour
         };
 
         var json = JsonUtility.ToJson(score);
+        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
         var uploadTransaction = SentrySdk.StartTransaction("scoreposter", "upload");
         SentrySdk.ConfigureScope(scope => scope.Transaction = uploadTransaction);
 
-        using var www = UnityWebRequest.Post(
-            _demoConfig.ApiUrl + "/score",
-            json,
-            "application/json"
-        );
-        www.SetRequestHeader("Authorization", "Bearer " + _jwtToken);
-        yield return www.SendWebRequest();
-
-        if (www.result != UnityWebRequest.Result.Success)
+        try
         {
-            Debug.Log("Uploading score to leaderboard failed.");
-            SentrySdk.CaptureException(new HttpRequestException("Failed to upload score."));
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _jwtToken);
+            var response = await _httpClient.PostAsync(_demoConfig.ApiUrl + "/score", content);
 
-            _buttonText.text = "Retry";
-            uploadTransaction.Finish(SpanStatus.Unavailable);
+            if (!response.IsSuccessStatusCode)
+            {
+                Debug.Log("Uploading score to leaderboard failed.");
+                SentrySdk.CaptureException(new HttpRequestException("Failed to upload score."));
+                _buttonText.text = "Retry";
+                uploadTransaction.Finish(SpanStatus.Unavailable);
+            }
+            else
+            {
+                Debug.Log("Uploading score to leaderboard was successful.");
+                _submitButton.interactable = false;
+                _buttonText.text = "Posted!";
+                uploadTransaction.Finish(SpanStatus.Ok);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Debug.Log("Uploading score to leaderboard was successful.");
-            _submitButton.interactable = false;
-            _buttonText.text = "Posted!";
-            uploadTransaction.Finish(SpanStatus.Ok);
+            Debug.LogError($"Score upload failed: {ex.Message}");
+            _buttonText.text = "Retry";
+            uploadTransaction.Finish(SpanStatus.InternalError);
         }
     }
 }
