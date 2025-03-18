@@ -1,5 +1,4 @@
 using UI;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -28,12 +27,25 @@ namespace SceneManagers
             _navigateAction = InputSystem.actions.FindAction("Navigate");
             _submitAction = InputSystem.actions.FindAction("Submit");
             
+            // Subscribe to the performed callback only
+            _submitAction.performed += OnSubmitPerformed;
+            
             _tryAgainHighlighter = tryAgainButton.GetComponent<Highlighter>();
             _quitHighlighter = quitButton.GetComponent<Highlighter>();
             _cheatLittleHighlighter = cheatLittleButton.GetComponent<Highlighter>();
             _cheatLotHighlighter = cheatLotButton.GetComponent<Highlighter>();
         }
-        
+
+        private void OnSubmitPerformed(InputAction.CallbackContext context)
+        {
+            if (!gameObject.activeSelf)
+            {
+                return;
+            }
+            
+            _highlightedButton?.GetComponent<Button>().onClick.Invoke();
+        }
+
         public void OnNavigate()
         {
             if (!gameObject.activeSelf)
@@ -133,21 +145,6 @@ namespace SceneManagers
                     }
                 }
             }
-        }
-
-        public void OnSubmit()
-        {
-            if (!gameObject.activeSelf)
-            {
-                return;
-            }
-            
-            if (!_submitAction.IsPressed())
-            {
-                return;
-            }
-            
-            _highlightedButton?.GetComponent<Button>().onClick.Invoke();
         }
 
         public void SetHighlightedButton(Highlighter highlighted)

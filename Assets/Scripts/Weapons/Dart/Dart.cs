@@ -29,7 +29,7 @@ public class Dart : WeaponBase
     [SerializeField]
     private DartProjectile _dartProjectilePrefab;
 
-    private Vector3 _shootingDirection;
+    private Vector3 _shootingDirection = Vector3.right;
     private Arrow _arrow;
 
     private void Awake()

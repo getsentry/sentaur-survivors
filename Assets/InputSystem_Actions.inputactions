@@ -483,7 +483,7 @@
                 {
                     "name": "",
                     "id": "516ec204-3b9e-43d6-b1fe-a3b649c01b88",
-                    "path": "<XInputController>/select",
+                    "path": "<GXDKGamepad>/select",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -498,6 +498,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a57c8beb-ff4b-48af-b12b-39a9b69277f8",
+                    "path": "<XInputController>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -876,7 +887,7 @@
                 {
                     "name": "",
                     "id": "4f2f6db6-f487-4f7b-819c-50fda21f90d7",
-                    "path": "<XInputController>/select",
+                    "path": "<GXDKGamepad>/select",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -891,6 +902,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b76180b-bc1b-4768-ae01-060e98b1d64a",
+                    "path": "<XInputController>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
