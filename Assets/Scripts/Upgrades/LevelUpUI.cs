@@ -57,7 +57,7 @@ namespace Upgrades
                 return;
             }
             
-            if (!_navigateAction.IsPressed())
+            if (!_navigateAction.WasPressedThisFrame())
             {
                 return;
             }

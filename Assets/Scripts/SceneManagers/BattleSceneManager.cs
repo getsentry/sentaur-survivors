@@ -369,6 +369,9 @@ public class BattleSceneManager : MonoBehaviour
 
     private void OnPlayerDeath()
     {
+        InputSystem.actions.FindActionMap("Player").Disable();
+        InputSystem.actions.FindActionMap("UI").Enable();
+        
         _gameState = GameState.GameOver;
         // stop playing the background music when the game stops
         _backgroundMusic.Stop();

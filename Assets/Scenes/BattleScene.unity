@@ -34504,6 +34504,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 292671231893397069, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
+      propertyPath: _hitPoints
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 292671231893397069, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
       propertyPath: _schnitzel
       value: 
       objectReference: {fileID: 0}

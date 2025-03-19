@@ -52,17 +52,17 @@ namespace SceneManagers
             {
                 return;
             }
-            
+
             if (!_quitHighlighter.isActiveAndEnabled)
             {
                 return;
             }
-         
-            if (!_navigateAction.IsPressed())
+
+            if (!_navigateAction.WasPressedThisFrame())
             {
                 return;
             }
-            
+
             var direction = _navigateAction.ReadValue<Vector2>();
             
             if (_highlightedButton == null)
