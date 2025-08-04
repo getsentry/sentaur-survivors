@@ -633,21 +633,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2050277062}
     m_Modifications:
-    - target: {fileID: 2235537914035941605, guid: 6cde6a2c228dc40d0b42ba0b19ca2fc3, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3306419623360918530, guid: 6cde6a2c228dc40d0b42ba0b19ca2fc3, type: 3}
       propertyPath: m_Name
       value: DynamicPickup
       objectReference: {fileID: 0}
     - target: {fileID: 5054089494736014737, guid: 6cde6a2c228dc40d0b42ba0b19ca2fc3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.00686
+      value: 13.73
       objectReference: {fileID: 0}
     - target: {fileID: 5054089494736014737, guid: 6cde6a2c228dc40d0b42ba0b19ca2fc3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.94119
+      value: 2.14
       objectReference: {fileID: 0}
     - target: {fileID: 5054089494736014737, guid: 6cde6a2c228dc40d0b42ba0b19ca2fc3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11584,6 +11580,7 @@ MonoBehaviour:
   - {fileID: 3306419623360918530, guid: a52115208a32b485e8a9cf76bda0d02b, type: 3}
   - {fileID: 3306419623360918530, guid: 6a6fc5df2c0c74e1581dfb8507d41f99, type: 3}
   - {fileID: 3306419623360918530, guid: c62e469089fde4fc98d1c3363f2ea177, type: 3}
+  - {fileID: 3306419623360918530, guid: 6cde6a2c228dc40d0b42ba0b19ca2fc3, type: 3}
   _levelUpUI: {fileID: 3736684284675310825}
   _activePickupsUI: {fileID: 1213143406}
   _activeUpgradesContainer: {fileID: 2111087225}

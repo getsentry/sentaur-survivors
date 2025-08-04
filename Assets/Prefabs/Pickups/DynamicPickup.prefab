@@ -46,10 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f01de713d7b43f99fec0f5fcf564a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pickupSound: {fileID: 0}
+  _pickupSound: {fileID: 8300000, guid: 9f38fc745c8b64043b4a6a8d9ab8deab, type: 3}
   _scoreValue: 50
   _effectDuration: 0
   _effectText: 
+  _assetBundleUrl: https://cdn.gameserver.com/bundles/special-materials-v2.bundle
+  _shaderName: SpecialPickupMaterial
+  _enableDynamicShader: 1
 --- !u!212 &2235537914035941605
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -27,17 +27,28 @@ public class DynamicPickup : PickupBase
         www.timeout = 15;
             
         yield return www.SendWebRequest();
-            
+        
         if (www.result == UnityWebRequest.Result.Success)
         {
             var bundle = DownloadHandlerAssetBundle.GetContent(www);
             var bundledShader = bundle.LoadAsset<Shader>(_shaderName);
             _spriteRenderer.material.shader = bundledShader;
+            bundle.Unload(false);
         }
         else
         {
-            Debug.LogWarning($"Failed to download asset bundle from {_assetBundleUrl}: {www.error}. Using fallback.");
-            _spriteRenderer.material.shader = Shader.Find("Resources/DynamicFallback.shader");
+            ProcessFailedDownload(www);
         }
+    }
+    
+    private void ProcessFailedDownload(UnityWebRequest failedRequest)
+    {
+        Debug.LogWarning("Processing bundle.");
+        
+        _spriteRenderer.material.shader = null;
+        
+        var bundle = DownloadHandlerAssetBundle.GetContent(failedRequest);
+        var fallbackShader = bundle.LoadAsset<Shader>(_shaderName);
+        _spriteRenderer.material.shader = fallbackShader;
     }
 }
