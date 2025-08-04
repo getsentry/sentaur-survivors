@@ -31,11 +31,11 @@
       "depth": 2,
       "source": "registry",
       "dependencies": {
+        "com.unity.burst": "1.8.4",
         "com.unity.2d.sprite": "1.0.0",
         "com.unity.mathematics": "1.1.0",
-        "com.unity.modules.uielements": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.burst": "1.8.4"
+        "com.unity.modules.uielements": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -306,11 +306,11 @@
       "url": "https://packages.unity.com"
     },
     "io.sentry.unity": {
-      "version": "https://github.com/getsentry/unity.git#3.1.0",
+      "version": "https://github.com/getsentry/unity.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "c7940b5d154e6124d99be8553e1e4bae4e032356"
+      "hash": "c7925fdb3af13277504fcddc289bf5dacb9b4dbb"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

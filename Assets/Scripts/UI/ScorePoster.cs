@@ -1,12 +1,11 @@
-using System;
-using System.Collections;
-using System.Net.Http;
 using Sentry;
+using Sentry.Unity;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
-using System.Threading.Tasks;
 
 [Serializable]
 public class ScoreEntry
