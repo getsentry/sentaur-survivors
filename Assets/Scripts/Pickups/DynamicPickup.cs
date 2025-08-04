@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 public class DynamicPickup : PickupBase
 {
-    [SerializeField] private string _assetBundleUrl = "https://cdn.gameserver.com/bundles/special-shaders-v2.bundle";
+    [SerializeField] private string _assetBundleUrl = "https://aspnetcore.empower-plant.com/bundles/special-shaders-v2.bundle";
     [SerializeField] private string _shaderName = "SpecialPickupShader";
     [SerializeField] private bool _enableDynamicShader = true;
     
@@ -17,6 +17,7 @@ public class DynamicPickup : PickupBase
 
         if (_enableDynamicShader)
         {
+            Debug.Log("Dynamic shader enabled! Loading...");
             StartCoroutine(LoadMaterialFromBundle());    
         }
     }
@@ -27,28 +28,14 @@ public class DynamicPickup : PickupBase
         www.timeout = 15;
             
         yield return www.SendWebRequest();
+
+        Debug.Log("Success! Applying dynamic shader.");
         
-        if (www.result == UnityWebRequest.Result.Success)
-        {
-            var bundle = DownloadHandlerAssetBundle.GetContent(www);
-            var bundledShader = bundle.LoadAsset<Shader>(_shaderName);
-            _spriteRenderer.material.shader = bundledShader;
-            bundle.Unload(false);
-        }
-        else
-        {
-            ProcessFailedDownload(www);
-        }
-    }
-    
-    private void ProcessFailedDownload(UnityWebRequest failedRequest)
-    {
-        Debug.LogWarning("Processing bundle.");
-        
-        _spriteRenderer.material.shader = null;
-        
-        var bundle = DownloadHandlerAssetBundle.GetContent(failedRequest);
-        var fallbackShader = bundle.LoadAsset<Shader>(_shaderName);
-        _spriteRenderer.material.shader = fallbackShader;
+        _spriteRenderer.material.shader = null; // Reset
+            
+        var bundle = DownloadHandlerAssetBundle.GetContent(www);
+        var bundledShader = bundle.LoadAsset<Shader>(_shaderName);
+        _spriteRenderer.material.shader = bundledShader;
+        bundle.Unload(false);
     }
 }
