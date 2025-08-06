@@ -14,10 +14,10 @@ public class DynamicPickup : PickupBase
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.material.shader = Shader.Find("Resources/Default.shader");
 
         if (_enableDynamicShader)
         {
-            Debug.Log("Dynamic shader enabled! Loading...");
             StartCoroutine(LoadMaterialFromBundle());    
         }
     }
@@ -26,13 +26,13 @@ public class DynamicPickup : PickupBase
     {
         using var www = UnityWebRequestAssetBundle.GetAssetBundle(_assetBundleUrl);
         www.timeout = 15;
-            
+     
+        Debug.Log("Dynamic shader enabled! Loading...");
+        
         yield return www.SendWebRequest();
 
         Debug.Log("Success! Applying dynamic shader.");
         
-        _spriteRenderer.material.shader = null; // Reset
-            
         var bundle = DownloadHandlerAssetBundle.GetContent(www);
         var bundledShader = bundle.LoadAsset<Shader>(_shaderName);
         _spriteRenderer.material.shader = bundledShader;
