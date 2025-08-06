@@ -155,7 +155,7 @@ namespace Upgrades
             var fetchTransaction = SentrySdk.StartTransaction("fetch_upgrades", "http.client");
             SentrySdk.ConfigureScope(scope => scope.Transaction = fetchTransaction);
         
-            var processDataSpan = fetchTransaction.StartChild("task", "process_player_data");
+            var processDataSpan = fetchTransaction.StartChild("task", "process_level_data");
             
             var currentLevel = _gameManager.GetCurrentLevel();
             
