@@ -48,11 +48,22 @@ namespace Upgrades
             // Pause the game
             Time.timeScale = 0;
             
-            GetUpgrades();
-
-            var paths = UpgradeManager.Instance.GetRandomUpgradePaths(2);
-            var upgradeChoice1 = paths[0];
-            var upgradeChoice2 = paths[1];
+            var serverUpgrades = GetUpgrades();
+            UpgradePathBase upgradeChoice1, upgradeChoice2;
+            
+            if (serverUpgrades is { Length: >= 2 })
+            {
+                upgradeChoice1 = serverUpgrades[0];
+                upgradeChoice2 = serverUpgrades[1];
+                Debug.Log("Using server-provided upgrades");
+            }
+            else
+            {
+                var paths = UpgradeManager.Instance.GetRandomUpgradePaths(2);
+                upgradeChoice1 = paths[0];
+                upgradeChoice2 = paths[1];
+                Debug.Log("Falling back to local upgrade selection");
+            }
 
             SetLevelOptionUI(upgradeChoice1, upgradeChoice2);
 
@@ -150,16 +161,43 @@ namespace Upgrades
             gameObject.SetActive(false);
         }
         
-        private void GetUpgrades()
+        private UpgradePathBase[] GetUpgrades()
         {
             var fetchTransaction = SentrySdk.StartTransaction("fetch_upgrades", "http.client");
             SentrySdk.ConfigureScope(scope => scope.Transaction = fetchTransaction);
+            
+            try
+            {
+                var responseContent = FetchUpgradeDataFromServer(fetchTransaction);
+                var upgrades = ParseUpgradeData(responseContent, fetchTransaction);
+                
+                if (upgrades == null)
+                {
+                    Debug.LogWarning("Upgrade parsing failed, falling back to local upgrades");
+                    fetchTransaction.Finish(SpanStatus.Ok);
+                    return null;
+                }
+                
+                fetchTransaction.Finish(SpanStatus.Ok);
+                return upgrades;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error fetching upgrades from server: {ex.Message}");
+                SentrySdk.CaptureException(ex);
+                fetchTransaction.Finish(SpanStatus.InternalError);
+                
+                return null;
+            }
+        }
         
-            var processDataSpan = fetchTransaction.StartChild("task", "process_level_data");
+        private string FetchUpgradeDataFromServer(ITransactionTracer transaction)
+        {
+            var processDataSpan = transaction.StartChild("task", "process_level_data");
             
             var currentLevel = _gameManager.GetCurrentLevel();
             
-            System.Threading.Tasks.Task.Delay((int)(Random.value * 100)).Wait();
+            System.Threading.Tasks.Task.Delay((int)(Random.value * 100)).Wait(); // Simulate some work to be done
         
             processDataSpan.Finish();
         
@@ -173,28 +211,60 @@ namespace Upgrades
             try
             {
                 var response = client.GetAsync(upgradesURL).Result;
-                if (response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
                 {
-                    Debug.Log("Successfully fetched available upgrades");
+                    throw new Exception($"Server returned error status: {response.StatusCode}");
                 }
-                else
-                {
-                    throw new Exception("Failed to fetch available upgrades");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"Error fetching upgrades: {ex.Message}");
-                SentrySdk.CaptureException(ex);
-                fetchTransaction.Finish(SpanStatus.InternalError);
-                return;
+                
+                Debug.Log("Successfully fetched upgrade data from server");
+                var responseContent = response.Content.ReadAsStringAsync().Result;
+                
+                return responseContent;
             }
             finally
             {
                 client.Dispose();
             }
+        }
         
-            fetchTransaction.Finish(SpanStatus.Ok);
+        private UpgradePathBase[] ParseUpgradeData(string responseContent, ITransactionTracer transaction)
+        {
+            var parseSpan = transaction.StartChild("task", "parse_upgrade_data");
+
+            try
+            {
+                var serverResponse = JsonUtility.FromJson<ServerUpgradeResponse>(responseContent);
+                var upgradePaths = new UpgradePathBase[serverResponse.upgrades.Length];
+
+                for (var i = 0; i < serverResponse.upgrades.Length; i++)
+                {
+                    var serverUpgrade = serverResponse.upgrades[i];
+
+                    // We need to map server upgrade data to actual UpgradePathBase instances
+                    // We'd need a sort of factory method or some mapping logic here
+                }
+
+                parseSpan.Finish(SpanStatus.Ok);
+                return upgradePaths;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Failed to parse the upgrade data.");
+                SentrySdk.CaptureException(ex);
+                parseSpan.Finish(SpanStatus.InternalError);
+                return null;
+            }
+        }
+        
+        [Serializable]
+        public class ServerUpgradeResponse
+        {
+            public ServerUpgrade[] upgrades;
+        }
+        
+        [Serializable]
+        public class ServerUpgrade
+        {
         }
     }
 }
