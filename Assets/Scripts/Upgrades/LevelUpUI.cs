@@ -1,7 +1,11 @@
+using System;
+using Sentry;
+using Sentry.Unity;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Upgrades
 {
@@ -19,12 +23,16 @@ namespace Upgrades
         [SerializeField] private LevelOptionUI _levelOption1;
         [SerializeField] private LevelOptionUI _levelOption2;
 
+        private BattleSceneManager _gameManager;
+        
         private Button _option1Button;
         private Button _option2Button;
         private Button _highlightedButton;
 
         private void Awake()
         {
+            _gameManager = GameObject.Find("BattleSceneManager").GetComponent<BattleSceneManager>();
+            
             _navigateAction = InputSystem.actions.FindAction("Navigate");
             _submitAction = InputSystem.actions.FindAction("Submit");
             
@@ -39,6 +47,8 @@ namespace Upgrades
             
             // Pause the game
             Time.timeScale = 0;
+            
+            GetUpgrades();
 
             var paths = UpgradeManager.Instance.GetRandomUpgradePaths(2);
             var upgradeChoice1 = paths[0];
@@ -138,6 +148,53 @@ namespace Upgrades
             // Resume the game and exit the level up popup
             Time.timeScale = 1;
             gameObject.SetActive(false);
+        }
+        
+        private void GetUpgrades()
+        {
+            var fetchTransaction = SentrySdk.StartTransaction("fetch_upgrades", "http.client");
+            SentrySdk.ConfigureScope(scope => scope.Transaction = fetchTransaction);
+        
+            var processDataSpan = fetchTransaction.StartChild("task", "process_player_data");
+            
+            var currentLevel = _gameManager.GetCurrentLevel();
+            
+            System.Threading.Tasks.Task.Delay((int)(Random.value * 100)).Wait();
+        
+            processDataSpan.Finish();
+        
+            const string domain = "https://aspnetcore.empower-plant.com";
+            const string upgradesEndpoint = "/reviews";
+            var upgradesURL = $"{domain}{upgradesEndpoint}?currentLevel={currentLevel}";
+        
+            var client = new System.Net.Http.HttpClient(new SentryHttpMessageHandler());
+            client.Timeout = TimeSpan.FromSeconds(3);
+
+            try
+            {
+                var response = client.GetAsync(upgradesURL).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.Log("Successfully fetched available upgrades");
+                }
+                else
+                {
+                    throw new Exception("Failed to fetch available upgrades");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error fetching upgrades: {ex.Message}");
+                SentrySdk.CaptureException(ex);
+                fetchTransaction.Finish(SpanStatus.InternalError);
+                return;
+            }
+            finally
+            {
+                client.Dispose();
+            }
+        
+            fetchTransaction.Finish(SpanStatus.Ok);
         }
     }
 }

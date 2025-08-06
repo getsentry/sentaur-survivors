@@ -401,6 +401,8 @@ public class BattleSceneManager : MonoBehaviour
         _hud.SetCurrentLevel(_currentLevel);
     }
 
+    public int GetCurrentLevel() => _currentLevel;
+
     public void OnPause()
     {
         if (_gameState == GameState.Playing)
