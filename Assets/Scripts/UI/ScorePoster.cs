@@ -2,6 +2,7 @@ using Sentry;
 using Sentry.Unity;
 using System;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -20,17 +21,12 @@ public class ScoreEntry
 
 public class ScorePoster : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _root;
+    [SerializeField] private GameObject _root;
+    [SerializeField] private TMP_InputField _nameField;
+    [SerializeField] private Button _submitButton;
 
-    [SerializeField]
-    private TMP_InputField _nameField;
-
-    [SerializeField]
-    private Button _submitButton;
-
-    private BattleSceneManager _gameManager;
     private DemoConfiguration _demoConfig;
+    private BattleSceneManager _gameManager;
     private TextMeshProUGUI _buttonText;
 
     private string _jwtToken;
@@ -38,8 +34,8 @@ public class ScorePoster : MonoBehaviour
 
     private void Awake()
     {
-        _gameManager = GameObject.Find("BattleSceneManager").GetComponent<BattleSceneManager>();
         _demoConfig = Resources.Load("DemoConfig") as DemoConfiguration;
+        _gameManager = GameObject.Find("BattleSceneManager").GetComponent<BattleSceneManager>();
         _buttonText = _submitButton.GetComponentInChildren<TextMeshProUGUI>();
 
         _submitButton.onClick.AddListener(OnSubmit);
@@ -62,7 +58,26 @@ public class ScorePoster : MonoBehaviour
         {
             _root.SetActive(true);
         }
+
+        if (_demoConfig != null && _demoConfig.CrashOnGameOver)
+        {
+            SaveScoreToDisk();
+        }
     }
+
+    private void SaveScoreToDisk()
+    {
+#if !UNITY_EDITOR
+        save_score();
+#else
+        Debug.Log("If this was not the Editor, the score would be saved 'natively'.");
+#endif
+        
+    }
+    
+    // NativeSaver.c
+    [DllImport("__Internal")]
+    private static extern void save_score_to_disk();
 
     private async Task LoginAsync()
     {

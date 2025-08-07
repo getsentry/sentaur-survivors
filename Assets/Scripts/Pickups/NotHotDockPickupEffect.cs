@@ -1,25 +1,22 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Serialization;
 
-public class DynamicPickup : PickupBase
+public class NotHotDockPickupEffect : MonoBehaviour
 {
     [SerializeField] private string _assetBundleUrl = "https://aspnetcore.empower-plant.com/bundles/special-shaders-v2.bundle";
-    [SerializeField] private string _shaderName = "SpecialPickupShader";
-    [SerializeField] private bool _enableDynamicShader = true;
+    [SerializeField] private string _shaderName = "SpecialShaderEffect";
+    [SerializeField] private float _lifeTime = 2;
     
-    private SpriteRenderer _spriteRenderer;
+    private ParticleSystemRenderer _renderer;
     
     private void Awake()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.material.shader = Shader.Find("Resources/Default.shader");
-
-        if (_enableDynamicShader)
-        {
-            StartCoroutine(LoadMaterialFromBundle());    
-        }
+        _renderer = GetComponent<ParticleSystemRenderer>();
+        _renderer.material.shader = Shader.Find("Resources/Default.shader");
+        
+        StartCoroutine(DestroyYourself());
+        StartCoroutine(LoadMaterialFromBundle());
     }
     
     private IEnumerator LoadMaterialFromBundle()
@@ -35,7 +32,13 @@ public class DynamicPickup : PickupBase
         
         var bundle = DownloadHandlerAssetBundle.GetContent(www);
         var bundledShader = bundle.LoadAsset<Shader>(_shaderName);
-        _spriteRenderer.material.shader = bundledShader;
+        _renderer.material.shader = bundledShader;
         bundle.Unload(false);
+    }
+    
+    private IEnumerator DestroyYourself()
+    {
+        yield return new WaitForSeconds(_lifeTime);
+        Destroy(this);
     }
 }

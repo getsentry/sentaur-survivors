@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Sentry;
 using Sentry.Unity;
 using UI;
@@ -23,6 +25,7 @@ namespace Upgrades
         [SerializeField] private LevelOptionUI _levelOption1;
         [SerializeField] private LevelOptionUI _levelOption2;
 
+        private DemoConfiguration _demoConfig;
         private BattleSceneManager _gameManager;
         
         private Button _option1Button;
@@ -31,6 +34,7 @@ namespace Upgrades
 
         private void Awake()
         {
+            _demoConfig = Resources.Load("DemoConfig") as DemoConfiguration;
             _gameManager = GameObject.Find("BattleSceneManager").GetComponent<BattleSceneManager>();
             
             _navigateAction = InputSystem.actions.FindAction("Navigate");
@@ -47,30 +51,54 @@ namespace Upgrades
             
             // Pause the game
             Time.timeScale = 0;
-            
-            var serverUpgrades = GetUpgrades();
-            UpgradePathBase upgradeChoice1, upgradeChoice2;
-            
-            if (serverUpgrades is { Length: >= 2 })
+
+            List<UpgradePathBase> paths = null;
+            if (_demoConfig != null && _demoConfig.FetchUpgradeFromServer)
             {
-                upgradeChoice1 = serverUpgrades[0];
-                upgradeChoice2 = serverUpgrades[1];
-                Debug.Log("Using server-provided upgrades");
-            }
-            else
-            {
-                var paths = UpgradeManager.Instance.GetRandomUpgradePaths(2);
-                upgradeChoice1 = paths[0];
-                upgradeChoice2 = paths[1];
-                Debug.Log("Falling back to local upgrade selection");
+                paths = GetUpgrades();
             }
 
+            paths ??= UpgradeManager.Instance.GetRandomUpgradePaths(2);
+
+            var upgradeChoice1 = paths[0];
+            var upgradeChoice2 = paths[1];
+            
             SetLevelOptionUI(upgradeChoice1, upgradeChoice2);
 
             _option1Button.onClick.AddListener(() => SelectUpgrade(upgradeChoice1));
             _option2Button.onClick.AddListener(() => SelectUpgrade(upgradeChoice2));
+
+            if (_demoConfig != null && _demoConfig.AutoSelectLevelUp)
+            {
+                StartCoroutine(SelectSomething());
+            }
         }
 
+        private IEnumerator SelectSomething()
+        {
+            var delay = Random.value;
+            Debug.Log($"Starting to select in {delay} seconds");
+            yield return new WaitForSecondsRealtime(delay);
+
+            Debug.Log("Done waiting");
+            
+            if (Random.value > 0.5f)
+            {
+                Debug.Log("Selected left");
+                SetHighlightedButton(_option1Button);
+            }
+            else
+            {
+                Debug.Log("Selected right");
+                SetHighlightedButton(_option2Button);
+            }
+
+            yield return new WaitForSecondsRealtime(Random.value);
+            
+            Debug.Log("Clicking the highlighted button");
+            _highlightedButton?.GetComponent<Button>().onClick.Invoke();
+        }
+        
         public void OnNavigate()
         {
             if (!gameObject.activeSelf)
@@ -161,7 +189,7 @@ namespace Upgrades
             gameObject.SetActive(false);
         }
         
-        private UpgradePathBase[] GetUpgrades()
+        private List<UpgradePathBase> GetUpgrades()
         {
             var fetchTransaction = SentrySdk.StartTransaction("fetch_upgrades", "http.client");
             SentrySdk.ConfigureScope(scope => scope.Transaction = fetchTransaction);
@@ -227,14 +255,14 @@ namespace Upgrades
             }
         }
         
-        private UpgradePathBase[] ParseUpgradeData(string responseContent, ITransactionTracer transaction)
+        private List<UpgradePathBase> ParseUpgradeData(string responseContent, ITransactionTracer transaction)
         {
             var parseSpan = transaction.StartChild("task", "parse_upgrade_data");
 
             try
             {
                 var serverResponse = JsonUtility.FromJson<ServerUpgradeResponse>(responseContent);
-                var upgradePaths = new UpgradePathBase[serverResponse.upgrades.Length];
+                var upgradePaths = new List<UpgradePathBase>(serverResponse.upgrades.Length);
 
                 for (var i = 0; i < serverResponse.upgrades.Length; i++)
                 {

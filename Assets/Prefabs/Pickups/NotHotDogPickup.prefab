@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2235537914035941605}
   - component: {fileID: 8459684996225841193}
   m_Layer: 0
-  m_Name: DynamicPickup
+  m_Name: NotHotDogPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,12 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pickupSound: {fileID: 8300000, guid: 9f38fc745c8b64043b4a6a8d9ab8deab, type: 3}
-  _scoreValue: 50
+  _scoreValue: 50000
   _effectDuration: 0
-  _effectText: 
-  _assetBundleUrl: https://cdn.gameserver.com/bundles/special-materials-v2.bundle
-  _shaderName: SpecialPickupMaterial
-  _enableDynamicShader: 1
+  _effectText: That was not a hotdog!
+  _healAmount: -50
+  _effectPrefab: {fileID: 3306419623360918530, guid: 59786710faf594f7283667e6bcac1405, type: 3}
 --- !u!212 &2235537914035941605
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -97,7 +96,7 @@ SpriteRenderer:
   m_SortingLayerID: 23827671
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f2bf24979fc854a0fa0a4ac4ff31544c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b6f1ac07bf29245a3ba0c5060ac070a3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

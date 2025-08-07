@@ -17,3 +17,9 @@ MonoBehaviour:
   User:
     Username: sentaur_gdc
     Password: survivor_whatsmyageagain42_survivor
+  AutoPlay: 1
+  CheatingButtons: 0
+  NotHotDogParticleEffect: 1
+  FetchUpgradeFromServer: 1
+  AutoSelectLevelUp: 1
+  CrashOnGameOver: 1

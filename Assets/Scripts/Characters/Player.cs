@@ -107,6 +107,11 @@ public class Player : MonoBehaviour
         lastPosition = transform.position;
         
         var movement = _moveAction.ReadValue<Vector2>();
+        if (movement.magnitude <= 0)
+        {
+            return;
+        }
+        
         _rigidBody.linearVelocity = movement.normalized * _playerMoveRate;;
         
         if (movement.x > 0)

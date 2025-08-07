@@ -32,6 +32,10 @@ public class Dart : WeaponBase
     private Vector3 _shootingDirection = Vector3.right;
     private Arrow _arrow;
 
+    // Override mechanism for external shooting direction control
+    private bool _hasExternalShootingDirection = false;
+    private Vector3 _externalShootingDirection;
+
     private void Awake()
     {
         _lookAction = InputSystem.actions.FindAction("Look");
@@ -50,7 +54,15 @@ public class Dart : WeaponBase
     {
         base.Update();
 
-        _shootingDirection = CalculateDirection(_player);
+        // Only calculate direction if not overridden externally
+        if (!_hasExternalShootingDirection)
+        {
+            _shootingDirection = CalculateDirection(_player);
+        }
+        else
+        {
+            _shootingDirection = _externalShootingDirection;
+        }
         
         // If we have a valid direction vector
         if (_shootingDirection != Vector3.zero)
@@ -60,6 +72,24 @@ public class Dart : WeaponBase
             float angle = Mathf.Atan2(_shootingDirection.y, _shootingDirection.x) * Mathf.Rad2Deg;
             _arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
         }
+    }
+
+    /// <summary>
+    /// Sets the shooting direction externally, overriding the normal input-based calculation
+    /// </summary>
+    /// <param name="direction">The direction to shoot in</param>
+    public void SetShootingDirection(Vector3 direction)
+    {
+        _hasExternalShootingDirection = true;
+        _externalShootingDirection = direction.normalized;
+    }
+
+    /// <summary>
+    /// Clears the external shooting direction override, returning to normal input-based calculation
+    /// </summary>
+    public void ClearShootingDirectionOverride()
+    {
+        _hasExternalShootingDirection = false;
     }
 
     public override void Fire()

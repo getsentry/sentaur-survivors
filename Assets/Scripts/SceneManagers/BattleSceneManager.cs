@@ -101,6 +101,8 @@ public class BattleSceneManager : MonoBehaviour
     [Tooltip("Background Music")]
     private AudioSource _backgroundMusic;
 
+    private DemoConfiguration _demoConfig;
+    
     // the player's accumulated score so far
     private int _score = 0;
 
@@ -196,13 +198,17 @@ public class BattleSceneManager : MonoBehaviour
     private GameObject _levelContainer;
     private Transform _enemiesParentTransform;
     private Transform _pickupParentTransform;
-    private Transform _xpDropParentTransform;
 
     private float _gameStartTime;
     private bool _isDeathEnemyPresent = false;
 
     private static System.Random random = new System.Random();
-    
+
+    private void Awake()
+    {
+        _demoConfig = Resources.Load("DemoConfig") as DemoConfiguration;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -220,7 +226,6 @@ public class BattleSceneManager : MonoBehaviour
         
         _enemiesParentTransform = _levelContainer.transform.Find("Enemies");
         _pickupParentTransform = _levelContainer.transform.Find("Pickups");
-        _xpDropParentTransform = _levelContainer.transform.Find("XpDrops");
         
         _lastEnemySpawnTime = Time.time;
         _lastWaveSpawnTime = Time.time;

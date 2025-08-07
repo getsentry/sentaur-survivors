@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,21 +13,18 @@ public class HUD : MonoBehaviour
     private TextMeshProUGUI _gameOverText;
     private TextMeshProUGUI _currentLevelText;
 
-    [SerializeField]
-    private ScorePoster _scorePoster;
-    [SerializeField]
-    private GameObject _tryAgain;
+    [SerializeField] private ScorePoster _scorePoster;
+    [SerializeField] private GameObject _tryAgain;
+    [SerializeField] private GameObject _quit;
+    [SerializeField] private GameObject _cheating;
 
-    [SerializeField]
-    private GameObject _quit;
-    
-    [SerializeField]
-    private GameObject _cheating;
-
+    private DemoConfiguration _demoConfig;
     private XpBar _xpBar;
 
     void Awake()
     {
+        _demoConfig = Resources.Load("DemoConfig") as DemoConfiguration;
+        
         // get score text component from child
         _scoreText = transform.Find("Score").GetComponent<TextMeshProUGUI>();
         _timeElapsedText = transform.Find("TimeElapsed").GetComponent<TextMeshProUGUI>();
@@ -35,14 +33,14 @@ public class HUD : MonoBehaviour
 
         _xpBar = transform.Find("XpBar").GetComponent<XpBar>();
 
-        var _tryAgainButton = _tryAgain.GetComponent<Button>();
-        _tryAgainButton.onClick.AddListener(() =>
+        var tryAgainButton = _tryAgain.GetComponent<Button>();
+        tryAgainButton.onClick.AddListener(() =>
         {
             EventManager.TriggerEvent("TryAgain");
         });
 
-        var _quitButton = _quit.GetComponent<Button>();
-        _quitButton.onClick.AddListener(() =>
+        var quitButton = _quit.GetComponent<Button>();
+        quitButton.onClick.AddListener(() =>
         {
             EventManager.TriggerEvent("Quit");
         });
@@ -76,7 +74,11 @@ public class HUD : MonoBehaviour
         _gameOverText.enabled = true;
 
         _quit.SetActive(true);
-        _cheating.SetActive(true);
+
+        if (_demoConfig != null && _demoConfig.CheatingButtons)
+        {
+            _cheating.SetActive(true);    
+        }
     }
 
     public void HidePause()
@@ -93,7 +95,12 @@ public class HUD : MonoBehaviour
         
         _quit.SetActive(true);
         _tryAgain.SetActive(true);
-        _cheating.SetActive(true);
+        
+        if (_demoConfig != null && _demoConfig.CheatingButtons)
+        {
+            _cheating.SetActive(true);    
+        }
+        
         _scorePoster.Enable();
     }
 
