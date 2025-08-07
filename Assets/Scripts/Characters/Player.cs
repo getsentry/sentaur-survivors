@@ -87,8 +87,17 @@ public class Player : MonoBehaviour
 
         takeDamageSound = GetComponent<AudioSource>();
     }
+
+    private void Update()
+    {
+        animator.SetFloat("Horizontal", _rigidBody.linearVelocity.x);
+        animator.SetFloat("Speed", _rigidBody.linearVelocity.sqrMagnitude);
+        animator.SetBool("FacingRight", facingRight);
+        
+        HandleMovement();
+    }
     
-    public void OnMove()
+    private void HandleMovement()
     {
         if (_isDead)
         {
@@ -108,13 +117,6 @@ public class Player : MonoBehaviour
         {
             facingRight = false;
         } // if 0, don't modify
-    }
-
-    private void Update()
-    {
-        animator.SetFloat("Horizontal", _rigidBody.linearVelocity.x);
-        animator.SetFloat("Speed", _rigidBody.linearVelocity.sqrMagnitude);
-        animator.SetBool("FacingRight", facingRight);
     }
 
     IEnumerator Wait(float _waitTime)

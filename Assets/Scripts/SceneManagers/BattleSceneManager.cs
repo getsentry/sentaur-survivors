@@ -194,6 +194,9 @@ public class BattleSceneManager : MonoBehaviour
 
     private HUD _hud;
     private GameObject _levelContainer;
+    private Transform _enemiesParentTransform;
+    private Transform _pickupParentTransform;
+    private Transform _xpDropParentTransform;
 
     private float _gameStartTime;
     private bool _isDeathEnemyPresent = false;
@@ -211,9 +214,14 @@ public class BattleSceneManager : MonoBehaviour
         _hud = GameObject.Find("HUD").GetComponent<HUD>();
         _hud.SetXp(1.0f * _score);
 
+        
         _levelContainer = GameObject.Find("Level");
-        _backgroundMusic = GameObject.Find("Level").GetComponent<AudioSource>();
-
+        _backgroundMusic = _levelContainer.GetComponent<AudioSource>();
+        
+        _enemiesParentTransform = _levelContainer.transform.Find("Enemies");
+        _pickupParentTransform = _levelContainer.transform.Find("Pickups");
+        _xpDropParentTransform = _levelContainer.transform.Find("XpDrops");
+        
         _lastEnemySpawnTime = Time.time;
         _lastWaveSpawnTime = Time.time;
         _lastPickupSpawnTime = Time.time;
@@ -632,11 +640,11 @@ public class BattleSceneManager : MonoBehaviour
         SpawnEnemies(prefab, waveSize);
     }
 
-    private GameObject InstantiateEnemy(GameObject gameObject)
+    private GameObject InstantiateEnemy(GameObject enemyPrefab)
     {
-        GameObject enemy = Instantiate(gameObject);
+        var enemy = Instantiate(enemyPrefab, _enemiesParentTransform, true);
         enemy.GetComponent<Enemy>().hitpoints += _enemyHitPointModifier;
-        enemy.transform.parent = _levelContainer.transform;
+        
         return enemy;
     }
 
@@ -755,8 +763,7 @@ public class BattleSceneManager : MonoBehaviour
 
     private void SpawnDeath()
     {
-        GameObject death = Instantiate(_deathEnemyPrefab);
-        death.transform.parent = _levelContainer.transform;
+        var death = Instantiate(_deathEnemyPrefab, _levelContainer.transform, true);
         death.transform.position = GetRandomSpawnPointOutsideViewport();
         _gameStartTime = Time.time;
     }
@@ -768,10 +775,8 @@ public class BattleSceneManager : MonoBehaviour
             return;
         }
 
-        int index = random.Next(_pickupPrefabs.Length);
-
-        GameObject pickup = Instantiate(_pickupPrefabs[index]);
-        pickup.transform.parent = _levelContainer.transform;
+        var index = random.Next(_pickupPrefabs.Length);
+        var pickup = Instantiate(_pickupPrefabs[index], _pickupParentTransform, true);
 
         pickup.transform.position = GetRandomSpawnPoint();
         _pickupsOnScreen++;
