@@ -90,3 +90,5 @@ crashlytics-build.properties
 
 # Ignore Sentry CLI options
 /Assets/Plugins/Sentry/SentryCliOptions.*
+
+/Assets/Plugins/GDK
