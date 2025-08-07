@@ -1,5 +1,0 @@
-/Users/bitfox/Workspace/demos/sentaur-survivors/.utmp/RelWithDebInfo/8525p1t2/armeabi-v7a/CMakeFiles/edit_cache.dir
-/Users/bitfox/Workspace/demos/sentaur-survivors/.utmp/RelWithDebInfo/8525p1t2/armeabi-v7a/CMakeFiles/rebuild_cache.dir
-/Users/bitfox/Workspace/demos/sentaur-survivors/.utmp/RelWithDebInfo/8525p1t2/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
-/Users/bitfox/Workspace/demos/sentaur-survivors/.utmp/RelWithDebInfo/8525p1t2/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
-/Users/bitfox/Workspace/demos/sentaur-survivors/.utmp/RelWithDebInfo/8525p1t2/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir
