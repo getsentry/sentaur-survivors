@@ -11,4 +11,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BattleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  m_configObjects: {}
+  - enabled: 0
+    path: Assets/Scenes/1_Bugfarm.unity
+    guid: ea1c53ffa9f3c482287ee84d42ea0db4
+  - enabled: 0
+    path: Assets/Scenes/2_NativeSupport.unity
+    guid: b2239cfd14b1c400ea7357ae542078c1
+  - enabled: 0
+    path: Assets/Scenes/3_AdditionalSamples.unity
+    guid: 9770f231579c0402c9384221ae02c07f
+  - enabled: 0
+    path: Assets/Scenes/4_ThreadedSamples.unity
+    guid: 52dfe3b1eabb64c3db9961011aac82b0
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 0461136c32c0cb74096be044766bb8ce, type: 3}
+  m_UseUCBPForAssetBundles: 0

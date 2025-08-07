@@ -47,6 +47,7 @@ public class Enemy : MonoBehaviour
     private Coroutine _flashCoroutine;
 
     private SpriteRenderer _spriteRenderer;
+    private GameObject _player;
 
     protected Rigidbody2D _rigidbody2D;
 
@@ -56,6 +57,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _player = GameObject.Find("Player");
         _rigidbody2D = GetComponent<Rigidbody2D>();
 
         _originalMaterial = _spriteRenderer.material;
@@ -65,10 +67,9 @@ public class Enemy : MonoBehaviour
     protected virtual void Update()
     {
         // move towards the player character
-        GameObject player = GameObject.Find("Player");
-        if (player != null)
+        if (_player != null)
         {
-            var direction = DetermineDirection(player);
+            var direction = DetermineDirection(_player);
             _rigidbody2D.linearVelocity = direction * _speed;
 
             // flip sprite in x direction if moving left
@@ -141,6 +142,7 @@ public class Enemy : MonoBehaviour
                         transform.position,
                         Quaternion.identity
                     );
+                    xpDrop.transform.parent = GameObject.Find("Level").transform.Find("XpDrops");
                     xpDrop.SetXp(_xpValue);
                 }
                 Destroy(gameObject);

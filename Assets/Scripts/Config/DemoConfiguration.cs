@@ -7,6 +7,13 @@ public class DemoConfiguration : ScriptableObject
     public bool Enabled = false;
     public string ApiUrl = string.Empty;
     public User User;
+
+    public bool AutoPlay;
+    public bool CheatingButtons;
+    public bool NotHotDogParticleEffect;
+    public bool FetchUpgradeFromServer;
+    public bool AutoSelectLevelUp;
+    public bool CrashOnGameOver;
 }
 
 [Serializable]

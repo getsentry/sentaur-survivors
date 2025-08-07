@@ -1,8 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
 
 public class Dart : WeaponBase
 {
+    private InputAction _lookAction;
+    private InputAction _mouseAction;
+    
     [SerializeField]
     private float _speed = 10.0f;
 
@@ -24,10 +29,67 @@ public class Dart : WeaponBase
     [SerializeField]
     private DartProjectile _dartProjectilePrefab;
 
+    private Vector3 _shootingDirection = Vector3.right;
+    private Arrow _arrow;
+
+    // Override mechanism for external shooting direction control
+    private bool _hasExternalShootingDirection = false;
+    private Vector3 _externalShootingDirection;
+
+    private void Awake()
+    {
+        _lookAction = InputSystem.actions.FindAction("Look");
+        _mouseAction = InputSystem.actions.FindAction("Mouse");
+
+        _arrow = FindFirstObjectByType<Arrow>();
+    }
+    
     public void Start()
     {
         _isEnabled = true;
         _player = Player.Instance.gameObject;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        // Only calculate direction if not overridden externally
+        if (!_hasExternalShootingDirection)
+        {
+            _shootingDirection = CalculateDirection(_player);
+        }
+        else
+        {
+            _shootingDirection = _externalShootingDirection;
+        }
+        
+        // If we have a valid direction vector
+        if (_shootingDirection != Vector3.zero)
+        {
+            // Create a rotation where the arrow's right vector points in the direction
+            // This works better for 2D objects that should point in a direction
+            float angle = Mathf.Atan2(_shootingDirection.y, _shootingDirection.x) * Mathf.Rad2Deg;
+            _arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
+    }
+
+    /// <summary>
+    /// Sets the shooting direction externally, overriding the normal input-based calculation
+    /// </summary>
+    /// <param name="direction">The direction to shoot in</param>
+    public void SetShootingDirection(Vector3 direction)
+    {
+        _hasExternalShootingDirection = true;
+        _externalShootingDirection = direction.normalized;
+    }
+
+    /// <summary>
+    /// Clears the external shooting direction override, returning to normal input-based calculation
+    /// </summary>
+    public void ClearShootingDirectionOverride()
+    {
+        _hasExternalShootingDirection = false;
     }
 
     public override void Fire()
@@ -47,30 +109,27 @@ public class Dart : WeaponBase
     public IEnumerator ShootDarts()
     {
         _isShooting = true;
-        Vector3 direction = CalculateDirection(_player);
-
+        
         // shoot the base number of darts
         for (int i = 0; i < Count; i++)
         {
-            ShootADart(_dartProjectilePrefab, _player, direction);
+            ShootADart(_dartProjectilePrefab, _player, _shootingDirection);
             if (RearFiringDartCount > i)
             {
-                ShootADart(_dartProjectilePrefab, _player, direction * -1);
+                ShootADart(_dartProjectilePrefab, _player, _shootingDirection * -1);
             }
 
             yield return new WaitForSeconds(_shootingInterval);
-            // get new updates mouse coords inbetween shots
-            direction = CalculateDirection(_player);
         }
 
         // accounting for case where # of backwards darts > # of forwards darts
         int remainingDarts = RearFiringDartCount - Count;
         if (remainingDarts > 0)
         {
-            direction *= -1;
+            _shootingDirection *= -1;
             for (int i = 0; i < remainingDarts; i++)
             {
-                ShootADart(_dartProjectilePrefab, _player, direction);
+                ShootADart(_dartProjectilePrefab, _player, _shootingDirection);
                 yield return new WaitForSeconds(_shootingInterval);
             }
         }
@@ -97,9 +156,21 @@ public class Dart : WeaponBase
 
     private Vector3 CalculateDirection(GameObject player)
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 direction = mousePosition - player.transform.position;
+        if (Gamepad.current != null)
+        {
+            var direction = _lookAction.ReadValue<Vector2>(); 
+            if (direction.magnitude < 0.1f)
+            {
+                // Don't change it if we're not aiming
+                return _shootingDirection;
+            }
 
-        return direction;
+            return direction;
+        }
+        
+        var mousePosition = Camera.main.ScreenToWorldPoint(_mouseAction.ReadValue<Vector2>());
+        var targetDirection = mousePosition - player.transform.position;
+        
+        return targetDirection;
     }
 }

@@ -1,35 +1,75 @@
-using System.Collections;
-using System.Collections.Generic;
+using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TitleSceneManager : MonoBehaviour
+namespace SceneManagers
 {
-    [SerializeField]
-    private GameObject _startButton;
-
-    [SerializeField]
-    private GameObject _quitButton;
-
-    void Awake()
+    public class TitleSceneManager : MonoBehaviour
     {
-        _startButton.GetComponent<Button>().onClick.AddListener(StartGame);
-        _quitButton.GetComponent<Button>().onClick.AddListener(QuitGame);
-    }
+        private InputAction _navigateAction;
+        
+        [SerializeField] private GameObject startButton;
+        [SerializeField] private GameObject quitButton;
+        
+        private Highlighter _startHighlighter;
+        private Highlighter _quitHighlighter;
 
-    // Update is called once per frame
-    void Update() { }
+        private GameObject _highlightedButton;
 
-    private void StartGame()
-    {
-        Debug.Log("Start Game");
-        SceneManager.LoadScene("BattleScene", LoadSceneMode.Single);
-    }
+        private void Awake()
+        {
+            _navigateAction = InputSystem.actions.FindAction("Navigate");
+            _startHighlighter = startButton.GetComponent<Highlighter>();
+            _quitHighlighter = quitButton.GetComponent<Highlighter>();
+        }
 
-    private void QuitGame()
-    {
-        Debug.Log("Quit (Note this won't quit in the editor)");
-        Application.Quit();
+        public void OnNavigate()
+        {
+            if (!_navigateAction.IsPressed())
+            {
+                return;
+            }
+            
+            var direction = _navigateAction.ReadValue<Vector2>();
+            if (direction.x < 0)
+            {
+                SetHighlightedButton(_startHighlighter);
+            }
+            else if (direction.x > 0)
+            {
+                SetHighlightedButton(_quitHighlighter);
+            }
+        }
+
+        public void OnSubmit() => _highlightedButton?.GetComponent<Button>().onClick.Invoke();
+
+        public void SetHighlightedButton(Highlighter highlighted)
+        {
+            _startHighlighter.Highlight(false);
+            _quitHighlighter.Highlight(false);
+        
+            highlighted.Highlight();
+            _highlightedButton = highlighted.gameObject;
+        }
+        
+        public void StartGame()
+        {
+            Debug.Log("Start Game");
+            SceneManager.LoadScene("BattleScene", LoadSceneMode.Single);
+        }
+
+        public void QuitGame()
+        {
+            Debug.Log("Quit (Note this won't quit in the editor)");
+            Application.Quit();
+        }
+        
+        private void UnityOfBugs()
+        {
+            Debug.Log("Loading UnityOfBugs");
+            SceneManager.LoadScene("1_Bugfarm", LoadSceneMode.Single);
+        }
     }
 }

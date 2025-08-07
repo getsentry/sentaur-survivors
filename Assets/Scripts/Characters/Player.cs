@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    private InputAction _moveAction;
+    
     [SerializeField]
     public WeaponManager WeaponManager;
 
@@ -33,6 +36,8 @@ public class Player : MonoBehaviour
     [Tooltip("How much damage is reduced for the player")]
     private float _damageReductionAmount = 0.0f;
 
+    [SerializeField] private Transform arrow;
+    
     public enum PlayerEffectTypes
     {
         SpeedUp,
@@ -41,7 +46,6 @@ public class Player : MonoBehaviour
 
     private HealthBar _healthBar;
     public Animator animator;
-    Vector2 movement;
     bool facingRight = false;
 
     public AudioSource takeDamageSound;
@@ -70,6 +74,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        _moveAction = InputSystem.actions.FindAction("Move");
         _rigidBody = GetComponent<Rigidbody2D>();
     }
 
@@ -83,23 +88,32 @@ public class Player : MonoBehaviour
         takeDamageSound = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
+    {
+        animator.SetFloat("Horizontal", _rigidBody.linearVelocity.x);
+        animator.SetFloat("Speed", _rigidBody.linearVelocity.sqrMagnitude);
+        animator.SetBool("FacingRight", facingRight);
+        
+        HandleMovement();
+    }
+    
+    private void HandleMovement()
     {
         if (_isDead)
         {
             return;
         }
-
+        
         lastPosition = transform.position;
-
-        var movementVector = new Vector2(
-            Input.GetAxis("Horizontal") * _playerMoveRate,
-            Input.GetAxis("Vertical") * _playerMoveRate
-        );
-        _rigidBody.linearVelocity = movementVector;
-
-        movement.x = Input.GetAxisRaw("Horizontal");
+        
+        var movement = _moveAction.ReadValue<Vector2>();
+        if (movement.magnitude <= 0)
+        {
+            return;
+        }
+        
+        _rigidBody.linearVelocity = movement.normalized * _playerMoveRate;;
+        
         if (movement.x > 0)
         {
             facingRight = true;
@@ -108,11 +122,6 @@ public class Player : MonoBehaviour
         {
             facingRight = false;
         } // if 0, don't modify
-        movement.y = Input.GetAxisRaw("Vertical");
-
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Speed", movement.sqrMagnitude);
-        animator.SetBool("FacingRight", facingRight);
     }
 
     IEnumerator Wait(float _waitTime)

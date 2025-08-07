@@ -11,18 +11,11 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField]
     public float BaseDamage;
 
-    public float Cooldown => BaseCooldown * _weaponManager.GlobalCooldownModifier;
-    public int Damage => (int)(_weaponManager.GlobalDamageModifier * BaseDamage);
-    public int Count => _weaponManager.GlobalCountModifier;
+    public float Cooldown => BaseCooldown * Player.Instance.WeaponManager.GlobalCooldownModifier;
+    public int Damage => (int)(Player.Instance.WeaponManager.GlobalDamageModifier * BaseDamage);
+    public int Count => Player.Instance.WeaponManager.GlobalCountModifier;
 
     protected float _timeElapsedSinceLastFire = 0.0f;
-
-    protected WeaponManager _weaponManager;
-
-    private void Awake()
-    {
-        _weaponManager = GameObject.Find("WeaponManager").GetComponent<WeaponManager>();
-    }
 
     protected virtual void Update()
     {
