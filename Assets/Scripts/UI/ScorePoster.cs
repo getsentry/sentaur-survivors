@@ -68,7 +68,7 @@ public class ScorePoster : MonoBehaviour
     private void SaveScoreToDisk()
     {
 #if !UNITY_EDITOR
-        save_score();
+        save_score_to_disk();
 #else
         Debug.Log("If this was not the Editor, the score would be saved 'natively'.");
 #endif

@@ -12,7 +12,6 @@ public class DemoConfiguration : ScriptableObject
     public bool CheatingButtons;
     public bool NotHotDogParticleEffect;
     public bool FetchUpgradeFromServer;
-    public bool AutoSelectLevelUp;
     public bool CrashOnGameOver;
 }
 

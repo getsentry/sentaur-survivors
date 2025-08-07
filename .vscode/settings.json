@@ -52,7 +52,7 @@
         "Obj/":true,
         "Logs/":true,
         "logs/":true,
-        "ProjectSettings/":true,
+        "ProjectSettings/":false,
         "UserSettings/":true,
         "temp/":true,
         "Temp/":true

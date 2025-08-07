@@ -136,13 +136,14 @@ public class Enemy : MonoBehaviour
             {
                 if (leaveXp)
                 {
-                    // instantiate an xp drop at this position
+                    // instantiate an xp drop at this position with parent set directly
+                    var xpDropParent = GameObject.Find("Level").transform.Find("XpDrops");
                     var xpDrop = Instantiate(
                         _xpDropPrefab,
                         transform.position,
-                        Quaternion.identity
+                        Quaternion.identity,
+                        xpDropParent
                     );
-                    xpDrop.transform.parent = GameObject.Find("Level").transform.Find("XpDrops");
                     xpDrop.SetXp(_xpValue);
                 }
                 Destroy(gameObject);

@@ -68,7 +68,7 @@ namespace Upgrades
             _option1Button.onClick.AddListener(() => SelectUpgrade(upgradeChoice1));
             _option2Button.onClick.AddListener(() => SelectUpgrade(upgradeChoice2));
 
-            if (_demoConfig != null && _demoConfig.AutoSelectLevelUp)
+            if (_demoConfig != null && _demoConfig.AutoPlay)
             {
                 StartCoroutine(SelectSomething());
             }

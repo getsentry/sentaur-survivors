@@ -21,5 +21,4 @@ MonoBehaviour:
   CheatingButtons: 0
   NotHotDogParticleEffect: 1
   FetchUpgradeFromServer: 1
-  AutoSelectLevelUp: 1
   CrashOnGameOver: 1

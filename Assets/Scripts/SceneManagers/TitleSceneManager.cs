@@ -1,13 +1,17 @@
+using System;
+using System.Collections;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace SceneManagers
 {
     public class TitleSceneManager : MonoBehaviour
     {
+        private DemoConfiguration _demoConfig;
         private InputAction _navigateAction;
         
         [SerializeField] private GameObject startButton;
@@ -20,9 +24,29 @@ namespace SceneManagers
 
         private void Awake()
         {
+            _demoConfig = Resources.Load("DemoConfig") as DemoConfiguration;
             _navigateAction = InputSystem.actions.FindAction("Navigate");
             _startHighlighter = startButton.GetComponent<Highlighter>();
             _quitHighlighter = quitButton.GetComponent<Highlighter>();
+        }
+
+        private void Start()
+        {
+            if (_demoConfig != null && _demoConfig.AutoPlay)
+            {
+                StartCoroutine(AutoStartGame());
+            }
+        }
+
+        private IEnumerator AutoStartGame()
+        {
+            yield return new WaitForSecondsRealtime(Random.value);
+            
+            SetHighlightedButton(_startHighlighter);
+            
+            yield return new WaitForSecondsRealtime(Random.value);
+
+            StartGame();
         }
 
         public void OnNavigate()
