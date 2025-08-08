@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
@@ -394,8 +396,41 @@ public class BattleSceneManager : MonoBehaviour
         Time.timeScale = 0;
 
         _hud.ShowGameOver();
+        
+        if (_demoConfig != null && _demoConfig.CrashOnGameOver)
+        {
+            Debug.Log("Saving score to disk.");
+            SaveScoreToDisk();
+        }
     }
 
+    private void SaveScoreToDisk()
+    {
+        
+#if !UNITY_EDITOR
+        Debug.Log("Calling into Native Save Utils.");
+        
+        try 
+        {
+            Debug.Log("Attempting save_score_to_disk...");
+            save_score_to_disk(_score);
+            Debug.Log("save_score_to_disk completed without crash - this should not happen!");
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log("save_score_to_disk threw exception: " + e.Message);
+        }
+        
+        Debug.Log("ForceCrash also failed - this should not be reached!");
+#else
+        Debug.Log("If this was not the Editor, the score would be saved 'natively'.");
+#endif
+    }
+    
+    // NativeSaver.c
+    [DllImport("__Internal")]
+    private static extern void save_score_to_disk(int score);
+    
     private void SetScore(int score)
     {
         _score = score;

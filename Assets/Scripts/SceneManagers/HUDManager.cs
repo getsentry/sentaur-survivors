@@ -12,13 +12,9 @@ namespace SceneManagers
         
         [SerializeField] private GameObject tryAgainButton;
         [SerializeField] private GameObject quitButton;
-        [SerializeField] private GameObject cheatLittleButton;
-        [SerializeField] private GameObject cheatLotButton;
         
         private Highlighter _tryAgainHighlighter;
         private Highlighter _quitHighlighter;
-        private Highlighter _cheatLittleHighlighter;
-        private Highlighter _cheatLotHighlighter;
 
         private GameObject _highlightedButton;
 
@@ -32,8 +28,6 @@ namespace SceneManagers
             
             _tryAgainHighlighter = tryAgainButton.GetComponent<Highlighter>();
             _quitHighlighter = quitButton.GetComponent<Highlighter>();
-            _cheatLittleHighlighter = cheatLittleButton.GetComponent<Highlighter>();
-            _cheatLotHighlighter = cheatLotButton.GetComponent<Highlighter>();
         }
 
         private void OnSubmitPerformed(InputAction.CallbackContext context)
@@ -65,85 +59,28 @@ namespace SceneManagers
 
             var direction = _navigateAction.ReadValue<Vector2>();
             
+            // Simple navigation between try again and quit buttons
             if (_highlightedButton == null)
             {
-                if (direction.x < 0)
+                // Default to try again button if available, otherwise quit button
+                if (direction.x < 0 && _tryAgainHighlighter.isActiveAndEnabled)
                 {
-                    if (_tryAgainHighlighter.isActiveAndEnabled)
-                    {
-                        SetHighlightedButton(_tryAgainHighlighter);    
-                    }
-                    else
-                    {
-                        SetHighlightedButton(_cheatLittleHighlighter);
-                    }
+                    SetHighlightedButton(_tryAgainHighlighter);
                 }
                 else if (direction.x > 0)
                 {
                     SetHighlightedButton(_quitHighlighter);
                 }
             }
-            else if (_highlightedButton == quitButton)
+            else if (_highlightedButton == quitButton && direction.x < 0 && _tryAgainHighlighter.isActiveAndEnabled)
             {
-                if (direction.x < 0)
-                {
-                    if (_tryAgainHighlighter.isActiveAndEnabled)
-                    {
-                        SetHighlightedButton(_tryAgainHighlighter);    
-                    }
-                    else
-                    {
-                        SetHighlightedButton(_cheatLittleHighlighter);
-                    }
-                }
-                else if (direction.x > 0)
-                {
-                    SetHighlightedButton(_quitHighlighter);
-                }
+                // Navigate from quit to try again
+                SetHighlightedButton(_tryAgainHighlighter);
             }
-            else if (_highlightedButton == tryAgainButton)
+            else if (_highlightedButton == tryAgainButton && direction.x > 0)
             {
-                if (direction.x < 0)
-                {
-                    SetHighlightedButton(_cheatLittleHighlighter);
-                }
-                else if (direction.x > 0)
-                {
-                    SetHighlightedButton(_quitHighlighter);
-                }
-            }
-            else if (_highlightedButton == tryAgainButton)
-            {
-                if (direction.x < 0)
-                {
-                    SetHighlightedButton(_cheatLittleHighlighter);
-                }
-                else if (direction.x > 0)
-                {
-                    SetHighlightedButton(_quitHighlighter);
-                }
-            }
-            else if (_highlightedButton == cheatLittleButton || _highlightedButton == cheatLotButton)
-            {
-                if (direction.y > 0)
-                {
-                    SetHighlightedButton(_cheatLittleHighlighter);
-                }
-                else if (direction.y < 0)
-                {
-                    SetHighlightedButton(_cheatLotHighlighter);
-                }
-                else if (direction.x > 0)
-                {
-                    if (_tryAgainHighlighter.isActiveAndEnabled)
-                    {
-                        SetHighlightedButton(_tryAgainHighlighter);    
-                    }
-                    else
-                    {
-                        SetHighlightedButton(_quitHighlighter);
-                    }
-                }
+                // Navigate from try again to quit
+                SetHighlightedButton(_quitHighlighter);
             }
         }
 
@@ -151,8 +88,6 @@ namespace SceneManagers
         {
             _tryAgainHighlighter.Highlight(false);
             _quitHighlighter.Highlight(false);
-            _cheatLittleHighlighter.Highlight(false);
-            _cheatLotHighlighter.Highlight(false);
         
             highlighted.Highlight();
             _highlightedButton = highlighted.gameObject;

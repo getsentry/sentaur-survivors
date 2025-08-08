@@ -2,7 +2,6 @@ using Sentry;
 using Sentry.Unity;
 using System;
 using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -58,26 +57,7 @@ public class ScorePoster : MonoBehaviour
         {
             _root.SetActive(true);
         }
-
-        if (_demoConfig != null && _demoConfig.CrashOnGameOver)
-        {
-            SaveScoreToDisk();
-        }
     }
-
-    private void SaveScoreToDisk()
-    {
-#if !UNITY_EDITOR
-        save_score_to_disk();
-#else
-        Debug.Log("If this was not the Editor, the score would be saved 'natively'.");
-#endif
-        
-    }
-    
-    // NativeSaver.c
-    [DllImport("__Internal")]
-    private static extern void save_score_to_disk();
 
     private async Task LoginAsync()
     {

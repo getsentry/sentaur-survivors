@@ -16,12 +16,11 @@ public class HUD : MonoBehaviour
     [SerializeField] private ScorePoster _scorePoster;
     [SerializeField] private GameObject _tryAgain;
     [SerializeField] private GameObject _quit;
-    [SerializeField] private GameObject _cheating;
 
     private DemoConfiguration _demoConfig;
     private XpBar _xpBar;
 
-    void Awake()
+    private void Awake()
     {
         _demoConfig = Resources.Load("DemoConfig") as DemoConfiguration;
         
@@ -46,10 +45,7 @@ public class HUD : MonoBehaviour
         });
     }
 
-    void Start() { }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // get time elapsed since game start in mm:ss format
         var timeElapsed = Time.timeSinceLevelLoad;
@@ -74,18 +70,12 @@ public class HUD : MonoBehaviour
         _gameOverText.enabled = true;
 
         _quit.SetActive(true);
-
-        if (_demoConfig != null && _demoConfig.CheatingButtons)
-        {
-            _cheating.SetActive(true);    
-        }
     }
 
     public void HidePause()
     {
         _gameOverText.enabled = false;
         _quit.SetActive(false);
-        _cheating.SetActive(false);
     }
 
     public void ShowGameOver()
@@ -95,12 +85,6 @@ public class HUD : MonoBehaviour
         
         _quit.SetActive(true);
         _tryAgain.SetActive(true);
-        
-        if (_demoConfig != null && _demoConfig.CheatingButtons)
-        {
-            _cheating.SetActive(true);    
-        }
-        
         _scorePoster.Enable();
     }
 

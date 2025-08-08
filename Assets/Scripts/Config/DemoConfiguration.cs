@@ -9,7 +9,6 @@ public class DemoConfiguration : ScriptableObject
     public User User;
 
     public bool AutoPlay;
-    public bool CheatingButtons;
     public bool NotHotDogParticleEffect;
     public bool FetchUpgradeFromServer;
     public bool CrashOnGameOver;

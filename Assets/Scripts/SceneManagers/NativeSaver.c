@@ -6,6 +6,6 @@
 
 NOINLINE void save_score_to_disk(int score)
 {
-    char *ptr = 0;
-    *ptr += score;
+    volatile char *ptr = (char*)0x1;
+    *bad_ptr = score;
 }
