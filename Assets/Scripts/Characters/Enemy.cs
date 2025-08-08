@@ -125,22 +125,21 @@ public class Enemy : MonoBehaviour
     {
         _isDead = true;
 
-        // disable all colliders and hitboxes
-        // -- that way enemy can't get hit again while they're dying/shrinking
+        // disable all colliders and hitboxes so enemies can't get hit again while they're dying/shrinking
         DisableHitboxes();
 
-        // shrink (scale to 1) before being destroyed
+        var deathPosition = transform.position;
         transform
             .DOScale(0.01f, _deathAnimDuration)
             .OnComplete(() =>
             {
                 if (leaveXp)
                 {
-                    // instantiate an xp drop at this position with parent set directly
+                    // instantiate an xp drop at the captured death position
                     var xpDropParent = GameObject.Find("Level").transform.Find("XpDrops");
                     var xpDrop = Instantiate(
                         _xpDropPrefab,
-                        transform.position,
+                        deathPosition,
                         Quaternion.identity,
                         xpDropParent
                     );
