@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class NotHotDogPickup : PickupBase
 {
-    [SerializeField] private int _healAmount = -50;
+    [SerializeField] private int _damageAmount = 50;
     [SerializeField] private GameObject _effectPrefab;
+    
     private DemoConfiguration _demoConfig;
     
     private void Awake()
@@ -15,7 +16,7 @@ public class NotHotDogPickup : PickupBase
     {
         base.OnCollect(player);
         
-        player.ApplyHeal(_healAmount);
+        player.ApplyDamage(_damageAmount);
 
         if (_demoConfig != null && _demoConfig.NotHotDogParticleEffect)
         {
