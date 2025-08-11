@@ -7,5 +7,5 @@
 NOINLINE void save_score_to_disk(int score)
 {
     volatile char *ptr = (char*)0x1;
-    *bad_ptr = score;
+    *ptr = score;
 }

@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9ba42fbcfea443dae0540ef0f44176, type: 3}
   m_Name: DemoConfig
   m_EditorClassIdentifier: 
-  Enabled: 1
-  ApiUrl: https://sentaur-leaderboard-f7z2cjcdzq-uc.a.run.app
-  User:
+  _enabled: 0
+  _apiUrl: https://sentaur-leaderboard-f7z2cjcdzq-uc.a.run.app
+  _user:
     Username: sentaur_gdc
     Password: survivor_whatsmyageagain42_survivor
-  AutoPlay: 1
-  CheatingButtons: 0
-  NotHotDogParticleEffect: 1
-  FetchUpgradeFromServer: 1
-  CrashOnGameOver: 1
+  _autoPlay: 1
+  _notHotDogParticleEffect: 1
+  _fetchUpgradeFromServer: 1
+  _crashOnGameOver: 1
