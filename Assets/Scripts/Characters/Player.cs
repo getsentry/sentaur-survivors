@@ -107,12 +107,7 @@ public class Player : MonoBehaviour
         lastPosition = transform.position;
         
         var movement = _moveAction.ReadValue<Vector2>();
-        if (movement.magnitude <= 0)
-        {
-            return;
-        }
-        
-        _rigidBody.linearVelocity = movement.normalized * _playerMoveRate;;
+        _rigidBody.linearVelocity = movement.normalized * _playerMoveRate;
         
         if (movement.x > 0)
         {
@@ -199,10 +194,18 @@ public class Player : MonoBehaviour
             _damageReductionAmount = 0f;
         }
     }
-
+    
     public void SpawnPlayerText(string text)
     {
         Vector2 textPosition = new Vector2(transform.position.x, transform.position.y + 1.0f);
         _playerTextPrefab.Spawn(transform.root, textPosition, text);
+    }
+    
+    private void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            _instance = null;
+        }
     }
 }

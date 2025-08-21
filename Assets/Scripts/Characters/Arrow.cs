@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private bool _forceEnable;
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (_forceEnable)
+        {
+            return;
+        }
+            
+        if (Application.platform != RuntimePlatform.Android && 
+            Application.platform != RuntimePlatform.IPhonePlayer)
+        {
+            gameObject.SetActive(false);    
+        }
     }
 }

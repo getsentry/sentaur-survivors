@@ -81,4 +81,12 @@ public class EventManager : MonoBehaviour
     {
         TriggerEvent(eventName, new EventData());
     }
+    
+    private void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            _instance = null;
+        }
+    }
 }

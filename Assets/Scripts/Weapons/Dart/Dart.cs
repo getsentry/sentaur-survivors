@@ -40,8 +40,8 @@ public class Dart : WeaponBase
     {
         _lookAction = InputSystem.actions.FindAction("Look");
         _mouseAction = InputSystem.actions.FindAction("Mouse");
-
-        _arrow = FindFirstObjectByType<Arrow>();
+        
+        _arrow = Player.Instance.GetComponentInChildren<Arrow>();
     }
     
     public void Start()
@@ -70,7 +70,10 @@ public class Dart : WeaponBase
             // Create a rotation where the arrow's right vector points in the direction
             // This works better for 2D objects that should point in a direction
             float angle = Mathf.Atan2(_shootingDirection.y, _shootingDirection.x) * Mathf.Rad2Deg;
-            _arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
+            if (_arrow != null)
+            {
+                _arrow.transform.rotation = Quaternion.Euler(0, 0, angle);    
+            }
         }
     }
 

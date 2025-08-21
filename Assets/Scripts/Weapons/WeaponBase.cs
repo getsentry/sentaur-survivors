@@ -11,7 +11,7 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField]
     public float BaseDamage;
 
-    public float Cooldown => BaseCooldown * Player.Instance.WeaponManager.GlobalCooldownModifier;
+    public float Cooldown => BaseCooldown * Player.Instance.WeaponManager.GlobalCooldownModifier * Player.Instance.WeaponManager.GlobalEffektCooldownModifier;
     public int Damage => (int)(Player.Instance.WeaponManager.GlobalDamageModifier * BaseDamage);
     public int Count => Player.Instance.WeaponManager.GlobalCountModifier;
 

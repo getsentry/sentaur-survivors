@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5054089494736014737}
-  - component: {fileID: 1872956838238847735}
+  - component: {fileID: -4891330270059684481}
   - component: {fileID: 2235537914035941605}
   - component: {fileID: 8459684996225841193}
   m_Layer: 0
-  m_Name: NotHotDogPickup
+  m_Name: BeerbootPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1872956838238847735
+--- !u!114 &-4891330270059684481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,15 +43,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3306419623360918530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5f01de713d7b43f99fec0f5fcf564a1, type: 3}
+  m_Script: {fileID: 11500000, guid: a571b4a8eb7cd4bc783b642e24514e3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _pickupSound: {fileID: 8300000, guid: 9f38fc745c8b64043b4a6a8d9ab8deab, type: 3}
-  _scoreValue: 50000
-  _effectDuration: 0
-  _effectText: That was not a hotdog!
-  _damageAmount: 25
-  _effectPrefab: {fileID: 3306419623360918530, guid: 59786710faf594f7283667e6bcac1405, type: 3}
+  _scoreValue: 50
+  _effectDuration: 5
+  _effectText: 
+  _cooldownModifier: 0.5
 --- !u!212 &2235537914035941605
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -96,7 +95,7 @@ SpriteRenderer:
   m_SortingLayerID: 23827671
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b6f1ac07bf29245a3ba0c5060ac070a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2275cd1cdd5404b10bb6221f0984640f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

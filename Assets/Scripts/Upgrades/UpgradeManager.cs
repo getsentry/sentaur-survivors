@@ -86,4 +86,12 @@ class UpgradeManager : MonoBehaviour
             }
         }
     }
+
+    void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            _instance = null;
+        }
+    }
 }

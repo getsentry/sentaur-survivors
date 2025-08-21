@@ -69,12 +69,14 @@ public class HUD : MonoBehaviour
         _gameOverText.text = "PAUSED";
         _gameOverText.enabled = true;
 
+        _tryAgain.SetActive(true);
         _quit.SetActive(true);
     }
 
     public void HidePause()
     {
         _gameOverText.enabled = false;
+        _tryAgain.SetActive(false);
         _quit.SetActive(false);
     }
 

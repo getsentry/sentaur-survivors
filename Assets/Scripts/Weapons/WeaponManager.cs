@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    [SerializeField]
-    public float GlobalDamageModifier = 1.0f;
+    [SerializeField] public float GlobalDamageModifier = 1.0f;
+    [SerializeField] public float GlobalCooldownModifier = 1.0f;
 
-    [SerializeField]
-    public float GlobalCooldownModifier = 1.0f;
-
-    [SerializeField]
-    public int GlobalCountModifier = 1;
+    public float GlobalEffektCooldownModifier = 1.0f;
+    
+    [SerializeField] public int GlobalCountModifier = 1;
 
     private List<WeaponBase> _weapons = new List<WeaponBase>();
 

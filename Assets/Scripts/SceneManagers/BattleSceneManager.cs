@@ -82,6 +82,10 @@ public class BattleSceneManager : MonoBehaviour
     [SerializeField]
     [Tooltip("The linear enemy prefab to spawn")]
     private GameObject _linearEnemyPrefab;
+    
+    [SerializeField]
+    [Tooltip("The random enemy prefab to spawn")]
+    private GameObject _randomEnemyPrefab;
 
     [SerializeField]
     [Tooltip("List of pickup prefabs to randomly spawn")]
@@ -154,9 +158,10 @@ public class BattleSceneManager : MonoBehaviour
     {
         Sentaur = 0,
         Ant = 1,
-        DiagonalHead = 2,
-        Mantis = 3,
-        LinearHead = 4,
+        RandomHead = 2,
+        DiagonalHead = 3,
+        Mantis = 4,
+        LinearHead = 5,
     };
 
     // what level enemies start appearing
@@ -164,8 +169,10 @@ public class BattleSceneManager : MonoBehaviour
     {
         { EnemyType.Sentaur, 0 }, // start
         { EnemyType.Ant, 2 }, // level 3
+        { EnemyType.RandomHead, 3 }, // level 4
         { EnemyType.DiagonalHead, 4 }, // level 5
         { EnemyType.Mantis, 6 }, // level 7
+        { EnemyType.LinearHead, 7 }, // level 8
     };
 
     [SerializeField]
@@ -209,6 +216,9 @@ public class BattleSceneManager : MonoBehaviour
     private void Awake()
     {
         _demoConfig = Resources.Load("DemoConfig") as DemoConfiguration;
+        
+        InputSystem.actions.FindActionMap("Player").Enable();
+        InputSystem.actions.FindActionMap("UI").Disable();
     }
 
     // Start is called before the first frame update
@@ -479,7 +489,7 @@ public class BattleSceneManager : MonoBehaviour
 
         // every 2 seconds, instantiate a new enemy prefab and position at the edge
         // of the viewport;
-        if (Time.time - _lastEnemySpawnTime > _enemySpawnRate)
+        if (_enemySpawnRate > 0 && Time.time - _lastEnemySpawnTime > _enemySpawnRate)
         {
             _lastEnemySpawnTime = Time.time;
 
@@ -633,6 +643,10 @@ public class BattleSceneManager : MonoBehaviour
         {
             spawnRange = (int)EnemyType.Ant;
         }
+        if (_currentLevel >= _levelEnemyGate[EnemyType.RandomHead])
+        {
+            spawnRange = (int)EnemyType.RandomHead;
+        }
         if (_currentLevel >= _levelEnemyGate[EnemyType.DiagonalHead])
         {
             spawnRange = (int)EnemyType.DiagonalHead;
@@ -651,6 +665,9 @@ public class BattleSceneManager : MonoBehaviour
                 break;
             case (int)EnemyType.Ant:
                 prefab = _antEnemyPrefab;
+                break;
+            case (int)EnemyType.RandomHead:
+                prefab = _randomEnemyPrefab;
                 break;
             case (int)EnemyType.DiagonalHead:
                 prefab = _headEnemyPrefab;

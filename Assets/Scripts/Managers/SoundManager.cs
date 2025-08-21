@@ -57,4 +57,12 @@ public class SoundManager : MonoBehaviour
         _audioSource.Play();
         _timeOfLastHitSound = Time.time;
     }
+
+    void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            _instance = null;
+        }
+    }
 }
