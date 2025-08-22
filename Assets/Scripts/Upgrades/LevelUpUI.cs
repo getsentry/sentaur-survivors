@@ -59,9 +59,17 @@ namespace Upgrades
             }
 
             paths ??= UpgradeManager.Instance.GetRandomUpgradePaths(2);
+            if (paths == null || paths.Count == 0)
+            {
+                Debug.LogWarning("No upgrade paths available. Everything fully upgraded?");
+                Time.timeScale = 1;
+                gameObject.SetActive(false);
+                return;
+            }
 
+            
             var upgradeChoice1 = paths[0];
-            var upgradeChoice2 = paths[1];
+            var upgradeChoice2 = paths.Count > 1 ? paths[1] : paths[0]; // In case there is only one upgrade left
             
             SetLevelOptionUI(upgradeChoice1, upgradeChoice2);
 

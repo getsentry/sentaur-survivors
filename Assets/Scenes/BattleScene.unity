@@ -36438,7 +36438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 292671231893397069, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
       propertyPath: _hitPoints
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 292671231893397069, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
       propertyPath: _schnitzel
@@ -36462,7 +36462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4961075627311851740, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
       propertyPath: orthographic size
-      value: 9.375
+      value: 8.4375
       objectReference: {fileID: 0}
     - target: {fileID: 4961075627311851740, guid: 5e9a239886cdc4f36bd47c7e2ce1f506, type: 3}
       propertyPath: m_BackGroundColor.a
