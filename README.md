@@ -1,3 +1,5 @@
+# ⚠️ THIS REPO IS SOFT-ARCHIVED - MOST RECENT VERSION LIVES ON [SENTRY-DEMOS](https://github.com/sentry-demos/unity)
+
 # ![](Media/sentaur.gif) Sentaur Survivors
 
 A Sentry-themed Vampire Survivors clone written for Unity in C# featuring:
