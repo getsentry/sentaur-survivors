@@ -6,7 +6,9 @@ A Sentry-themed Vampire Survivors clone written for Unity in C# featuring:
 * Fast paced 2D shoot 'em up action!
 * 4 weapons with their own unique behavior and upgrade paths
 * 7 different enemies
-* 6 tactical item pickups
+* 7 tactical item pickups
+
+📖 See the [Game Reference](docs/game-reference.md) for detailed stats on all weapons, enemies, and items.
 
 🍿 Watch [the original trailer on YouTube](https://www.youtube.com/watch?v=8z4T97gJ7Rg)
 
