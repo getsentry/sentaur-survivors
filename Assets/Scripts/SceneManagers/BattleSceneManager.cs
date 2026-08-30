@@ -92,6 +92,14 @@ public class BattleSceneManager : MonoBehaviour
     private GameObject[] _pickupPrefabs;
 
     [SerializeField]
+    [Tooltip("Optional pickup to spawn once at game start next to the player (e.g. Chain Lightning)")]
+    private GameObject _startingPickupPrefab;
+
+    [SerializeField]
+    [Tooltip("Offset from player position for the starting pickup spawn")]
+    private Vector3 _startingPickupOffset = new Vector3(2f, 0f, 0f);
+
+    [SerializeField]
     [Tooltip("The level up UI prefab to spawn")]
     private GameObject _levelUpUI;
 
@@ -242,11 +250,19 @@ public class BattleSceneManager : MonoBehaviour
         _lastEnemySpawnTime = Time.time;
         _lastWaveSpawnTime = Time.time;
         _lastPickupSpawnTime = Time.time;
-        _pickupsOnScreen = 1;
+        // Count pickups already in scene (e.g. under Level/Pickups) so spawn limit is correct
+        _pickupsOnScreen = _pickupParentTransform != null ? _pickupParentTransform.childCount : 0;
 
         _gameStartTime = Time.time;
 
         SetCurrentLevel(_currentLevel);
+
+        if (_startingPickupPrefab != null && Player.Instance != null)
+        {
+            var startingPickup = Instantiate(_startingPickupPrefab, _pickupParentTransform, true);
+            startingPickup.transform.position = Player.Instance.transform.position + _startingPickupOffset;
+            _pickupsOnScreen++;
+        }
 
         EventManager.AddListener(
             "EnemyDestroyed",
@@ -833,13 +849,31 @@ public class BattleSceneManager : MonoBehaviour
 
     private void SpawnPickup()
     {
+        if (_pickupPrefabs == null || _pickupPrefabs.Length == 0)
+        {
+            return;
+        }
+
         if (_pickupsOnScreen >= _maxPickupsOnScreen)
         {
             return;
         }
 
-        var index = random.Next(_pickupPrefabs.Length);
-        var pickup = Instantiate(_pickupPrefabs[index], _pickupParentTransform, true);
+        // Filter out missing/broken prefab references
+        var validPrefabs = new List<GameObject>();
+        foreach (var prefab in _pickupPrefabs)
+        {
+            if (prefab != null)
+                validPrefabs.Add(prefab);
+        }
+
+        if (validPrefabs.Count == 0)
+        {
+            return;
+        }
+
+        var index = random.Next(validPrefabs.Count);
+        var pickup = Instantiate(validPrefabs[index], _pickupParentTransform, true);
 
         pickup.transform.position = GetRandomSpawnPoint();
         _pickupsOnScreen++;

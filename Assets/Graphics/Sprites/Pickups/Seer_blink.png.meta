@@ -1,0 +1,728 @@
+fileFormatVersion: 2
+guid: fc169414b3a5341e9a0b1241daa48455
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3112027180600672057
+    second: Seer_blink_0
+  - first:
+      213: -3658826879486719873
+    second: Seer_blink_1
+  - first:
+      213: 231708683369588047
+    second: Seer_blink_2
+  - first:
+      213: -1208587394263326236
+    second: Seer_blink_3
+  - first:
+      213: 236422566541920856
+    second: Seer_blink_4
+  - first:
+      213: -3508679888957169061
+    second: Seer_blink_5
+  - first:
+      213: -6094687489715682315
+    second: Seer_blink_6
+  - first:
+      213: 2883065883746469608
+    second: Seer_blink_7
+  - first:
+      213: -8982159857408402294
+    second: Seer_blink_8
+  - first:
+      213: -799279947985030534
+    second: Seer_blink_9
+  - first:
+      213: 4510625927976728850
+    second: Seer_blink_10
+  - first:
+      213: 2113366754050510075
+    second: Seer_blink_11
+  - first:
+      213: 4369064337180826890
+    second: Seer_blink_12
+  - first:
+      213: -1969633779704712751
+    second: Seer_blink_13
+  - first:
+      213: -3899788003005307118
+    second: Seer_blink_14
+  - first:
+      213: -4962171180683232601
+    second: Seer_blink_15
+  - first:
+      213: -2370864095218513919
+    second: Seer_blink_16
+  - first:
+      213: 1049491602104027953
+    second: Seer_blink_17
+  - first:
+      213: -4183983715464417217
+    second: Seer_blink_18
+  - first:
+      213: -4233451866447810493
+    second: Seer_blink_19
+  - first:
+      213: -2414805374548436684
+    second: Seer_blink_20
+  - first:
+      213: -1628643192592974098
+    second: Seer_blink_21
+  - first:
+      213: 3935560846184996004
+    second: Seer_blink_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Seer_blink_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 135
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93f30178b34203b20800000000000000
+      internalID: 3112027180600672057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_1
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 135
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f780b81a65c393dc0800000000000000
+      internalID: -3658826879486719873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_2
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 135
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f452e93e1d1373300800000000000000
+      internalID: 231708683369588047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_3
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 135
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e16be41b2c3a3fe0800000000000000
+      internalID: -1208587394263326236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_4
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 135
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85a0e975211f74300800000000000000
+      internalID: 236422566541920856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_5
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 103
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b52a6241b3aae4fc0800000000000000
+      internalID: -3508679888957169061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_6
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 103
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f3ca76e4025b6ba0800000000000000
+      internalID: -6094687489715682315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_7
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 103
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e681c86525b20820800000000000000
+      internalID: 2883065883746469608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_8
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 103
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8c166ff235f85380800000000000000
+      internalID: -8982159857408402294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_9
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 103
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7272404f1368e4f0800000000000000
+      internalID: -799279947985030534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_10
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 71
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21938b71266f89e30800000000000000
+      internalID: 4510625927976728850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_11
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 71
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfc0d4f9ddf245d10800000000000000
+      internalID: 2113366754050510075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_12
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 71
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0d9d7acdd802ac30800000000000000
+      internalID: 4369064337180826890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_13
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 71
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d1371f43847aa4e0800000000000000
+      internalID: -1969633779704712751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_14
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 71
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 217e985297b21e9c0800000000000000
+      internalID: -3899788003005307118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_15
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 39
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aaf1b41a93d22bb0800000000000000
+      internalID: -4962171180683232601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_16
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 39
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 108c5c1baaff81fd0800000000000000
+      internalID: -2370864095218513919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_17
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 39
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13b8a2a3d0b809e00800000000000000
+      internalID: 1049491602104027953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_18
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 39
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3079bd7af08fe5c0800000000000000
+      internalID: -4183983715464417217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_19
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 39
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 340f9ae05f1cf35c0800000000000000
+      internalID: -4233451866447810493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_20
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 7
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43916585e43ec7ed0800000000000000
+      internalID: -2414805374548436684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_21
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 7
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eee33af25a5e569e0800000000000000
+      internalID: -1628643192592974098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Seer_blink_22
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 7
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4acdac4fcbbed9630800000000000000
+      internalID: 3935560846184996004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Seer_blink_0: 3112027180600672057
+      Seer_blink_1: -3658826879486719873
+      Seer_blink_10: 4510625927976728850
+      Seer_blink_11: 2113366754050510075
+      Seer_blink_12: 4369064337180826890
+      Seer_blink_13: -1969633779704712751
+      Seer_blink_14: -3899788003005307118
+      Seer_blink_15: -4962171180683232601
+      Seer_blink_16: -2370864095218513919
+      Seer_blink_17: 1049491602104027953
+      Seer_blink_18: -4183983715464417217
+      Seer_blink_19: -4233451866447810493
+      Seer_blink_2: 231708683369588047
+      Seer_blink_20: -2414805374548436684
+      Seer_blink_21: -1628643192592974098
+      Seer_blink_22: 3935560846184996004
+      Seer_blink_3: -1208587394263326236
+      Seer_blink_4: 236422566541920856
+      Seer_blink_5: -3508679888957169061
+      Seer_blink_6: -6094687489715682315
+      Seer_blink_7: 2883065883746469608
+      Seer_blink_8: -8982159857408402294
+      Seer_blink_9: -799279947985030534
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

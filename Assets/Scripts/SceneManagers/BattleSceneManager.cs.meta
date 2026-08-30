@@ -3,7 +3,20 @@ guid: 84e681e7688644d2ba29ad98a6fe47a5
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _spawnPlane: {instanceID: 0}
+  - _sentaurEnemyPrefab: {instanceID: 0}
+  - _antEnemyPrefab: {instanceID: 0}
+  - _headEnemyPrefab: {instanceID: 0}
+  - _mantisEnemyPrefab: {instanceID: 0}
+  - _deathEnemyPrefab: {instanceID: 0}
+  - _linearEnemyPrefab: {instanceID: 0}
+  - _randomEnemyPrefab: {instanceID: 0}
+  - _startingPickupPrefab: {fileID: 6000001, guid: d4e5f6078190a2b3c4d5e6f70891a3b4, type: 3}
+  - _levelUpUI: {instanceID: 0}
+  - _activePickupsUI: {instanceID: 0}
+  - _activeUpgradesContainer: {instanceID: 0}
+  - _backgroundMusic: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
